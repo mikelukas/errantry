@@ -92,7 +92,7 @@ bool GetMonsters(apvector<Monster>& monsters)
 		elemType weak;
 		apstring name;
 				
-		ifstream inFile("Monster.dat");
+		ifstream inFile("../dat/Monster.dat");
 		
 		if(inFile)
 			{

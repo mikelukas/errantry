@@ -59,10 +59,10 @@ int main()
 						GameOver(win);
 					}
 				else
-					cout<<"ERROR:  'Monster.dat' not found!"<<endl;
+					cout<<"ERROR:  '../dat/Monster.dat' not found!"<<endl;
 			}
 		else
-			cout<<"ERROR:  'Map1.dat' not found!"<<endl;
+			cout<<"ERROR:  '../dat/Map1.dat' not found!"<<endl;
 				
 		return 0;
 	}
@@ -71,7 +71,7 @@ bool GetMap(apvector<apstring>& Map)
 		int pos = 0;
 		bool found = false;
 		
-		ifstream inFile("Map1.dat");
+		ifstream inFile("../dat/Map1.dat");
 		
 		if(inFile)
 			{	

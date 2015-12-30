@@ -29,8 +29,8 @@
 const int MAXMONSTERS = 10;
 const int MAXBOSSES = 8;
 const int MAXSIZE = 50;
-const apstring MONSTERFILE = "Monster.dat";
-const apstring BOSSFILE = "Bosses.dat";
+const apstring MONSTERFILE = "../dat/Monster.dat";
+const apstring BOSSFILE = "../dat/Bosses.dat";
  
 enum State {overworld, bossBattle, battle};
 enum Region {easy, medium, hard};
@@ -80,10 +80,10 @@ int main()
 						GameOver(win);
 					}
 				else
-					cout<<"ERROR:  'Monster.dat' not found!"<<endl;
+					cout<<"ERROR:  '../dat/Monster.dat' not found!"<<endl;
 			}
 		else
-			cout<<"ERROR:  'Map1.dat' not found!"<<endl;
+			cout<<"ERROR:  '../dat/Map1.dat' not found!"<<endl;
 				
 		return 0;
 	}
@@ -139,7 +139,7 @@ bool GetMap(apvector<apstring>& Map)
 		int pos = 0;
 		bool found = false;
 		
-		ifstream inFile("Map1.dat");
+		ifstream inFile("../dat/Map1.dat");
 		
 		if(inFile)
 			{	

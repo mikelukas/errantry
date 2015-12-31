@@ -9,11 +9,11 @@
 enum elemType {fire, air, earth, water, none};
 
 struct SpellType
-	{
-		int MAP; 			//attack power of spell
-		int cost;			//cost in MP
-		apstring name; 		//name of spell
-		elemType element; 	//basic elemental type of spell
-	};
-	
+    {
+        int MAP;            //attack power of spell
+        int cost;           //cost in MP
+        apstring name;      //name of spell
+        elemType element;   //basic elemental type of spell
+    };
+    
 #endif

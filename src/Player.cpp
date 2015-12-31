@@ -5,6 +5,9 @@
 #include <ctype.h>
 #include "player.h"
 
+using std::cout;
+using std::cin;
+
 //Constructors---------------------------------------------------------------//
 
 Player::Player()

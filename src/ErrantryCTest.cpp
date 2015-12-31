@@ -3,6 +3,9 @@
 #include <iostream>
 #include "chtypes.h"
 
+using std::cout;
+using std::cin;
+using std::endl;
 
 int main()
     {

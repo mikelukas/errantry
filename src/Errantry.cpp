@@ -1,7 +1,7 @@
 //Mike Lukas - p2prog03-      -Errantry.cpp-
 
-#include <iostream.h>
-#include <fstream.h>
+#include <iostream>
+#include <fstream>
 #include <conio.h>
 #include <stdio.h>
 #include "apstring.h"

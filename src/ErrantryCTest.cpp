@@ -1,6 +1,6 @@
 //Mike Lukas -p2prog03-     -Errantry Class Test-
 
-#include <iostream.h>
+#include <iostream>
 #include "chtypes.h"
 
 

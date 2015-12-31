@@ -17,10 +17,10 @@
 //display an ending message when the game is lost or won, as well as
 //instructions in the beginning.  
 
-#include <iostream.h>
-#include <fstream.h>
+#include <iostream>
+#include <fstream>
 #include <stdlib.h>
-#include <iomanip.h>
+#include <iomanip>
 #include <math.h>
 #include "apstring.h"
 #include "apvector.h"

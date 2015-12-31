@@ -1,7 +1,7 @@
 //Mike Lukas - p2prog03- Member function definition for player class-
 //Function explanations also included.
 
-#include <iostream.h>
+#include <iostream>
 #include <ctype.h>
 #include "player.h"
 

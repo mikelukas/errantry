@@ -1,7 +1,7 @@
 //Mike Lukas - p2prog03-      -Errantry1.cpp-
 
-#include <iostream.h>
-#include <fstream.h>
+#include <iostream>
+#include <fstream>
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,7 +1,7 @@
 //Mike Lukas - p2prog03- player.cpp-
 //Functions and explanations for the player class.
 
-#include <iostream.h>
+#include <iostream>
 #include "chtypes1.h"
 
 //Constructors---------------------------------------------------------------//

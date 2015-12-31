@@ -26,6 +26,13 @@
 #include "apvector.h"
 #include "chtypes1.h"
 
+using std::ifstream;
+using std::setw;
+
+using std::cout;
+using std::cin;
+using std::endl;
+
 const int MAXMONSTERS = 10;
 const int MAXBOSSES = 8;
 const int MAXSIZE = 50;

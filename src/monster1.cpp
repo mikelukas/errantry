@@ -7,8 +7,8 @@
 //Constructors-------------------------------------------------------//
 
 Monster::Monster()
-    : HP(1),
-      maxHP(1),
+    : mHP(1),
+      mmaxHP(1),
       AP(0),
       DP(0),
       SP(0),
@@ -21,8 +21,8 @@ Monster::Monster()
 void Monster::SetAttributes(int hpVar, int apVar, int dpVar, int spVar, int expVar, 
                          apstring& name)
     {
-        HP = hpVar;
-        maxHP = hpVar;
+        mHP = hpVar;
+        mmaxHP = hpVar;
         AP = apVar;
         DP = dpVar;
         SP = spVar;
@@ -36,7 +36,7 @@ void Monster::ChangeHP(int hpChange)
         //is added to HP, if health is gained, a positive value is
         //added to HP
         
-        HP = HP + hpChange;
+        mHP = mHP + hpChange;
     }
 //accessor functions-------------------------------------------------//
 

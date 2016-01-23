@@ -9,7 +9,7 @@
 #include "apvector.h"
 #include "chtypes.h"
 
-const int MAXMONSTERS = 20;
+const int MAXMONSTERS = 10;
 const int MAXBOSSES = 8;
 const int MAXSIZE = 50;
 const Point STARTPOS = {29, 8};
@@ -27,7 +27,7 @@ void battleChoices(int& choice);
 bool TestChoice(apvector<apstring>& Map, Player& player, 
                 apvector<Monster>& monsterList, 
                 apvector<Monster>& Bosses, Monster& monster,
-                char choice, State& location, bool win, char& landscape,
+                int choice, State& location, bool win, char& landscape,
                 int& nextBoss);
 void Move(apvector<apstring>& Map, Player& player, 
           apvector<Monster>& monsterList, apvector<Monster>& Bosses,

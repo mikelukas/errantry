@@ -162,25 +162,17 @@ void mapChoices(apvector<apstring>& Map, int& choice)
         __gotoxy(30,1);
         cout<<"*1)Move         *";
         __gotoxy(30,2);
-        cout<<"*2)Inventory    *";
-        __gotoxy(30,3);
         cout<<"*3)Status       *";
-        __gotoxy(30,4);
-        cout<<"*4)Equip Weapons*";
-        __gotoxy(30,5);
-        cout<<"*5)Equip Armor  *";
-        __gotoxy(30,6);
-        cout<<"*6)Use Items    *";
-        __gotoxy(30,7);
+        __gotoxy(30,3);
         cout<<"*7)Quit Game    *";
-        __gotoxy(30,8);
+        __gotoxy(30,5);
         cout<<"*****************";
         do
          {
             __gotoxy(0,23);
             cout<<"Please choose an option:  "<<endl;
             cin>>choice;
-         }while(choice, 7);
+         }while(choice, 3);
         
     }
 
@@ -191,10 +183,6 @@ void battleChoices(int& choice)
         __gotoxy(30,1);
         cout<<"*1)Fight        *";
         __gotoxy(30,2);
-        cout<<"*2)Cast Spell   *";
-        __gotoxy(30,3);
-        cout<<"*3)Use Item     *";
-        __gotoxy(30,4);
         cout<<"*4)Run          *";
         __gotoxy(30,5);
         cout<<"*****************";
@@ -203,7 +191,7 @@ void battleChoices(int& choice)
             __gotoxy(0,23);
             cout<<"Please choose an option:  "<<endl;
             cin>>choice;
-         }while(Validate(choice, 4);
+         }while(Validate(choice, 2);
     }
 bool TestChoice(apvector<apstring>& Map, Player& player, 
                 apvector<Monster>& monsterList, 
@@ -224,21 +212,9 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                      nextBoss);
                                 break;
                             case 2:
-                                PrintInventory(player);
-                                break;
-                            case 3:
                                 PrintStatus(player);
                                 break;
-                            case 4:
-                                EquipWeapons(player);
-                                break;
-                            case 5:
-                                EquipArmor(player);
-                                break;
-                            case 6:
-                                UseItem(player);
-                                break;
-                            case 7:
+                            case 3:
                                 leave = true;
                                 break;
                         }
@@ -269,12 +245,6 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                 Fight(player, monster);
                                 break;
                             case 2:
-                                UseMagic(player, monster);
-                                break;
-                            case 3:
-                                UseItem(player);
-                                break;
-                            case 4:
                                 location = map;
                                 break;
                         }

@@ -9,6 +9,7 @@
 #include "chtypes.h"
 
 const int MAXMONSTERS = 20;
+const int MAXBOSSES = 8;
 const int MAXSIZE = 50;
 const Point STARTPOS = {29, 8};
  
@@ -25,12 +26,14 @@ void townChoices(int& choice)
 void battleChoices(int& choice);
 bool TestChoice(apvector<apstring>& Map, Player& player,
 				apvector<Monster>& monsterList, 
-				Monster& monster, 
-				char choice, State& location, bool win, char& landscape,f
+				apvector<Monster>& Bosses, Monster& monster, 
+				char choice, State& location, bool win, char& landscape,
+				int& nextBoss,
 				int& townNum)
 void Move(apvector<apstring>& Map, Player& player, 
-          apvector<Monster>& monsterList,
-          State& location, Monster& monster, char& landscape);
+          apvector<Monster>& monsterList, apvector<Monster>& Bosses,
+          State& location, Monster& monster, char& landscape,
+          int nextBoss);
 void Fight(Player& player, Monster& monster);                
 void PrintMap(const apvector<apstring> &Map);
 void GameOver(bool win);
@@ -41,6 +44,7 @@ int main()
         Player player;
         Point startPos;
         apvector<Monster> monsters(MAXMONSTERS);
+        apvector<Monster> Bosses(MAXBOSSES)
         apvector<apstring> Map(MAXSIZE);
         
         mapFound = GetMap(Map);
@@ -48,6 +52,7 @@ int main()
         if(mapFound != false)
             {
                 GetMonsters(monsters);
+                GetMonsters(Bosses);
                 if(monsFound != false)
                     {
                         cout<<"Monsters found!";
@@ -107,9 +112,10 @@ bool GetMonsters(apvector<Monster>& monsters)
         return found;
     }
 bool MainGame(Player& player, apvector<apstring>& Map, 
-              apvector<Monster>& monsters, Point& StartPos)
+              apvector<Monster>& monsters, apvector<Monster>& Bosses,
+              Point& StartPos)
     {
-        int choice, townNum = 0;
+        int choice, nextBoss = 0, townNum = 0;
         char landscape;
         bool win = false, dead = false, leave = false;
         State location = overworld;
@@ -119,8 +125,8 @@ bool MainGame(Player& player, apvector<apstring>& Map,
             {
                 DisplayMenu(Map, choice, location);
                 leave = TestChoice(Map, player, monsters, monster,
-                				   choice, location, win
-                                   landscape, townNum);
+                				   Bosses, choice, location, win
+                                   landscape, nextBoss, townNum);
                 __clrscr();
             }
         return win;
@@ -141,6 +147,7 @@ void DisplayMenu(apvector<apstring>& Map, int& choice,
                 case town:
                     townChoices(choice);
                     break;
+                case bossBattle:
                 case battle:
                     battleChoices(choice);
                     break;
@@ -223,9 +230,9 @@ void battleChoices(int& choice)
     }
 bool TestChoice(apvector<apstring>& Map, Player& player, 
                 apvector<Monster>& monsterList, 
-                Monster& monster, 
+                apvector<Monster>& Bosses, Monster& monster,
                 int choice, State& location, bool win, char& landscape,
-                int& townNum)
+                int& nextBoss, int& townNum)
     {
         bool leave = false;
         
@@ -235,8 +242,9 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                     switch(choice)
                         {
                             case 1:
-                                Move(Map, player, monsterList, 
-                                     location, monster, landscape);
+                                Move(Map, player, monsterList, Bosses,
+                                     location, monster, landscape,
+                                     nextBoss);
                                 break;
                             case 2:
                                 PrintInventory(player);
@@ -275,6 +283,25 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                 break;
                         }
                     break;
+                case bossBattle
+                    switch(choice)
+                        {
+                            case 1:
+                                Fight(player, monster);
+                                break;
+                            case 2;
+                                cout<<"Can't run from boss fight!"<<endl
+                                break;
+                        }
+                    if(monster.Health() == 0)
+                        {
+                            if(nextBoss == 8)
+                                win = true;
+                            player.AddExp(monster.Experience());
+                            location = map; 
+                            nextBoss++;
+                        }
+                    break;
                 case battle:
                     switch(choice)
                         {
@@ -304,8 +331,9 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
         return leave;
     }
 void Move(apvector<apstring>& Map, Player& player, 
-          apvector<Monster>& monsterList, 
-          State& location, Monster& monster, char& landscape)
+          apvector<Monster>& monsterList, apvector<Monster>& Bosses,
+          State& location, Monster& monster, char& landscape,
+          int nextBoss)
     {
         int x, y, randMons;
         Point Coords;

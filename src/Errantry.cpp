@@ -20,6 +20,18 @@ bool MainGame(Player& player, apvector<apstring>& Map,
               apvector<Monster>& monsters, Point& startPos);
 void DisplayMenu(apvector<apstring>& Map, char& choice, 
                  State& location);
+void mapChoices(apvector<apstring>& Map, int& choice);
+void townChoices(int& choice)
+void battleChoices(int& choice);
+bool TestChoice(apvector<apstring>& Map, Player& player,
+				apvector<Monster>& monsterList, 
+				Monster& monster, 
+				char choice, State& location, bool win, char& landscape,f
+				int& townNum)
+void Move(apvector<apstring>& Map, Player& player, 
+          apvector<Monster>& monsterList,
+          State& location, Monster& monster, char& landscape);
+void Fight(Player& player, Monster& monster);                
 void PrintMap(const apvector<apstring> &Map);
 void GameOver(bool win);
 
@@ -39,7 +51,7 @@ int main()
                 if(monsFound != false)
                     {
                         cout<<"Monsters found!";
-                        win = MainGame(player, monsters, STARTPOS);
+                        win = MainGame(player, Map, monsters, STARTPOS);
                         GameOver(win);
                     }
                 else
@@ -98,14 +110,17 @@ bool MainGame(Player& player, apvector<apstring>& Map,
               apvector<Monster>& monsters, Point& StartPos)
     {
         int choice, townNum = 0;
+        char landscape;
         bool win = false, dead = false, leave = false;
         State location = overworld;
+        Monster monster;
         
         while(dead == false && leave == false && win == false);
             {
                 DisplayMenu(Map, choice, location);
-                leave = TestChoice(player, choice, location, win
-                                   townNum);
+                leave = TestChoice(Map, player, monsters, monster,
+                				   choice, location, win
+                                   landscape, townNum);
                 __clrscr();
             }
         return win;
@@ -206,8 +221,11 @@ void battleChoices(int& choice)
             cin>>choice;
          }while(Validate(choice, 4);
     }
-bool TestChoice(Player& player, Monster& monster, char choice,
-                State& location, bool win, int& townNum)
+bool TestChoice(apvector<apstring>& Map, Player& player, 
+                apvector<Monster>& monsterList, 
+                Monster& monster, 
+                int choice, State& location, bool win, char& landscape,
+                int& townNum)
     {
         bool leave = false;
         
@@ -217,7 +235,8 @@ bool TestChoice(Player& player, Monster& monster, char choice,
                     switch(choice)
                         {
                             case 1:
-                                Move(player, location);
+                                Move(Map, player, monsterList, 
+                                     location, monster, landscape);
                                 break;
                             case 2:
                                 PrintInventory(player);
@@ -273,9 +292,95 @@ bool TestChoice(Player& player, Monster& monster, char choice,
                                 break;
                         }
                     BattleStatus(player, monster);
-                    if(monster.Health() == 0)
-                        
-                                                
+                    if(monster.Health() = 0)
+                        {
+                            player.AddExp(monster.Experience());
+                            location = map;
+                        }
+                    break;
+            }
+        if(player.Health() = 0)
+            leave == true;
+        return leave;
+    }
+void Move(apvector<apstring>& Map, Player& player, 
+          apvector<Monster>& monsterList, 
+          State& location, Monster& monster, char& landscape)
+    {
+        int x, y, randMons;
+        Point Coords;
+        
+        __gotoxy(0,23);
+        cout<<"Please choose an x coordinate on the map using"<<endl;
+        cout<<"method described in the instructions:  ";
+        cin>>x;
+        __gotoxy(0,23);
+        cout<<"                                              ";
+        __gotoxy(0,24);
+        cout<<"                                              ";
+        __gotoxy(0,23);
+        cout<<"Now, please choose a y coordinate normally:  "
+        cin>>y;
+        
+        player.SetCoords(x,y);
+        Coords = player.GetCoords();
+        landscape = Map[Coords.x][Coords.y]
+        Map[Coords.x][Coords.y] = 'X';
+        
+        if(Map[Coords.x][Coords.y] == 'C')
+            {
+                location = bossBattle;
+                monster = Bosses[nextBoss];
+            }
+        else
+            {
+                numRandMons = random(20);
+                if(randMons < 10)
+                    {
+                        monster = monsterList[randMons];
+                        location = battle;
+                    }
+                
+            }   
+        
+    }   
+void Fight(Player& player, Monster& monster)
+    {
+        int pDamage, pDefense, mDamage, mDefense;
+        
+        if(player.Defense() > 10)
+            pDefense = (player.Defense()/10) * monster.Damage();
+        else
+            pDefense = player.Defense() * monster.Damage();
+        
+        if(monster.Defense() > 10)
+            mDefense = (monster.Defense()/10) * player.Damage();
+        else
+            mDefense = monster.Defense() * monster.Damage();
+            
+        pDamage = player.Damage() - mDefense;
+        mDamage = monster.Damage() - pDefense;
+        if(player.Speed() >= monster.Speed())
+            {
+                monster.ChangeHP(-1 * pDamage);
+                if(monster.Health() <= 0)
+                    {
+                        monster.ChangeHP(-1 * (0-monster.Health()));
+                        return;
+                    }
+                player.ChangeHP(-1 * mDamage);
+            }
+        else
+            {
+                player.ChangeHP(-1 * mDamage);
+                if(player.Health() <= 0)
+                    {
+                        player.ChangeHP(-1 * (0-player.Health()));
+                        return;
+                    }
+                monster.ChangeHP(-1 * pDamage); 
+            }
+    }           
 void PrintMap(const apvector<apstring>& Map)
     {
         int row, col, numrows, numcols;

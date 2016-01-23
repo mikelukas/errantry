@@ -4,6 +4,7 @@
 #include <fstream>
 #include <conio.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "apstring.h"
 #include "apvector.h"
 #include "chtypes.h"
@@ -117,11 +118,12 @@ bool MainGame(Player& player, apvector<apstring>& Map,
     {
         int choice, nextBoss = 0, townNum = 0;
         char landscape;
-        bool win = false, dead = false, leave = false;
+        bool win = false, leave = false;
         State location = overworld;
+        player.SetCoords(StartPos.x, StartPos.y);
         Monster monster;
         
-        while(dead == false && leave == false && win == false);
+        while(leave == false && win == false);
             {
                 DisplayMenu(Map, choice, location);
                 leave = TestChoice(Map, player, monsters, monster,

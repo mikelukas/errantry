@@ -14,7 +14,7 @@ const int MAXBOSSES = 8;
 const int MAXSIZE = 50;
 const Point STARTPOS = {29, 8};
  
-enum State {overworld, town, battle};
+enum State {overworld, battle};
 
 bool GetMap(apvector<apstring>& Map);
 bool GetMonsters(apvector<Monster>& monsters);
@@ -23,14 +23,12 @@ bool MainGame(Player& player, apvector<apstring>& Map,
 void DisplayMenu(apvector<apstring>& Map, char& choice, 
                  State& location);
 void mapChoices(apvector<apstring>& Map, int& choice);
-void townChoices(int& choice)
 void battleChoices(int& choice);
-bool TestChoice(apvector<apstring>& Map, Player& player,
-				apvector<Monster>& monsterList, 
-				apvector<Monster>& Bosses, Monster& monster, 
-				char choice, State& location, bool win, char& landscape,
-				int& nextBoss,
-				int& townNum)
+bool TestChoice(apvector<apstring>& Map, Player& player, 
+                apvector<Monster>& monsterList, 
+                apvector<Monster>& Bosses, Monster& monster,
+                char choice, State& location, bool win, char& landscape,
+                int& nextBoss);
 void Move(apvector<apstring>& Map, Player& player, 
           apvector<Monster>& monsterList, apvector<Monster>& Bosses,
           State& location, Monster& monster, char& landscape,
@@ -116,7 +114,7 @@ bool MainGame(Player& player, apvector<apstring>& Map,
               apvector<Monster>& monsters, apvector<Monster>& Bosses,
               Point& StartPos)
     {
-        int choice, nextBoss = 0, townNum = 0;
+        int choice, nextBoss = 0;
         char landscape;
         bool win = false, leave = false;
         State location = overworld;
@@ -126,9 +124,9 @@ bool MainGame(Player& player, apvector<apstring>& Map,
         while(leave == false && win == false);
             {
                 DisplayMenu(Map, choice, location);
-                leave = TestChoice(Map, player, monsters, monster,
-                				   Bosses, choice, location, win
-                                   landscape, nextBoss, townNum);
+                leave = TestChoice(Map, player, monsters, monster, 
+                                   Bosses, choice, location, win,
+                                   landscape, nextBoss);
                 __clrscr();
             }
         return win;
@@ -145,9 +143,6 @@ void DisplayMenu(apvector<apstring>& Map, int& choice,
             {
                 case overworld:
                     mapChoices(Map, choice);
-                    break;
-                case town:
-                    townChoices(choice);
                     break;
                 case bossBattle:
                 case battle:
@@ -188,27 +183,7 @@ void mapChoices(apvector<apstring>& Map, int& choice)
          }while(choice, 7);
         
     }
-void townChoices(int& choice)
-    {
-        __gotoxy(30,0);
-        cout<<"*****Choices*****";
-        __gotoxy(30,1);
-        cout<<"*1)Goto a Shop  *";
-        __gotoxy(30,2);
-        cout<<"*2)Magic Lessons*";
-        __gotoxy(30,3);
-        cout<<"*3)Talk         *";
-        __gotoxy(30,4);
-        cout<<"*4)Leave Town   *";
-        __gotoxy(30,5);
-        cout<<"*****************";
-        do
-         {
-            __gotoxy(0,23);
-            cout<<"Please choose an option:  ";
-            cin>>choice;
-         }while(choice, 4);
-    }
+
 void battleChoices(int& choice)
     {
         __gotoxy(30,0);
@@ -234,7 +209,7 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                 apvector<Monster>& monsterList, 
                 apvector<Monster>& Bosses, Monster& monster,
                 int choice, State& location, bool win, char& landscape,
-                int& nextBoss, int& townNum)
+                int& nextBoss)
     {
         bool leave = false;
         
@@ -265,23 +240,6 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                 break;
                             case 7:
                                 leave = true;
-                                break;
-                        }
-                    break;
-                case town:
-                    switch(choice)
-                        {
-                            case 1:
-                                Shop(player, townNum);
-                                break;
-                            case 2:
-                                LearnMagic(player, townNum);
-                                break;
-                            case 3:
-                                Talk(player, townNum);
-                                break;
-                            case 4:
-                                location = map;
                                 break;
                         }
                     break;

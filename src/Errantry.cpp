@@ -2,12 +2,18 @@
 
 #include <iostream>
 #include <fstream>
-#include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "apstring.h"
 #include "apvector.h"
 #include "chtypes.h"
+
+using std::ifstream;
+using std::setw;
+
+using std::cout;
+using std::cin;
+using std::endl;
 
 const int MAXMONSTERS = 10;
 const int MAXBOSSES = 8;
@@ -127,7 +133,6 @@ bool MainGame(Player& player, apvector<apstring>& Map,
                 leave = TestChoice(Map, player, monsters, monster, 
                                    Bosses, choice, location, win,
                                    landscape, nextBoss);
-                __clrscr();
             }
         return win;
     }
@@ -136,7 +141,6 @@ void DisplayMenu(apvector<apstring>& Map, int& choice,
                  State& location)
     {
         cout<<"0    1     2     3     4     5    6"<<endl;
-        gotoxy(0,22);
         cout<<"**********************MESSAGES**********************"
             <<endl<<endl<<endl<<endl;
         switch(location)
@@ -154,22 +158,14 @@ void DisplayMenu(apvector<apstring>& Map, int& choice,
 
 void mapChoices(apvector<apstring>& Map, int& choice)
     {
-        
-        __gotoxy(0,1);
         PrintMap(Map);
-        __gotoxy(30,0);
         cout<<"*****Choices*****";
-        __gotoxy(30,1);
         cout<<"*1)Move         *";
-        __gotoxy(30,2);
         cout<<"*3)Status       *";
-        __gotoxy(30,3);
         cout<<"*7)Quit Game    *";
-        __gotoxy(30,5);
         cout<<"*****************";
         do
          {
-            __gotoxy(0,23);
             cout<<"Please choose an option:  "<<endl;
             cin>>choice;
          }while(choice, 3);
@@ -178,17 +174,12 @@ void mapChoices(apvector<apstring>& Map, int& choice)
 
 void battleChoices(int& choice)
     {
-        __gotoxy(30,0);
         cout<<"*****Choices*****";
-        __gotoxy(30,1);
         cout<<"*1)Fight        *";
-        __gotoxy(30,2);
         cout<<"*4)Run          *";
-        __gotoxy(30,5);
         cout<<"*****************";
         do
          {
-            __gotoxy(0,23);
             cout<<"Please choose an option:  "<<endl;
             cin>>choice;
          }while(Validate(choice, 2);
@@ -268,15 +259,11 @@ void Move(apvector<apstring>& Map, Player& player,
         int x, y, randMons;
         Point Coords;
         
-        __gotoxy(0,23);
         cout<<"Please choose an x coordinate on the map using"<<endl;
         cout<<"method described in the instructions:  ";
         cin>>x;
-        __gotoxy(0,23);
         cout<<"                                              ";
-        __gotoxy(0,24);
         cout<<"                                              ";
-        __gotoxy(0,23);
         cout<<"Now, please choose a y coordinate normally:  "
         cin>>y;
         

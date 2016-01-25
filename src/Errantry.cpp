@@ -1,4 +1,21 @@
-//Mike Lukas - p2prog03-      -Errantry.cpp-
+//Mike Lukas - p2prog03-      -Errantry2.cpp-
+//This program is game called Errantry which is fantasy adventure game.
+//In it, the user may travel around a map and fight monsters.  The goal
+//is to defeat all 7 of the boss monsters which are found only in caves
+//on the map.  While the user is moving, he/she may encounter and fight
+//monsters.  If the player defeats the monster, he/she will gain 
+//experience points, which when enough are earned, promote the player 
+//by one level and increase his/her attributes.  It is to the player's
+//advantage to move around a lot and gain experience, because by 
+//increase his/her attributes, the player has a better chance of defeating
+//the bosses which are stronger than the regular enemies.  The output from
+//this program includes the map the user travels on and his/her position
+//on it or a battle display with player and enemy information displayed,
+//a menu of actions the user may take while on the map, a menu of actions
+//the user may take while in battle, and other comments regarding 
+//experienced being earned and levels being increased.  Also, it will
+//display an ending message when the game is lost or won, as well as
+//instructions in the beginning.  
 
 #include <iostream>
 #include <fstream>
@@ -122,6 +139,8 @@ void Intro()
     }
 bool GetMap(apvector<apstring>& Map)
     {
+        //Postcondition:  the world map for the game is retrieved from
+        //a file for use in the program.
         int pos = 0;
         bool found = false;
         
@@ -141,6 +160,9 @@ bool GetMap(apvector<apstring>& Map)
     }
 bool GetMonsters(apvector<Monster>& monsters)
     {
+        //Postcondition:  the attributes of each monster are retrieved
+        //from a file for use in the program
+        
         int pos = 0, hp, ap, dp, mdp, sp, gold, expPts;
         bool found = false;
         elemType weak;
@@ -168,12 +190,21 @@ bool MainGame(Player& player, apvector<apstring>& Map,
               apvector<Monster>& monsters, apvector<Monster>& Bosses,
               Point& StartPos)
     {
+        //This function controls the main game.  It displays the
+        //appropriate menus for the game's state(battle or map (overworld))
+        //and also indirectly carries out all of the actions a user may
+        //perform by calling the functions that perform those actions.
+        
         int choice, nextBoss = 0;
-        char landscape;
+            //nextboss holds the index of the next boss to be fought in
+            //'Bosses'
+        char landscape; //holds the current type of landscape the
+                        //the player is standing on
         bool win = false, leave = false;
-        State location = overworld;
+        State location = overworld;  //holds the state of the game
         player.SetCoords(StartPos.x, StartPos.y);
-        Monster monster;
+        Monster monster;     //will hold the monster to be fought if the 
+                             //user encounters one while moving
         
         while(leave == false && win == false);
             {
@@ -187,7 +218,11 @@ bool MainGame(Player& player, apvector<apstring>& Map,
     
 void DisplayMenu(apvector<apstring>& Map, int& choice, 
                  State& location)
-    {
+    {   
+        //postcondition:  The menu for the current state ofthe game 
+        //(battle or map(overworld) ) is displayed, and the user may
+        //choose an action from one of the options
+        
         cout<<"0    1     2     3     4     5    6"<<endl;
         cout<<"**********************MESSAGES**********************"
             <<endl<<endl<<endl<<endl;
@@ -238,11 +273,15 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                 int choice, State& location, bool win, char& landscape,
                 int& nextBoss)
     {
-        bool leave = false;
+        //postcondition:  the user-chosen action chose at the current
+        //menu the player is at is carried out.  For instance, if the
+        //user chooses move from the map menu, that action is
+        //performed.  
+        bool leave = false;  //holds whether or not the user chose quit
         
         switch(location)
             {
-                case map:
+                case map:  //map menu
                     switch(choice)
                         {
                             case 1:
@@ -258,7 +297,7 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                 break;
                         }
                     break;
-                case bossBattle:
+                case bossBattle:  //battle menu
                     switch(choice)
                         {
                             case 1:
@@ -268,16 +307,18 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                 cout<<"Can't run from boss fight!"<<endl;
                                 break;
                         }
-                    if(monster.Health() == 0)
-                        {
+                    if(monster.Health() == 0)  //if boss is dead
+                        {                      //find the next on the list
+                                               //add exp. pts. from the 
+                                               //boss.
                             if(nextBoss == 8)
                                 win = true;
                             player.AddExp(monster.Experience());
                             location = map; 
                             nextBoss++;
                         }
-                    break;
-                case battle:
+                    break;              
+                case battle:   //battle menu
                     switch(choice)
                         {
                             case 1:
@@ -295,7 +336,7 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                         }
                     break;
             }
-        if(player.Health() <= 0)
+        if(player.Health() <= 0)  //if player dies, leave game
             leave == true;
         return leave;
     }
@@ -304,6 +345,12 @@ void Move(apvector<apstring>& Map, Player& player,
           State& location, Monster& monster, char& landscape,
           int nextBoss)
     {
+        //postcondition:  The player's position on the map will be moved
+        //to the coordinates he/she specifies, if they are on the map.
+        //If they are not, he/she will be prompted to re-enter them.
+        //This function also handles whether or not a player encounters
+        //an enemy or moves to a cave (marked with 'C') while he/she is moving
+        
         int x, y, randMons;
         Point Coords;
         
@@ -339,6 +386,13 @@ void Move(apvector<apstring>& Map, Player& player,
     }   
 void Fight(Player& player, Monster& monster)
     {
+        //postcondition:  this function deals damage to the monster
+        //from the player and damage from to the player by the monster.
+        //It deducts that damage from the player's and monster's HP.
+        //A certain defense number is subtracted for the DP value of the
+        //player and monster, so that the player and monster do not
+        //do all of their damage(AP) to the other. 
+        
         int pDamage, pDefense, mDamage, mDefense;
         
         if(player.Defense() > 10)

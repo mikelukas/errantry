@@ -49,7 +49,7 @@ int main()
         Player player;
         Point startPos;
         apvector<Monster> monsters(MAXMONSTERS);
-        apvector<Monster> Bosses(MAXBOSSES)
+        apvector<Monster> Bosses(MAXBOSSES);
         apvector<apstring> Map(MAXSIZE);
         
         mapFound = GetMap(Map);
@@ -182,7 +182,7 @@ void battleChoices(int& choice)
          {
             cout<<"Please choose an option:  "<<endl;
             cin>>choice;
-         }while(Validate(choice, 2);
+         }while(Validate(choice, 2));
     }
 bool TestChoice(apvector<apstring>& Map, Player& player, 
                 apvector<Monster>& monsterList, 
@@ -210,14 +210,14 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                 break;
                         }
                     break;
-                case bossBattle
+                case bossBattle:
                     switch(choice)
                         {
                             case 1:
                                 Fight(player, monster);
                                 break;
-                            case 2;
-                                cout<<"Can't run from boss fight!"<<endl
+                            case 2:
+                                cout<<"Can't run from boss fight!"<<endl;
                                 break;
                         }
                     if(monster.Health() == 0)
@@ -240,14 +240,14 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                 break;
                         }
                     BattleStatus(player, monster);
-                    if(monster.Health() = 0)
+                    if(monster.Health() <= 0)
                         {
                             player.AddExp(monster.Experience());
                             location = map;
                         }
                     break;
             }
-        if(player.Health() = 0)
+        if(player.Health() <= 0)
             leave == true;
         return leave;
     }
@@ -264,12 +264,12 @@ void Move(apvector<apstring>& Map, Player& player,
         cin>>x;
         cout<<"                                              ";
         cout<<"                                              ";
-        cout<<"Now, please choose a y coordinate normally:  "
+        cout<<"Now, please choose a y coordinate normally:  ";
         cin>>y;
         
         player.SetCoords(x,y);
         Coords = player.GetCoords();
-        landscape = Map[Coords.x][Coords.y]
+        landscape = Map[Coords.x][Coords.y];
         Map[Coords.x][Coords.y] = 'X';
         
         if(Map[Coords.x][Coords.y] == 'C')

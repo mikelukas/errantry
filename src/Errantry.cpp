@@ -2,11 +2,12 @@
 
 #include <iostream>
 #include <fstream>
-#include <stdio.h>
 #include <stdlib.h>
+#include <iomanip>
+#include <math.h>
 #include "apstring.h"
 #include "apvector.h"
-#include "chtypes.h"
+#include "chtypes1.h"
 
 using std::ifstream;
 using std::setw;
@@ -20,8 +21,9 @@ const int MAXBOSSES = 8;
 const int MAXSIZE = 50;
 const Point STARTPOS = {29, 8};
  
-enum State {overworld, battle};
+enum State {overworld, bossBattle, battle};
 
+void Intro();
 bool GetMap(apvector<apstring>& Map);
 bool GetMonsters(apvector<Monster>& monsters);
 bool MainGame(Player& player, apvector<apstring>& Map,
@@ -39,8 +41,9 @@ void Move(apvector<apstring>& Map, Player& player,
           apvector<Monster>& monsterList, apvector<Monster>& Bosses,
           State& location, Monster& monster, char& landscape,
           int nextBoss);
-void Fight(Player& player, Monster& monster);                
+void Fight(Player& player, Monster& monster);
 void PrintMap(const apvector<apstring> &Map);
+void PrintStatus(Player& player);
 void GameOver(bool win);
 
 int main()
@@ -71,6 +74,51 @@ int main()
             cout<<"ERROR:  '../dat/Map1.dat' not found!"<<endl;
                 
         return 0;
+    }
+void Intro()
+    {
+        char answer, start;
+        do
+         {
+            cout<<"#/////**/----/**/////**/\**\\\\\**\----\**\\\\\#"<<endl
+                <<"|                                              |"<<endl
+                <<"|                                              |"<<endl
+                <<"|                  Errantry                    |"<<endl
+                <<"|                by Mike Lukas                 |"<<endl
+                <<"|                                              |"<<endl
+                <<"|                                              |"<<endl
+                <<"#\\\\\**\----\**\\\\\**\/**/////**/----/**/////#"<<endl
+                <<"Would you like to view the instructions?(y/n) ";
+            cin>>answer;
+         }while(!Validate(answer));
+        
+        if(answer == 'Y' || answer == 'y')
+            {
+                cout<<"The world you have just set foot in has become one of chaos."<<endl
+                    <<"Monsters ravish the land destroying all that once was beautiful"
+              <<endl<<"to the people.  An errant warrior from another continent, it is"<<endl
+                    <<"your job to defeat these monsters and their evil controllers"<<endl
+                    <<"hiding in various caves around the continent.  Only after all"<<endl
+                    <<"7 have been defeated, can the monsters be vanquished and peace"<<endl
+                    <<"be restored."<<endl
+                    <<"Your position on the continent is marked by an X on the map."<<endl
+                    <<"You begin on the right side.  As you progress to the other"<<endl
+                    <<"side of the continent, beware, for the monsters become stronger."<<endl
+                    <<"The various C's along the map mark the entrances to caves."<<endl
+                    <<"By moving to the caves, you can fight the evil controllers" <<endl
+                    <<"of the monsters.  While you move around the map, you may encouner"<<endl
+                    <<"monsters.  By defeating these monsters, you can increase your"<<endl
+                    <<"experience points.  When you gain enough, you will advance 1"<<endl
+                    <<"level.  Every level advance allows you to increase your attributes"<<endl
+                    <<"and become stronger.  If you are defeated by a monster in battle,"<<endl
+                    <<"you lose the game.  You may view your statistics at any time"<<endl
+                    <<"by choosing that option on the map menu.  Build your levels"<<endl
+                    <<"so that you are stronger and can fight monsters and controllers"<<endl
+                    <<"better!  Good luck and enjoy Errantry!"<<endl;
+            }
+        cout<<"Type x and press enter to start the game:  ";
+        cin>>start;
+        cout<<"****************************************************"<<endl;
     }
 bool GetMap(apvector<apstring>& Map)
     {
@@ -344,3 +392,48 @@ void PrintMap(const apvector<apstring>& Map)
             }
         cout<<endl<<endl;
     }
+void PrintStatus(Player& player)
+    {
+        //postcondition:  prints out the status of a player;
+        //their name, level, attributes, current experience, and
+        //the amount of experience needed for the next level.
+        //It lets the player view his/her status until she presses
+        //x and enter when he/she is finished, and returns to the
+        //map menu
+        
+        char junkCh;
+        
+        cout<<"********************************************************"<<endl;
+        cout<<"*Name:  "<<player.ShowName()<<setw(16)<<"Level: "<<player.Level()<<endl;
+        cout<<"*HP:  "<<player.Health()<<"   --health"<<endl;
+        cout<<"*AP:  "<<player.Damage()<<"   --attack power"<<endl;
+        cout<<"*DP:  "<<player.Defense()<<"   --defense percentage"<<endl;
+        cout<<"*SP:  "<<player.Speed()<<"   --speed points"<<endl<<endl;
+        cout<<"*Current experience points:     "<<player.NumExpPts()<<endl;
+        cout<<"*Number needed for next level:  "<<player.NumToNext()<<endl<<endl;
+        cout<<"**********************MESSAGES**********************"<<endl;
+        cout<<"Press X and enter when done:  ";
+        cin>>junkCh;
+        cout<<endl<<endl;
+        
+    }
+void GameOver(bool win)
+    {
+        //postcondition:  This function displays an ending message when the game
+        //has ended, depending on whether the user has ended the game by winning,
+        //or whether he/she has ended it by losing.
+        
+        if(win)
+            {
+                cout<<"Congratulations, you have defeated the evil monsters of the land,"
+                    <<endl<<"saved the people, and allowed peace to flourish!"<<endl
+                    <<"You win!"<<endl;
+            }
+        else
+            {
+                cout<<"You failed to complete your mission of the conquest of evil."<<endl
+                    <<"The monsters continue to ravish the land and devour civilization"
+                    <<endl<<"You lose!"<<endl;
+            }
+    }
+    

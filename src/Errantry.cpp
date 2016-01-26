@@ -47,9 +47,8 @@ bool GetMonsters(apvector<Monster>& monsters, const apstring& filename);
 bool MainGame(Player& player, apvector<apstring>& Map,
               apvector<Monster>& monsters, apvector<Monster>& Bosses,
               Point& StartPos);
-void DisplayMenu(apvector<apstring>& Map, char& choice, 
+void DisplayMenu(Player& player, Monster& monster, apvector<apstring>& Map, int& choice, 
                  State& location);
-void mapChoices(apvector<apstring>& Map, int& choice);
 void battleChoices(int& choice);
 bool TestChoice(apvector<apstring>& Map, Player& player, 
                 apvector<Monster>& monsterList, 
@@ -61,7 +60,6 @@ void Move(apvector<apstring>& Map, Player& player,
           State& location, Monster& monster, char& landscape,
           int nextBoss);
 void Fight(Player& player, Monster& monster);
-void PrintMap(const apvector<apstring> &Map);
 void PrintStatus(Player& player);
 void GameOver(bool win);
 
@@ -209,7 +207,7 @@ bool MainGame(Player& player, apvector<apstring>& Map,
         
         while(leave == false && win == false)
             {
-                DisplayMenu(Map, choice, location);
+                DisplayMenu(player, monster, Map, choice, location);
                 leave = TestChoice(Map, player, monsters, monster, 
                                    Bosses, choice, location, win,
                                    landscape, nextBoss);
@@ -217,21 +215,37 @@ bool MainGame(Player& player, apvector<apstring>& Map,
         return win;
     }
     
-void DisplayMenu(apvector<apstring>& Map, int& choice, 
+void DisplayMenu(Player& player, Monster& monster, apvector<apstring>& Map, int& choice, 
                  State& location)
     {   
         //postcondition:  The menu for the current state ofthe game 
         //(battle or map(overworld) ) is displayed, and the user may
         //choose an action from one of the options
         
-        cout<<"0    1     2     3     4     5    6"<<endl;
-        cout<<"**********************MESSAGES**********************"
-            <<endl<<endl<<endl<<endl;
+        int row, numrows;
+        numrows = Map.length();
+            
         switch(location)
-            {
-                case overworld:
-                    mapChoices(Map, choice);
-                    break;
+          {
+            case overworld:
+                cout<<"0    5   10   15   20   25  29"<<endl;
+                for(row=0; row<numrows; row++)
+                    {
+                        cout<<Map[row]
+                            <<" "<<row<<endl;
+                    } 
+                cout<<"*****Choices*****"<<endl;
+                cout<<"*1)Move         *"<<endl;
+                cout<<"*2)Status       *"<<endl;                
+                cout<<"*3)Quit Game    *"<<endl;
+                cout<<"*****************"<<endl;
+                cout<<"**********************MESSAGES**********************"<<endl;
+                do
+                 {
+                    cout<<"Please choose an option:  "<<endl;
+                    cin>>choice;
+                 }while(!Validate(choice, 3));
+                break;
                 case bossBattle:
                 case battle:
                     battleChoices(choice);
@@ -239,23 +253,6 @@ void DisplayMenu(apvector<apstring>& Map, int& choice,
             };
         
     }
-
-void mapChoices(apvector<apstring>& Map, int& choice)
-    {
-        PrintMap(Map);
-        cout<<"*****Choices*****";
-        cout<<"*1)Move         *";
-        cout<<"*3)Status       *";
-        cout<<"*7)Quit Game    *";
-        cout<<"*****************";
-        do
-         {
-            cout<<"Please choose an option:  "<<endl;
-            cin>>choice;
-         }while(choice, 3);
-        
-    }
-
 void battleChoices(int& choice)
     {
         cout<<"*****Choices*****";
@@ -282,7 +279,7 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
         
         switch(location)
             {
-                case map:  //map menu
+                case overworld:  //map menu
                     switch(choice)
                         {
                             case 1:
@@ -428,25 +425,8 @@ void Fight(Player& player, Monster& monster)
                     }
                 monster.ChangeHP(-1 * pDamage); 
             }
-    }           
-void PrintMap(const apvector<apstring>& Map)
-    {
-        int row, col, numrows, numcols;
-
-        numrows=Map.length();
-        numcols=Map[0].length();
-
-        for(row=0; row<numrows; row++)
-            {
-                cout<<row;
-                for(col=0; col<numcols; col++)
-                    {
-                        cout<<Map[row][col];
-                    }
-                cout<<endl;
-            }
-        cout<<endl<<endl;
     }
+
 void PrintStatus(Player& player)
     {
         //postcondition:  prints out the status of a player;

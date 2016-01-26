@@ -38,7 +38,6 @@ const int MAXBOSSES = 8;
 const int MAXSIZE = 50;
 const apstring MONSTERFILE = "../dat/Monster.dat";
 const apstring BOSSFILE = "../dat/Bosses.dat";
-const Point STARTPOS = {29, 8};
  
 enum State {overworld, bossBattle, battle};
 
@@ -70,7 +69,7 @@ int main()
     {
         bool mapFound, monsFound, bossFound, win;
         Player player;
-        Point startPos;
+        Point STARTPOS = {29, 8};
         apvector<Monster> monsters(MAXMONSTERS);
         apvector<Monster> Bosses(MAXBOSSES);
         apvector<apstring> Map(MAXSIZE);
@@ -83,6 +82,7 @@ int main()
                 bossFound = GetMonsters(Bosses, BOSSFILE);
                 if(monsFound != false && bossFound != false)
                     {
+                        Intro();
                         win = MainGame(player, Map, monsters, Bosses, STARTPOS);
                         GameOver(win);
                     }
@@ -198,15 +198,16 @@ bool MainGame(Player& player, apvector<apstring>& Map,
         int choice, nextBoss = 0;
             //nextboss holds the index of the next boss to be fought in
             //'Bosses'
-        char landscape; //holds the current type of landscape the
-                        //the player is standing on
+        char landscape = '.'; //holds the current type of landscape the
+                              //the player is standing on
         bool win = false, leave = false;
         State location = overworld;  //holds the state of the game
-        player.SetCoords(StartPos.x, StartPos.y);
         Monster monster;     //will hold the monster to be fought if the 
                              //user encounters one while moving
+        player.SetCoords(StartPos.x, StartPos.y);
         
-        while(leave == false && win == false);
+        
+        while(leave == false && win == false)
             {
                 DisplayMenu(Map, choice, location);
                 leave = TestChoice(Map, player, monsters, monster, 

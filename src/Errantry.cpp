@@ -36,15 +36,18 @@ using std::endl;
 const int MAXMONSTERS = 10;
 const int MAXBOSSES = 8;
 const int MAXSIZE = 50;
+const apstring MONSTERFILE = "../dat/Monster.dat";
+const apstring BOSSFILE = "../dat/Bosses.dat";
 const Point STARTPOS = {29, 8};
  
 enum State {overworld, bossBattle, battle};
 
 void Intro();
 bool GetMap(apvector<apstring>& Map);
-bool GetMonsters(apvector<Monster>& monsters);
+bool GetMonsters(apvector<Monster>& monsters, const apstring& filename);
 bool MainGame(Player& player, apvector<apstring>& Map,
-              apvector<Monster>& monsters, Point& startPos);
+              apvector<Monster>& monsters, apvector<Monster>& Bosses,
+              Point& StartPos);
 void DisplayMenu(apvector<apstring>& Map, char& choice, 
                  State& location);
 void mapChoices(apvector<apstring>& Map, int& choice);
@@ -65,7 +68,7 @@ void GameOver(bool win);
 
 int main()
     {
-        bool mapFound, monsFound, win;
+        bool mapFound, monsFound, bossFound, win;
         Player player;
         Point startPos;
         apvector<Monster> monsters(MAXMONSTERS);
@@ -76,12 +79,11 @@ int main()
         
         if(mapFound != false)
             {
-                GetMonsters(monsters);
-                GetMonsters(Bosses);
-                if(monsFound != false)
+                monsFound = GetMonsters(monsters, MONSTERFILE);
+                bossFound = GetMonsters(Bosses, BOSSFILE);
+                if(monsFound != false && bossFound != false)
                     {
-                        cout<<"Monsters found!";
-                        win = MainGame(player, Map, monsters, STARTPOS);
+                        win = MainGame(player, Map, monsters, Bosses, STARTPOS);
                         GameOver(win);
                     }
                 else
@@ -158,26 +160,23 @@ bool GetMap(apvector<apstring>& Map)
             }
         return found;       
     }
-bool GetMonsters(apvector<Monster>& monsters)
+bool GetMonsters(apvector<Monster>& monsters, const apstring& filename)
     {
         //Postcondition:  the attributes of each monster are retrieved
         //from a file for use in the program
         
-        int pos = 0, hp, ap, dp, mdp, sp, gold, expPts;
+        int pos = 0, hp, ap, dp, sp, expPts;
         bool found = false;
-        elemType weak;
-        apstring name;
-                
-        ifstream inFile("../dat/Monster.dat");
+        apstring name; //name of monster
+        
+        ifstream inFile(filename.c_str());
         
         if(inFile)
             {
                 while(pos<MAXMONSTERS && getline(inFile, name) &&
-                      inFile>>hp>>ap>>dp>>mdp>>sp>>gold>>expPts
-                            >>weak)
+                      inFile>>hp>>ap>>dp>>sp>>expPts)
                     {
-                        monsters[pos](hp, mp, ap, dp, mdp, sp, gold,
-                                      expPts, weak);
+                        monsters[pos].SetAttributes(hp, ap, dp, sp, expPts,name);
                         pos++;
                     }
                 monsters.resize(pos);
@@ -186,6 +185,7 @@ bool GetMonsters(apvector<Monster>& monsters)
             }
         return found;
     }
+
 bool MainGame(Player& player, apvector<apstring>& Map, 
               apvector<Monster>& monsters, apvector<Monster>& Bosses,
               Point& StartPos)

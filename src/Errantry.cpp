@@ -49,7 +49,6 @@ bool MainGame(Player& player, apvector<apstring>& Map,
               Point& StartPos);
 void DisplayMenu(Player& player, Monster& monster, apvector<apstring>& Map, int& choice, 
                  State& location);
-void battleChoices(int& choice);
 bool TestChoice(apvector<apstring>& Map, Player& player, 
                 apvector<Monster>& monsterList, 
                 apvector<Monster>& Bosses, Monster& monster,
@@ -246,24 +245,29 @@ void DisplayMenu(Player& player, Monster& monster, apvector<apstring>& Map, int&
                     cin>>choice;
                  }while(!Validate(choice, 3));
                 break;
-                case bossBattle:
-                case battle:
-                    battleChoices(choice);
-                    break;
-            };
-        
-    }
-void battleChoices(int& choice)
-    {
-        cout<<"*****Choices*****";
-        cout<<"*1)Fight        *";
-        cout<<"*4)Run          *";
-        cout<<"*****************";
-        do
-         {
-            cout<<"Please choose an option:  "<<endl;
-            cin>>choice;
-         }while(Validate(choice, 2));
+            case bossBattle:
+            case battle:                                 
+                cout<<"*************ENEMY! You went to battle!*************"<<endl;
+                cout<<player.ShowName()<<endl;
+                cout<<"HP:  "<<player.Health()<<"/"<<player.MaxHealth()<<endl;
+                cout<<"AP:  "<<player.Damage()<<endl;
+                cout<<endl;
+                cout<<endl;
+                cout<<endl;
+                cout<<monster.ShowName()<<endl;
+                cout<<"HP:  "<<monster.mHealth()<<endl;
+                cout<<"*****************"<<endl;
+                cout<<"*1)Fight        *"<<endl;
+                cout<<"*2)Run          *"<<endl;
+                cout<<"*****************"<<endl;
+                cout<<"**********************MESSAGES**********************"<<endl;
+                do
+                 {
+                    cout<<"Please choose an option:  "<<endl;
+                    cin>>choice;
+                 }while(!Validate(choice,2));
+                break;
+        }
     }
 bool TestChoice(apvector<apstring>& Map, Player& player, 
                 apvector<Monster>& monsterList, 

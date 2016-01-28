@@ -52,8 +52,8 @@ void DisplayMenu(Player& player, Monster& monster, apvector<apstring>& Map, int&
                  State& location);
 bool TestChoice(apvector<apstring>& Map, Player& player, 
                 apvector<Monster>& monsterList, 
-                apvector<Monster>& Bosses, Monster& monster,
-                int choice, State& location, bool win, char& landscape,
+                Monster& monster, apvector<Monster>& Bosses, 
+                int choice, State& location, bool& win, char& landscape,
                 int& nextBoss, Region& area);
 void Move(apvector<apstring>& Map, Player& player, 
           apvector<Monster>& monsterList, apvector<Monster>& Bosses,
@@ -277,14 +277,16 @@ void DisplayMenu(Player& player, Monster& monster, apvector<apstring>& Map, int&
     }
 bool TestChoice(apvector<apstring>& Map, Player& player, 
                 apvector<Monster>& monsterList, 
-                apvector<Monster>& Bosses, Monster& monster,
-                int choice, State& location, bool win, char& landscape,
+                Monster& monster, apvector<Monster>& Bosses, 
+                int choice, State& location, bool& win, char& landscape,
                 int& nextBoss, Region& area)
     {
         //postcondition:  the user-chosen action chose at the current
         //menu the player is at is carried out.  For instance, if the
         //user chooses move from the map menu, that action is
         //performed.  
+        char cont;          //holds character user types at the 'press x and enter
+                            //to continue' prompt
         bool leave = false;  //holds whether or not the user chose quit
         
         switch(location)
@@ -342,7 +344,7 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                 Fight(player, monster);
                                 break;
                             case 2:
-                                location = map;
+                                location = overworld;
                                 break;
                         }
                     if(monster.mHealth() <= 0)
@@ -361,7 +363,7 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                     break;
             }
         if(player.Health() <= 0)  //if player dies, leave game
-            leave == true;
+            leave = true;
         return leave;
     }
 void Move(apvector<apstring>& Map, Player& player, 

@@ -315,15 +315,24 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                 cout<<"Can't run from boss fight!"<<endl;
                                 break;
                         }
-                    if(monster.Health() == 0)  //if boss is dead
+                    if(monster.mHealth() <= 0)  //if boss is dead
                         {                      //find the next on the list
                                                //add exp. pts. from the 
                                                //boss.
-                            if(nextBoss == 8)
+                            if(nextBoss > 7)
                                 win = true;
+                            cout<<"You won the battle!  ";
+                            cout<<"You gained "<<monster.Experience()<<" pts!";
+                            cout<<endl;
+                            cout<<"Press X and enter to continue:  ";
+                            cin>>cont;
                             player.AddExp(monster.Experience());
-                            location = map; 
+                            if(player.NumExpPts() >= player.NumToNext())
+                                player.LevelUp();
+                            player.ChangeHP(player.MaxHealth() - player.Health());
+                            landscape = 'M';
                             nextBoss++;
+                            location = overworld;   
                         }
                     break;              
                 case battle:   //battle menu
@@ -336,11 +345,18 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                                 location = map;
                                 break;
                         }
-                    BattleStatus(player, monster);
-                    if(monster.Health() <= 0)
+                    if(monster.mHealth() <= 0)
                         {
+                            cout<<"You won the battle!  ";
+                            cout<<"You gained "<<monster.Experience()<<" pts!";
+                            cout<<endl;
+                            cout<<"Press X and enter to continue:  ";
+                            cin>>cont;
                             player.AddExp(monster.Experience());
-                            location = map;
+                            if(player.NumExpPts() >= player.NumToNext())
+                                player.LevelUp();
+                            player.ChangeHP(player.MaxHealth() - player.Health());
+                            location = overworld;
                         }
                     break;
             }
@@ -455,38 +471,25 @@ void Fight(Player& player, Monster& monster)
         //player and monster, so that the player and monster do not
         //do all of their damage(AP) to the other. 
         
-        int pDamage, pDefense, mDamage, mDefense;
+        int pDamage, mDamage;
         
-        if(player.Defense() > 10)
-            pDefense = (player.Defense()/10) * monster.Damage();
-        else
-            pDefense = player.Defense() * monster.Damage();
+        pDamage = player.Damage() - monster.Defense();
         
-        if(monster.Defense() > 10)
-            mDefense = (monster.Defense()/10) * player.Damage();
-        else
-            mDefense = monster.Defense() * monster.Damage();
-            
-        pDamage = player.Damage() - mDefense;
-        mDamage = monster.Damage() - pDefense;
+        if(pDamage < 0)
+            pDamage = 0;
+        mDamage = monster.Damage() - monster.Defense();
+        
+        if(mDamage < 0)
+            mDamage = 0;
+        
         if(player.Speed() >= monster.Speed())
             {
                 monster.ChangeHP(-1 * pDamage);
-                if(monster.Health() <= 0)
-                    {
-                        monster.ChangeHP(-1 * (0-monster.Health()));
-                        return;
-                    }
                 player.ChangeHP(-1 * mDamage);
             }
         else
             {
                 player.ChangeHP(-1 * mDamage);
-                if(player.Health() <= 0)
-                    {
-                        player.ChangeHP(-1 * (0-player.Health()));
-                        return;
-                    }
                 monster.ChangeHP(-1 * pDamage); 
             }
     }

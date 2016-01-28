@@ -40,6 +40,7 @@ const apstring MONSTERFILE = "../dat/Monster.dat";
 const apstring BOSSFILE = "../dat/Bosses.dat";
  
 enum State {overworld, bossBattle, battle};
+enum Region {easy, medium, hard};
 
 void Intro();
 bool GetMap(apvector<apstring>& Map);
@@ -53,11 +54,13 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                 apvector<Monster>& monsterList, 
                 apvector<Monster>& Bosses, Monster& monster,
                 int choice, State& location, bool win, char& landscape,
-                int& nextBoss);
+                int& nextBoss, Region& area);
 void Move(apvector<apstring>& Map, Player& player, 
           apvector<Monster>& monsterList, apvector<Monster>& Bosses,
           State& location, Monster& monster, char& landscape,
-          int nextBoss);
+          int nextBoss, Region& area);
+void GetEnemy(apvector<Monster>& monsterList, Monster& monster, int x, Region& area,
+              State& location);
 void Fight(Player& player, Monster& monster);
 void PrintStatus(Player& player);
 void GameOver(bool win);
@@ -199,6 +202,9 @@ bool MainGame(Player& player, apvector<apstring>& Map,
                               //the player is standing on
         bool win = false, leave = false;
         State location = overworld;  //holds the state of the game
+        Region area = easy;  //holds the region of the map where the player
+                             //is;  depending on the region, the user will
+                             //fight harder or easier enemies
         Monster monster;     //will hold the monster to be fought if the 
                              //user encounters one while moving
         player.SetCoords(StartPos.x, StartPos.y);
@@ -209,7 +215,7 @@ bool MainGame(Player& player, apvector<apstring>& Map,
                 DisplayMenu(player, monster, Map, choice, location);
                 leave = TestChoice(Map, player, monsters, monster, 
                                    Bosses, choice, location, win,
-                                   landscape, nextBoss);
+                                   landscape, nextBoss, area);
             }
         return win;
     }
@@ -273,7 +279,7 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                 apvector<Monster>& monsterList, 
                 apvector<Monster>& Bosses, Monster& monster,
                 int choice, State& location, bool win, char& landscape,
-                int& nextBoss)
+                int& nextBoss, Region& area)
     {
         //postcondition:  the user-chosen action chose at the current
         //menu the player is at is carried out.  For instance, if the
@@ -289,7 +295,7 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
                             case 1:
                                 Move(Map, player, monsterList, Bosses,
                                      location, monster, landscape,
-                                     nextBoss);
+                                     nextBoss, area);
                                 break;
                             case 2:
                                 PrintStatus(player);
@@ -345,7 +351,7 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
 void Move(apvector<apstring>& Map, Player& player, 
           apvector<Monster>& monsterList, apvector<Monster>& Bosses,
           State& location, Monster& monster, char& landscape,
-          int nextBoss)
+          int nextBoss, Region& area)
     {
         //postcondition:  The player's position on the map will be moved
         //to the coordinates he/she specifies, if they are on the map.
@@ -353,39 +359,93 @@ void Move(apvector<apstring>& Map, Player& player,
         //This function also handles whether or not a player encounters
         //an enemy or moves to a cave (marked with 'C') while he/she is moving
         
-        int x, y, randMons;
+        int x, y;
         Point Coords;
         
-        cout<<"Please choose an x coordinate on the map using"<<endl;
-        cout<<"method described in the instructions:  ";
-        cin>>x;
-        cout<<"                                              ";
-        cout<<"                                              ";
-        cout<<"Now, please choose a y coordinate normally:  ";
-        cin>>y;
+        do
+         {
+            cout<<"Please choose a valid x coordinate:  ";
+            cin>>x;
+         }while(!Validate(x+1, 30));
+        do
+         {
+            cout<<"Please choose a valid y coordinate:  ";
+            cin>>y;
+         }while(!Validate(y+1, 21));
+            cout<<endl;
+         
+         //error trap for valid coordinates
         
-        player.SetCoords(x,y);
         Coords = player.GetCoords();
-        landscape = Map[Coords.x][Coords.y];
-        Map[Coords.x][Coords.y] = 'X';
+        Map[Coords.y][Coords.x] = landscape;
         
-        if(Map[Coords.x][Coords.y] == 'C')
+        player.SetCoords(x,y);  
+        landscape = Map[y][x];
+        
+        if(landscape == 'C')
             {
                 location = bossBattle;
                 monster = Bosses[nextBoss];
             }
         else
-            {
-                numRandMons = random(20);
-                if(randMons < 10)
-                    {
-                        monster = monsterList[randMons];
-                        location = battle;
-                    }
-                
-            }   
+            GetEnemy(monsterList, monster, x, area, location);  
+        Map[y][x] = 'X';
+    }
+void GetEnemy(apvector<Monster>& monsterList, Monster& monster, int x, Region& area,
+              State& location)
+    {   //postcondition:  a random monster is returned from the monster
+        //list to you be fought in battle.  Depending on the region of
+        //the map the player is in, the monsters may be more difficult.
+        //Occasionally, the player will not encounter a monster at when
+        //he/she moves.
         
-    }   
+        int randMons;  //holds value to be used as index of monster
+                       //in 'monsterList' if it is less than a certain
+                       //number.
+        //variable x is the x coordinate of the player on the map.
+        
+        if(x < 30)
+            {
+                if(x < 20)
+                    {
+                        if(x < 10)
+                            area = hard;
+                        else
+                            area = medium;
+                    }
+                else
+                    area = easy;
+            }
+                
+        randMons = rand() % 5 + 1;
+        
+        switch(area)
+            {
+                case easy:
+                    if(randMons < 3)
+                        {
+                            monster = monsterList[randMons];
+                            location = battle;
+                        }
+                    break;
+                case medium:
+                    if(randMons < 4)
+                        {
+                            monster = monsterList[randMons + 3];
+                            location = battle;
+                        }
+                    break;
+                case hard:
+                    if(randMons < 3)
+                        {
+                            monster = monsterList[randMons + 7];
+                            location  = battle;
+                        }
+                    break;
+            }
+        
+    }
+            
 void Fight(Player& player, Monster& monster)
     {
         //postcondition:  this function deals damage to the monster

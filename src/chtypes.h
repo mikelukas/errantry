@@ -13,6 +13,7 @@
 
 #include "apvector.h"
 #include "apstring.h"
+#include "types.h"
 
 const int    MAXEQUIPMENT = 5;
 const double HPRATE = .65;   //
@@ -32,16 +33,6 @@ const int BEGINSP = 3;
 const int BEGINGOLD = 0;
 
 enum type {weapon, armor, item};
-enum elemType {fire, air, earth, water, none};
-
-//Structs to hold item and spell data----------------------------------------//
-struct SpellType
-    {
-        int MAP;            //attack power of spell
-        int cost;           //cost in MP
-        apstring name;      //name of spell
-        elemType element;   //basic elemental type of spell
-    };
     
 struct EquipType
     {

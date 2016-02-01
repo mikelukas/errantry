@@ -8,7 +8,7 @@
 //remove items from their inventory, buy and sell items, swap items or spells
 //if there inventory is full, and move up a level. 
 
-#include "types.h"
+#include "spell.h"
 #include "apvector.h"
 #include "apstring.h"
 

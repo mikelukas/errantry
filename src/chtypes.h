@@ -13,7 +13,7 @@
 
 #include "apvector.h"
 #include "apstring.h"
-#include "types.h"
+#include "spell.h"
 
 const int    MAXEQUIPMENT = 5;
 const double HPRATE = .65;   //

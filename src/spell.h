@@ -1,7 +1,7 @@
-#ifndef _TYPES_H
-#define _TYPES_H
+#ifndef _SPELL_H
+#define _SPELL_H
 
-//Mike Lukas -p2prog03 - types.h-
+//Mike Lukas -p2prog03 - spell.h-
 //This file just holds the two data types, SpellType and elemType for
 //use in each class.
 #include "apstring.h"

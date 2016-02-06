@@ -4,16 +4,12 @@
 //MikeLukas -p2prog03-    -player.h-
 //Class definition for a player.  This class holds all the values of all the
 //necessary player attributes and all of the operations that a player will
-//need to do such as equip an unequip items, add items to their inventory,
-//remove items from their inventory, buy and sell items, swap items
-//if there inventory is full, and move up a level.
+//need to do such as move up a level, access attributes, move coordinates,
+//etc. 
 
-#include "equipment.h"
-#include "apvector.h"
 #include "apstring.h"
 #include "point.h"
 
-const int    MAXEQUIPMENT = 5;
 const double HPRATE = .65;   //
 const double BIGRATE = .45;      //rates to increase attributes by
 const double FLATRATE = .2;      //
@@ -39,36 +35,16 @@ class Player
             int gold;
 
             apstring playerName;
-            int weapCount;      //number of weapons player has
-            int armCount;       //amount of armor player has
-            int itemCount;      //number of items player has
             int expPoints;      //current experience points
             int expToNext;      //exp. points needed to advance level
             int lvl;            //current level
             Point Coords;       //Holds the players coordinates on the map
-            EquipType eArmor;   //holds currently equipped armor
-            EquipType eWeapon;  //holds currently equipped weapon
-            apvector<EquipType> Weapons;
-            apvector<EquipType> Armor;
-            apvector<EquipType> Items;
-
-            int GetItemCount(EquipType&) const;
-            bool FindItem(apvector<EquipType>&, apstring&, int&, int) const;
-            void InitializeInventory(apvector<EquipType>&, type equipType);
+            
         public:
             Player();
-            Player(int, int, int,int, int, int, int, int);
+            Player(int, int, int, int, int, int);
 
-            void AddEquip(apvector<EquipType>&, EquipType&);
-            void RemoveEquip(apvector<EquipType>&, EquipType&);
-            void OverwriteEquip(apvector<EquipType>&, EquipType&);
             void LevelUp();
-
-            void ChangeCount(EquipType&, char);
-            void EquipItem(EquipType&);
-            void Unequip(EquipType&);
-            void BuyItem(apvector<EquipType>&, EquipType&, int);
-            void SellItem(apvector<EquipType>&, EquipType&);
             void AddExp(int);
             void AddMoney(int);
             Point GetCoords() const;

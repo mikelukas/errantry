@@ -1,12 +1,12 @@
-//Mike Lukas - p2prog03- Member function definition for player class-
-//Function explanations also included.
+//Mike Lukas - p2prog03- player.cpp-
+//Functions and explanations for the player class.
 
 #include <iostream>
-#include <ctype.h>
 #include "player.h"
 
 using std::cout;
 using std::cin;
+using std::endl;
 
 //Constructors---------------------------------------------------------------//
 
@@ -61,6 +61,8 @@ void Player::LevelUp()
         int choice;
         
         HP = HP + int(HP * HPRATE);
+        maxHP = HP;
+                
         if(lvl % SPRATE == 0)
             SP++;
         lvl++;
@@ -100,14 +102,7 @@ void Player::AddExp(int pts)
         
         expPoints = expPoints + pts;
     }
-void Player::MoveCoords(int x, int y)
-    {
-        //postcondition:  changes the player's position on the map to the
-        //coordinates sent
-        
-        Coords.x = x;
-        Coords.y = y;
-    }
+
 void Player::ChangeHP(int hpChange)
     {
         //postcondition:  HP value of character altered by the value
@@ -168,6 +163,7 @@ Point Player::GetCoords() const
     
 void Player::SetCoords(int x, int y)
     {
+        //postcondition:  returns a player's x and y coordinates on the map
         Coords.x = x;
         Coords.y = y;
     }
@@ -204,11 +200,9 @@ bool Validate(int answer, int numChoices)
         //postcondition:  determines if response entered by user is
         //a valid response number and returns true if so, false
         //if not.
-        if(answer != 1 && answer<=numChoices)
+        if(answer >0 && answer<=numChoices)
             return true;
         else
             cout<<"Invalid Response"<<endl;
         return false;
     }
-
-#endif

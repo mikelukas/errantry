@@ -11,7 +11,7 @@
 #include "point.h"
 
 const double HPRATE = .65;   //
-const double BIGRATE = .45;      //rates to increase attributes by
+const double BIGRATE = .45;     //rates to increase attributes by at level up
 const double FLATRATE = .2;      //
 const int    SPRATE = 10;       //
 const double NEXTRATE = .85; //
@@ -31,8 +31,9 @@ class Player
             int AP;             //attack power
             int DP;             //defense percentage
             int SP;             //speed points
-
-            apstring playerName;
+                        
+            apstring playerName;            
+            
             int expPoints;      //current experience points
             int expToNext;      //exp. points needed to advance level
             int lvl;            //current level
@@ -46,9 +47,9 @@ class Player
             void AddExp(int);
             Point GetCoords() const;
             void SetCoords(int, int);
-            void MoveCoords(int, int);
             void ChangeHP(int);
-
+                        
+            apstring ShowName() const;
             int Damage() const;
             int Defense() const;
             int Health() const;
@@ -63,3 +64,5 @@ class Player
 
 bool Validate(char answer);
 bool Validate(int answer, int numChoices);
+
+#endif

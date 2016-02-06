@@ -24,8 +24,8 @@
 #include <math.h>
 #include "apstring.h"
 #include "apvector.h"
-#include "chtypes1.h"
 #include "point.h"
+#include "player.h"
 #include "monster.h"
 
 using std::ifstream;

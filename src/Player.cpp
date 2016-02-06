@@ -115,7 +115,7 @@ void Player::ChangeHP(int hpChange)
 
 //accessor functions-------------------------------------------------//
 
-apstring Player::ShowName() const
+string Player::ShowName() const
     {
         //postcondition:  returns the name of the player
         return playerName;

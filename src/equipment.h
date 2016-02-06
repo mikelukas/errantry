@@ -1,6 +1,10 @@
 #ifndef _EQUIPMENT_H_
 #define _EQUIPMENT_H_
 
+#include <string>
+
+using std::string;
+
 enum type {weapon, armor, item};
 
 struct EquipType
@@ -9,7 +13,7 @@ struct EquipType
         int cost;   //price the item sells for
         int quantity;
         type type;
-        apstring name;
+        string name;
     };
 
 #endif

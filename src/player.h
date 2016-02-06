@@ -7,8 +7,10 @@
 //need to do such as move up a level, access attributes, move coordinates,
 //etc. 
 
-#include "apstring.h"
+#include <string>
 #include "point.h"
+
+using std::string;
 
 const double HPRATE = .65;   //
 const double BIGRATE = .45;     //rates to increase attributes by at level up
@@ -32,7 +34,7 @@ class Player
             int DP;             //defense percentage
             int SP;             //speed points
                         
-            apstring playerName;            
+            string playerName;
             
             int expPoints;      //current experience points
             int expToNext;      //exp. points needed to advance level
@@ -49,7 +51,7 @@ class Player
             void SetCoords(int, int);
             void ChangeHP(int);
                         
-            apstring ShowName() const;
+            string ShowName() const;
             int Damage() const;
             int Defense() const;
             int Health() const;

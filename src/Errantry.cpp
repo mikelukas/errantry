@@ -22,11 +22,13 @@
 #include <stdlib.h>
 #include <iomanip>
 #include <math.h>
-#include "apstring.h"
+#include <string>
 #include "apvector.h"
 #include "point.h"
 #include "player.h"
 #include "monster.h"
+
+using std::string;
 
 using std::ifstream;
 using std::setw;
@@ -38,26 +40,26 @@ using std::endl;
 const int MAXMONSTERS = 10;
 const int MAXBOSSES = 8;
 const int MAXSIZE = 50;
-const apstring MONSTERFILE = "../dat/Monster.dat";
-const apstring BOSSFILE = "../dat/Bosses.dat";
+const string MONSTERFILE = "../dat/Monster.dat";
+const string BOSSFILE = "../dat/Bosses.dat";
  
 enum State {overworld, bossBattle, battle};
 enum Region {easy, medium, hard};
 
 void Intro();
-bool GetMap(apvector<apstring>& Map);
-bool GetMonsters(apvector<Monster>& monsters, const apstring& filename);
-bool MainGame(Player& player, apvector<apstring>& Map,
+bool GetMap(apvector<string>& Map);
+bool GetMonsters(apvector<Monster>& monsters, const string& filename);
+bool MainGame(Player& player, apvector<string>& Map,
               apvector<Monster>& monsters, apvector<Monster>& Bosses,
               Point& StartPos);
-void DisplayMenu(Player& player, Monster& monster, apvector<apstring>& Map, int& choice, 
+void DisplayMenu(Player& player, Monster& monster, apvector<string>& Map, int& choice,
                  State& location);
-bool TestChoice(apvector<apstring>& Map, Player& player, 
+bool TestChoice(apvector<string>& Map, Player& player,
                 apvector<Monster>& monsterList, 
                 Monster& monster, apvector<Monster>& Bosses, 
                 int choice, State& location, bool& win, char& landscape,
                 int& nextBoss, Region& area);
-void Move(apvector<apstring>& Map, Player& player, 
+void Move(apvector<string>& Map, Player& player,
           apvector<Monster>& monsterList, apvector<Monster>& Bosses,
           State& location, Monster& monster, char& landscape,
           int nextBoss, Region& area);
@@ -74,7 +76,7 @@ int main()
         Point STARTPOS = {29, 8};
         apvector<Monster> monsters(MAXMONSTERS);
         apvector<Monster> Bosses(MAXBOSSES);
-        apvector<apstring> Map(MAXSIZE);
+        apvector<string> Map(MAXSIZE);
         
         mapFound = GetMap(Map);
         
@@ -141,7 +143,7 @@ void Intro()
         cin>>start;
         cout<<"****************************************************"<<endl;
     }
-bool GetMap(apvector<apstring>& Map)
+bool GetMap(apvector<string>& Map)
     {
         //Postcondition:  the world map for the game is retrieved from
         //a file for use in the program.
@@ -162,14 +164,14 @@ bool GetMap(apvector<apstring>& Map)
             }
         return found;       
     }
-bool GetMonsters(apvector<Monster>& monsters, const apstring& filename)
+bool GetMonsters(apvector<Monster>& monsters, const string& filename)
     {
         //Postcondition:  the attributes of each monster are retrieved
         //from a file for use in the program
         
         int pos = 0, hp, ap, dp, sp, expPts;
         bool found = false;
-        apstring name; //name of monster
+        string name; //name of monster
         
         ifstream inFile(filename.c_str());
         
@@ -188,7 +190,7 @@ bool GetMonsters(apvector<Monster>& monsters, const apstring& filename)
         return found;
     }
 
-bool MainGame(Player& player, apvector<apstring>& Map, 
+bool MainGame(Player& player, apvector<string>& Map,
               apvector<Monster>& monsters, apvector<Monster>& Bosses,
               Point& StartPos)
     {
@@ -222,7 +224,7 @@ bool MainGame(Player& player, apvector<apstring>& Map,
         return win;
     }
     
-void DisplayMenu(Player& player, Monster& monster, apvector<apstring>& Map, int& choice, 
+void DisplayMenu(Player& player, Monster& monster, apvector<string>& Map, int& choice,
                  State& location)
     {   
         //postcondition:  The menu for the current state ofthe game 
@@ -277,7 +279,7 @@ void DisplayMenu(Player& player, Monster& monster, apvector<apstring>& Map, int&
                 break;
         }
     }
-bool TestChoice(apvector<apstring>& Map, Player& player, 
+bool TestChoice(apvector<string>& Map, Player& player,
                 apvector<Monster>& monsterList, 
                 Monster& monster, apvector<Monster>& Bosses, 
                 int choice, State& location, bool& win, char& landscape,
@@ -368,7 +370,7 @@ bool TestChoice(apvector<apstring>& Map, Player& player,
             leave = true;
         return leave;
     }
-void Move(apvector<apstring>& Map, Player& player, 
+void Move(apvector<string>& Map, Player& player,
           apvector<Monster>& monsterList, apvector<Monster>& Bosses,
           State& location, Monster& monster, char& landscape,
           int nextBoss, Region& area)

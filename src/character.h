@@ -6,8 +6,6 @@
 //values a character will need; health points, magic points, attack
 //points, defense points, magic defense points, speed points, and 
 //money.  
-
-#include "apstring.h"
     
 class Character
     {

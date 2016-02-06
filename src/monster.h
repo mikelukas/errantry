@@ -6,7 +6,9 @@
 //and operations a monster will need, such as HP changing and accessing
 //various attributes of the monster from in the program
 
-#include "apstring.h"
+#include <string>
+
+using std::string;
 
 class Monster
     {
@@ -18,15 +20,15 @@ class Monster
             int SP;             //speed points
             int expPoints;          //number of expPoints player gets 
                                     //from beating monster
-            apstring monsterName;
+            string monsterName;
 
 
         public:
             Monster();
-            void SetAttributes(int, int, int, int, int, apstring&);
+            void SetAttributes(int, int, int, int, int, string&);
             void ChangeHP(int);
                     
-            apstring ShowName() const;
+            string ShowName() const;
             int Damage() const;
             int Defense() const;
             int mHealth() const;

@@ -19,7 +19,7 @@ Monster::Monster()
     }
 //Public Member functions--------------------------------------------//
 void Monster::SetAttributes(int hpVar, int apVar, int dpVar, int spVar, int expVar, 
-                         apstring& name)
+                         string& name)
     {
         mHP = hpVar;
         mmaxHP = hpVar;
@@ -40,7 +40,7 @@ void Monster::ChangeHP(int hpChange)
     }
 //accessor functions-------------------------------------------------//
 
-apstring Monster::ShowName() const
+string Monster::ShowName() const
     {
         //postcondition:  returns the monster's name
         return monsterName;

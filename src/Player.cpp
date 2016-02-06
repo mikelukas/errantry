@@ -13,14 +13,10 @@ using std::cin;
 Player::Player()
     : HP(BEGINHP),
       maxHP(BEGINHP),
-      MP(BEGINMP),
-      maxMP(BEGINMP),
       AP(BEGINAP),
       DP(BEGINDP),
-      MDP(BEGINMDP),
       SP(BEGINSP),
       gold(BEGINGOLD),
-      spellCount(0),
       weapCount(0),
       armCount(0),
       itemCount(0),
@@ -30,20 +26,12 @@ Player::Player()
      
     {
         //attribute variables initialized in initializer list
-        int lcv;
         
         Coords.x = 0;
         Coords.y = 0;
         eArmor.name = "none";
         eWeapon.name = "none";
-        Spells.resize(MAXEQUIPMENT);
-        for(lcv = 0; lcv<MAXEQUIPMENT; lcv++)
-            {
-                Spells[lcv].MAP = 0;
-                Spells[lcv].cost = 0;
-                Spells[lcv].name = "none";
-                Spells[lcv].element = none;
-            }
+
         InitializeInventory(Weapons, weapon);
         InitializeInventory(Armor, armor);
         InitializeInventory(Items, item);
@@ -51,22 +39,18 @@ Player::Player()
         cin>>playerName;
         cout<<endl;
     }
-Player::Player(int hpVar, int mpVar, int apVar, int dpVar, int mdpVar, 
+Player::Player(int hpVar, int apVar, int dpVar,
                int spVar, int money, int level)
     : HP(hpVar),
       maxHP(hpVar),
-      MP(mpVar),
-      maxMP(mpVar),
       AP(apVar),
       DP(dpVar),
-      MDP(mdpVar),
       SP(spVar),
       gold(money)
     {
         //postcondition:  Player statistics are initialized to the specific
         //values sent to the function
                 
-        spellCount = 0;
         weapCount = 0;
         armCount = 0;
         itemCount = 0;
@@ -78,14 +62,6 @@ Player::Player(int hpVar, int mpVar, int apVar, int dpVar, int mdpVar,
     }
 //Public Member Functions-----------------------------------------------//
 
-void Player::AddSpell(SpellType& newSpell)
-    {
-        //postcondition:  newSpell added to the list of spells held 
-        //in 'Spells'
-        
-        Spells[spellCount] = newSpell;
-        spellCount++;
-    }
 void Player::AddEquip(apvector<EquipType>& EquipList, EquipType& newItem)
     {
         //postcondition:  newItem added to the equipment list sent to
@@ -130,42 +106,6 @@ void Player::RemoveEquip(apvector<EquipType>& EquipList, EquipType& oldItem)
             cout<<"You don't have that item to remove."<<endl;
                             
     }
-void Player::OverwriteSpell(SpellType& newSpell)
-    {
-        //postcondition:  newSpell replaces a user selected spell
-        //(oldSpell) in the list of spells held in 'Spells'
-        
-        int index = 0;
-        bool found;
-        char response;
-        apstring oldSpell;
-                
-        cout<<"Which spell do you want to overwrite?  ";
-        cin>>oldSpell;
-        do
-         {
-            cout<<"Are you sure you want to overwrite this spell?(y/n)  ";
-            cin>>response;                  
-         }while(Validate(response));
-            
-        if(response == 'y' || response == 'Y')
-            {
-                 found = FindSpell(Spells, oldSpell, index, spellCount);
-                 
-                 if(found == true)
-                    {
-                        Spells[index] = newSpell;
-                        cout<<oldSpell<<" was erased and you learned "
-                            <<newSpell.name<<endl;
-                    }
-                 else
-                    cout<<"You don't have that spell."<<endl;
-            }
-        else
-            {
-                cout<<oldSpell<<" will not be overwritten"<<endl;
-            }
-    }
 void Player::OverwriteEquip(apvector<EquipType>& EquipList, EquipType& newItem)
     {
         //postcondition:  newItem replaces a user selected item
@@ -209,13 +149,12 @@ void Player::LevelUp()
         //postcondition:  player's attributes are increased;
         //user chooses whether he/she wants to increase a certain
         //attack or defense attribute greater than the others, while
-        //the player's HP, MP, SP, lvl, and expToNext are changed by
+        //the player's HP, SP, lvl, and expToNext are changed by
         //the same rates every time.
         
-        int lcv, choice;
+        int choice;
         
         HP = HP + int(HP * HPRATE);
-        MP = MP + int(MP * MPRATE);
         if(lvl % SPRATE == 0)
             SP++;
         lvl++;
@@ -224,59 +163,26 @@ void Player::LevelUp()
         cout<<"Congratulations, your level is now "<<lvl<<"!"<<endl;
         cout<<"--------------------------------------"<<endl;
         
-        do
-         {
-            cout<<"Increase:  1) attack"<<endl
-                <<"           2) defense"<<endl
-                <<"           3) magic attack power"<<endl
-                <<"           4) magic defense"<<endl;
-            cout<<"Choice:  ";
-            cin>>choice;
-            cout<<"--------------------------------------"<<endl;
-         }while(Validate(choice, 4));
+        cout<<"Increase:  1) attack"<<endl
+            <<"           2) defense"<<endl
+            <<"           3) even increment"<<endl;
+        cout<<"Choice:  ";
+        cin>>choice;
+        cout<<"--------------------------------------"<<endl;
          
          switch(choice)
             {
                 case 1: //Attack
                     AP = AP + int(AP * BIGRATE);
                     DP = DP + int(AP * FLATRATE);
-                    for(lcv = 0; lcv<spellCount; lcv++)
-                        {
-                            Spells[lcv].MAP = Spells[lcv].MAP
-                                        + int(Spells[lcv].MAP * FLATRATE);
-                        }
-                    MDP = MDP + int(MDP * FLATRATE);
                     break;
                 case 2: //Defense
                     AP = AP + int(AP * FLATRATE);
                     DP = DP + int(AP * BIGRATE);
-                    for(lcv = 0; lcv<spellCount; lcv++)
-                        {
-                            Spells[lcv].MAP = Spells[lcv].MAP
-                                        + int(Spells[lcv].MAP * FLATRATE);
-                        }
-                    MDP = MDP + int(MDP * FLATRATE);
                     break;
-                case 3: //MagicAttack
+                default:  //even
                     AP = AP + int(AP * FLATRATE);
-                    DP = DP + int(AP * FLATRATE);
-                    for(lcv = 0; lcv<spellCount; lcv++)
-                        {
-                            Spells[lcv].MAP = Spells[lcv].MAP
-                                        + int(Spells[lcv].MAP * BIGRATE);
-                        }
-                    MDP = MDP + int(MDP * FLATRATE);
-                    break;
-                case 4:  //MagicDefense
-                    AP = AP + int(AP * FLATRATE);
-                    DP = DP + int(AP * FLATRATE);
-                    for(lcv = 0; lcv<spellCount; lcv++)
-                        {
-                            Spells[lcv].MAP = Spells[lcv].MAP
-                                        + int(Spells[lcv].MAP * FLATRATE);
-                        }
-                    MDP = MDP + int(MDP * BIGRATE);
-                    break;
+                    DP = DP + int(AP * FLATRATE); 
             }
             
         }
@@ -444,17 +350,14 @@ void Player::ChangeHP(int hpChange)
         
         HP = HP + hpChange;
     }
-void Player::ChangeMP(int mpChange)
-    {
-        //postcondition:  MP value of character altered by the value
-        //sent to the function; if a spell is used, a negative value
-        //is added to MP, if MP is gained, a positive value is
-        //added to MP
-        
-        MP = MP + mpChange;
-    }
+
 //accessor functions-------------------------------------------------//
 
+apstring Player::ShowName() const
+    {
+        //postcondition:  returns the name of the player
+        return playerName;
+    }
 int Player::Damage() const
     {
         //postcondition:  returns the amount of damage the player can do (AP)
@@ -472,47 +375,18 @@ int Player::Health() const
         //postcondition:  returns user's health points
         return HP;
     }
-
-int Player::MEnergy() const
+    
+int Player::MaxHealth() const
     {
-        //postcondition:  returns the character's magic points
-        return MP;
+        //postcondition:  returns user's maximum health points
+        return maxHP;
     }
-
-int Player::MDefense() const
-    {
-        //postcondition:  returns the character's magic defense points
-        return MDP;
-    }
-
+    
 int Player::Speed() const
     {
         //postcondition:  returns the character's speed points
         return SP;
     }
-
-int Player::Money() const
-    {
-        //postcondition:  returns amount of gold the character has
-        return gold;
-    }
-int Player::MDamage(SpellType& spell)
-    {
-        //postcondition:  returns the magic attack points for a 
-        //certain spell 
-        
-        int index = 0;
-        bool found = FindSpell(Spells, spell.name, index, spellCount);
-        
-        if(found == true)
-            {
-                return spell.MAP;
-            }
-        else
-            cout<<"You don't have that spell"<<endl;
-        return 0;
-    }
-
 int Player::Level() const
     {
         //postcondition:  returns the user's level number
@@ -587,32 +461,6 @@ bool Player::FindItem(apvector<EquipType>& EquipList, apstring& itemName,
             
             toupper(EquipList[lcv].name[0]);
                     
-         }while(lcv<numItems && found == false);
-         
-         toupper(itemName[0]);
-         index = lcv;
-         return found;
-    }
-bool Player::FindSpell(apvector<SpellType>& spellList, apstring& itemName,
-                       int& index, int numItems) const
-    { 
-        //postcondition:  when given a certain list and item, this function
-        //returns if the user has that item and if so, what number that item
-        //is on the list given
-        
-        int lcv = -1;
-        bool found = false;
-        tolower(itemName[0]);
-        
-        do
-         {
-            lcv++;
-            tolower(spellList[lcv].name[0]);
-                    
-            if(itemName == spellList[lcv].name)
-                found = true;
-            
-            toupper(spellList[lcv].name[0]);
          }while(lcv<numItems && found == false);
          
          toupper(itemName[0]);

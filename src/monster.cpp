@@ -7,39 +7,28 @@
 //Constructors-------------------------------------------------------//
 
 Monster::Monster()
-    : HP(1),
-      maxHP(1),
+    : mHP(1),
+      mmaxHP(1),
       AP(0),
       DP(0),
-      MDP(0),
       SP(0),
-      gold(0),
-      weakness(fire),
       monsterName("none")
     {
         //all necessary monster attributes initialized in initializer
         //list
     }
-Monster::Monster(int hpVar, int apVar, int dpVar, int mdpVar,
-                 int spVar, int money, int expPts, elemType& weak, 
-                 apstring& name)
-    : HP(hpVar),
-      maxHP(hpVar),
-       AP(apVar),
-      DP(dpVar),
-      MDP(mdpVar),
-      SP(spVar),
-      gold(money),
-      weakness(weak)
-    {
-        //sets all monster attributes to specific values, specified by
-        //a file.  
-                
-        monsterName = name;
-        
-        expPoints = expPts;
-    }
 //Public Member functions--------------------------------------------//
+void Monster::SetAttributes(int hpVar, int apVar, int dpVar, int spVar, int expVar, 
+                         apstring& name)
+    {
+        mHP = hpVar;
+        mmaxHP = hpVar;
+        AP = apVar;
+        DP = dpVar;
+        SP = spVar;
+        expPoints = expVar;
+        monsterName = name;
+    }
 void Monster::ChangeHP(int hpChange)
     {
         //postcondition:  HP value of character altered by the value
@@ -47,53 +36,45 @@ void Monster::ChangeHP(int hpChange)
         //is added to HP, if health is gained, a positive value is
         //added to HP
         
-        HP = HP + hpChange;
+        mHP = mHP + hpChange;
     }
 //accessor functions-------------------------------------------------//
 
+apstring Monster::ShowName() const
+    {
+        //postcondition:  returns the monster's name
+        return monsterName;
+    }
+    
 int Monster::Damage() const
     {
-        //postcondition:  returns the amount of damage the player can do (AP)
+        //postcondition:  returns the amount of damage the monster can do (AP)
         return AP;
     }
 
 int Monster::Defense() const
     {
-        //postcondition:  returns user's defense points
+        //postcondition:  returns monster's defense points
         return DP;
     }
 
-int Monster::Health() const
+int Monster::mHealth() const
     {
-        //postcondition:  returns user's health points
-        return HP;
+        //postcondition:  returns monster's health points
+        return mHP;
     }
 
-int Monster::MDefense() const
+int Monster::mMaxHealth() const
     {
-        //postcondition:  returns the character's magic defense points
-        return MDP;
+        //postcondition:  returns monster's maximum health points
+        return mmaxHP;
     }
-
 int Monster::Speed() const
     {
-        //postcondition:  returns the character's speed points
+        //postcondition:  returns the monster's speed points
         return SP;
     }
 
-int Monster::Money() const
-    {
-        //postcondition:  returns amount of gold the character has
-        return gold;
-    }
-
-int Monster::Weakness() const
-    {
-        //returns a numerical value corresponding with the monster's
-        //elemental weakness
-        
-        return weakness;
-    }
 int Monster::Experience() const
     {
         //returns the number of experience points the monster gives

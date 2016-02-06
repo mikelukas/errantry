@@ -1,7 +1,7 @@
 //Mike Lukas -p2prog03-     -Errantry Class Test-
 
 #include <iostream>
-#include "chtypes.h"
+#include "player.h"
 
 using std::cout;
 using std::cin;

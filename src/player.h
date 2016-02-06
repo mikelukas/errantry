@@ -1,17 +1,17 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 
-//Mike Lukas -p2prog03-           - player.h - 
+//MikeLukas -p2prog03-    -player.h-
 //Class definition for a player.  This class holds all the values of all the
 //necessary player attributes and all of the operations that a player will
-//need to do such as equip an unequip items, add items to their inventory, 
+//need to do such as equip an unequip items, add items to their inventory,
 //remove items from their inventory, buy and sell items, swap items or spells
-//if there inventory is full, and move up a level. 
+//if there inventory is full, and move up a level.
 
-#include "spell.h"
-#include "equipment.h"
 #include "apvector.h"
 #include "apstring.h"
+#include "spell.h"
+#include "equipment.h"
 #include "point.h"
 
 const int    MAXEQUIPMENT = 5;
@@ -38,14 +38,14 @@ class Player
             int HP;             //current hit points (life)
             int maxHP;          //maximum hit points
             int MP;             //magic points (energy for spells)
-            int maxMP;          //maximum magic points 
+            int maxMP;          //maximum magic points
             int AP;             //attack power
             int DP;             //defense percentage
             int MDP;            //magic defense percentage
             int SP;             //speed points
             int gold;
-            
-            apstring playerName;            
+
+            apstring playerName;
             int spellCount;     //number of spells player has
             int weapCount;      //number of weapons player has
             int armCount;       //amount of armor player has
@@ -60,7 +60,7 @@ class Player
             apvector<EquipType> Weapons;
             apvector<EquipType> Armor;
             apvector<EquipType> Items;
-            
+
             int GetItemCount(EquipType&) const;
             bool FindItem(apvector<EquipType>&, apstring&, int&, int) const;
             bool FindSpell(apvector<SpellType>&, apstring&, int&, int) const;
@@ -68,26 +68,27 @@ class Player
         public:
             Player();
             Player(int, int, int,int, int, int, int, int);
-            
+
             void AddSpell(SpellType&);
             void AddEquip(apvector<EquipType>&, EquipType&);
             void RemoveEquip(apvector<EquipType>&, EquipType&);
-            void OverwriteSpell(SpellType&);            
+            void OverwriteSpell(SpellType&);
             void OverwriteEquip(apvector<EquipType>&, EquipType&);
-            void LevelUp();             
-            
-            void ChangeCount(EquipType&, char); 
+            void LevelUp();
+
+            void ChangeCount(EquipType&, char);
             void EquipItem(EquipType&);
             void Unequip(EquipType&);
             void BuyItem(apvector<EquipType>&, EquipType&, int);
             void SellItem(apvector<EquipType>&, EquipType&);
             void AddExp(int);
+            void AddMoney(int);
             Point GetCoords() const;
             void SetCoords(int, int);
             void MoveCoords(int, int);
             void ChangeHP(int);
             void ChangeMP(int);
-            
+
             int Damage() const;
             int Defense() const;
             int Health() const;
@@ -97,11 +98,11 @@ class Player
             int Money() const;
             int MDamage(SpellType&);
             int Level() const;
-            int NumExpPts() const;      
+            int NumExpPts() const;
             int NumToNext() const;
     };
 
-//free function prototypes---------------------------------------------------// 
+//free function prototypes---------------------------------------------------//
 
 bool Validate(char answer);
 bool Validate(int answer, int numChoices);

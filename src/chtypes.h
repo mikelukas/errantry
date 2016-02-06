@@ -14,6 +14,7 @@
 #include "apvector.h"
 #include "apstring.h"
 #include "spell.h"
+#include "point.h"
 
 const int    MAXEQUIPMENT = 5;
 const double HPRATE = .65;   //
@@ -41,12 +42,6 @@ struct EquipType
         int quantity;
         type type;
         apstring name;
-    };
-
-struct Point
-    {
-        int x;
-        int y;
     };
 
 //Player Class Definition--------------------------------------------// 

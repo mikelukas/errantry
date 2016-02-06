@@ -11,6 +11,7 @@
 //etc. 
 
 #include "apstring.h"
+#include "point.h"
 
 const double HPRATE = .65;   //
 const double BIGRATE = .45;     //rates to increase attributes by at level up
@@ -23,12 +24,6 @@ const int BEGINHP = 25;
 const int BEGINAP = 10;
 const int BEGINDP = 7;
 const int BEGINSP = 3;
-
-struct Point //holds x y coordinates on the map
-    {
-        int x;
-        int y;
-    };
 
 //Player Class Definition--------------------------------------------// 
 class Player

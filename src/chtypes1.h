@@ -58,7 +58,6 @@ class Player
             int Health() const;
             int MaxHealth() const;
             int Speed() const;
-            int Money() const;
             int Level() const;
             int NumExpPts() const;      
             int NumToNext() const;

@@ -21,7 +21,6 @@ const int BEGINHP = 50;
 const int BEGINAP = 15;
 const int BEGINDP = 20;
 const int BEGINSP = 3;
-const int BEGINGOLD = 0;
 
 //Player Class Definition----------------------------------------------------// 
 class Player
@@ -32,7 +31,6 @@ class Player
             int AP;             //attack power
             int DP;             //defense percentage
             int SP;             //speed points
-            int gold;
 
             apstring playerName;
             int expPoints;      //current experience points
@@ -42,11 +40,10 @@ class Player
             
         public:
             Player();
-            Player(int, int, int, int, int, int);
+            Player(int, int, int, int, int);
 
             void LevelUp();
             void AddExp(int);
-            void AddMoney(int);
             Point GetCoords() const;
             void SetCoords(int, int);
             void MoveCoords(int, int);
@@ -57,7 +54,6 @@ class Player
             int Health() const;
             int MaxHealth() const;
             int Speed() const;
-            int Money() const;
             int Level() const;
             int NumExpPts() const;
             int NumToNext() const;

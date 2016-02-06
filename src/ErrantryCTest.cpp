@@ -20,11 +20,7 @@ int main()
         cout<<player.Damage()<<endl;
         cout<<player.Defense()<<endl;
         cout<<player.Health()<<endl;
-        cout<<player.MEnergy()<<endl;
-        cout<<player.MDamage(testSpell)<<endl;
-        cout<<player.MDefense()<<endl;
         cout<<player.Speed()<<endl;
-        cout<<player.Money()<<endl<<endl;
         cout<<player.Level()<<endl;
         cout<<player.NumExpPts()<<endl;
         cout<<player.NumToNext()<<endl;

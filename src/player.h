@@ -17,9 +17,9 @@ const int    SPRATE = 10;       //
 const double NEXTRATE = .85; //
 
 //attributes a player starts with
-const int BEGINHP = 50;
-const int BEGINAP = 15;
-const int BEGINDP = 20;
+const int BEGINHP = 25;
+const int BEGINAP = 10;
+const int BEGINDP = 7;
 const int BEGINSP = 3;
 
 //Player Class Definition----------------------------------------------------// 

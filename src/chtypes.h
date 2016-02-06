@@ -14,6 +14,7 @@
 #include "apvector.h"
 #include "apstring.h"
 #include "spell.h"
+#include "equipment.h"
 #include "point.h"
 
 const int    MAXEQUIPMENT = 5;
@@ -32,17 +33,6 @@ const int BEGINDP = 20;
 const int BEGINMDP = 20;
 const int BEGINSP = 3;
 const int BEGINGOLD = 0;
-
-enum type {weapon, armor, item};
-    
-struct EquipType
-    {
-        int statUp;     //how much additional AP/DP/HP/MP given by item
-        int cost;   //price the item sells for
-        int quantity;
-        type type;
-        apstring name;
-    };
 
 //Player Class Definition--------------------------------------------// 
 class Player

@@ -8,16 +8,13 @@
 //remove items from their inventory, buy and sell items, swap items or spells
 //if there inventory is full, and move up a level.
 
-#include "spell.h"
 #include "apstring.h"
-    
+
 class Monster
     {
         private:
             int HP;             //current hit points (life)
             int maxHP;          //maximum hit points
-            int MP;             //magic points (energy for spells)
-            int maxMP;          //maximum magic points 
             int AP;             //attack power
             int DP;             //defense percentage
             int MDP;            //magic defense percentage
@@ -29,25 +26,22 @@ class Monster
                                     //monster, based on the type held by
                                     //a spell
             apstring monsterName;
-            SpellType Spell;
-            
+                        
         
         public:
             Monster();
-            Monster(int, int, int, int, int, int, int, int, elemType&,
-                    apstring&, SpellType&);
+            Monster(int, int, int, int, int, int, int, elemType&,
+                    apstring&);
             void ChangeHP(int);
-            void ChangeMP(int);
-            
+                    
             int Damage() const;
             int Defense() const;
             int Health() const;
-            int MEnergy() const;
             int MDefense() const;
             int Speed() const;
             int Money() const;
-            int MDamage() const;
             int Weakness() const;
+            int Experience() const;
     };
 
 #endif

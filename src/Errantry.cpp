@@ -22,12 +22,13 @@
 #include <stdlib.h>
 #include <iomanip>
 #include <math.h>
+#include <vector>
 #include <string>
-#include "apvector.h"
 #include "point.h"
 #include "player.h"
 #include "monster.h"
 
+using std::vector;
 using std::string;
 
 using std::ifstream;
@@ -47,23 +48,23 @@ enum State {overworld, bossBattle, battle};
 enum Region {easy, medium, hard};
 
 void Intro();
-bool GetMap(apvector<string>& Map);
-bool GetMonsters(apvector<Monster>& monsters, const string& filename);
-bool MainGame(Player& player, apvector<string>& Map,
-              apvector<Monster>& monsters, apvector<Monster>& Bosses,
+bool GetMap(vector<string>& Map);
+bool GetMonsters(vector<Monster>& monsters, const string& filename);
+bool MainGame(Player& player, vector<string>& Map,
+              vector<Monster>& monsters, vector<Monster>& Bosses,
               Point& StartPos);
-void DisplayMenu(Player& player, Monster& monster, apvector<string>& Map, int& choice,
+void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& choice,
                  State& location);
-bool TestChoice(apvector<string>& Map, Player& player,
-                apvector<Monster>& monsterList, 
-                Monster& monster, apvector<Monster>& Bosses, 
+bool TestChoice(vector<string>& Map, Player& player,
+                vector<Monster>& monsterList,
+                Monster& monster, vector<Monster>& Bosses,
                 int choice, State& location, bool& win, char& landscape,
                 int& nextBoss, Region& area);
-void Move(apvector<string>& Map, Player& player,
-          apvector<Monster>& monsterList, apvector<Monster>& Bosses,
+void Move(vector<string>& Map, Player& player,
+          vector<Monster>& monsterList, vector<Monster>& Bosses,
           State& location, Monster& monster, char& landscape,
           int nextBoss, Region& area);
-void GetEnemy(apvector<Monster>& monsterList, Monster& monster, int x, Region& area,
+void GetEnemy(vector<Monster>& monsterList, Monster& monster, int x, Region& area,
               State& location);
 void Fight(Player& player, Monster& monster);
 void PrintStatus(Player& player);
@@ -74,9 +75,9 @@ int main()
         bool mapFound, monsFound, bossFound, win;
         Player player;
         Point STARTPOS = {29, 8};
-        apvector<Monster> monsters(MAXMONSTERS);
-        apvector<Monster> Bosses(MAXBOSSES);
-        apvector<string> Map(MAXSIZE);
+        vector<Monster> monsters(MAXMONSTERS);
+        vector<Monster> Bosses(MAXBOSSES);
+        vector<string> Map(MAXSIZE);
         
         mapFound = GetMap(Map);
         
@@ -143,7 +144,7 @@ void Intro()
         cin>>start;
         cout<<"****************************************************"<<endl;
     }
-bool GetMap(apvector<string>& Map)
+bool GetMap(vector<string>& Map)
     {
         //Postcondition:  the world map for the game is retrieved from
         //a file for use in the program.
@@ -164,7 +165,7 @@ bool GetMap(apvector<string>& Map)
             }
         return found;       
     }
-bool GetMonsters(apvector<Monster>& monsters, const string& filename)
+bool GetMonsters(vector<Monster>& monsters, const string& filename)
     {
         //Postcondition:  the attributes of each monster are retrieved
         //from a file for use in the program
@@ -190,8 +191,8 @@ bool GetMonsters(apvector<Monster>& monsters, const string& filename)
         return found;
     }
 
-bool MainGame(Player& player, apvector<string>& Map,
-              apvector<Monster>& monsters, apvector<Monster>& Bosses,
+bool MainGame(Player& player, vector<string>& Map,
+              vector<Monster>& monsters, vector<Monster>& Bosses,
               Point& StartPos)
     {
         //This function controls the main game.  It displays the
@@ -224,7 +225,7 @@ bool MainGame(Player& player, apvector<string>& Map,
         return win;
     }
     
-void DisplayMenu(Player& player, Monster& monster, apvector<string>& Map, int& choice,
+void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& choice,
                  State& location)
     {   
         //postcondition:  The menu for the current state ofthe game 
@@ -232,7 +233,7 @@ void DisplayMenu(Player& player, Monster& monster, apvector<string>& Map, int& c
         //choose an action from one of the options
         
         int row, numrows;
-        numrows = Map.length();
+        numrows = Map.size();
             
         switch(location)
           {
@@ -279,9 +280,9 @@ void DisplayMenu(Player& player, Monster& monster, apvector<string>& Map, int& c
                 break;
         }
     }
-bool TestChoice(apvector<string>& Map, Player& player,
-                apvector<Monster>& monsterList, 
-                Monster& monster, apvector<Monster>& Bosses, 
+bool TestChoice(vector<string>& Map, Player& player,
+                vector<Monster>& monsterList,
+                Monster& monster, vector<Monster>& Bosses,
                 int choice, State& location, bool& win, char& landscape,
                 int& nextBoss, Region& area)
     {
@@ -370,8 +371,8 @@ bool TestChoice(apvector<string>& Map, Player& player,
             leave = true;
         return leave;
     }
-void Move(apvector<string>& Map, Player& player,
-          apvector<Monster>& monsterList, apvector<Monster>& Bosses,
+void Move(vector<string>& Map, Player& player,
+          vector<Monster>& monsterList, vector<Monster>& Bosses,
           State& location, Monster& monster, char& landscape,
           int nextBoss, Region& area)
     {
@@ -413,7 +414,7 @@ void Move(apvector<string>& Map, Player& player,
             GetEnemy(monsterList, monster, x, area, location);  
         Map[y][x] = 'X';
     }
-void GetEnemy(apvector<Monster>& monsterList, Monster& monster, int x, Region& area,
+void GetEnemy(vector<Monster>& monsterList, Monster& monster, int x, Region& area,
               State& location)
     {   //postcondition:  a random monster is returned from the monster
         //list to you be fought in battle.  Depending on the region of

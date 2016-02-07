@@ -3,7 +3,6 @@
 	<name>errantry</name>
 	<comment></comment>
 	<projects>
-		<project>ap-compsci</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,0 +1,30 @@
+#ifndef _TOWN_H_
+#define _TOWN_H_
+
+#include <string>
+#include <istream>
+#include "point.h"
+
+using std::string;
+
+using std::istream;
+
+const string TOWN_CONVO_DELIM = "__convo__end";
+
+class Town
+{
+	private:
+		string name;
+		Point location;
+		string conversation; //What you hear when you choose to talk in this town
+
+	public:
+		string getName();
+		string getConversation();
+
+		int locationAsIndex(int);
+
+		friend istream& operator>> (istream&, Town&);
+};
+
+#endif

@@ -19,15 +19,17 @@
 
 #include <iostream>
 #include <fstream>
-#include <stdlib.h>
 #include <iomanip>
 #include <math.h>
 #include <vector>
+#include <map>
 #include <string>
 #include "point.h"
 #include "player.h"
 #include "monster.h"
+#include "town.h"
 
+using std::map;
 using std::vector;
 using std::string;
 
@@ -43,6 +45,7 @@ const int MAXBOSSES = 8;
 const int MAXSIZE = 50;
 const string MONSTERFILE = "../dat/Monster.dat";
 const string BOSSFILE = "../dat/Bosses.dat";
+const string TOWNFILE = "../dat/Towns.dat";
  
 enum State {overworld, bossBattle, battle};
 enum Region {easy, medium, hard};
@@ -50,6 +53,7 @@ enum Region {easy, medium, hard};
 void Intro();
 bool GetMap(vector<string>& Map);
 bool GetMonsters(vector<Monster>& monsters, const string& filename);
+bool GetTowns(vector<string>& Map, map<int,Town>& towns);
 bool MainGame(Player& player, vector<string>& Map,
               vector<Monster>& monsters, vector<Monster>& Bosses,
               Point& StartPos);
@@ -72,12 +76,13 @@ void GameOver(bool win);
 
 int main()
     {
-        bool mapFound, monsFound, bossFound, win;
+        bool mapFound, monsFound, bossFound, townsFound, win;
         Player player;
         Point STARTPOS = {29, 8};
         vector<Monster> monsters(MAXMONSTERS);
         vector<Monster> Bosses(MAXBOSSES);
         vector<string> Map(MAXSIZE);
+        map<int, Town> towns;
         
         mapFound = GetMap(Map);
         
@@ -85,14 +90,15 @@ int main()
             {
                 monsFound = GetMonsters(monsters, MONSTERFILE);
                 bossFound = GetMonsters(Bosses, BOSSFILE);
-                if(monsFound != false && bossFound != false)
+                townsFound = GetTowns(Map, towns);
+                if(monsFound && bossFound && townsFound)
                     {
                         Intro();
                         win = MainGame(player, Map, monsters, Bosses, STARTPOS);
                         GameOver(win);
                     }
                 else
-                    cout<<"ERROR:  '../dat/Monster.dat' not found!"<<endl;
+                    cout<<"ERROR:  'Could not read one or more data files!"<<endl;
             }
         else
             cout<<"ERROR:  '../dat/Map1.dat' not found!"<<endl;
@@ -190,7 +196,36 @@ bool GetMonsters(vector<Monster>& monsters, const string& filename)
             }
         return found;
     }
+bool GetTowns(vector<string>& Map, map<int,Town>& towns)
+	{
+		//Postcondition:  towns is populated with all towns from the town data file
 
+		ifstream townFile(TOWNFILE);
+		if(!townFile)
+		{
+			return false;
+		}
+
+		cout<<":  Loading towns..."<<endl;
+		int mapWidth = Map[0].size();
+		while(townFile.peek() != EOF)
+			{
+				Town town;
+				townFile>>town;
+				towns[town.locationAsIndex(mapWidth)] = town;
+
+				//For debugging, remove when town-loading is all done.
+				cout<<town.getName()<<endl;
+				cout<<"    "<<town.locationAsIndex(mapWidth)<<endl;
+				cout<<town.getConversation();
+				cout<<TOWN_CONVO_DELIM<<endl;
+			}
+
+		townFile.close();
+		cout<<":  "<<towns.size()<<" towns found."<<endl;
+
+		return true;
+	}
 bool MainGame(Player& player, vector<string>& Map,
               vector<Monster>& monsters, vector<Monster>& Bosses,
               Point& StartPos)

@@ -5,10 +5,13 @@
 
 using std::istream;
 
-struct Point
+class Point
     {
-        int x;
-        int y;
+		public:
+			int x;
+			int y;
+
+			int as1dIndex(int);
     };
 
 istream& operator>> (istream&, Point&);

@@ -5,14 +5,14 @@ string Town::getName()
 	return name;
 }
 
+Point Town::getLocation()
+{
+	return location;
+}
+
 string Town::getConversation()
 {
 	return conversation;
-}
-
-int Town::locationAsIndex(int mapWidth)
-{
-	return location.y*mapWidth + location.x;
 }
 
 istream& operator>> (istream& is, Town& town)

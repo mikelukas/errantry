@@ -20,9 +20,8 @@ class Town
 
 	public:
 		string getName();
+		Point getLocation();
 		string getConversation();
-
-		int locationAsIndex(int);
 
 		friend istream& operator>> (istream&, Town&);
 };

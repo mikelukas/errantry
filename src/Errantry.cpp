@@ -216,7 +216,11 @@ bool GetTowns(vector<string>& Map, map<int, Town>& towns)
 			{
 				Town town;
 				townFile>>town;
-				towns[town.getLocation().as1dIndex(mapWidth)] = town;
+
+				//index town into towns using its location, and draw its symbol onto the map
+				Point townLoc = town.getLocation();
+				towns[townLoc.as1dIndex(mapWidth)] = town;
+				Map[townLoc.y][townLoc.x] = TOWN_SYMBOL;
 
 				//For debugging, remove when town-loading is all done.
 				cout<<town.getName()<<endl;
@@ -243,7 +247,7 @@ bool MainGame(Player& player, vector<string>& Map,
         int choice, nextBoss = 0;
             //nextboss holds the index of the next boss to be fought in
             //'Bosses'
-        char landscape = '.'; //holds the current type of landscape the
+        char landscape = ' '; //holds the current type of landscape the
                               //the player is standing on
         bool win = false, leave = false;
         State location = overworld;  //holds the state of the game
@@ -480,7 +484,7 @@ void Move(vector<string>& Map, Player& player,
                 location = bossBattle;
                 monster = Bosses[nextBoss];
             }
-        else if (landscape == 'T')
+        else if (landscape == TOWN_SYMBOL)
 			{
         		location = town;
 			}

@@ -10,6 +10,7 @@ using std::string;
 using std::istream;
 
 const string TOWN_CONVO_DELIM = "__convo__end";
+const char TOWN_SYMBOL = 'T';
 
 class Town
 {

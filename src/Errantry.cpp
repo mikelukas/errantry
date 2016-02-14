@@ -329,6 +329,8 @@ void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& cho
     }
 void townChoices(int& choice)
     {
+		//postcondition: Displays town menu options to user, and returns their choice.
+
         cout<<"*****Choices*****"<<endl;
         cout<<"*1)Talk         *"<<endl;
         cout<<"*2)Leave Town   *"<<endl;

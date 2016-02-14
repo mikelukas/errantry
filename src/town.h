@@ -1,6 +1,9 @@
 #ifndef _TOWN_H_
 #define _TOWN_H_
 
+//Class definition for a town.  Holds all attributes of a town,
+//as well as functions for interacting with town features.
+
 #include <string>
 #include <istream>
 #include "point.h"

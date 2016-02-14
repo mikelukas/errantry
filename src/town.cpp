@@ -17,7 +17,7 @@ string Town::getConversation()
 
 istream& operator>> (istream& is, Town& town)
 {
-	is>>town.name;
+	getline(is,town.name);
 	is>>town.location;
 
 	string convoLine;

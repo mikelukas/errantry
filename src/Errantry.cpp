@@ -457,18 +457,20 @@ void Move(vector<string>& Map, Player& player,
         //an enemy or moves to a cave (marked with 'C') while he/she is moving
         
         int x, y;
+        int mapWidth = Map[0].size();
+        int mapHeight = Map.size();
         Point Coords;
         
         do
          {
             cout<<"Please choose a valid x coordinate:  ";
             cin>>x;
-         }while(!Validate(x+1, 30));
+         }while(!Validate(x+1, mapWidth));
         do
          {
             cout<<"Please choose a valid y coordinate:  ";
             cin>>y;
-         }while(!Validate(y+1, 21));
+         }while(!Validate(y+1, mapHeight));
             cout<<endl;
          
          //error trap for valid coordinates

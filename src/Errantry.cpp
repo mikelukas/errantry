@@ -46,6 +46,9 @@ const int MAXSIZE = 50;
 const string MONSTERFILE = "../dat/Monster.dat";
 const string BOSSFILE = "../dat/Bosses.dat";
 const string TOWNFILE = "../dat/Towns.dat";
+const string WEAPONFILE = "../dat/weapons.dat";
+const string ARMORFILE = "../dat/armor.dat";
+const string ITEMFILE = "../dat/items.dat";
  
 enum State {overworld, town, bossBattle, battle};
 enum Region {easy, medium, hard};
@@ -53,6 +56,7 @@ enum Region {easy, medium, hard};
 void Intro();
 bool GetMap(vector<string>& Map);
 bool GetMonsters(vector<Monster>& monsters, const string& filename);
+bool GetEquipment(EquipType type, vector<Equipment>& equipment, const string& filename);
 bool GetTowns(vector<string>& Map, map<int, Town>& towns);
 bool MainGame(Player& player, vector<string>& Map,
               vector<Monster>& monsters, vector<Monster>& Bosses,
@@ -81,11 +85,15 @@ void GameOver(bool win);
 int main()
     {
         bool mapFound, monsFound, bossFound, townsFound, win;
+        bool weaponsFound, armorFound, itemsFound;
         Player player;
         Point STARTPOS = {29, 8};
         vector<Monster> monsters(MAXMONSTERS);
         vector<Monster> Bosses(MAXBOSSES);
         vector<string> Map(MAXSIZE);
+        vector<Equipment> weapons;
+        vector<Equipment> armorPieces;
+        vector<Equipment> items;
         map<int, Town> towns;
         
         mapFound = GetMap(Map);
@@ -94,8 +102,13 @@ int main()
             {
                 monsFound = GetMonsters(monsters, MONSTERFILE);
                 bossFound = GetMonsters(Bosses, BOSSFILE);
+                weaponsFound = GetEquipment(weapon, weapons, WEAPONFILE);
+                armorFound = GetEquipment(armor, armorPieces, ARMORFILE);
+                itemsFound = GetEquipment(item, items, ITEMFILE);
                 townsFound = GetTowns(Map, towns);
-                if(monsFound && bossFound && townsFound)
+                if(monsFound && bossFound
+                   && weaponsFound && armorFound && itemsFound
+				   && townsFound)
                     {
                         Intro();
                         win = MainGame(player, Map, monsters, Bosses, towns, STARTPOS);
@@ -200,6 +213,37 @@ bool GetMonsters(vector<Monster>& monsters, const string& filename)
             }
         return found;
     }
+bool GetEquipment(EquipType type, vector<Equipment>& equipment, const string& filename)
+	{
+		ifstream equipFile(filename);
+		if(!equipFile)
+		{
+			return false;
+		}
+
+		cout<<":  Loading equipment from "<<filename<<endl;
+
+		while(equipFile.peek() != EOF)
+			{
+				string junk;
+				getline(equipFile, junk); //Throw away equipment index in file
+
+				Equipment item(type);
+				equipFile>>item;
+
+				equipment.push_back(item);
+
+				cout<<item.getName()<<endl;
+				cout<<"   "<<item.getCost()<<endl;
+				cout<<"   "<<item.getType()<<endl;
+
+				cout<<"   Mods - "<<item.getStatMod()<<endl<<endl;
+			}
+		equipFile.close();
+		cout<<":  "<<equipment.size()<<" equipment found."<<endl;
+
+		return true;
+	}
 bool GetTowns(vector<string>& Map, map<int, Town>& towns)
 	{
 		//Postcondition:  towns is populated with all towns from the town data file

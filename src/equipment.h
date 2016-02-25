@@ -1,19 +1,47 @@
 #ifndef _EQUIPMENT_H_
 #define _EQUIPMENT_H_
 
+#include <iostream>
 #include <string>
+
+using std::istream;
+using std::ostream;
 
 using std::string;
 
-enum type {weapon, armor, item};
+enum EquipType {weapon, armor, item};
 
-struct EquipType
+//Encapsulates changes to stats caused by using a piece of equipment
+struct StatMod
+	{
+		int hpMod;
+		int apMod;
+		int dpMod;
+		int spMod;
+
+		friend istream& operator>> (istream&, StatMod&);
+		friend ostream& operator<< (ostream&, const StatMod&);
+	};
+
+class Equipment
     {
-        int statUp;     //how much additional AP/DP/HP/MP given by item
-        int cost;   //price the item sells for
-        int quantity;
-        type type;
-        string name;
+		private:
+			EquipType type;
+			string name;
+
+			StatMod statMods;
+			int cost;   //price the item sells for
+			int quantity;
+
+		public:
+			Equipment(EquipType type);
+
+			string getName();
+			EquipType getType();
+			int getCost();
+			StatMod& getStatMod();
+
+			friend istream& operator>> (istream&, Equipment&);
     };
 
 #endif

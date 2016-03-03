@@ -10,21 +10,21 @@ Point Town::getLocation()
 	return location;
 }
 
-vector<Equipment> Town::getShopEquipment(EquipType equipType)
+vector<int> Town::getShopEquipmentIds(EquipType equipType)
 {
 	switch(equipType)
 	{
 	case WEAPON:
-		return weapons;
+		return weaponIds;
 		break;
 	case ARMOR:
-		return armor;
+		return armorIds;
 		break;
 	case ITEM:
-		return items;
+		return itemIds;
 		break;
 	default:
-		return vector<Equipment>();
+		return vector<int>();
 		break;
 	}
 }
@@ -46,13 +46,27 @@ istream& operator>> (istream& is, Town& town)
 
 	getline(is,town.name);
 	is>>town.location;
+	is.get(); //gets the newline character after the location point is read in
+
+	town.loadEquipmentIdLine(is, town.weaponIds);
+	town.loadEquipmentIdLine(is, town.armorIds);
+	town.loadEquipmentIdLine(is, town.itemIds);
 
 	string convoLine;
-	getline(is,convoLine); //gets the newline character after the location point is read in
-
 	while(getline(is, convoLine) && convoLine != TOWN_CONVO_DELIM) {
 		town.conversation += (convoLine + "\n");
 	}
 
 	return is;
+}
+
+void Town::loadEquipmentIdLine(istream& is, vector<int>& equipIds)
+{
+	int equipId;
+	while(is.peek() != '\n')
+	{
+		is>>equipId;
+		equipIds.push_back(equipId);
+	}
+	is.get();//throwout newline char
 }

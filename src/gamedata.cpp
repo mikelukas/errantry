@@ -156,6 +156,9 @@ bool GameData::loadTowns()
 			//For debugging, remove when town-loading is all done.
 			cout<<town.getName()<<endl;
 			cout<<"    "<<town.getLocation().as1dIndex(mapWidth)<<endl;
+			cout<<"    "<<town.getShopEquipmentIds(WEAPON).size()<<" weapons loaded"<<endl;
+			cout<<"    "<<town.getShopEquipmentIds(ARMOR).size()<<" armor pieces loaded"<<endl;
+			cout<<"    "<<town.getShopEquipmentIds(ITEM).size()<<" items loaded"<<endl;
 			cout<<town.getConversation();
 			cout<<TOWN_CONVO_DELIM<<endl;
 		}

@@ -23,15 +23,17 @@ class Town
 	private:
 		string name;
 		Point location;
-		vector<Equipment> weapons;
-		vector<Equipment> armor;
-		vector<Equipment> items;
+		vector<int> weaponIds;
+		vector<int> armorIds;
+		vector<int> itemIds;
 		string conversation; //What you hear when you choose to talk in this town
+
+		void loadEquipmentIdLine(istream&, vector<int>&);
 
 	public:
 		string getName();
 		Point getLocation();
-		vector<Equipment> getShopEquipment(EquipType);
+		vector<int> getShopEquipmentIds(EquipType);
 		string getConversation();
 
 		friend istream& operator>> (istream&, Town&);

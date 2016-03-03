@@ -21,10 +21,6 @@ using std::map;
 using std::string;
 using std::vector;
 
-const int MAXMONSTERS = 10;
-const int MAXBOSSES = 8;
-const int MAXSIZE = 50;
-
 const string MAPFILE = "../dat/Map.dat";
 const string MONSTERFILE = "../dat/Monster.dat";
 const string BOSSFILE = "../dat/Bosses.dat";

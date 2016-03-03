@@ -1,10 +1,7 @@
 #include "gamedata.h"
 
 GameData::GameData()
-	: loadedSuccessfully(false),
-	  worldMap(MAXSIZE),
-	  monsters(MAXMONSTERS),
-	  bosses(MAXBOSSES)
+	: loadedSuccessfully(false)
 {
 	loadedSuccessfully = loadDataFiles();
 }
@@ -56,18 +53,17 @@ bool GameData::loadMap()
 {
 	//Postcondition:  the world map for the game is retrieved from
 	//a file for use in the program.
-	int pos = 0;
 	bool found = false;
 
 	ifstream inFile(MAPFILE);
 
 	if(inFile)
 		{
-			while(pos<MAXSIZE && getline(inFile, worldMap[pos]))
+			string mapLine;
+			while(getline(inFile, mapLine))
 				{
-					pos++;
+					worldMap.push_back(mapLine);
 				}
-			worldMap.resize(pos);
 			found = true;
 			cout<<":  Map found."<<endl;
 		}
@@ -79,7 +75,7 @@ bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
 	//Postcondition:  the attributes of each monster are retrieved
 	//from a file for use in the program
 
-	int pos = 0, hp, ap, dp, sp, expPts;
+	int hp, ap, dp, sp, expPts;
 	bool found = false;
 	string name; //name of monster
 
@@ -87,15 +83,16 @@ bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
 
 	if(inFile)
 		{
-			while(pos<MAXMONSTERS && getline(inFile, name) &&
+			while(getline(inFile, name) &&
 				  inFile>>hp>>ap>>dp>>sp>>expPts)
 				{
-					monsters[pos].SetAttributes(hp, ap, dp, sp, expPts,name);
-					pos++;
+					Monster monster;
+					monster.SetAttributes(hp, ap, dp, sp, expPts,name);
+
+					monsters.push_back(monster);
 				}
-			monsters.resize(pos);
 			found = true;
-			cout<<":  Monsters found."<<endl;
+			cout<<":  "<<monsters.size()<<" Monsters found."<<endl;
 		}
 	return found;
 }

@@ -9,7 +9,7 @@ using std::ostream;
 
 using std::string;
 
-enum EquipType {weapon, armor, item};
+enum EquipType {WEAPON, ARMOR, ITEM};
 
 //Encapsulates changes to stats caused by using a piece of equipment
 struct StatMod

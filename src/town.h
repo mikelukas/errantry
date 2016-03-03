@@ -6,9 +6,12 @@
 
 #include <string>
 #include <istream>
+#include <vector>
+#include "equipment.h"
 #include "point.h"
 
 using std::string;
+using std::vector;
 
 using std::istream;
 
@@ -20,11 +23,15 @@ class Town
 	private:
 		string name;
 		Point location;
+		vector<Equipment> weapons;
+		vector<Equipment> armor;
+		vector<Equipment> items;
 		string conversation; //What you hear when you choose to talk in this town
 
 	public:
 		string getName();
 		Point getLocation();
+		vector<Equipment> getShopEquipment(EquipType);
 		string getConversation();
 
 		friend istream& operator>> (istream&, Town&);

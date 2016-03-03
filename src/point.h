@@ -11,7 +11,7 @@ class Point
 			int x;
 			int y;
 
-			int as1dIndex(int);
+			int as1dIndex(int) const;
     };
 
 istream& operator>> (istream&, Point&);

@@ -18,64 +18,41 @@
 //instructions in the beginning.  
 
 #include <iostream>
-#include <fstream>
 #include <iomanip>
 #include <math.h>
 #include <vector>
 #include <map>
 #include <string>
-#include "point.h"
+#include "gamedata.h"
 #include "player.h"
-#include "monster.h"
-#include "town.h"
 
 using std::map;
 using std::vector;
 using std::string;
 
-using std::ifstream;
 using std::setw;
 
 using std::cout;
 using std::cin;
 using std::endl;
-
-const int MAXMONSTERS = 10;
-const int MAXBOSSES = 8;
-const int MAXSIZE = 50;
-const string MONSTERFILE = "../dat/Monster.dat";
-const string BOSSFILE = "../dat/Bosses.dat";
-const string TOWNFILE = "../dat/Towns.dat";
-const string WEAPONFILE = "../dat/weapons.dat";
-const string ARMORFILE = "../dat/armor.dat";
-const string ITEMFILE = "../dat/items.dat";
  
 enum State {overworld, town, bossBattle, battle};
 enum Region {easy, medium, hard};
 
 void Intro();
-bool GetMap(vector<string>& Map);
-bool GetMonsters(vector<Monster>& monsters, const string& filename);
-bool GetEquipment(EquipType type, vector<Equipment>& equipment, const string& filename);
-bool GetTowns(vector<string>& Map, map<int, Town>& towns);
-bool MainGame(Player& player, vector<string>& Map,
-              vector<Monster>& monsters, vector<Monster>& Bosses,
-			  map<int, Town> towns,
-              Point& StartPos);
+bool MainGame(Player& player, GameData& gameData, Point& StartPos);
 void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& choice,
                  State& location);
 void townChoices(int& choice);
-bool TestChoice(vector<string>& Map, Player& player,
-                vector<Monster>& monsterList,
-                Monster& monster, vector<Monster>& Bosses,
-				map<int, Town> towns,
+bool TestChoice(GameData& gameData, Player& player,
+                Monster& monster,
                 int choice, State& location, bool& win, char& landscape,
                 int& nextBoss, Region& area);
 void Move(vector<string>& Map, Player& player,
-          vector<Monster>& monsterList, vector<Monster>& Bosses,
+          const vector<Monster>& monsterList, const vector<Monster>& Bosses,
           State& location, Monster& monster, char& landscape,
           int nextBoss, Region& area);
-void GetEnemy(vector<Monster>& monsterList, Monster& monster, int x, Region& area,
+void GetEnemy(const vector<Monster>& monsterList, Monster& monster, int x, Region& area,
               State& location);
 void Fight(Player& player, Monster& monster);
 void PrintStatus(Player& player);
@@ -84,41 +61,22 @@ void GameOver(bool win);
 
 int main()
     {
-        bool mapFound, monsFound, bossFound, townsFound, win;
-        bool weaponsFound, armorFound, itemsFound;
+        bool win;
         Player player;
         Point STARTPOS = {29, 8};
-        vector<Monster> monsters(MAXMONSTERS);
-        vector<Monster> Bosses(MAXBOSSES);
-        vector<string> Map(MAXSIZE);
-        vector<Equipment> weapons;
-        vector<Equipment> armorPieces;
-        vector<Equipment> items;
-        map<int, Town> towns;
-        
-        mapFound = GetMap(Map);
-        
-        if(mapFound != false)
-            {
-                monsFound = GetMonsters(monsters, MONSTERFILE);
-                bossFound = GetMonsters(Bosses, BOSSFILE);
-                weaponsFound = GetEquipment(weapon, weapons, WEAPONFILE);
-                armorFound = GetEquipment(armor, armorPieces, ARMORFILE);
-                itemsFound = GetEquipment(item, items, ITEMFILE);
-                townsFound = GetTowns(Map, towns);
-                if(monsFound && bossFound
-                   && weaponsFound && armorFound && itemsFound
-				   && townsFound)
-                    {
-                        Intro();
-                        win = MainGame(player, Map, monsters, Bosses, towns, STARTPOS);
-                        GameOver(win);
-                    }
-                else
-                    cout<<"ERROR:  'Could not read one or more data files!"<<endl;
+
+        GameData gameData;
+
+        if(gameData.loadSuccessful())
+        	{
+				Intro();
+				win = MainGame(player, gameData, STARTPOS);
+				GameOver(win);
+			}
+		else
+			{
+				cout<<"ERROR:  'Could not read one or more data files!"<<endl;
             }
-        else
-            cout<<"ERROR:  '../dat/Map.dat' not found!"<<endl;
                 
         return 0;
     }
@@ -167,121 +125,7 @@ void Intro()
         cin>>start;
         cout<<"****************************************************"<<endl;
     }
-bool GetMap(vector<string>& Map)
-    {
-        //Postcondition:  the world map for the game is retrieved from
-        //a file for use in the program.
-        int pos = 0;
-        bool found = false;
-        
-        ifstream inFile("../dat/Map.dat");
-        
-        if(inFile)
-            {   
-                while(pos<MAXSIZE && getline(inFile, Map[pos]))
-                    {
-                        pos++;
-                    }
-                Map.resize(pos);
-                found = true;
-                cout<<":  Map found."<<endl;                
-            }
-        return found;       
-    }
-bool GetMonsters(vector<Monster>& monsters, const string& filename)
-    {
-        //Postcondition:  the attributes of each monster are retrieved
-        //from a file for use in the program
-        
-        int pos = 0, hp, ap, dp, sp, expPts;
-        bool found = false;
-        string name; //name of monster
-        
-        ifstream inFile(filename.c_str());
-        
-        if(inFile)
-            {
-                while(pos<MAXMONSTERS && getline(inFile, name) &&
-                      inFile>>hp>>ap>>dp>>sp>>expPts)
-                    {
-                        monsters[pos].SetAttributes(hp, ap, dp, sp, expPts,name);
-                        pos++;
-                    }
-                monsters.resize(pos);
-                found = true;
-                cout<<":  Monsters found."<<endl;
-            }
-        return found;
-    }
-bool GetEquipment(EquipType type, vector<Equipment>& equipment, const string& filename)
-	{
-		ifstream equipFile(filename);
-		if(!equipFile)
-		{
-			return false;
-		}
-
-		cout<<":  Loading equipment from "<<filename<<endl;
-
-		while(equipFile.peek() != EOF)
-			{
-				string junk;
-				getline(equipFile, junk); //Throw away equipment index in file
-
-				Equipment item(type);
-				equipFile>>item;
-
-				equipment.push_back(item);
-
-				cout<<item.getName()<<endl;
-				cout<<"   "<<item.getCost()<<endl;
-				cout<<"   "<<item.getType()<<endl;
-
-				cout<<"   Mods - "<<item.getStatMod()<<endl<<endl;
-			}
-		equipFile.close();
-		cout<<":  "<<equipment.size()<<" equipment found."<<endl;
-
-		return true;
-	}
-bool GetTowns(vector<string>& Map, map<int, Town>& towns)
-	{
-		//Postcondition:  towns is populated with all towns from the town data file
-
-		ifstream townFile(TOWNFILE);
-		if(!townFile)
-		{
-			return false;
-		}
-
-		cout<<":  Loading towns..."<<endl;
-		int mapWidth = Map[0].size();
-		while(townFile.peek() != EOF)
-			{
-				Town town;
-				townFile>>town;
-
-				//index town into towns using its location, and draw its symbol onto the map
-				Point townLoc = town.getLocation();
-				towns[townLoc.as1dIndex(mapWidth)] = town;
-				Map[townLoc.y][townLoc.x] = TOWN_SYMBOL;
-
-				//For debugging, remove when town-loading is all done.
-				cout<<town.getName()<<endl;
-				cout<<"    "<<town.getLocation().as1dIndex(mapWidth)<<endl;
-				cout<<town.getConversation();
-				cout<<TOWN_CONVO_DELIM<<endl;
-			}
-
-		townFile.close();
-		cout<<":  "<<towns.size()<<" towns found."<<endl;
-
-		return true;
-	}
-bool MainGame(Player& player, vector<string>& Map,
-              vector<Monster>& monsters, vector<Monster>& Bosses,
-			  map<int,Town> towns,
-              Point& StartPos)
+bool MainGame(Player& player, GameData& gameData, Point& StartPos)
     {
         //This function controls the main game.  It displays the
         //appropriate menus for the game's state(battle or map (overworld))
@@ -305,8 +149,8 @@ bool MainGame(Player& player, vector<string>& Map,
         
         while(leave == false && win == false)
             {
-                DisplayMenu(player, monster, Map, choice, location);
-                leave = TestChoice(Map, player, monsters, monster, Bosses, towns,
+                DisplayMenu(player, monster, gameData.getMap(), choice, location);
+                leave = TestChoice(gameData, player, monster,
 								   choice, location, win,
                                    landscape, nextBoss, area);
             }
@@ -385,10 +229,8 @@ void townChoices(int& choice)
             cin>>choice;
          }while(!Validate(choice, 2));
     }
-bool TestChoice(vector<string>& Map, Player& player,
-                vector<Monster>& monsterList,
-                Monster& monster, vector<Monster>& Bosses,
-				map<int, Town> towns,
+bool TestChoice(GameData& gameData, Player& player,
+                Monster& monster,
                 int choice, State& location, bool& win, char& landscape,
                 int& nextBoss, Region& area)
     {
@@ -406,7 +248,7 @@ bool TestChoice(vector<string>& Map, Player& player,
                     switch(choice)
                         {
                             case 1:
-                                Move(Map, player, monsterList, Bosses,
+                                Move(gameData.getMap(), player, gameData.getMonsters(), gameData.getBosses(),
                                      location, monster, landscape,
                                      nextBoss, area);
                                 break;
@@ -419,8 +261,7 @@ bool TestChoice(vector<string>& Map, Player& player,
                         }
                     break;
 				case town: {//braces necessary b/c of declaring variables inside of case; statement
-					Point curCoords = player.GetCoords();
-					Town town = towns[curCoords.as1dIndex(Map[0].size())];
+					Town town = gameData.getTown(player.GetCoords());
 					switch(choice)
 						{
 							case 1:
@@ -492,7 +333,7 @@ bool TestChoice(vector<string>& Map, Player& player,
         return leave;
     }
 void Move(vector<string>& Map, Player& player,
-          vector<Monster>& monsterList, vector<Monster>& Bosses,
+          const vector<Monster>& monsterList, const vector<Monster>& Bosses,
           State& location, Monster& monster, char& landscape,
           int nextBoss, Region& area)
     {
@@ -540,7 +381,7 @@ void Move(vector<string>& Map, Player& player,
             GetEnemy(monsterList, monster, x, area, location);  
         Map[y][x] = 'X';
     }
-void GetEnemy(vector<Monster>& monsterList, Monster& monster, int x, Region& area,
+void GetEnemy(const vector<Monster>& monsterList, Monster& monster, int x, Region& area,
               State& location)
     {   //postcondition:  a random monster is returned from the monster
         //list to you be fought in battle.  Depending on the region of

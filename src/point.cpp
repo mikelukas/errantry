@@ -1,6 +1,6 @@
 #include "point.h"
 
-int Point::as1dIndex(int maxWidth)
+int Point::as1dIndex(int maxWidth) const
 {
 	return y*maxWidth + x;
 }

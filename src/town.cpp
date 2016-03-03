@@ -10,6 +10,25 @@ Point Town::getLocation()
 	return location;
 }
 
+vector<Equipment> Town::getShopEquipment(EquipType equipType)
+{
+	switch(equipType)
+	{
+	case WEAPON:
+		return weapons;
+		break;
+	case ARMOR:
+		return armor;
+		break;
+	case ITEM:
+		return items;
+		break;
+	default:
+		return vector<Equipment>();
+		break;
+	}
+}
+
 string Town::getConversation()
 {
 	//postcondition: returns conversation text to be displayed when user

@@ -67,17 +67,16 @@ int main()
 
         GameData gameData;
 
-        if(gameData.loadSuccessful())
+        if(!gameData.loadSuccessful())
         	{
-				Intro();
-				win = MainGame(player, gameData, STARTPOS);
-				GameOver(win);
-			}
-		else
-			{
-				cout<<"ERROR:  'Could not read one or more data files!"<<endl;
-            }
-                
+        		cout<<"ERROR:  'Could not read one or more data files!"<<endl;
+        		return 1;
+        	}
+
+        Intro();
+		win = MainGame(player, gameData, STARTPOS);
+		GameOver(win);
+
         return 0;
     }
 void Intro()

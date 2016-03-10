@@ -16,6 +16,7 @@ Player::Player()
       AP(BEGINAP),
       DP(BEGINDP),
       SP(BEGINSP),
+      gold(BEGINGOLD),
       expPoints(0),
       expToNext(100),
       lvl(1)
@@ -31,12 +32,13 @@ Player::Player()
         cout<<endl;
     }
 Player::Player(int hpVar, int apVar, int dpVar,
-               int spVar, int level)
+               int spVar, int money, int level)
     : HP(hpVar),
       maxHP(hpVar),
       AP(apVar),
       DP(dpVar),
-      SP(spVar)
+      SP(spVar),
+      gold(money)
     {
         //postcondition:  Player statistics are initialized to the specific
         //values sent to the function
@@ -102,7 +104,13 @@ void Player::AddExp(int pts)
         
         expPoints = expPoints + pts;
     }
-
+void Player::AddMoney(int money)
+    {
+        //postcondition:  the player's gold total is raised by the value
+        //sent to the function
+        
+        gold = gold + money;
+    }
 void Player::ChangeHP(int hpChange)
     {
         //postcondition:  HP value of character altered by the value
@@ -148,6 +156,11 @@ int Player::Speed() const
     {
         //postcondition:  returns the character's speed points
         return SP;
+    }
+int Player::Money() const
+    {
+        //postcondition:  returns the amount of gold the character is carrying
+        return gold;
     }
 int Player::Level() const
     {

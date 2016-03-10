@@ -11,6 +11,10 @@ class Point
 			int x;
 			int y;
 
+			Point();
+			Point(const Point&);
+			Point(int, int);
+
 			int as1dIndex(int) const;
     };
 

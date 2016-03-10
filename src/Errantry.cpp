@@ -40,7 +40,7 @@ enum State {overworld, town, bossBattle, battle};
 enum Region {easy, medium, hard};
 
 void Intro();
-bool MainGame(Player& player, GameData& gameData, Point& StartPos);
+bool MainGame(Player& player, GameData& gameData);
 void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& choice,
                  State& location);
 void townChoices(int& choice);
@@ -63,7 +63,6 @@ int main()
     {
         bool win;
         Player player;
-        Point STARTPOS = {29, 8};
 
         GameData gameData;
 
@@ -74,7 +73,7 @@ int main()
         	}
 
         Intro();
-		win = MainGame(player, gameData, STARTPOS);
+		win = MainGame(player, gameData);
 		GameOver(win);
 
         return 0;
@@ -124,7 +123,7 @@ void Intro()
         cin>>start;
         cout<<"****************************************************"<<endl;
     }
-bool MainGame(Player& player, GameData& gameData, Point& StartPos)
+bool MainGame(Player& player, GameData& gameData)
     {
         //This function controls the main game.  It displays the
         //appropriate menus for the game's state(battle or map (overworld))
@@ -143,8 +142,6 @@ bool MainGame(Player& player, GameData& gameData, Point& StartPos)
                              //fight harder or easier enemies
         Monster monster;     //will hold the monster to be fought if the 
                              //user encounters one while moving
-        player.SetCoords(StartPos.x, StartPos.y);
-        
         
         while(leave == false && win == false)
             {

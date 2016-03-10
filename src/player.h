@@ -25,6 +25,8 @@ const int BEGINDP = 7;
 const int BEGINSP = 3;
 const int BEGINGOLD = 0;
 
+const Point STARTPOS(29, 8);
+
 //Player Class Definition----------------------------------------------------// 
 class Player
     {

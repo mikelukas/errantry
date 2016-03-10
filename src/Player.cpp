@@ -19,14 +19,10 @@ Player::Player()
       gold(BEGINGOLD),
       expPoints(0),
       expToNext(100),
-      lvl(1)
-     
+      lvl(1),
+      Coords(STARTPOS)
     {
         //attribute variables initialized in initializer list
-        
-        Coords.x = 0;
-        Coords.y = 0;
-        
         cout<<"Greetings wanderer, tell me your name:  ";
         cin>>playerName;
         cout<<endl;

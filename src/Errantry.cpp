@@ -36,24 +36,24 @@ using std::cout;
 using std::cin;
 using std::endl;
  
-enum State {overworld, town, bossBattle, battle};
+enum GameMode {overworld, town, bossBattle, battle};
 enum Region {easy, medium, hard};
 
 void Intro();
 bool MainGame(Player& player, GameData& gameData);
 void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& choice,
-                 State& location);
+                 GameMode& location);
 void townChoices(int& choice);
 bool TestChoice(GameData& gameData, Player& player,
                 Monster& monster,
-                int choice, State& location, bool& win, char& landscape,
+                int choice, GameMode& location, bool& win, char& landscape,
                 int& nextBoss, Region& area);
 void Move(vector<string>& Map, Player& player,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses,
-          State& location, Monster& monster, char& landscape,
+          GameMode& location, Monster& monster, char& landscape,
           int nextBoss, Region& area);
 void GetEnemy(const vector<Monster>& monsterList, Monster& monster, int x, Region& area,
-              State& location);
+              GameMode& location);
 void Fight(Player& player, Monster& monster);
 void PrintStatus(Player& player);
 void Talk(Town& town);
@@ -136,7 +136,7 @@ bool MainGame(Player& player, GameData& gameData)
         char landscape = ' '; //holds the current type of landscape the
                               //the player is standing on
         bool win = false, leave = false;
-        State location = overworld;  //holds the state of the game
+        GameMode location = overworld;  //holds the state of the game
         Region area = easy;  //holds the region of the map where the player
                              //is;  depending on the region, the user will
                              //fight harder or easier enemies
@@ -154,7 +154,7 @@ bool MainGame(Player& player, GameData& gameData)
     }
     
 void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& choice,
-                 State& location)
+                 GameMode& location)
     {   
         //postcondition:  The menu for the current state ofthe game 
         //(battle or map(overworld) ) is displayed, and the user may
@@ -227,7 +227,7 @@ void townChoices(int& choice)
     }
 bool TestChoice(GameData& gameData, Player& player,
                 Monster& monster,
-                int choice, State& location, bool& win, char& landscape,
+                int choice, GameMode& location, bool& win, char& landscape,
                 int& nextBoss, Region& area)
     {
         //postcondition:  the user-chosen action chose at the current
@@ -330,7 +330,7 @@ bool TestChoice(GameData& gameData, Player& player,
     }
 void Move(vector<string>& Map, Player& player,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses,
-          State& location, Monster& monster, char& landscape,
+          GameMode& location, Monster& monster, char& landscape,
           int nextBoss, Region& area)
     {
         //postcondition:  The player's position on the map will be moved
@@ -378,7 +378,7 @@ void Move(vector<string>& Map, Player& player,
         Map[y][x] = 'X';
     }
 void GetEnemy(const vector<Monster>& monsterList, Monster& monster, int x, Region& area,
-              State& location)
+              GameMode& location)
     {   //postcondition:  a random monster is returned from the monster
         //list to you be fought in battle.  Depending on the region of
         //the map the player is in, the monsters may be more difficult.

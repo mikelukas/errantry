@@ -29,6 +29,8 @@ const string WEAPONFILE = "../dat/weapons.dat";
 const string ARMORFILE = "../dat/armor.dat";
 const string ITEMFILE = "../dat/items.dat";
 
+/* This class tracks game resources, which don't change as the player progresses.
+ */
 class GameData
 {
 	private:

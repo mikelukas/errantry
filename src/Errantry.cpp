@@ -23,6 +23,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include "gamestate.h"
 #include "gamedata.h"
 #include "player.h"
 
@@ -36,11 +37,8 @@ using std::cout;
 using std::cin;
 using std::endl;
  
-enum GameMode {overworld, town, bossBattle, battle};
-enum Region {easy, medium, hard};
-
 void Intro();
-bool MainGame(Player& player, GameData& gameData);
+bool MainGame(GameData& gameData, GameState& gameState);
 void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& choice,
                  GameMode& location);
 void townChoices(int& choice);
@@ -62,9 +60,9 @@ void GameOver(bool win);
 int main()
     {
         bool win;
-        Player player;
 
         GameData gameData;
+        GameState gameState;
 
         if(!gameData.loadSuccessful())
         	{
@@ -73,7 +71,7 @@ int main()
         	}
 
         Intro();
-		win = MainGame(player, gameData);
+		win = MainGame(gameData, gameState);
 		GameOver(win);
 
         return 0;
@@ -123,30 +121,24 @@ void Intro()
         cin>>start;
         cout<<"****************************************************"<<endl;
     }
-bool MainGame(Player& player, GameData& gameData)
+bool MainGame(GameData& gameData, GameState& gameState)
     {
         //This function controls the main game.  It displays the
         //appropriate menus for the game's state(battle or map (overworld))
         //and also indirectly carries out all of the actions a user may
         //perform by calling the functions that perform those actions.
         
-        int choice, nextBoss = 0;
-            //nextboss holds the index of the next boss to be fought in
-            //'Bosses'
-        char landscape = ' '; //holds the current type of landscape the
-                              //the player is standing on
+        int choice, nextBoss = gameState.getNextBoss();
+        char landscape = ' ';
         bool win = false, leave = false;
-        GameMode location = overworld;  //holds the state of the game
-        Region area = easy;  //holds the region of the map where the player
-                             //is;  depending on the region, the user will
-                             //fight harder or easier enemies
-        Monster monster;     //will hold the monster to be fought if the 
-                             //user encounters one while moving
+        GameMode location = gameState.getCurrentMode();
+        Region area = gameState.getCurrentRegion();
+        Monster monster;
         
         while(leave == false && win == false)
             {
-                DisplayMenu(player, monster, gameData.getMap(), choice, location);
-                leave = TestChoice(gameData, player, monster,
+                DisplayMenu(gameState.getPlayer(), monster, gameData.getMap(), choice, location);
+                leave = TestChoice(gameData, gameState.getPlayer(), monster,
 								   choice, location, win,
                                    landscape, nextBoss, area);
             }

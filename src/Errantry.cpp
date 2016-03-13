@@ -38,11 +38,10 @@ using std::cin;
 using std::endl;
  
 void Intro();
-bool MainGame(GameData& gameData, GameState& gameState);
+void MainGame(GameData& gameData, GameState& gameState);
 void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState);
 void townChoices(int& choice);
-bool TestChoice(GameData& gameData,
-                int choice, bool& win, GameState& gameState);
+bool TestChoice(GameData& gameData, int choice, GameState& gameState);
 void Move(GameData& gameData,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses, GameState& gameState);
 void GetEnemy(const vector<Monster>& monsterList, GameState& gameState);
@@ -65,8 +64,8 @@ int main()
         	}
 
         Intro();
-		win = MainGame(gameData, gameState);
-		GameOver(win);
+		MainGame(gameData, gameState);
+		GameOver(gameState.isWon());
 
         return 0;
     }
@@ -115,7 +114,7 @@ void Intro()
         cin>>start;
         cout<<"****************************************************"<<endl;
     }
-bool MainGame(GameData& gameData, GameState& gameState)
+void MainGame(GameData& gameData, GameState& gameState)
     {
         //This function controls the main game.  It displays the
         //appropriate menus for the game's state(battle or map (overworld))
@@ -123,15 +122,14 @@ bool MainGame(GameData& gameData, GameState& gameState)
         //perform by calling the functions that perform those actions.
         
         int choice;
-        bool win = false, leave = false;
+        bool leave = false;
         
-        while(leave == false && win == false)
+        while(leave == false && !gameState.isWon())
             {
                 DisplayMenu(gameData.getMap(), choice, gameState);
                 leave = TestChoice(gameData,
-								   choice, win, gameState);
+								   choice, gameState);
             }
-        return win;
     }
     
 void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState)
@@ -210,7 +208,7 @@ void townChoices(int& choice)
          }while(!Validate(choice, 2));
     }
 bool TestChoice(GameData& gameData,
-                int choice, bool& win, GameState& gameState)
+                int choice, GameState& gameState)
     {
         //postcondition:  the user-chosen action chose at the current
         //menu the player is at is carried out.  For instance, if the
@@ -265,8 +263,6 @@ bool TestChoice(GameData& gameData,
                         {                      //find the next on the list
                                                //add exp. pts. from the 
                                                //boss.
-                            if(gameState.getCurrentBoss() > 7)
-                                win = true;
                             cout<<"You won the battle!  ";
                             cout<<"You gained "<<monster.Experience()<<" pts!";
                             cout<<endl;

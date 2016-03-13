@@ -50,7 +50,7 @@ class GameState
 		int getCurrentBoss();
 		void advanceToNextBoss();
 
-		bool isWon();
+		const bool isWon() const;
 };
 
 #endif

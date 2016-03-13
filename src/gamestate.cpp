@@ -64,11 +64,13 @@ int GameState::getCurrentBoss()
 }
 void GameState::advanceToNextBoss()
 {
+	if(currBoss > 7)
+		win = true;
 	currBoss++;
 	setCurrentLandscape('M');
 }
 
-bool GameState::isWon()
+const bool GameState::isWon() const
 {
 	return win;
 }

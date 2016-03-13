@@ -38,6 +38,7 @@ class GameState
 		Player& getPlayer();
 
 		char getCurrentLandscape();
+		void setCurrentLandscape(const char);
 
 		GameMode getCurrentMode();
 		void setCurrentMode(const GameMode);

@@ -31,6 +31,10 @@ char GameState::getCurrentLandscape()
 {
 	return landscape;
 }
+void GameState::setCurrentLandscape(const char landscape)
+{
+	this->landscape = landscape;
+}
 GameMode GameState::getCurrentMode()
 {
 	return mode;

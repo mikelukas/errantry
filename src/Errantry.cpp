@@ -39,17 +39,17 @@ using std::endl;
  
 void Intro();
 bool MainGame(GameData& gameData, GameState& gameState);
-void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& choice,
-                 GameMode& location);
+void DisplayMenu(Monster& monster, vector<string>& Map, int& choice,
+                 GameMode& location, GameState& gameState);
 void townChoices(int& choice);
-bool TestChoice(GameData& gameData, Player& player,
+bool TestChoice(GameData& gameData,
                 Monster& monster,
                 int choice, GameMode& location, bool& win, char& landscape,
-                int& nextBoss, Region& area);
-void Move(vector<string>& Map, Player& player,
+                int& nextBoss, Region& area, GameState& gameState);
+void Move(vector<string>& Map,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses,
           GameMode& location, Monster& monster, char& landscape,
-          int nextBoss, Region& area);
+          int nextBoss, Region& area, GameState& gameState);
 void GetEnemy(const vector<Monster>& monsterList, Monster& monster, int x, Region& area,
               GameMode& location);
 void Fight(Player& player, Monster& monster);
@@ -137,16 +137,16 @@ bool MainGame(GameData& gameData, GameState& gameState)
         
         while(leave == false && win == false)
             {
-                DisplayMenu(gameState.getPlayer(), monster, gameData.getMap(), choice, location);
-                leave = TestChoice(gameData, gameState.getPlayer(), monster,
+                DisplayMenu(monster, gameData.getMap(), choice, location, gameState);
+                leave = TestChoice(gameData, monster,
 								   choice, location, win,
-                                   landscape, nextBoss, area);
+                                   landscape, nextBoss, area, gameState);
             }
         return win;
     }
     
-void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& choice,
-                 GameMode& location)
+void DisplayMenu(Monster& monster, vector<string>& Map, int& choice,
+                 GameMode& location, GameState& gameState)
     {   
         //postcondition:  The menu for the current state ofthe game 
         //(battle or map(overworld) ) is displayed, and the user may
@@ -154,6 +154,8 @@ void DisplayMenu(Player& player, Monster& monster, vector<string>& Map, int& cho
         
         int row, numrows;
         numrows = Map.size();
+
+        Player& player = gameState.getPlayer();
             
         switch(location)
           {
@@ -217,10 +219,10 @@ void townChoices(int& choice)
             cin>>choice;
          }while(!Validate(choice, 2));
     }
-bool TestChoice(GameData& gameData, Player& player,
+bool TestChoice(GameData& gameData,
                 Monster& monster,
                 int choice, GameMode& location, bool& win, char& landscape,
-                int& nextBoss, Region& area)
+                int& nextBoss, Region& area, GameState& gameState)
     {
         //postcondition:  the user-chosen action chose at the current
         //menu the player is at is carried out.  For instance, if the
@@ -229,6 +231,7 @@ bool TestChoice(GameData& gameData, Player& player,
         char cont;          //holds character user types at the 'press x and enter
                             //to continue' prompt
         bool leave = false;  //holds whether or not the user chose quit
+        Player player = gameState.getPlayer();
         
         switch(location)
             {
@@ -236,9 +239,9 @@ bool TestChoice(GameData& gameData, Player& player,
                     switch(choice)
                         {
                             case 1:
-                                Move(gameData.getMap(), player, gameData.getMonsters(), gameData.getBosses(),
+                                Move(gameData.getMap(), gameData.getMonsters(), gameData.getBosses(),
                                      location, monster, landscape,
-                                     nextBoss, area);
+                                     nextBoss, area, gameState);
                                 break;
                             case 2:
                                 PrintStatus(player);
@@ -320,10 +323,10 @@ bool TestChoice(GameData& gameData, Player& player,
             leave = true;
         return leave;
     }
-void Move(vector<string>& Map, Player& player,
+void Move(vector<string>& Map,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses,
           GameMode& location, Monster& monster, char& landscape,
-          int nextBoss, Region& area)
+          int nextBoss, Region& area, GameState& gameState)
     {
         //postcondition:  The player's position on the map will be moved
         //to the coordinates he/she specifies, if they are on the map.
@@ -334,6 +337,8 @@ void Move(vector<string>& Map, Player& player,
         int x, y;
         int mapWidth = Map[0].size();
         int mapHeight = Map.size();
+
+        Player player = gameState.getPlayer();
         Point Coords;
         
         do

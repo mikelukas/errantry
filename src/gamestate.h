@@ -40,7 +40,9 @@ class GameState
 		char getCurrentLandscape();
 		GameMode getCurrentMode();
 		Region getCurrentRegion();
+
 		Town& getCurrentTown();
+		void setCurrentTown(const Town&);
 
 		Monster& getCurrentMonster();
 		void setCurrentMonster(Monster);

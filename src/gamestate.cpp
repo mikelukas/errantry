@@ -43,6 +43,10 @@ Town& GameState::getCurrentTown()
 {
 	return town;
 }
+void GameState::setCurrentTown(const Town& town)
+{
+	this->town = town;
+}
 Monster& GameState::getCurrentMonster()
 {
 	return monster;

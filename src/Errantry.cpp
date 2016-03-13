@@ -45,7 +45,7 @@ void townChoices(int& choice);
 bool TestChoice(GameData& gameData,
                 int choice, GameMode& location, bool& win, char& landscape,
                 int& nextBoss, Region& area, GameState& gameState);
-void Move(vector<string>& Map,
+void Move(GameData& gameData,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses,
           GameMode& location, char& landscape,
           int nextBoss, Region& area, GameState& gameState);
@@ -239,7 +239,7 @@ bool TestChoice(GameData& gameData,
                     switch(choice)
                         {
                             case 1:
-                                Move(gameData.getMap(), gameData.getMonsters(), gameData.getBosses(),
+                                Move(gameData, gameData.getMonsters(), gameData.getBosses(),
                                      location, landscape,
                                      nextBoss, area, gameState);
                                 break;
@@ -252,7 +252,7 @@ bool TestChoice(GameData& gameData,
                         }
                     break;
 				case town: {//braces necessary b/c of declaring variables inside of case; statement
-					Town town = gameData.getTown(player.GetCoords());
+					Town& town = gameState.getCurrentTown();
 					switch(choice)
 						{
 							case 1:
@@ -323,7 +323,7 @@ bool TestChoice(GameData& gameData,
             leave = true;
         return leave;
     }
-void Move(vector<string>& Map,
+void Move(GameData& gameData,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses,
           GameMode& location, char& landscape,
           int nextBoss, Region& area, GameState& gameState)
@@ -335,6 +335,8 @@ void Move(vector<string>& Map,
         //an enemy or moves to a cave (marked with 'C') while he/she is moving
         
         int x, y;
+
+        vector<string>& Map = gameData.getMap();
         int mapWidth = Map[0].size();
         int mapHeight = Map.size();
 
@@ -368,6 +370,7 @@ void Move(vector<string>& Map,
         else if (landscape == TOWN_SYMBOL)
 			{
         		location = town;
+        		gameState.setCurrentTown(gameData.getTown(player.GetCoords()));
 			}
         else
             GetEnemy(monsterList, x, area, location, gameState);

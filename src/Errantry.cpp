@@ -39,18 +39,16 @@ using std::endl;
  
 void Intro();
 bool MainGame(GameData& gameData, GameState& gameState);
-void DisplayMenu(vector<string>& Map, int& choice,
-                 GameMode& location, GameState& gameState);
+void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState);
 void townChoices(int& choice);
 bool TestChoice(GameData& gameData,
-                int choice, GameMode& location, bool& win, char& landscape,
+                int choice, bool& win, char& landscape,
                 int& nextBoss, Region& area, GameState& gameState);
 void Move(GameData& gameData,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses,
-          GameMode& location, char& landscape,
+          char& landscape,
           int nextBoss, Region& area, GameState& gameState);
-void GetEnemy(const vector<Monster>& monsterList, int x, Region& area,
-              GameMode& location, GameState& gameState);
+void GetEnemy(const vector<Monster>& monsterList, int x, Region& area, GameState& gameState);
 void Fight(Player& player, Monster& monster);
 void PrintStatus(Player& player);
 void Talk(Town& town);
@@ -130,21 +128,19 @@ bool MainGame(GameData& gameData, GameState& gameState)
         int choice, nextBoss = gameState.getNextBoss();
         char landscape = ' ';
         bool win = false, leave = false;
-        GameMode location = gameState.getCurrentMode();
         Region area = gameState.getCurrentRegion();
         
         while(leave == false && win == false)
             {
-                DisplayMenu(gameData.getMap(), choice, location, gameState);
+                DisplayMenu(gameData.getMap(), choice, gameState);
                 leave = TestChoice(gameData,
-								   choice, location, win,
+								   choice, win,
                                    landscape, nextBoss, area, gameState);
             }
         return win;
     }
     
-void DisplayMenu(vector<string>& Map, int& choice,
-                 GameMode& location, GameState& gameState)
+void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState)
     {   
         //postcondition:  The menu for the current state ofthe game 
         //(battle or map(overworld) ) is displayed, and the user may
@@ -155,7 +151,7 @@ void DisplayMenu(vector<string>& Map, int& choice,
 
         Player& player = gameState.getPlayer();
             
-        switch(location)
+        switch(gameState.getCurrentMode())
           {
             case overworld:
                 cout<<"0    5   10   15   20   25  29"<<endl;
@@ -220,7 +216,7 @@ void townChoices(int& choice)
          }while(!Validate(choice, 2));
     }
 bool TestChoice(GameData& gameData,
-                int choice, GameMode& location, bool& win, char& landscape,
+                int choice, bool& win, char& landscape,
                 int& nextBoss, Region& area, GameState& gameState)
     {
         //postcondition:  the user-chosen action chose at the current
@@ -233,14 +229,14 @@ bool TestChoice(GameData& gameData,
         Player& player = gameState.getPlayer();
         Monster& monster = gameState.getCurrentMonster();
         
-        switch(location)
+        switch(gameState.getCurrentMode())
             {
                 case overworld:  //map menu
                     switch(choice)
                         {
                             case 1:
                                 Move(gameData, gameData.getMonsters(), gameData.getBosses(),
-                                     location, landscape,
+                                     landscape,
                                      nextBoss, area, gameState);
                                 break;
                             case 2:
@@ -259,7 +255,7 @@ bool TestChoice(GameData& gameData,
 								Talk(town);
 								break;
 							case 2: //Leave Town
-								location = overworld;
+								gameState.setCurrentMode(overworld);
 								break;
 						}
 					break;
@@ -291,7 +287,7 @@ bool TestChoice(GameData& gameData,
                             player.ChangeHP(player.MaxHealth() - player.Health());
                             landscape = 'M';
                             nextBoss++;
-                            location = overworld;   
+                            gameState.setCurrentMode(overworld);
                         }
                     break;              
                 case battle:   //battle menu
@@ -301,7 +297,7 @@ bool TestChoice(GameData& gameData,
                                 Fight(player, monster);
                                 break;
                             case 2:
-                                location = overworld;
+                            	gameState.setCurrentMode(overworld);
                                 break;
                         }
                     if(monster.mHealth() <= 0)
@@ -315,7 +311,7 @@ bool TestChoice(GameData& gameData,
                             if(player.NumExpPts() >= player.NumToNext())
                                 player.LevelUp();
                             player.ChangeHP(player.MaxHealth() - player.Health());
-                            location = overworld;
+                            gameState.setCurrentMode(overworld);
                         }
                     break;
             }
@@ -325,7 +321,7 @@ bool TestChoice(GameData& gameData,
     }
 void Move(GameData& gameData,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses,
-          GameMode& location, char& landscape,
+          char& landscape,
           int nextBoss, Region& area, GameState& gameState)
     {
         //postcondition:  The player's position on the map will be moved
@@ -364,20 +360,19 @@ void Move(GameData& gameData,
         
         if(landscape == 'C')
             {
-                location = bossBattle;
+                gameState.setCurrentMode(bossBattle);
                 gameState.setCurrentMonster(Bosses[nextBoss]);
             }
         else if (landscape == TOWN_SYMBOL)
 			{
-        		location = town;
+        		gameState.setCurrentMode(town);
         		gameState.setCurrentTown(gameData.getTown(player.GetCoords()));
 			}
         else
-            GetEnemy(monsterList, x, area, location, gameState);
+            GetEnemy(monsterList, x, area, gameState);
         Map[y][x] = 'X';
     }
-void GetEnemy(const vector<Monster>& monsterList, int x, Region& area,
-              GameMode& location, GameState& gameState)
+void GetEnemy(const vector<Monster>& monsterList, int x, Region& area, GameState& gameState)
     {   //postcondition:  a random monster is set into the game state from the monster
         //list to be fought in battle.  Depending on the region of
         //the map the player is in, the monsters may be more difficult.
@@ -410,21 +405,21 @@ void GetEnemy(const vector<Monster>& monsterList, int x, Region& area,
                     if(randMons < 3)
                         {
                             gameState.setCurrentMonster(monsterList[randMons]);
-                            location = battle;
+                            gameState.setCurrentMode(battle);
                         }
                     break;
                 case medium:
                     if(randMons < 4)
                         {
                     		gameState.setCurrentMonster(monsterList[randMons + 3]);
-                            location = battle;
+                    		gameState.setCurrentMode(battle);
                         }
                     break;
                 case hard:
                     if(randMons < 3)
                         {
                     		gameState.setCurrentMonster(monsterList[randMons + 7]);
-                            location  = battle;
+                    		gameState.setCurrentMode(battle);
                         }
                     break;
             }

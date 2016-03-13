@@ -35,6 +35,10 @@ GameMode GameState::getCurrentMode()
 {
 	return mode;
 }
+void GameState::setCurrentMode(const GameMode mode)
+{
+	this->mode = mode;
+}
 Region GameState::getCurrentRegion()
 {
 	return region;

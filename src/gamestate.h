@@ -38,7 +38,10 @@ class GameState
 		Player& getPlayer();
 
 		char getCurrentLandscape();
+
 		GameMode getCurrentMode();
+		void setCurrentMode(const GameMode);
+
 		Region getCurrentRegion();
 
 		Town& getCurrentTown();

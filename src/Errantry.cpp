@@ -42,8 +42,7 @@ void MainGame(GameData& gameData, GameState& gameState);
 void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState);
 void townChoices(int& choice);
 bool TestChoice(GameData& gameData, int choice, GameState& gameState);
-void Move(GameData& gameData,
-          const vector<Monster>& monsterList, const vector<Monster>& Bosses, GameState& gameState);
+void Move(GameData& gameData, GameState& gameState);
 void GetEnemy(const vector<Monster>& monsterList, GameState& gameState);
 void Fight(Player& player, Monster& monster);
 void PrintStatus(Player& player);
@@ -226,7 +225,7 @@ bool TestChoice(GameData& gameData,
                     switch(choice)
                         {
                             case 1:
-                                Move(gameData, gameData.getMonsters(), gameData.getBosses(), gameState);
+                                Move(gameData, gameState);
                                 break;
                             case 2:
                                 PrintStatus(player);
@@ -306,8 +305,7 @@ bool TestChoice(GameData& gameData,
             leave = true;
         return leave;
     }
-void Move(GameData& gameData,
-          const vector<Monster>& monsterList, const vector<Monster>& Bosses, GameState& gameState)
+void Move(GameData& gameData, GameState& gameState)
     {
         //postcondition:  The player's position on the map will be moved
         //to the coordinates he/she specifies, if they are on the map.
@@ -347,14 +345,14 @@ void Move(GameData& gameData,
 			{
 				case 'C':
 					gameState.setCurrentMode(bossBattle);
-					gameState.setCurrentMonster(Bosses[gameState.getCurrentBoss()]);
+					gameState.setCurrentMonster(gameData.getBosses()[gameState.getCurrentBoss()]);
 					break;
 				case TOWN_SYMBOL:
 					gameState.setCurrentMode(town);
 					gameState.setCurrentTown(gameData.getTown(player.GetCoords()));
 					break;
 				default:
-					GetEnemy(monsterList, gameState);
+					GetEnemy(gameData.getMonsters(), gameState);
 					break;
 			}
         Map[y][x] = 'X';

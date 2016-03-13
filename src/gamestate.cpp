@@ -12,7 +12,7 @@ GameState::GameState()
 	  landscape(INIT_LANDSCAPE),
 	  mode(INIT_MODE),
 	  region(INIT_REGION),
-	  nextBoss(INIT_NEXT_BOSS),
+	  currBoss(INIT_NEXT_BOSS),
 	  win(false)
 {
 	//monster and town not initialized because you don't start in a town
@@ -63,10 +63,16 @@ void GameState::setCurrentMonster(Monster monster)
 {
 	this->monster = monster;
 }
-int GameState::getNextBoss()
+int GameState::getCurrentBoss()
 {
-	return nextBoss;
+	return currBoss;
 }
+void GameState::advanceToNextBoss()
+{
+	currBoss++;
+	setCurrentLandscape('M');
+}
+
 bool GameState::isWon()
 {
 	return win;

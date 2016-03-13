@@ -27,7 +27,7 @@ class GameState
 		Town town; //current town the player is in, if they have moved onto a town in the map
 
 		Monster monster; //will hold the monster to be fought if the user encounters one while moving
-		int nextBoss; //index of the next boss to be fought in 'Bosses'
+		int currBoss; //index of the next boss to be fought in 'Bosses'
 
 		bool win;
 
@@ -50,7 +50,9 @@ class GameState
 
 		Monster& getCurrentMonster();
 		void setCurrentMonster(Monster);
-		int getNextBoss();
+
+		int getCurrentBoss();
+		void advanceToNextBoss();
 
 		bool isWon();
 };

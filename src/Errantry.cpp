@@ -43,10 +43,10 @@ void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState);
 void townChoices(int& choice);
 bool TestChoice(GameData& gameData,
                 int choice, bool& win,
-                int& nextBoss, Region& area, GameState& gameState);
+                Region& area, GameState& gameState);
 void Move(GameData& gameData,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses,
-          int nextBoss, Region& area, GameState& gameState);
+          Region& area, GameState& gameState);
 void GetEnemy(const vector<Monster>& monsterList, int x, Region& area, GameState& gameState);
 void Fight(Player& player, Monster& monster);
 void PrintStatus(Player& player);
@@ -124,7 +124,7 @@ bool MainGame(GameData& gameData, GameState& gameState)
         //and also indirectly carries out all of the actions a user may
         //perform by calling the functions that perform those actions.
         
-        int choice, nextBoss = gameState.getNextBoss();
+        int choice;
         bool win = false, leave = false;
         Region area = gameState.getCurrentRegion();
         
@@ -133,7 +133,7 @@ bool MainGame(GameData& gameData, GameState& gameState)
                 DisplayMenu(gameData.getMap(), choice, gameState);
                 leave = TestChoice(gameData,
 								   choice, win,
-                                   nextBoss, area, gameState);
+                                   area, gameState);
             }
         return win;
     }
@@ -215,7 +215,7 @@ void townChoices(int& choice)
     }
 bool TestChoice(GameData& gameData,
                 int choice, bool& win,
-                int& nextBoss, Region& area, GameState& gameState)
+                Region& area, GameState& gameState)
     {
         //postcondition:  the user-chosen action chose at the current
         //menu the player is at is carried out.  For instance, if the
@@ -234,7 +234,7 @@ bool TestChoice(GameData& gameData,
                         {
                             case 1:
                                 Move(gameData, gameData.getMonsters(), gameData.getBosses(),
-                                     nextBoss, area, gameState);
+                                     area, gameState);
                                 break;
                             case 2:
                                 PrintStatus(player);
@@ -271,7 +271,7 @@ bool TestChoice(GameData& gameData,
                         {                      //find the next on the list
                                                //add exp. pts. from the 
                                                //boss.
-                            if(nextBoss > 7)
+                            if(gameState.getCurrentBoss() > 7)
                                 win = true;
                             cout<<"You won the battle!  ";
                             cout<<"You gained "<<monster.Experience()<<" pts!";
@@ -282,8 +282,8 @@ bool TestChoice(GameData& gameData,
                             if(player.NumExpPts() >= player.NumToNext())
                                 player.LevelUp();
                             player.ChangeHP(player.MaxHealth() - player.Health());
-                            gameState.setCurrentLandscape('M');
-                            nextBoss++;
+
+                            gameState.advanceToNextBoss();
                             gameState.setCurrentMode(overworld);
                         }
                     break;              
@@ -318,7 +318,7 @@ bool TestChoice(GameData& gameData,
     }
 void Move(GameData& gameData,
           const vector<Monster>& monsterList, const vector<Monster>& Bosses,
-          int nextBoss, Region& area, GameState& gameState)
+          Region& area, GameState& gameState)
     {
         //postcondition:  The player's position on the map will be moved
         //to the coordinates he/she specifies, if they are on the map.
@@ -358,7 +358,7 @@ void Move(GameData& gameData,
 			{
 				case 'C':
 					gameState.setCurrentMode(bossBattle);
-					gameState.setCurrentMonster(Bosses[nextBoss]);
+					gameState.setCurrentMonster(Bosses[gameState.getCurrentBoss()]);
 					break;
 				case TOWN_SYMBOL:
 					gameState.setCurrentMode(town);

@@ -10,7 +10,6 @@ enum Region {easy, medium, hard};
 
 const int INIT_LANDSCAPE = ' ';
 const GameMode INIT_MODE = overworld;
-const Region INIT_REGION = easy;
 const int INIT_NEXT_BOSS = 0;
 
 /* This class tracks persistent state in the game, which will change as the
@@ -23,7 +22,6 @@ class GameState
 
 		char landscape; //current type of landscape the player is standing on
 		GameMode mode; //current mode of the game
-		Region region; //current difficulty region of the map where the player is; depending on the region, the user will fight harder or easier enemies
 		Town town; //current town the player is in, if they have moved onto a town in the map
 
 		Monster monster; //will hold the monster to be fought if the user encounters one while moving
@@ -42,8 +40,6 @@ class GameState
 
 		GameMode getCurrentMode();
 		void setCurrentMode(const GameMode);
-
-		Region getCurrentRegion();
 
 		Town& getCurrentTown();
 		void setCurrentTown(const Town&);

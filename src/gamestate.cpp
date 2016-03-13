@@ -11,7 +11,6 @@ GameState::GameState()
 	: player(),
 	  landscape(INIT_LANDSCAPE),
 	  mode(INIT_MODE),
-	  region(INIT_REGION),
 	  currBoss(INIT_NEXT_BOSS),
 	  win(false)
 {
@@ -42,10 +41,6 @@ GameMode GameState::getCurrentMode()
 void GameState::setCurrentMode(const GameMode mode)
 {
 	this->mode = mode;
-}
-Region GameState::getCurrentRegion()
-{
-	return region;
 }
 Town& GameState::getCurrentTown()
 {

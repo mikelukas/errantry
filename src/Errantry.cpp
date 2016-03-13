@@ -42,12 +42,10 @@ bool MainGame(GameData& gameData, GameState& gameState);
 void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState);
 void townChoices(int& choice);
 bool TestChoice(GameData& gameData,
-                int choice, bool& win,
-                Region& area, GameState& gameState);
+                int choice, bool& win, GameState& gameState);
 void Move(GameData& gameData,
-          const vector<Monster>& monsterList, const vector<Monster>& Bosses,
-          Region& area, GameState& gameState);
-void GetEnemy(const vector<Monster>& monsterList, int x, Region& area, GameState& gameState);
+          const vector<Monster>& monsterList, const vector<Monster>& Bosses, GameState& gameState);
+void GetEnemy(const vector<Monster>& monsterList, GameState& gameState);
 void Fight(Player& player, Monster& monster);
 void PrintStatus(Player& player);
 void Talk(Town& town);
@@ -126,14 +124,12 @@ bool MainGame(GameData& gameData, GameState& gameState)
         
         int choice;
         bool win = false, leave = false;
-        Region area = gameState.getCurrentRegion();
         
         while(leave == false && win == false)
             {
                 DisplayMenu(gameData.getMap(), choice, gameState);
                 leave = TestChoice(gameData,
-								   choice, win,
-                                   area, gameState);
+								   choice, win, gameState);
             }
         return win;
     }
@@ -214,8 +210,7 @@ void townChoices(int& choice)
          }while(!Validate(choice, 2));
     }
 bool TestChoice(GameData& gameData,
-                int choice, bool& win,
-                Region& area, GameState& gameState)
+                int choice, bool& win, GameState& gameState)
     {
         //postcondition:  the user-chosen action chose at the current
         //menu the player is at is carried out.  For instance, if the
@@ -233,8 +228,7 @@ bool TestChoice(GameData& gameData,
                     switch(choice)
                         {
                             case 1:
-                                Move(gameData, gameData.getMonsters(), gameData.getBosses(),
-                                     area, gameState);
+                                Move(gameData, gameData.getMonsters(), gameData.getBosses(), gameState);
                                 break;
                             case 2:
                                 PrintStatus(player);
@@ -317,8 +311,7 @@ bool TestChoice(GameData& gameData,
         return leave;
     }
 void Move(GameData& gameData,
-          const vector<Monster>& monsterList, const vector<Monster>& Bosses,
-          Region& area, GameState& gameState)
+          const vector<Monster>& monsterList, const vector<Monster>& Bosses, GameState& gameState)
     {
         //postcondition:  The player's position on the map will be moved
         //to the coordinates he/she specifies, if they are on the map.
@@ -365,12 +358,12 @@ void Move(GameData& gameData,
 					gameState.setCurrentTown(gameData.getTown(player.GetCoords()));
 					break;
 				default:
-					GetEnemy(monsterList, x, area, gameState);
+					GetEnemy(monsterList, gameState);
 					break;
 			}
         Map[y][x] = 'X';
     }
-void GetEnemy(const vector<Monster>& monsterList, int x, Region& area, GameState& gameState)
+void GetEnemy(const vector<Monster>& monsterList, GameState& gameState)
     {   //postcondition:  a random monster is set into the game state from the monster
         //list to be fought in battle.  Depending on the region of
         //the map the player is in, the monsters may be more difficult.
@@ -380,7 +373,8 @@ void GetEnemy(const vector<Monster>& monsterList, int x, Region& area, GameState
         int randMons;  //holds value to be used as index of monster
                        //in 'monsterList' if it is less than a certain
                        //number.
-        //variable x is the x coordinate of the player on the map.
+        int x = gameState.getPlayer().GetCoords().x;
+        Region area = easy;
         
         if(x < 30)
             {

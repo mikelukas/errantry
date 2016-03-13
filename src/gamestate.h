@@ -42,7 +42,8 @@ class GameState
 		Region getCurrentRegion();
 		Town& getCurrentTown();
 
-		Monster& getMonster();
+		Monster& getCurrentMonster();
+		void setCurrentMonster(Monster);
 		int getNextBoss();
 
 		bool isWon();

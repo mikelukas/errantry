@@ -43,9 +43,13 @@ Town& GameState::getCurrentTown()
 {
 	return town;
 }
-Monster& GameState::getMonster()
+Monster& GameState::getCurrentMonster()
 {
 	return monster;
+}
+void GameState::setCurrentMonster(Monster monster)
+{
+	this->monster = monster;
 }
 int GameState::getNextBoss()
 {

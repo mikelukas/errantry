@@ -39,9 +39,9 @@ using std::endl;
  
 void Intro();
 void MainGame(GameData& gameData, GameState& gameState);
-void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState);
-void townChoices(int& choice);
-bool TestChoice(GameData& gameData, int choice, GameState& gameState);
+int DisplayMenu(vector<string>& Map, GameState& gameState);
+int townChoices();
+bool TestChoice(int choice, GameData& gameData, GameState& gameState);
 void Move(GameData& gameData, GameState& gameState);
 void GetEnemy(const vector<Monster>& monsterList, GameState& gameState);
 void Fight(Player& player, Monster& monster);
@@ -120,23 +120,23 @@ void MainGame(GameData& gameData, GameState& gameState)
         //and also indirectly carries out all of the actions a user may
         //perform by calling the functions that perform those actions.
         
-        int choice;
+		int choice;
         bool leave = false;
         
         while(leave == false && !gameState.isWon())
             {
-                DisplayMenu(gameData.getMap(), choice, gameState);
-                leave = TestChoice(gameData,
-								   choice, gameState);
+                choice = DisplayMenu(gameData.getMap(), gameState);
+                leave = TestChoice(choice, gameData, gameState);
             }
     }
     
-void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState)
+int DisplayMenu(vector<string>& Map, GameState& gameState)
     {   
         //postcondition:  The menu for the current state ofthe game 
         //(battle or map(overworld) ) is displayed, and the user may
         //choose an action from one of the options
         
+		int choice;
         int row, numrows;
         numrows = Map.size();
 
@@ -164,7 +164,7 @@ void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState)
                  }while(!Validate(choice, 3));
                 break;
             case town:
-				townChoices(choice);
+				choice = townChoices();
 				break;
             case bossBattle:
             case battle:
@@ -191,10 +191,13 @@ void DisplayMenu(vector<string>& Map, int& choice, GameState& gameState)
                  }while(!Validate(choice,2));
                 break;
         }
+
+        return choice;
     }
-void townChoices(int& choice)
+int townChoices()
     {
 		//postcondition: Displays town menu options to user, and returns their choice.
+		int choice;
 
         cout<<"*****Choices*****"<<endl;
         cout<<"*1)Talk         *"<<endl;
@@ -205,9 +208,10 @@ void townChoices(int& choice)
             cout<<"Please choose an option:  ";
             cin>>choice;
          }while(!Validate(choice, 2));
+
+        return choice;
     }
-bool TestChoice(GameData& gameData,
-                int choice, GameState& gameState)
+bool TestChoice(int choice, GameData& gameData, GameState& gameState)
     {
         //postcondition:  the user-chosen action chose at the current
         //menu the player is at is carried out.  For instance, if the

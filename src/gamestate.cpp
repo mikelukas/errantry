@@ -10,11 +10,13 @@
 GameState::GameState()
 	: player(),
 	  landscape(INIT_LANDSCAPE),
-	  mode(INIT_MODE),
-	  currBoss(INIT_NEXT_BOSS),
-	  win(false)
+	  currBoss(INIT_NEXT_BOSS)
 {
 	//monster and town not initialized because you don't start in a town
+
+	initGameOverModes();
+	activeModes.push(quit); //Quit is at the bottom of the stack, so  exiting all modes results in ending the game
+	activeModes.push(INIT_MODE);
 }
 
 GameState::~GameState() {
@@ -34,13 +36,17 @@ void GameState::setCurrentLandscape(const char landscape)
 {
 	this->landscape = landscape;
 }
-GameMode GameState::getCurrentMode()
+GameMode GameState::getCurrentMode() const
 {
-	return mode;
+	return activeModes.top();
 }
-void GameState::setCurrentMode(const GameMode mode)
+void GameState::enterMode(const GameMode mode)
 {
-	this->mode = mode;
+	activeModes.push(mode);
+}
+void GameState::exitCurrentMode()
+{
+	activeModes.pop();
 }
 Town& GameState::getCurrentTown()
 {
@@ -65,12 +71,25 @@ int GameState::getCurrentBoss()
 void GameState::advanceToNextBoss()
 {
 	if(currBoss > 7)
-		win = true;
+		enterMode(win);
 	currBoss++;
 	setCurrentLandscape('M');
 }
 
+void GameState::initGameOverModes()
+{
+	gameOverModes.insert(quit);
+	gameOverModes.insert(dead);
+	gameOverModes.insert(win);
+}
+
+const bool GameState::isGameOver() const
+{
+	//postcondition: returns true if the current mode is in one of the ones in the gameOverModes set
+	return (gameOverModes.find(getCurrentMode()) != gameOverModes.end());
+}
+
 const bool GameState::isWon() const
 {
-	return win;
+	return (activeModes.top() == win);
 }

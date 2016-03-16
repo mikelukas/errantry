@@ -41,7 +41,7 @@ void Intro();
 void MainGame(GameData& gameData, GameState& gameState);
 int DisplayMenu(vector<string>& Map, GameState& gameState);
 int townChoices();
-bool TestChoice(int choice, GameData& gameData, GameState& gameState);
+void TestChoice(int choice, GameData& gameData, GameState& gameState);
 void Move(GameData& gameData, GameState& gameState);
 void GetEnemy(const vector<Monster>& monsterList, GameState& gameState);
 void Fight(Player& player, Monster& monster);
@@ -121,12 +121,11 @@ void MainGame(GameData& gameData, GameState& gameState)
         //perform by calling the functions that perform those actions.
         
 		int choice;
-        bool leave = false;
         
-        while(leave == false && !gameState.isWon())
+        while(!gameState.isGameOver())
             {
                 choice = DisplayMenu(gameData.getMap(), gameState);
-                leave = TestChoice(choice, gameData, gameState);
+                TestChoice(choice, gameData, gameState);
             }
     }
     
@@ -136,7 +135,7 @@ int DisplayMenu(vector<string>& Map, GameState& gameState)
         //(battle or map(overworld) ) is displayed, and the user may
         //choose an action from one of the options
         
-		int choice;
+		int choice = 0;
         int row, numrows;
         numrows = Map.size();
 
@@ -167,7 +166,7 @@ int DisplayMenu(vector<string>& Map, GameState& gameState)
 				choice = townChoices();
 				break;
             case bossBattle:
-            case battle:
+            case battle: {
             	Monster monster = gameState.getCurrentMonster();
 
                 cout<<"*************ENEMY! You went to battle!*************"<<endl;
@@ -190,6 +189,10 @@ int DisplayMenu(vector<string>& Map, GameState& gameState)
                     cin>>choice;
                  }while(!Validate(choice,2));
                 break;
+            }
+            default:
+            	//should not reach
+            	return 0;
         }
 
         return choice;
@@ -211,7 +214,7 @@ int townChoices()
 
         return choice;
     }
-bool TestChoice(int choice, GameData& gameData, GameState& gameState)
+void TestChoice(int choice, GameData& gameData, GameState& gameState)
     {
         //postcondition:  the user-chosen action chose at the current
         //menu the player is at is carried out.  For instance, if the
@@ -219,7 +222,7 @@ bool TestChoice(int choice, GameData& gameData, GameState& gameState)
         //performed.  
         char cont;          //holds character user types at the 'press x and enter
                             //to continue' prompt
-        bool leave = false;  //holds whether or not the user chose quit
+
         Player& player = gameState.getPlayer();
         Monster& monster = gameState.getCurrentMonster();
         
@@ -235,7 +238,7 @@ bool TestChoice(int choice, GameData& gameData, GameState& gameState)
                                 PrintStatus(player);
                                 break;
                             case 3:
-                                leave = true;
+                                gameState.exitCurrentMode();
                                 break;
                         }
                     break;
@@ -247,7 +250,7 @@ bool TestChoice(int choice, GameData& gameData, GameState& gameState)
 								Talk(town);
 								break;
 							case 2: //Leave Town
-								gameState.setCurrentMode(overworld);
+								gameState.exitCurrentMode();
 								break;
 						}
 					break;
@@ -276,8 +279,8 @@ bool TestChoice(int choice, GameData& gameData, GameState& gameState)
                                 player.LevelUp();
                             player.ChangeHP(player.MaxHealth() - player.Health());
 
-                            gameState.advanceToNextBoss();
-                            gameState.setCurrentMode(overworld);
+                            gameState.exitCurrentMode();
+                            gameState.advanceToNextBoss(); //May enter win mode if no bosses left
                         }
                     break;              
                 case battle:   //battle menu
@@ -287,7 +290,7 @@ bool TestChoice(int choice, GameData& gameData, GameState& gameState)
                                 Fight(player, monster);
                                 break;
                             case 2:
-                            	gameState.setCurrentMode(overworld);
+                            	gameState.exitCurrentMode();
                                 break;
                         }
                     if(monster.mHealth() <= 0)
@@ -301,13 +304,12 @@ bool TestChoice(int choice, GameData& gameData, GameState& gameState)
                             if(player.NumExpPts() >= player.NumToNext())
                                 player.LevelUp();
                             player.ChangeHP(player.MaxHealth() - player.Health());
-                            gameState.setCurrentMode(overworld);
+                            gameState.exitCurrentMode();
                         }
                     break;
             }
         if(player.Health() <= 0)  //if player dies, leave game
-            leave = true;
-        return leave;
+            gameState.enterMode(dead);
     }
 void Move(GameData& gameData, GameState& gameState)
     {
@@ -348,11 +350,11 @@ void Move(GameData& gameData, GameState& gameState)
         switch(gameState.getCurrentLandscape())
 			{
 				case 'C':
-					gameState.setCurrentMode(bossBattle);
+					gameState.enterMode(bossBattle);
 					gameState.setCurrentMonster(gameData.getBosses()[gameState.getCurrentBoss()]);
 					break;
 				case TOWN_SYMBOL:
-					gameState.setCurrentMode(town);
+					gameState.enterMode(town);
 					gameState.setCurrentTown(gameData.getTown(player.GetCoords()));
 					break;
 				default:
@@ -395,21 +397,21 @@ void GetEnemy(const vector<Monster>& monsterList, GameState& gameState)
                     if(randMons < 3)
                         {
                             gameState.setCurrentMonster(monsterList[randMons]);
-                            gameState.setCurrentMode(battle);
+                            gameState.enterMode(battle);
                         }
                     break;
                 case medium:
                     if(randMons < 4)
                         {
                     		gameState.setCurrentMonster(monsterList[randMons + 3]);
-                    		gameState.setCurrentMode(battle);
+                    		gameState.enterMode(battle);
                         }
                     break;
                 case hard:
                     if(randMons < 3)
                         {
                     		gameState.setCurrentMonster(monsterList[randMons + 7]);
-                    		gameState.setCurrentMode(battle);
+                    		gameState.enterMode(battle);
                         }
                     break;
             }

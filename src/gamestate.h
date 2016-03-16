@@ -1,11 +1,16 @@
 #ifndef SRC_GAMESTATE_H_
 #define SRC_GAMESTATE_H_
 
+#include <set>
+#include <stack>
 #include "monster.h"
 #include "player.h"
 #include "town.h"
 
-enum GameMode {overworld, town, bossBattle, battle};
+using std::set;
+using std::stack;
+
+enum GameMode {quit, overworld, town, bossBattle, battle, dead, win};
 enum Region {easy, medium, hard};
 
 const int INIT_LANDSCAPE = ' ';
@@ -21,13 +26,14 @@ class GameState
 		Player player;
 
 		char landscape; //current type of landscape the player is standing on
-		GameMode mode; //current mode of the game
+		set<GameMode> gameOverModes;
+		stack<GameMode> activeModes; //top of stack is current game mode, items under it are modes that we got to it from
 		Town town; //current town the player is in, if they have moved onto a town in the map
 
 		Monster monster; //will hold the monster to be fought if the user encounters one while moving
 		int currBoss; //index of the next boss to be fought in 'Bosses'
 
-		bool win;
+		void initGameOverModes();
 
 	public:
 		GameState();
@@ -38,8 +44,9 @@ class GameState
 		char getCurrentLandscape();
 		void setCurrentLandscape(const char);
 
-		GameMode getCurrentMode();
-		void setCurrentMode(const GameMode);
+		GameMode getCurrentMode() const;
+		void enterMode(const GameMode);
+		void exitCurrentMode();
 
 		Town& getCurrentTown();
 		void setCurrentTown(const Town&);
@@ -50,6 +57,7 @@ class GameState
 		int getCurrentBoss();
 		void advanceToNextBoss();
 
+		const bool isGameOver() const;
 		const bool isWon() const;
 };
 

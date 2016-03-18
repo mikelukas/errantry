@@ -36,11 +36,11 @@ void GameState::setCurrentLandscape(const char landscape)
 {
 	this->landscape = landscape;
 }
-GameMode GameState::getCurrentMode() const
+GameModeType GameState::getCurrentMode() const
 {
 	return activeModes.top();
 }
-void GameState::enterMode(const GameMode mode)
+void GameState::enterMode(const GameModeType mode)
 {
 	activeModes.push(mode);
 }

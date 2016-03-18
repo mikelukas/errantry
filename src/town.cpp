@@ -1,16 +1,16 @@
 #include "town.h"
 
-string Town::getName()
+string Town::getName() const
 {
 	return name;
 }
 
-Point Town::getLocation()
+Point Town::getLocation() const
 {
 	return location;
 }
 
-vector<int> Town::getShopEquipmentIds(EquipType equipType)
+vector<int> Town::getShopEquipmentIds(EquipType equipType) const
 {
 	switch(equipType)
 	{
@@ -29,7 +29,7 @@ vector<int> Town::getShopEquipmentIds(EquipType equipType)
 	}
 }
 
-string Town::getConversation()
+string Town::getConversation() const
 {
 	//postcondition: returns conversation text to be displayed when user
 	//chooses Talk when in a town.

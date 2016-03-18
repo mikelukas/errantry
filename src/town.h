@@ -31,10 +31,10 @@ class Town
 		void loadEquipmentIdLine(istream&, vector<int>&);
 
 	public:
-		string getName();
-		Point getLocation();
-		vector<int> getShopEquipmentIds(EquipType);
-		string getConversation();
+		string getName() const;
+		Point getLocation() const;
+		vector<int> getShopEquipmentIds(EquipType) const;
+		string getConversation() const;
 
 		friend istream& operator>> (istream&, Town&);
 };

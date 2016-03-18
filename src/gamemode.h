@@ -17,7 +17,7 @@ class GameMode
 
 	public:
 		GameMode(GameData& gameData, GameState& gameState);
-		~GameMode();
+		virtual ~GameMode();
 
 		virtual void run() = 0;
 };

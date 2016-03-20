@@ -19,7 +19,7 @@ void BossBattleMode::onBattleWon()
 	//boss on the list or enter Win Mode if all bosses are dead.
 
 	BattleMode::onBattleWon();
-	if(gameState.getCurrentBoss() > 7)
+	if(gameState.getCurrentBoss() >= 7)
 	{
 		GameMode* win = new WinMode(gameData, gameState);
 		gameState.enterMode(win);

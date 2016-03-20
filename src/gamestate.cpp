@@ -78,10 +78,10 @@ void GameState::advanceToNextBoss()
 
 void GameState::setGameOver()
 {
-	//postcondition: activeModes stack is emptied
+	//postcondition: all modes are exited (activeModes stack is emptied)
 	while(!activeModes.empty())
 	{
-		activeModes.pop();
+		exitCurrentMode();
 	}
 }
 

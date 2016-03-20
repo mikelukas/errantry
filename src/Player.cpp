@@ -58,8 +58,7 @@ void Player::LevelUp()
         
         int choice;
         
-        HP = HP + int(HP * HPRATE);
-        maxHP = HP;
+        maxHP = maxHP + int(maxHP * HPRATE);
                 
         if(lvl % SPRATE == 0)
             SP++;

@@ -1,4 +1,5 @@
 #include "battlemode.h"
+#include "deadmode.h"
 #include "gamestate.h"
 
 BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
@@ -85,6 +86,13 @@ void BattleMode::fight()
     if(currMonster.mHealth() <= 0)
 		{
     		onBattleWon();
+		}
+
+    if(player.Health() <= 0)
+		{
+			//if player dies, leave game
+			GameMode* dead = new DeadMode(gameData, gameState);
+			gameState.enterMode(dead);
 		}
 }
 

@@ -16,10 +16,6 @@ GameState::GameState()
 	//monster and town not initialized because you don't start in a town
 }
 
-GameState::~GameState() {
-	// TODO Auto-generated destructor stub
-}
-
 Player& GameState::getPlayer()
 {
 	return player;
@@ -49,22 +45,6 @@ void GameState::exitCurrentMode()
 	//was previously in before they got to that mode the current mode
 	delete activeModes.top();
 	activeModes.pop();
-}
-Town& GameState::getCurrentTown()
-{
-	return town;
-}
-void GameState::setCurrentTown(const Town& town)
-{
-	this->town = town;
-}
-Monster& GameState::getCurrentMonster()
-{
-	return monster;
-}
-void GameState::setCurrentMonster(Monster monster)
-{
-	this->monster = monster;
 }
 int GameState::getCurrentBoss()
 {

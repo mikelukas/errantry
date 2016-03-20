@@ -12,8 +12,6 @@ using std::stack;
 
 class GameMode; //Forward declaration since GameState and GameMode are interdependent
 
-enum Region {easy, medium, hard};
-
 const int INIT_LANDSCAPE = ' ';
 const int INIT_NEXT_BOSS = 0;
 
@@ -27,14 +25,12 @@ class GameState
 
 		char landscape; //current type of landscape the player is standing on
 		stack<GameMode*> activeModes; //top of stack is current game mode, items under it are modes that we got to it from
-		Town town; //current town the player is in, if they have moved onto a town in the map
 
-		Monster monster; //will hold the monster to be fought if the user encounters one while moving
 		int currBoss; //index of the next boss to be fought in 'Bosses'
 
 	public:
 		GameState();
-		~GameState();
+		~GameState() { };
 
 		Player& getPlayer();
 
@@ -44,12 +40,6 @@ class GameState
 		GameMode* getCurrentMode() const;
 		void enterMode(GameMode*);
 		void exitCurrentMode();
-
-		Town& getCurrentTown();
-		void setCurrentTown(const Town&);
-
-		Monster& getCurrentMonster();
-		void setCurrentMonster(Monster);
 
 		int getCurrentBoss();
 		void advanceToNextBoss();

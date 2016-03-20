@@ -2,6 +2,7 @@
 #include "gamestate.h"
 #include "overworldmode.h"
 #include "townmode.h"
+#include "quitmode.h"
 
 OverworldMode::OverworldMode(GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState)
@@ -46,7 +47,8 @@ void OverworldMode::testChoice(int choice)
 				printStatus();
 				break;
 			case 3:
-				gameState.exitCurrentMode();
+				GameMode* quit = new QuitMode(gameData, gameState);
+				gameState.enterMode(quit);
 				break;
 		}
 }

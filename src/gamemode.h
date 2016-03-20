@@ -2,7 +2,8 @@
 #define SRC_GAMEMODE_H_
 
 #include "gamedata.h"
-#include "gamestate.h"
+
+class GameState; //Forward declaration since GameState and GameMode are interdependent
 
 /* Subclasses of GameMode encapsulate mode-specific processing, and mode-specific
  * state, to avoid having to create a growing number of conditionals in

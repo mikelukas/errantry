@@ -1,11 +1,5 @@
-/*
- * battlemode.cpp
- *
- *  Created on: Mar 18, 2016
- *      Author: mlukas
- */
-
 #include "battlemode.h"
+#include "gamestate.h"
 
 BattleMode::BattleMode(Monster& monster, GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState),

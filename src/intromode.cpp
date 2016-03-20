@@ -5,7 +5,9 @@
  *      Author: mlukas
  */
 
+#include "gamestate.h"
 #include "intromode.h"
+#include "overworldmode.h"
 
 IntroMode::IntroMode(GameData& gameData, GameState& gameState)
 	: GameMode(gameData, gameState)
@@ -58,6 +60,7 @@ void IntroMode::run()
 	cin>>start;
 	cout<<"****************************************************"<<endl;
 
+	GameMode* overworld  = new OverworldMode(gameData, gameState);
 	gameState.enterMode(overworld);
 }
 

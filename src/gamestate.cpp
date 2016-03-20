@@ -5,6 +5,7 @@
  *      Author: mlukas
  */
 
+#include "gamemode.h"
 #include "gamestate.h"
 
 GameState::GameState()
@@ -13,10 +14,6 @@ GameState::GameState()
 	  currBoss(INIT_NEXT_BOSS)
 {
 	//monster and town not initialized because you don't start in a town
-
-	initGameOverModes();
-	activeModes.push(quit); //Quit is at the bottom of the stack, so  exiting all modes results in ending the game
-	activeModes.push(INIT_MODE);
 }
 
 GameState::~GameState() {
@@ -36,16 +33,21 @@ void GameState::setCurrentLandscape(const char landscape)
 {
 	this->landscape = landscape;
 }
-GameModeType GameState::getCurrentMode() const
+GameMode* GameState::getCurrentMode() const
 {
 	return activeModes.top();
 }
-void GameState::enterMode(const GameModeType mode)
+void GameState::enterMode(GameMode* mode)
 {
+	//postcondition: mode becomes the current active mode.  Mode will be deleted
+	//when exitCurrentMode is called
 	activeModes.push(mode);
 }
 void GameState::exitCurrentMode()
 {
+	//postcondition: deletes the current mode and makes the mode that the player
+	//was previously in before they got to that mode the current mode
+	delete activeModes.top();
 	activeModes.pop();
 }
 Town& GameState::getCurrentTown()
@@ -70,26 +72,21 @@ int GameState::getCurrentBoss()
 }
 void GameState::advanceToNextBoss()
 {
-	if(currBoss > 7)
-		enterMode(win);
 	currBoss++;
 	setCurrentLandscape('M');
 }
 
-void GameState::initGameOverModes()
+void GameState::setGameOver()
 {
-	gameOverModes.insert(quit);
-	gameOverModes.insert(dead);
-	gameOverModes.insert(win);
+	//postcondition: activeModes stack is emptied
+	while(!activeModes.empty())
+	{
+		activeModes.pop();
+	}
 }
 
 const bool GameState::isGameOver() const
 {
-	//postcondition: returns true if the current mode is in one of the ones in the gameOverModes set
-	return (gameOverModes.find(getCurrentMode()) != gameOverModes.end());
-}
-
-const bool GameState::isWon() const
-{
-	return (activeModes.top() == win);
+	//postcondition: returns true if the activeModes is empty
+	return activeModes.empty();
 }

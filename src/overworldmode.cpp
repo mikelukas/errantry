@@ -1,11 +1,7 @@
-/*
- * overworldmode.cpp
- *
- *  Created on: Mar 18, 2016
- *      Author: mlukas
- */
-
+#include "bossbattlemode.h"
+#include "gamestate.h"
 #include "overworldmode.h"
+#include "townmode.h"
 
 OverworldMode::OverworldMode(GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState)
@@ -93,14 +89,18 @@ void OverworldMode::move()
 
 	switch(gameState.getCurrentLandscape())
 		{
-			case 'C':
+			case 'C': {
+				Monster boss = gameData.getBosses()[gameState.getCurrentBoss()];
+				GameMode* bossBattle = new BossBattleMode(boss, gameData, gameState);
 				gameState.enterMode(bossBattle);
-				gameState.setCurrentMonster(gameData.getBosses()[gameState.getCurrentBoss()]);
 				break;
-			case TOWN_SYMBOL:
-				gameState.enterMode(town);
-				gameState.setCurrentTown(gameData.getTown(player.GetCoords()));
+			}
+			case TOWN_SYMBOL: {
+				const Town& town = gameData.getTown(player.GetCoords());
+				GameMode* townMode = new TownMode(town, gameData, gameState);
+				gameState.enterMode(townMode);
 				break;
+			}
 			default:
 				getEnemy();
 				break;
@@ -141,21 +141,24 @@ void OverworldMode::getEnemy()
 			case easy:
 				if(randMons < 3)
 					{
-						gameState.setCurrentMonster(monsterList[randMons]);
+						Monster monster = monsterList[randMons];
+						GameMode* battle = new BattleMode(monster, gameData, gameState);
 						gameState.enterMode(battle);
 					}
 				break;
 			case medium:
 				if(randMons < 4)
 					{
-						gameState.setCurrentMonster(monsterList[randMons + 3]);
+						Monster monster = monsterList[randMons + 3];
+						GameMode* battle = new BattleMode(monster, gameData, gameState);
 						gameState.enterMode(battle);
 					}
 				break;
 			case hard:
 				if(randMons < 3)
 					{
-						gameState.setCurrentMonster(monsterList[randMons + 7]);
+						Monster monster = monsterList[randMons + 7];
+						GameMode* battle = new BattleMode(monster, gameData, gameState);
 						gameState.enterMode(battle);
 					}
 				break;

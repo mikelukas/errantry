@@ -1,10 +1,4 @@
-/*
- * townmode.cpp
- *
- *  Created on: Mar 18, 2016
- *      Author: mlukas
- */
-
+#include "gamestate.h"
 #include "townmode.h"
 
 TownMode::TownMode(const Town& town, GameData& gameData, GameState& gameState)

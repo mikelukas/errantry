@@ -10,11 +10,11 @@
 using std::set;
 using std::stack;
 
-enum GameModeType {quit, overworld, town, bossBattle, battle, dead, win};
+class GameMode; //Forward declaration since GameState and GameMode are interdependent
+
 enum Region {easy, medium, hard};
 
 const int INIT_LANDSCAPE = ' ';
-const GameModeType INIT_MODE = overworld;
 const int INIT_NEXT_BOSS = 0;
 
 /* This class tracks persistent state in the game, which will change as the
@@ -26,14 +26,11 @@ class GameState
 		Player player;
 
 		char landscape; //current type of landscape the player is standing on
-		set<GameModeType> gameOverModes;
-		stack<GameModeType> activeModes; //top of stack is current game mode, items under it are modes that we got to it from
+		stack<GameMode*> activeModes; //top of stack is current game mode, items under it are modes that we got to it from
 		Town town; //current town the player is in, if they have moved onto a town in the map
 
 		Monster monster; //will hold the monster to be fought if the user encounters one while moving
 		int currBoss; //index of the next boss to be fought in 'Bosses'
-
-		void initGameOverModes();
 
 	public:
 		GameState();
@@ -44,8 +41,8 @@ class GameState
 		char getCurrentLandscape();
 		void setCurrentLandscape(const char);
 
-		GameModeType getCurrentMode() const;
-		void enterMode(const GameModeType);
+		GameMode* getCurrentMode() const;
+		void enterMode(GameMode*);
 		void exitCurrentMode();
 
 		Town& getCurrentTown();
@@ -57,8 +54,8 @@ class GameState
 		int getCurrentBoss();
 		void advanceToNextBoss();
 
+		void setGameOver();
 		const bool isGameOver() const;
-		const bool isWon() const;
 };
 
 #endif

@@ -190,28 +190,3 @@ int Player::NumToNext() const
         
         return expToNext;
     }   
-
-//free functions-------------------------------------------------------------//
-
-bool Validate(char answer)
-    {
-        //postcondition:  determines if response entered by user is
-        //a valid response character and returns true if so, false
-        //if not.
-        if(answer == 'Y' || answer == 'y' || answer == 'n' || answer == 'N')
-            return true;
-        else
-            cout<<"Invalid Response"<<endl;
-        return false;
-    }
-bool Validate(int answer, int numChoices)
-    {
-        //postcondition:  determines if response entered by user is
-        //a valid response number and returns true if so, false
-        //if not.
-        if(answer >0 && answer<=numChoices)
-            return true;
-        else
-            cout<<"Invalid Response"<<endl;
-        return false;
-    }

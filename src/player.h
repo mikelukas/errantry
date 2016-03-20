@@ -68,9 +68,4 @@ class Player
             int NumToNext() const;
     };
 
-//free function prototypes---------------------------------------------------// 
-
-bool Validate(char answer);
-bool Validate(int answer, int numChoices);
-
 #endif

@@ -16,7 +16,7 @@ class BossBattleMode : public BattleMode
 		void onBattleWon();
 
 	public:
-		BossBattleMode(Monster&, GameData&, GameState&);
+		BossBattleMode(Monster, GameData&, GameState&);
 		~BossBattleMode() { };
 };
 

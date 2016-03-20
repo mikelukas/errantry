@@ -1,7 +1,7 @@
 #include "battlemode.h"
 #include "gamestate.h"
 
-BattleMode::BattleMode(Monster& monster, GameData& gameData, GameState& gameState)
+BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState),
 	  currMonster(monster)
 {

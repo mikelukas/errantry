@@ -10,7 +10,7 @@
 class BattleMode : public MenuMode
 {
 	protected:
-		Monster& currMonster; //Monster we're fighting in this mode
+		Monster currMonster; //Monster we're fighting in this mode
 
 		int displayMenu();
 		void testChoice(int);
@@ -21,7 +21,7 @@ class BattleMode : public MenuMode
 		virtual void onBattleWon();
 
 	public:
-		BattleMode(Monster&, GameData&, GameState&);
+		BattleMode(Monster, GameData&, GameState&);
 		~BattleMode() { };
 };
 

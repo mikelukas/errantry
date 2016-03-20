@@ -92,8 +92,8 @@ void OverworldMode::move()
 	switch(gameState.getCurrentLandscape())
 		{
 			case 'C': {
-				Monster boss = gameData.getBosses()[gameState.getCurrentBoss()];
-				GameMode* bossBattle = new BossBattleMode(boss, gameData, gameState);
+				int currBoss = gameState.getCurrentBoss();
+				GameMode* bossBattle = new BossBattleMode(gameData.getBosses()[currBoss], gameData, gameState);
 				gameState.enterMode(bossBattle);
 				break;
 			}
@@ -143,24 +143,21 @@ void OverworldMode::getEnemy()
 			case easy:
 				if(randMons < 3)
 					{
-						Monster monster = monsterList[randMons];
-						GameMode* battle = new BattleMode(monster, gameData, gameState);
+						GameMode* battle = new BattleMode(monsterList[randMons], gameData, gameState);
 						gameState.enterMode(battle);
 					}
 				break;
 			case medium:
 				if(randMons < 4)
 					{
-						Monster monster = monsterList[randMons + 3];
-						GameMode* battle = new BattleMode(monster, gameData, gameState);
+						GameMode* battle = new BattleMode(monsterList[randMons + 3], gameData, gameState);
 						gameState.enterMode(battle);
 					}
 				break;
 			case hard:
 				if(randMons < 3)
 					{
-						Monster monster = monsterList[randMons + 7];
-						GameMode* battle = new BattleMode(monster, gameData, gameState);
+						GameMode* battle = new BattleMode(monsterList[randMons + 7], gameData, gameState);
 						gameState.enterMode(battle);
 					}
 				break;

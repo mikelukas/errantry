@@ -2,7 +2,7 @@
 #include "gamestate.h"
 #include "winmode.h"
 
-BossBattleMode::BossBattleMode(Monster& bossMonster, GameData& gameData, GameState& gameState)
+BossBattleMode::BossBattleMode(Monster bossMonster, GameData& gameData, GameState& gameState)
 	: BattleMode(bossMonster, gameData, gameState)
 {
 

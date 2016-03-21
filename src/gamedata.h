@@ -42,20 +42,21 @@ class GameData
 		vector<Monster> monsters;
 		vector<Monster> bosses;
 
-		vector<Equipment> weapons;
-		vector<Equipment> armor;
-		vector<Equipment> items;
+		vector<Equipment*> weaponPtrs;
+		vector<Equipment*> armorPtrs;
+		vector<Equipment*> itemsPtrs;
 
 		bool loadDataFiles(); //master load method
 
 		bool loadMap();
 		bool loadMonsters(vector<Monster>& monsters, const string& filename);
-		bool loadEquipment(EquipType type, vector<Equipment>& equipment, const string& filename);
+		bool loadEquipment(EquipType type, vector<Equipment*>& equipment, const string& filename);
 
 		bool loadTowns();
 
 	public:
 		GameData();
+		~GameData();
 
 		const bool loadSuccessful();
 
@@ -65,9 +66,9 @@ class GameData
 		const vector<Monster>& getMonsters();
 		const vector<Monster>& getBosses();
 
-		const vector<Equipment>& getWeapons();
-		const vector<Equipment>& getArmor();
-		const vector<Equipment>& getItems();
+		const vector<Equipment*>& getWeapons();
+		const vector<Equipment*>& getArmor();
+		const vector<Equipment*>& getItems();
 };
 
 

@@ -6,6 +6,28 @@ GameData::GameData()
 	loadedSuccessfully = loadDataFiles();
 }
 
+GameData::~GameData()
+{
+	//delete all equipment definitions
+	while(!weaponPtrs.empty())
+	{
+		delete (weaponPtrs.back());
+		weaponPtrs.pop_back();
+	}
+
+	while(!armorPtrs.empty())
+	{
+		delete (armorPtrs.back());
+		armorPtrs.pop_back();
+	}
+
+	while(!itemsPtrs.empty())
+	{
+		delete (itemsPtrs.back());
+		itemsPtrs.pop_back();
+	}
+}
+
 bool GameData::loadDataFiles()
 {
 	if(!loadMap())
@@ -26,17 +48,17 @@ bool GameData::loadDataFiles()
 		return false;
 	}
 
-	if(!loadEquipment(WEAPON, weapons, WEAPONFILE))
+	if(!loadEquipment(WEAPON, weaponPtrs, WEAPONFILE))
 	{
 		return false;
 	}
 
-	if(!loadEquipment(ARMOR, armor, ARMORFILE))
+	if(!loadEquipment(ARMOR, armorPtrs, ARMORFILE))
 	{
 		return false;
 	}
 
-	if(!loadEquipment(ITEM, items, ITEMFILE))
+	if(!loadEquipment(ITEM, itemsPtrs, ITEMFILE))
 	{
 		return false;
 	}
@@ -97,7 +119,7 @@ bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
 	return found;
 }
 
-bool GameData::loadEquipment(EquipType type, vector<Equipment>& equipment, const string& filename)
+bool GameData::loadEquipment(EquipType type, vector<Equipment*>& equipment, const string& filename)
 {
 	ifstream equipFile(filename);
 	if(!equipFile)
@@ -113,16 +135,16 @@ bool GameData::loadEquipment(EquipType type, vector<Equipment>& equipment, const
 			string junk;
 			getline(equipFile, junk); //Throw away equipment index in file
 
-			Equipment item(type);
-			equipFile>>item;
+			Equipment* item = new Equipment(type);
+			equipFile>>(*item);
 
 			equipment.push_back(item);
 
-			cout<<item.getName()<<endl;
-			cout<<"   "<<item.getCost()<<endl;
-			cout<<"   "<<item.getType()<<endl;
+			cout<<item->getName()<<endl;
+			cout<<"   "<<item->getCost()<<endl;
+			cout<<"   "<<item->getType()<<endl;
 
-			cout<<"   Mods - "<<item.getStatMod()<<endl<<endl;
+			cout<<"   Mods - "<<item->getStatMod()<<endl<<endl;
 		}
 	equipFile.close();
 	cout<<":  "<<equipment.size()<<" equipment found."<<endl;
@@ -194,17 +216,17 @@ const vector<Monster>& GameData::getBosses()
 	return bosses;
 }
 
-const vector<Equipment>& GameData::getWeapons()
+const vector<Equipment*>& GameData::getWeapons()
 {
-	return weapons;
+	return weaponPtrs;
 }
 
-const vector<Equipment>& GameData::getArmor()
+const vector<Equipment*>& GameData::getArmor()
 {
-	return armor;
+	return armorPtrs;
 }
 
-const vector<Equipment>& GameData::getItems()
+const vector<Equipment*>& GameData::getItems()
 {
-	return items;
+	return itemsPtrs;
 }

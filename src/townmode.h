@@ -15,6 +15,7 @@ class TownMode : public MenuMode
 		void testChoice(int);
 
 		void talk() const;
+		void enterArmory();
 
 	public:
 		TownMode(const Town& town, GameData&, GameState&);

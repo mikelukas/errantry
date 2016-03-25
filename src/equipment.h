@@ -31,17 +31,28 @@ class Equipment
 
 			StatMod statMods;
 			int cost;   //price the item sells for
-			int quantity;
 
 		public:
 			Equipment(EquipType type);
 
-			string getName();
-			EquipType getType();
-			int getCost();
-			StatMod& getStatMod();
+			string getName() const;
+			EquipType getType() const;
+			int getCost() const;
+			const StatMod& getStatMod() const;
 
 			friend istream& operator>> (istream&, Equipment&);
     };
 
+struct EquipmentLine
+	{
+		const Equipment* pEquipment;
+		int quantity;
+
+		EquipmentLine(const Equipment*);
+		EquipmentLine(const Equipment*, const int);
+
+		int getTotalCost() const;
+
+		friend void operator+=(EquipmentLine&, const EquipmentLine&);
+	};
 #endif

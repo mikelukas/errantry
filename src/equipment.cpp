@@ -3,8 +3,7 @@
 Equipment::Equipment(EquipType type)
 	: type(type),
 	  name(""),
-	  cost(0),
-	  quantity(0)
+	  cost(0)
 {
 	statMods.hpMod=0;
 	statMods.apMod=0;
@@ -12,22 +11,22 @@ Equipment::Equipment(EquipType type)
 	statMods.spMod=0;
 }
 
-string Equipment::getName()
+string Equipment::getName() const
 {
 	return name;
 }
 
-EquipType Equipment::getType()
+EquipType Equipment::getType() const
 {
 	return type;
 }
 
-int Equipment::getCost()
+int Equipment::getCost() const
 {
 	return cost;
 }
 
-StatMod& Equipment::getStatMod()
+const StatMod& Equipment::getStatMod() const
 {
 	return statMods;
 }
@@ -67,4 +66,28 @@ istream& operator>> (istream& is, Equipment& equipment)
 	getline(is, junk);
 
 	return is;
+}
+
+EquipmentLine::EquipmentLine(const Equipment* pEquipment)
+	: pEquipment(pEquipment),
+	  quantity(1)
+{
+
+}
+
+EquipmentLine::EquipmentLine(const Equipment* pEquipment, const int quantity)
+	: pEquipment(pEquipment),
+	  quantity(quantity)
+{
+
+}
+
+int EquipmentLine::getTotalCost() const
+{
+	return pEquipment->getCost() * quantity;
+}
+
+void operator+= (EquipmentLine& leftLine, const EquipmentLine& rightLine)
+{
+	leftLine.quantity += (rightLine.quantity);
 }

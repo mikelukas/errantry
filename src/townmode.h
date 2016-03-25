@@ -3,6 +3,8 @@
 
 #include "menumode.h"
 
+const string ARMORY_CLOSED_MSG = "The armory is closed for business in ";
+
 /* The player enters this mode when moving into a Town on the overworld.
  * State and actions specific to being in a Town is tracked by this class.
  */

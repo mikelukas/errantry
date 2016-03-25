@@ -65,7 +65,7 @@ void TownMode::enterArmory()
 
 	if(!hasInventory)
 	{
-		cout<<"The armory is closed for business in "<<currentTown.getName()<<"."<<endl;
+		cout<<ARMORY_CLOSED_MSG<<currentTown.getName()<<"."<<endl;
 		return;
 	}
 

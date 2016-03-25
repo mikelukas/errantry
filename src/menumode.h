@@ -17,7 +17,7 @@ class MenuMode : public GameMode
 		virtual int displayMenu() = 0;
 		virtual void testChoice(int) = 0;
 
-		bool validateChoice(int, int);
+		bool validateChoice(int, int) const;
 
 	public:
 		MenuMode(GameData&, GameState& gameState);

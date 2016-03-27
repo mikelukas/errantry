@@ -48,6 +48,7 @@ struct EquipmentLine
 		const Equipment* pEquipment;
 		int quantity;
 
+		EquipmentLine(); //Constructs a NULL object essentially; pEquipment is null and quantity is 0
 		EquipmentLine(const Equipment*);
 		EquipmentLine(const Equipment*, const int);
 

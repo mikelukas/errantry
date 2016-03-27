@@ -115,7 +115,22 @@ void Player::ChangeHP(int hpChange)
         
         HP = HP + hpChange;
     }
+void Player::Buy(const EquipmentLine* purchasedEqLine)
+	{
+		EquipType purchaseType = purchasedEqLine->pEquipment->getType();
+		unordered_map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(purchaseType);
 
+		EquipmentLine& eqLine = inventory[purchasedEqLine->pEquipment];
+		if(eqLine.pEquipment != NULL)
+		{
+			eqLine += (*purchasedEqLine);
+		}
+		else {
+			inventory[purchasedEqLine->pEquipment] = (*purchasedEqLine);
+		}
+
+		gold -= (purchasedEqLine->getTotalCost());
+	}
 //accessor functions-------------------------------------------------//
 
 string Player::ShowName() const
@@ -188,4 +203,27 @@ int Player::NumToNext() const
         //needs to advance to the next level up.
         
         return expToNext;
-    }   
+    }
+unordered_map<const Equipment*, EquipmentLine>& Player::getInventoryFor(const EquipType equipType)
+	{
+		//postcondition: returns the inventory set matching the given equipment type,
+		//or the items list if the EquipType is not recognized (if this happens then
+		//it should be a bug.
+
+		switch(equipType)
+		{
+		case WEAPON:
+			return weapons;
+			break;
+		case ARMOR:
+			return armor;
+			break;
+		case ITEM:
+			return items;
+			break;
+
+		default:
+			return items;
+			break;
+		}
+	}

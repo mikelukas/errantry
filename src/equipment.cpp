@@ -68,6 +68,13 @@ istream& operator>> (istream& is, Equipment& equipment)
 	return is;
 }
 
+EquipmentLine::EquipmentLine()
+	: pEquipment(NULL),
+	  quantity(0)
+{
+
+}
+
 EquipmentLine::EquipmentLine(const Equipment* pEquipment)
 	: pEquipment(pEquipment),
 	  quantity(1)

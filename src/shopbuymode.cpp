@@ -26,7 +26,6 @@ bool ShopBuyMode::validateShopChoice(const Equipment* equipment, int quantity) c
 
 void ShopBuyMode::processTransaction()
 {
-	//TODO: After buy() is implemented on player, call it here w/ equipmentChoice to put it in player inventory
-	int totalCost = equipmentChoice->getTotalCost();
-	cout<<"Bought "<<equipmentChoice->quantity<<" "<<equipmentChoice->pEquipment->getName()<<" for $"<<totalCost<<"."<<endl;
+	gameState.getPlayer().Buy(equipmentChoice);
+	cout<<"Bought "<<equipmentChoice->quantity<<" "<<equipmentChoice->pEquipment->getName()<<" for $"<<equipmentChoice->getTotalCost()<<"."<<endl;
 }

@@ -7,13 +7,13 @@
 //need to do such as move up a level, access attributes, move coordinates,
 //etc. 
 
+#include <map>
 #include <string>
-#include <unordered_map>
 #include "equipment.h"
 #include "point.h"
 
+using std::map;
 using std::string;
-using std::unordered_map;
 
 const double HPRATE = .65;   //
 const double BIGRATE = .45;     //rates to increase attributes by at level up
@@ -49,11 +49,11 @@ class Player
             Point Coords;       //Holds the players coordinates on the map
             
             //Inventory; maps for fast lookup of quantity
-            unordered_map<const Equipment*, EquipmentLine> weapons;
-            unordered_map<const Equipment*, EquipmentLine> armor;
-            unordered_map<const Equipment*, EquipmentLine> items;
+            map<const Equipment*, EquipmentLine> weapons;
+            map<const Equipment*, EquipmentLine> armor;
+            map<const Equipment*, EquipmentLine> items;
 
-            unordered_map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
+            map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
 
         public:
             Player();

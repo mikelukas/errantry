@@ -118,7 +118,7 @@ void Player::ChangeHP(int hpChange)
 void Player::Buy(const EquipmentLine* purchasedEqLine)
 	{
 		EquipType purchaseType = purchasedEqLine->pEquipment->getType();
-		unordered_map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(purchaseType);
+		map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(purchaseType);
 
 		EquipmentLine& eqLine = inventory[purchasedEqLine->pEquipment];
 		if(eqLine.pEquipment != NULL)
@@ -204,7 +204,7 @@ int Player::NumToNext() const
         
         return expToNext;
     }
-unordered_map<const Equipment*, EquipmentLine>& Player::getInventoryFor(const EquipType equipType)
+map<const Equipment*, EquipmentLine>& Player::getInventoryFor(const EquipType equipType)
 	{
 		//postcondition: returns the inventory set matching the given equipment type,
 		//or the items list if the EquipType is not recognized (if this happens then

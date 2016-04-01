@@ -15,7 +15,7 @@ const int EXIT_CHOICE = 0;
 class ShopTransactionMode : public MenuMode
 {
 	protected:
-		const vector<Equipment*>* equipmentChoices;
+		vector<EquipmentLine*>* equipmentChoices;
 		EquipmentLine* equipmentChoice;
 
 		int displayMenu();
@@ -23,12 +23,12 @@ class ShopTransactionMode : public MenuMode
 
 		void clearShopChoice();
 
-		virtual void displayShopChoice(const Equipment*) const = 0;
+		virtual void displayShopChoice(const EquipmentLine*) const = 0;
 		virtual bool validateShopChoice(const Equipment*, int quantity) const = 0;
 		virtual void processTransaction() = 0;
 
 	public:
-		ShopTransactionMode(const vector<Equipment*>*, GameData&, GameState&);
+		ShopTransactionMode(vector<EquipmentLine*>*, GameData&, GameState&);
 		virtual ~ShopTransactionMode();
 };
 

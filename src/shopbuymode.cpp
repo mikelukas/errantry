@@ -1,15 +1,15 @@
 #include "gamestate.h"
 #include "shopbuymode.h"
 
-ShopBuyMode::ShopBuyMode(const vector<Equipment*>* equipmentChoices, GameData& gameData, GameState& gameState)
+ShopBuyMode::ShopBuyMode(vector<EquipmentLine*>* equipmentChoices, GameData& gameData, GameState& gameState)
 	: ShopTransactionMode(equipmentChoices, gameData, gameState)
 {
 
 }
 
-void ShopBuyMode::displayShopChoice(const Equipment* equipment) const
+void ShopBuyMode::displayShopChoice(const EquipmentLine* eqLine) const
 {
-	cout<<"$"<<equipment->getCost()<<setw(5)<<" - "<<equipment->getName();
+	cout<<"$"<<eqLine->pEquipment->getCost()<<setw(5)<<" - "<<eqLine->pEquipment->getName();
 }
 
 bool ShopBuyMode::validateShopChoice(const Equipment* equipment, int quantity) const

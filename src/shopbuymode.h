@@ -10,12 +10,12 @@
 class ShopBuyMode: public ShopTransactionMode
 {
 	protected:
-		void displayShopChoice(const Equipment*) const;
+		void displayShopChoice(const EquipmentLine*) const;
 		bool validateShopChoice(const Equipment*, int quantity) const;
 		void processTransaction();
 
 	public:
-		ShopBuyMode(const vector<Equipment*>*, GameData&, GameState&);
+		ShopBuyMode(vector<EquipmentLine*>*, GameData&, GameState&);
 		~ShopBuyMode() { };
 };
 

@@ -16,17 +16,18 @@ void ArmoryMainMode::enterBuyMode()
 	const vector<int> shopWeaponIds = currentTown.getShopEquipmentIds(WEAPON);
 	const vector<int> shopArmorIds = currentTown.getShopEquipmentIds(ARMOR);
 
-	vector<Equipment*>* equipmentChoices = new vector<Equipment*>;
+	vector<EquipmentLine*>* equipmentChoices = new vector<EquipmentLine*>; //will be deleted by ShopTransactionMode
 
 	for(int i = 0; i < shopWeaponIds.size(); i++)
 	{
-		Equipment* eq = allWeapons[shopWeaponIds[i]];
-		equipmentChoices->push_back(eq);
+		EquipmentLine* eqLine = new EquipmentLine(allWeapons[shopWeaponIds[i]], INF_QUANTITY);
+		equipmentChoices->push_back(eqLine);
 	}
 
 	for(int i = 0; i < shopArmorIds.size(); i++)
 	{
-		equipmentChoices->push_back(allArmor[shopArmorIds[i]]);
+		EquipmentLine* eqLine = new EquipmentLine(allArmor[shopArmorIds[i]], INF_QUANTITY);
+		equipmentChoices->push_back(eqLine);
 	}
 
 	GameMode* shopBuyMode = new ShopBuyMode(equipmentChoices, gameData, gameState);

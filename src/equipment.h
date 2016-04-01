@@ -11,6 +11,8 @@ using std::string;
 
 enum EquipType {WEAPON, ARMOR, ITEM};
 
+const int INF_QUANTITY = -1; //For shops that sell equipment, you can buy as much as you can afford, and equipment lines need SOME kind of quantity, so this is a sentinel value for infinity
+
 //Encapsulates changes to stats caused by using a piece of equipment
 struct StatMod
 	{

@@ -1,7 +1,7 @@
 #include "gamestate.h"
 #include "shoptransactionmode.h"
 
-ShopTransactionMode::ShopTransactionMode(const vector<Equipment*>* equipmentChoices, GameData& gameData, GameState& gameState)
+ShopTransactionMode::ShopTransactionMode(vector<EquipmentLine*>* equipmentChoices, GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState),
 	  equipmentChoices(equipmentChoices),
 	  equipmentChoice(NULL)
@@ -16,6 +16,11 @@ ShopTransactionMode::~ShopTransactionMode()
 		clearShopChoice();
 	}
 
+	while(!equipmentChoices->empty())
+	{
+		delete (equipmentChoices->back());
+		equipmentChoices->pop_back();
+	}
 	delete equipmentChoices;
 }
 
@@ -52,12 +57,12 @@ int ShopTransactionMode::displayMenu()
 
 		do
 		{
-			cout<<"How many '"<<(*equipmentChoices)[choice-1]->getName()<<"' (0 to cancel)? "<<endl;
+			cout<<"How many '"<<(*equipmentChoices)[choice-1]->pEquipment->getName()<<"' (0 to cancel)? "<<endl;
 			cin>>quantity;
-		}while(!validateShopChoice((*equipmentChoices)[choice-1], quantity));
+		}while(!validateShopChoice((*equipmentChoices)[choice-1]->pEquipment, quantity));
 	}while(quantity <=0);
 
-	equipmentChoice = new EquipmentLine((*equipmentChoices)[choice-1], quantity);
+	equipmentChoice = new EquipmentLine((*equipmentChoices)[choice-1]->pEquipment, quantity);
 	return choice;
 }
 

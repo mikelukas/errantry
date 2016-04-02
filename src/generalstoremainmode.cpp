@@ -2,6 +2,7 @@
 #include "gamestate.h"
 #include "generalstoremainmode.h"
 #include "shopbuymode.h"
+#include "shopsellmode.h"
 
 GeneralStoreMainMode::GeneralStoreMainMode(const Town& town, GameData& gameData, GameState& gameState)
 	: ShopMainMode(town, gameData, gameState)
@@ -33,6 +34,21 @@ void GeneralStoreMainMode::enterBuyMode()
 
 void GeneralStoreMainMode::enterSellMode()
 {
-	//TODO: implement
-	cout<<"Just sellin' at the "<<currentTown.getName()<<" General Store!"<<endl;
+	//postcondition: Enter ShopSellMode with items from player's inventory.
+	//A vector is dynamically allocated to hold these, and new EquipmentLines for each
+	//piece of equipment are also dynamically allocated.  All of these allocations
+	//are freed in ShopTransactionMode's destructor when exiting the mode.
+
+	map<const Equipment*, EquipmentLine>& invItems = gameState.getPlayer().getInventoryFor(ITEM);
+
+	vector<EquipmentLine*>* equipmentChoices = new vector<EquipmentLine*>; //will be deleted by ShopTransactionMode
+
+	for(map<const Equipment*,EquipmentLine>::iterator it=invItems.begin(); it!=invItems.end(); it++)
+	{
+		EquipmentLine* eqLine = new EquipmentLine(it->second);
+		equipmentChoices->push_back(eqLine);
+	}
+
+	GameMode* shopBuyMode = new ShopSellMode(equipmentChoices, gameData, gameState);
+	gameState.enterMode(shopBuyMode);
 }

@@ -66,6 +66,9 @@ void TownMode::talk() const
 
 void TownMode::enterArmory()
 {
+	//postcondition: enters ArmoryMainMode if the town has weapons and armor to sell,
+	//otherwise just displays message and remains in town mode.
+
 	bool hasInventory = (!currentTown.getShopEquipmentIds(WEAPON).empty()
 						|| !currentTown.getShopEquipmentIds(ARMOR).empty());
 

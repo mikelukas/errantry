@@ -11,6 +11,11 @@ ArmoryMainMode::ArmoryMainMode(const Town& town, GameData& gameData, GameState& 
 
 void ArmoryMainMode::enterBuyMode()
 {
+	//postcondition: Enters ShopBuyMode with current town's weapon and armor list.
+	//Dynamically allocates EquipmentLines for each piece, and also allocates a
+	//vector to hold them, all of which will be cleaned up in ShopTransactionMode's
+	//destructor.
+
 	const vector<Equipment*> allWeapons = gameData.getWeapons();
 	const vector<Equipment*> allArmor = gameData.getArmor();
 

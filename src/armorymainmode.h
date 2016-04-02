@@ -4,8 +4,8 @@
 #include "shopmainmode.h"
 
 /* Top-level mode when entering an Armory from a town.  Just directs the player
- * to the ArmoryBuy or ArmorySell modes depending on their choice, initialized
- * with the proper inventory from the town.
+ * to the ShopBuy or ShopSell modes depending on their choice, initialized
+ * with the proper inventory from the town or player weapon and armor inventory, respectively.
  */
 class ArmoryMainMode : public ShopMainMode
 {

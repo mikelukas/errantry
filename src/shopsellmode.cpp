@@ -40,7 +40,7 @@ bool ShopSellMode::validateShopChoice(const Equipment* equipment, int quantity) 
 void ShopSellMode::processTransaction()
 {
 	//postcondition: sell is called on the player object with the chosen EquipmentLine,
-	//and a message is displayed telling the player what they just bought and for how much.
+	//and a message is displayed telling the player what they just sold and for how much.
 
 	gameState.getPlayer().Sell(equipmentChoice);
 	cout<<"Sold "<<equipmentChoice->quantity<<" "<<equipmentChoice->pEquipment->getName()<<" for $"<<equipmentChoice->getTotalSellPrice()<<"."<<endl;

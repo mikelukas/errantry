@@ -10,7 +10,7 @@ ShopMainMode::ShopMainMode(const Town& town, GameData& gameData, GameState& game
 
 int ShopMainMode::displayMenu()
 {
-	//postcondition: Displays town menu options to user, and returns their choice.
+	//postcondition: Displays shop menu options to user, and returns their choice.
 	int choice;
 
 	cout<<"*****Choices*****"<<endl;

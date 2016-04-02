@@ -9,11 +9,16 @@ ShopBuyMode::ShopBuyMode(vector<EquipmentLine*>* equipmentChoices, GameData& gam
 
 void ShopBuyMode::displayShopChoice(const EquipmentLine* eqLine) const
 {
+	//postcondition: displays 1 line of equipment able to be bought.  Does not append newline.
+
 	cout<<"$"<<eqLine->pEquipment->getCost()<<setw(5)<<" - "<<eqLine->pEquipment->getName();
 }
 
 bool ShopBuyMode::validateShopChoice(const Equipment* equipment, int quantity) const
 {
+	//postcondition: returns false and shows an error message if the player tried
+	//to buy more than they can afford
+
 	int totalCost = equipment->getCost() * quantity;
 	if(totalCost <= gameState.getPlayer().Money())
 	{
@@ -26,6 +31,9 @@ bool ShopBuyMode::validateShopChoice(const Equipment* equipment, int quantity) c
 
 void ShopBuyMode::processTransaction()
 {
+	//postcondition: buy is called on the player object with the chosen EquipmentLine,
+	//and a message is displayed telling the player what they just bought and for how much.
+
 	gameState.getPlayer().Buy(equipmentChoice);
 	cout<<"Bought "<<equipmentChoice->quantity<<" "<<equipmentChoice->pEquipment->getName()<<" for $"<<equipmentChoice->getTotalCost()<<"."<<endl;
 }

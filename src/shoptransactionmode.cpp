@@ -27,6 +27,14 @@ ShopTransactionMode::~ShopTransactionMode()
 
 int ShopTransactionMode::displayMenu()
 {
+	//postcondition: displays equipment choice list to be bought/sold at shop,
+	//and returns the index into the equipmentChoices vector the player picked,
+	//or the EXIT_CHOICE value if the player wants to exit buy/sell mode at the shop.
+	//Also handles asking the player how much of the equipment they chose they
+	//want to buy/sell, and dynamically allocates a new EquipmentLine for the
+	//choice and quantity.  This will be freed once the transaction is processed
+	//after testChoice.
+
 	int choice;
 	int quantity=0;
 
@@ -69,6 +77,10 @@ int ShopTransactionMode::displayMenu()
 
 void ShopTransactionMode::testChoice(int choice)
 {
+	//postcondition: calls subclass's implementations of processTransaction and
+	//updateChoices, or exits the mode if the player chose to leave from the
+	//choice list.
+
 	switch(choice)
 	{
 	case EXIT_CHOICE:

@@ -26,6 +26,11 @@ int Equipment::getCost() const
 	return cost;
 }
 
+int Equipment::getSellPrice() const
+{
+	return round(USED_EQUIPMENT_MARKDOWN * ((float) cost));
+}
+
 const StatMod& Equipment::getStatMod() const
 {
 	return statMods;
@@ -94,7 +99,17 @@ int EquipmentLine::getTotalCost() const
 	return pEquipment->getCost() * quantity;
 }
 
+int EquipmentLine::getTotalSellPrice() const
+{
+	return pEquipment->getSellPrice() * quantity;
+}
+
 void operator+= (EquipmentLine& leftLine, const EquipmentLine& rightLine)
 {
 	leftLine.quantity += (rightLine.quantity);
+}
+
+void operator-= (EquipmentLine& leftLine, const EquipmentLine& rightLine)
+{
+	leftLine.quantity -= min(leftLine.quantity, rightLine.quantity); //you can't reduce total equipment to a number below 0
 }

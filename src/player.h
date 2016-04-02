@@ -26,7 +26,7 @@ const int BEGINHP = 25;
 const int BEGINAP = 10;
 const int BEGINDP = 7;
 const int BEGINSP = 3;
-const int BEGINGOLD = 0;
+const int BEGINGOLD = 1200;
 
 const Point STARTPOS(29, 8);
 
@@ -53,8 +53,6 @@ class Player
             map<const Equipment*, EquipmentLine> armor;
             map<const Equipment*, EquipmentLine> items;
 
-            map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
-
         public:
             Player();
             Player(int, int, int, int, int, int);
@@ -67,6 +65,7 @@ class Player
             void ChangeHP(int);
 
             void Buy(const EquipmentLine*);
+            void Sell(const EquipmentLine*);
                         
             string ShowName() const;
             int Damage() const;
@@ -78,6 +77,9 @@ class Player
             int Level() const;
             int NumExpPts() const;
             int NumToNext() const;
+
+            map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
+            EquipmentLine& getEquipmentLineFromInventoryFor(const Equipment*);
     };
 
 #endif

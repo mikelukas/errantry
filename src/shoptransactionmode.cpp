@@ -16,6 +16,7 @@ ShopTransactionMode::~ShopTransactionMode()
 		clearShopChoice();
 	}
 
+	//all EquipmentLine* in choices vector were also dynamically allocated prior to creating this mode
 	while(!equipmentChoices->empty())
 	{
 		delete (equipmentChoices->back());
@@ -75,6 +76,7 @@ void ShopTransactionMode::testChoice(int choice)
 		break;
 	default:
 		processTransaction();
+		updateChoices(choice);
 		clearShopChoice();
 		break;
 	}

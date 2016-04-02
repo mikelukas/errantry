@@ -1,6 +1,7 @@
 #include "armorymainmode.h"
 #include "gamestate.h"
 #include "shopbuymode.h"
+#include "shopsellmode.h"
 
 ArmoryMainMode::ArmoryMainMode(const Town& town, GameData& gameData, GameState& gameState)
 	: ShopMainMode(town, gameData, gameState)
@@ -36,7 +37,28 @@ void ArmoryMainMode::enterBuyMode()
 
 void ArmoryMainMode::enterSellMode()
 {
-	//TODO: implement actual state change
-	cout<<"Just sellin' at the "<<currentTown.getName()<<" Armory!"<<endl;
-	gameState.exitCurrentMode();
+	//postcondition: Enter ShopSellMode with weapons and armor from player's inventory.
+	//A vector is dynamically allocated to hold these, and new EquipmentLines for each
+	//piece of equipment are also dynamically allocated.  All of these allocations
+	//are freed in ShopTransactionMode's destructor when exiting the mode.
+
+	map<const Equipment*, EquipmentLine>& invWeapons = gameState.getPlayer().getInventoryFor(WEAPON);
+	map<const Equipment*, EquipmentLine>& invArmor = gameState.getPlayer().getInventoryFor(ARMOR);
+
+	vector<EquipmentLine*>* equipmentChoices = new vector<EquipmentLine*>; //will be deleted by ShopTransactionMode
+
+	for(map<const Equipment*,EquipmentLine>::iterator it=invWeapons.begin(); it!=invWeapons.end(); it++)
+	{
+		EquipmentLine* eqLine = new EquipmentLine(it->second);
+		equipmentChoices->push_back(eqLine);
+	}
+
+	for(map<const Equipment*,EquipmentLine>::iterator it=invArmor.begin(); it!=invArmor.end(); it++)
+	{
+		EquipmentLine* eqLine = new EquipmentLine(it->second);
+		equipmentChoices->push_back(eqLine);
+	}
+
+	GameMode* shopBuyMode = new ShopSellMode(equipmentChoices, gameData, gameState);
+	gameState.enterMode(shopBuyMode);
 }

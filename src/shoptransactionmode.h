@@ -26,6 +26,7 @@ class ShopTransactionMode : public MenuMode
 		virtual void displayShopChoice(const EquipmentLine*) const = 0;
 		virtual bool validateShopChoice(const Equipment*, int quantity) const = 0;
 		virtual void processTransaction() = 0;
+		virtual void updateChoices(int) {};
 
 	public:
 		ShopTransactionMode(vector<EquipmentLine*>*, GameData&, GameState&);

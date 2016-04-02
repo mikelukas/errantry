@@ -131,6 +131,34 @@ void Player::Buy(const EquipmentLine* purchasedEqLine)
 
 		gold -= (purchasedEqLine->getTotalCost());
 	}
+void Player::Sell(const EquipmentLine* soldEqLine)
+	{
+		//postcondition: sold equipment quantity is subtracted from the quantity
+		//the player has, and the equipment is removed entirely if they have none left
+		//after selling.  An amount of gold equal to the sale price of the
+		//equipment * sold quantity is added to player's gold count.
+
+		EquipType soldType = soldEqLine->pEquipment->getType();
+		map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(soldType);
+
+		EquipmentLine& invEqline = inventory[soldEqLine->pEquipment];
+		if(invEqline.pEquipment == NULL)
+		{
+			//bug if we got this far...
+			cout<<"You can't sell what you don't have!"<<endl;
+			return;
+		}
+
+		invEqline -= (*soldEqLine);
+		if(invEqline.quantity <= 0)
+		{
+			//don't want this equipment listed anywhere anymore if we're out of it
+			inventory.erase(invEqline.pEquipment);
+		}
+
+		gold += soldEqLine->getTotalSellPrice();
+	}
+
 //accessor functions-------------------------------------------------//
 
 string Player::ShowName() const
@@ -224,6 +252,24 @@ map<const Equipment*, EquipmentLine>& Player::getInventoryFor(const EquipType eq
 
 		default:
 			return items;
+			break;
+		}
+	}
+EquipmentLine& Player::getEquipmentLineFromInventoryFor(const Equipment* equipment)
+	{
+		switch(equipment->getType())
+		{
+		case WEAPON:
+			return weapons[equipment];
+			break;
+		case ARMOR:
+			return armor[equipment];
+			break;
+		case ITEM:
+			return items[equipment];
+			break;
+		default:
+			return items[equipment]; //will likely create a null equipment
 			break;
 		}
 	}

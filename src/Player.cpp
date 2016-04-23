@@ -334,6 +334,11 @@ const Equipment* Player::getCurrentEquipped(EquipType equipType)
 void Player::AddStats(const StatMod& stats)
 	{
 		HP += stats.hpMod;
+		if(HP > maxHP)
+		{
+			HP = maxHP;
+		}
+
 		AP += stats.apMod;
 		DP += stats.dpMod;
 		SP += stats.spMod;

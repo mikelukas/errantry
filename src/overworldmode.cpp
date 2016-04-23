@@ -192,8 +192,10 @@ void OverworldMode::printStatus() const
 	cout<<"Name:  "<<player.ShowName()<<endl
 		<<endl;
 	StatsDisplayer::fullDisplayFor(player);
-	cout<<"**********************MESSAGES**********************"<<endl;
-	cout<<"Press X and enter when done:  ";
+	cout<<endl
+		<<"Gold: "<<player.Money()<<endl
+		<<"**********************MESSAGES**********************"<<endl
+		<<"Press X and enter when done:  ";
 	cin>>junkCh;
 	cout<<endl<<endl;
 }

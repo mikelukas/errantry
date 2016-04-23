@@ -2,6 +2,7 @@
 #include "equipmode.h"
 #include "gamestate.h"
 #include "overworldmode.h"
+#include "statsdisplayer.h"
 #include "townmode.h"
 #include "quitmode.h"
 
@@ -187,13 +188,9 @@ void OverworldMode::printStatus() const
 	char junkCh;
 
 	cout<<"********************************************************"<<endl;
-	cout<<"*Name:  "<<player.ShowName()<<setw(16)<<"Level: "<<player.Level()<<endl;
-	cout<<"*HP:  "<<player.Health()<<"   --health"<<endl;
-	cout<<"*AP:  "<<player.Damage()<<"   --attack power"<<endl;
-	cout<<"*DP:  "<<player.Defense()<<"   --defense percentage"<<endl;
-	cout<<"*SP:  "<<player.Speed()<<"   --speed points"<<endl<<endl;
-	cout<<"*Current experience points:     "<<player.NumExpPts()<<endl;
-	cout<<"*Number needed for next level:  "<<player.NumToNext()<<endl<<endl;
+	cout<<"Name:  "<<player.ShowName()<<endl
+		<<endl;
+	StatsDisplayer::fullDisplayFor(player);
 	cout<<"**********************MESSAGES**********************"<<endl;
 	cout<<"Press X and enter when done:  ";
 	cin>>junkCh;

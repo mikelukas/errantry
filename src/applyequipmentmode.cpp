@@ -18,7 +18,10 @@ void ApplyEquipmentMode::run()
 	//postcondition: Updates the equipment choice list before displaying the menu,
 	//since the player's inventory will be changed by whatever they choose.
 
+	//initializes or refreshes equipment choices vector
+	cleanupEquipmentChoices();
 	updateEquipmentChoices();
+
 	MenuMode::run();
 }
 
@@ -64,8 +67,6 @@ void ApplyEquipmentMode::testChoice(int choice)
 		break;
 	default:
 		gameState.getPlayer().apply((*invEquipment)[choice-1]);
-		cleanupEquipmentChoices();
-		updateEquipmentChoices();
 		break;
 	}
 }

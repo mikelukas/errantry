@@ -34,20 +34,10 @@ void GeneralStoreMainMode::enterBuyMode()
 
 void GeneralStoreMainMode::enterSellMode()
 {
-	//postcondition: Enter ShopSellMode with items from player's inventory.
-	//A vector is dynamically allocated to hold these, and new EquipmentLines for each
-	//piece of equipment are also dynamically allocated.  All of these allocations
-	//are freed in ShopTransactionMode's destructor when exiting the mode.
+	//postcondition:  Enter ShopSellMode with weapons and armor from player's inventory.
+	//Equipment choices vector (but not EquipmentLines there-in) will be freed by ShopTransactionMode
 
-	map<const Equipment*, EquipmentLine>& invItems = gameState.getPlayer().getInventoryFor(ITEM);
-
-	vector<EquipmentLine*>* equipmentChoices = new vector<EquipmentLine*>; //will be deleted by ShopTransactionMode
-
-	for(map<const Equipment*,EquipmentLine>::iterator it=invItems.begin(); it!=invItems.end(); it++)
-	{
-		EquipmentLine* eqLine = new EquipmentLine(it->second);
-		equipmentChoices->push_back(eqLine);
-	}
+	vector<EquipmentLine*>* equipmentChoices = gameState.getPlayer().getItemsAsVector();
 
 	GameMode* shopBuyMode = new ShopSellMode(equipmentChoices, gameData, gameState);
 	gameState.enterMode(shopBuyMode);

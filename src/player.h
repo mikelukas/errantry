@@ -93,6 +93,7 @@ class Player
 
             map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
             vector<EquipmentLine*>* getWeaponsAndArmorAsVector();
+            vector<EquipmentLine*>* getItemsAsVector();
             EquipmentLine& getEquipmentLineFromInventoryFor(const Equipment*);
 
             const Equipment* getCurrentEquipped(EquipType);

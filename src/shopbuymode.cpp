@@ -7,6 +7,23 @@ ShopBuyMode::ShopBuyMode(vector<EquipmentLine*>* equipmentChoices, GameData& gam
 
 }
 
+ShopBuyMode::~ShopBuyMode()
+{
+	if(equipmentChoices == NULL)
+	{
+		return;
+	}
+
+	//for BuyModes, all EquipmentLine* in choices vector were dynamically allocated,
+	//since they are created from the shops' inventories which have unlimited amounts
+	//TODO: to avoid having to de-allocate here, shop inventory could be Eq lines, rather than just Equipment.  would need to encapsulate decrementing quantity so decrementing from infinity could be enforced
+	while(!equipmentChoices->empty())
+	{
+		delete (equipmentChoices->back());
+		equipmentChoices->pop_back();
+	}
+}
+
 void ShopBuyMode::displayShopChoice(const EquipmentLine* eqLine) const
 {
 	//postcondition: displays 1 line of equipment able to be bought.  Does not append newline.

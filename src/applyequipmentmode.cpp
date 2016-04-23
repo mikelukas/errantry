@@ -78,11 +78,5 @@ void ApplyEquipmentMode::cleanupEquipmentChoices()
 		return;
 	}
 
-	//all EquipmentLine* in choices vector were also dynamically allocated prior to creating this mode
-	while(!invEquipment->empty())
-	{
-		delete (invEquipment->back());
-		invEquipment->pop_back();
-	}
 	delete invEquipment;
 }

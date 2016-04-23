@@ -16,12 +16,6 @@ ShopTransactionMode::~ShopTransactionMode()
 		clearShopChoice();
 	}
 
-	//all EquipmentLine* in choices vector were also dynamically allocated prior to creating this mode
-	while(!equipmentChoices->empty())
-	{
-		delete (equipmentChoices->back());
-		equipmentChoices->pop_back();
-	}
 	delete equipmentChoices;
 }
 

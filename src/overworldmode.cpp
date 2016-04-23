@@ -5,6 +5,7 @@
 #include "statsdisplayer.h"
 #include "townmode.h"
 #include "quitmode.h"
+#include "useitemmode.h"
 
 OverworldMode::OverworldMode(GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState)
@@ -205,5 +206,6 @@ void OverworldMode::equip()
 
 void OverworldMode::useItem()
 {
-	cout<<"Would be entering UseItemMode right now... IF IT EXISTED."<<endl;
+	GameMode* useItemMode = new UseItemMode(gameData, gameState);
+	gameState.enterMode(useItemMode);
 }

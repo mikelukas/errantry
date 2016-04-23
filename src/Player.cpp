@@ -281,19 +281,34 @@ vector<EquipmentLine*>* Player::getWeaponsAndArmorAsVector()
 
 		for(map<const Equipment*,EquipmentLine>::iterator it=invWeapons.begin(); it!=invWeapons.end(); it++)
 		{
-			EquipmentLine* eqLine = new EquipmentLine(it->second);
-			equipmentChoices->push_back(eqLine);
+			equipmentChoices->push_back(&(it->second));
 		}
 
 		for(map<const Equipment*,EquipmentLine>::iterator it=invArmor.begin(); it!=invArmor.end(); it++)
 		{
-			EquipmentLine* eqLine = new EquipmentLine(it->second);
-			equipmentChoices->push_back(eqLine);
+			equipmentChoices->push_back(&(it->second));
 		}
 
 		return equipmentChoices;
 	}
+vector<EquipmentLine*>* Player::getItemsAsVector()
+	{
+		//Postcondition: A vector is dynamically allocated to hold all items in
+		//the player's inventory, and new EquipmentLines for each piece of item
+		//are also dynamically allocated.  All of these allocations should be
+		//freed by the caller.
 
+		map<const Equipment*, EquipmentLine>& invItems = getInventoryFor(ITEM);
+
+		vector<EquipmentLine*>* equipmentChoices = new vector<EquipmentLine*>;
+
+		for(map<const Equipment*,EquipmentLine>::iterator it=invItems.begin(); it!=invItems.end(); it++)
+		{
+			equipmentChoices->push_back(&(it->second));
+		}
+
+		return equipmentChoices;
+	}
 EquipmentLine& Player::getEquipmentLineFromInventoryFor(const Equipment* equipment)
 	{
 		switch(equipment->getType())

@@ -16,7 +16,7 @@ class ShopBuyMode: public ShopTransactionMode
 
 	public:
 		ShopBuyMode(vector<EquipmentLine*>*, GameData&, GameState&);
-		~ShopBuyMode() { };
+		~ShopBuyMode();
 };
 
 #endif

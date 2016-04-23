@@ -26,14 +26,15 @@ int OverworldMode::displayMenu()
 	cout<<"*1)Move         *"<<endl;
 	cout<<"*2)Status       *"<<endl;
 	cout<<"*3)Equip        *"<<endl;
-	cout<<"*4)Quit Game    *"<<endl;
+	cout<<"*4)Use Item     *"<<endl;
+	cout<<"*5)Quit Game    *"<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"**********************MESSAGES**********************"<<endl;
 	do
 	{
 		cout<<"Please choose an option:  "<<endl;
 		cin>>choice;
-	}while(!validateChoice(choice, 4));
+	}while(!validateChoice(choice, 5));
 
 	return choice;
 }
@@ -52,6 +53,9 @@ void OverworldMode::testChoice(int choice)
 				equip();
 				break;
 			case 4:
+				useItem();
+				break;
+			case 5:
 				GameMode* quit = new QuitMode(gameData, gameState);
 				gameState.enterMode(quit);
 				break;
@@ -200,4 +204,9 @@ void OverworldMode::equip()
 {
 	GameMode* equipMode = new EquipMode(gameData, gameState);
 	gameState.enterMode(equipMode);
+}
+
+void OverworldMode::useItem()
+{
+	cout<<"Would be entering UseItemMode right now... IF IT EXISTED."<<endl;
 }

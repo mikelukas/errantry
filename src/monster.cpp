@@ -18,7 +18,7 @@ Monster::Monster()
         //list
     }
 //Public Member functions--------------------------------------------//
-void Monster::SetAttributes(int hpVar, int apVar, int dpVar, int spVar, int expVar, 
+void Monster::SetAttributes(int hpVar, int apVar, int dpVar, int spVar, int goldVar, int expVar,
                          string& name)
     {
         mHP = hpVar;
@@ -26,6 +26,7 @@ void Monster::SetAttributes(int hpVar, int apVar, int dpVar, int spVar, int expV
         AP = apVar;
         DP = dpVar;
         SP = spVar;
+        gold = goldVar;
         expPoints = expVar;
         monsterName = name;
     }
@@ -74,7 +75,11 @@ int Monster::Speed() const
         //postcondition:  returns the monster's speed points
         return SP;
     }
-
+int Monster::Money() const
+	{
+		//postcondition: returns the amount of gold the monster is carrying
+		return gold;
+	}
 int Monster::Experience() const
     {
         //returns the number of experience points the monster gives

@@ -18,6 +18,7 @@ class Monster
             int AP;             //attack power
             int DP;             //defense percentage
             int SP;             //speed points
+            int gold;
             int expPoints;          //number of expPoints player gets 
                                     //from beating monster
             string monsterName;
@@ -25,7 +26,7 @@ class Monster
 
         public:
             Monster();
-            void SetAttributes(int, int, int, int, int, string&);
+            void SetAttributes(int, int, int, int, int, int, string&);
             void ChangeHP(int);
                     
             string ShowName() const;
@@ -34,6 +35,7 @@ class Monster
             int mHealth() const;
             int mMaxHealth() const;
             int Speed() const;
+            int Money() const;
             int Experience() const;
     };
 

@@ -97,7 +97,7 @@ bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
 	//Postcondition:  the attributes of each monster are retrieved
 	//from a file for use in the program
 
-	int hp, ap, dp, sp, expPts;
+	int hp, ap, dp, sp, gold, expPts;
 	bool found = false;
 	string name; //name of monster
 
@@ -106,10 +106,10 @@ bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
 	if(inFile)
 		{
 			while(getline(inFile, name) &&
-				  inFile>>hp>>ap>>dp>>sp>>expPts)
+				  inFile>>hp>>ap>>dp>>sp>>gold>>expPts)
 				{
 					Monster monster;
-					monster.SetAttributes(hp, ap, dp, sp, expPts,name);
+					monster.SetAttributes(hp, ap, dp, sp, gold, expPts,name);
 
 					monsters.push_back(monster);
 				}

@@ -107,13 +107,14 @@ void BattleMode::onBattleWon()
 
 	char cont;
 	cout<<"You won the battle!  ";
-	cout<<"You gained "<<currMonster.Experience()<<" pts!";
+	cout<<"You gained "<<currMonster.Experience()<<" pts!"<<endl;
+	cout<<"Monster dropped "<<currMonster.Money()<<" gold!";
 	cout<<endl;
 	cout<<"Press X and enter to continue:  ";
 	cin>>cont;
 	player.AddExp(currMonster.Experience());
+	player.AddMoney(currMonster.Money());
 	if(player.NumExpPts() >= player.NumToNext())
 		player.LevelUp();
-	player.ChangeHP(player.MaxHealth() - player.Health());
 	gameState.exitCurrentMode();
 }

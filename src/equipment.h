@@ -25,9 +25,12 @@ struct StatMod
 		int dpMod;
 		int spMod;
 
+		StatMod();
+
 		friend istream& operator>> (istream&, StatMod&);
 		friend ostream& operator<< (ostream&, const StatMod&);
 	};
+const StatMod NO_STATMOD;
 
 class Equipment
     {

@@ -22,6 +22,7 @@ class OverworldMode : public MenuMode
 
 		void move();
 		void getEnemy();
+		void equip();
 
 		void printStatus() const;
 

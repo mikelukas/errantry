@@ -1,4 +1,5 @@
 #include "bossbattlemode.h"
+#include "equipmode.h"
 #include "gamestate.h"
 #include "overworldmode.h"
 #include "townmode.h"
@@ -24,14 +25,15 @@ int OverworldMode::displayMenu()
 	cout<<"*****Choices*****"<<endl;
 	cout<<"*1)Move         *"<<endl;
 	cout<<"*2)Status       *"<<endl;
-	cout<<"*3)Quit Game    *"<<endl;
+	cout<<"*3)Equip        *"<<endl;
+	cout<<"*4)Quit Game    *"<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"**********************MESSAGES**********************"<<endl;
 	do
 	{
 		cout<<"Please choose an option:  "<<endl;
 		cin>>choice;
-	}while(!validateChoice(choice, 3));
+	}while(!validateChoice(choice, 4));
 
 	return choice;
 }
@@ -47,6 +49,9 @@ void OverworldMode::testChoice(int choice)
 				printStatus();
 				break;
 			case 3:
+				equip();
+				break;
+			case 4:
 				GameMode* quit = new QuitMode(gameData, gameState);
 				gameState.enterMode(quit);
 				break;
@@ -189,4 +194,10 @@ void OverworldMode::printStatus() const
 	cout<<"Press X and enter when done:  ";
 	cin>>junkCh;
 	cout<<endl<<endl;
+}
+
+void OverworldMode::equip()
+{
+	GameMode* equipMode = new EquipMode(gameData, gameState);
+	gameState.enterMode(equipMode);
 }

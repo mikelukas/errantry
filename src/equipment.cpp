@@ -36,6 +36,15 @@ const StatMod& Equipment::getStatMod() const
 	return statMods;
 }
 
+StatMod::StatMod()
+	: hpMod(0),
+	  apMod(0),
+	  dpMod(0),
+	  spMod(0)
+{
+
+}
+
 ostream& operator<< (ostream& os, const StatMod& statMods)
 {
 	os<<" HP: "<<statMods.hpMod

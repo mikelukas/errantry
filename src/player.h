@@ -9,11 +9,13 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include "equipment.h"
 #include "point.h"
 
 using std::map;
 using std::string;
+using std::vector;
 
 const double HPRATE = .65;   //
 const double BIGRATE = .45;     //rates to increase attributes by at level up
@@ -48,10 +50,21 @@ class Player
             int lvl;            //current level
             Point Coords;       //Holds the players coordinates on the map
             
+
             //Inventory; maps for fast lookup of quantity
             map<const Equipment*, EquipmentLine> weapons;
             map<const Equipment*, EquipmentLine> armor;
             map<const Equipment*, EquipmentLine> items;
+
+            map<EquipType, const Equipment*> currentEquipped;
+
+            void initStartingEquipment();
+
+            void AddStats(const StatMod&);
+			void SubStats(const StatMod&);
+
+			void dequipCurrent(EquipType);
+			void equip(const Equipment*);
 
         public:
             Player();
@@ -79,7 +92,12 @@ class Player
             int NumToNext() const;
 
             map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
+            vector<EquipmentLine*>* getWeaponsAndArmorAsVector();
             EquipmentLine& getEquipmentLineFromInventoryFor(const Equipment*);
+
+            const Equipment* getCurrentEquipped(EquipType);
+
+            void apply(EquipmentLine*);
     };
 
 #endif

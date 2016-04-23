@@ -23,7 +23,7 @@ class MenuMode : public GameMode
 		MenuMode(GameData&, GameState& gameState);
 		~MenuMode() { };
 
-		void run(); //Calls displayMenu, followed by testChoice with player's choice from menu
+		virtual void run(); //Calls displayMenu, followed by testChoice with player's choice from menu
 };
 
 #endif

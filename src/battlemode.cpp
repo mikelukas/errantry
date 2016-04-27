@@ -114,7 +114,7 @@ void BattleMode::onBattleWon()
 	cin>>cont;
 	player.AddExp(currMonster.Experience());
 	player.AddMoney(currMonster.Money());
-	if(player.NumExpPts() >= player.NumToNext())
+	if(player.ExpPts() >= player.NumToNext())
 		player.LevelUp();
 	gameState.exitCurrentMode();
 }

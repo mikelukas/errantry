@@ -11,40 +11,14 @@ using std::endl;
 //Constructors---------------------------------------------------------------//
 
 Player::Player()
-    : HP(BEGINHP),
-      maxHP(BEGINHP),
-      AP(BEGINAP),
-      DP(BEGINDP),
-      SP(BEGINSP),
-      gold(BEGINGOLD),
-      expPoints(0),
+    : Character(BEGINHP, BEGINAP, BEGINDP, BEGINSP, BEGINGOLD, 0),
       expToNext(100),
       lvl(1),
       Coords(STARTPOS)
     {
         //attribute variables initialized in initializer list
         cout<<"Greetings wanderer, tell me your name:  ";
-        cin>>playerName;
-        cout<<endl;
-
-        initStartingEquipment();
-    }
-Player::Player(int hpVar, int apVar, int dpVar,
-               int spVar, int money, int level)
-    : HP(hpVar),
-      maxHP(hpVar),
-      AP(apVar),
-      DP(dpVar),
-      SP(spVar),
-      gold(money)
-    {
-        //postcondition:  Player statistics are initialized to the specific
-        //values sent to the function
-                
-        lvl = level;
-        
-        cout<<"Greetings wanderer, tell me your name:  ";
-        cin>>playerName;
+        cin>>name;
         cout<<endl;
 
         initStartingEquipment();
@@ -119,15 +93,6 @@ void Player::AddMoney(int money)
         
         gold = gold + money;
     }
-void Player::ChangeHP(int hpChange)
-    {
-        //postcondition:  HP value of character altered by the value
-        //sent to the function; if damage is done, a negative value
-        //is added to HP, if health is gained, a positive value is
-        //added to HP
-        
-        HP = HP + hpChange;
-    }
 void Player::Buy(const EquipmentLine* purchasedEqLine)
 	{
 		EquipType purchaseType = purchasedEqLine->pEquipment->getType();
@@ -174,45 +139,6 @@ void Player::Sell(const EquipmentLine* soldEqLine)
 
 //accessor functions-------------------------------------------------//
 
-string Player::ShowName() const
-    {
-        //postcondition:  returns the name of the player
-        return playerName;
-    }
-int Player::Damage() const
-    {
-        //postcondition:  returns the amount of damage the player can do (AP)
-        return AP;
-    }
-
-int Player::Defense() const
-    {
-        //postcondition:  returns user's defense points
-        return DP;
-    }
-
-int Player::Health() const
-    {
-        //postcondition:  returns user's health points
-        return HP;
-    }
-    
-int Player::MaxHealth() const
-    {
-        //postcondition:  returns user's maximum health points
-        return maxHP;
-    }
-    
-int Player::Speed() const
-    {
-        //postcondition:  returns the character's speed points
-        return SP;
-    }
-int Player::Money() const
-    {
-        //postcondition:  returns the amount of gold the character is carrying
-        return gold;
-    }
 int Player::Level() const
     {
         //postcondition:  returns the user's level number
@@ -230,12 +156,6 @@ void Player::SetCoords(int x, int y)
         //postcondition:  returns a player's x and y coordinates on the map
         Coords.x = x;
         Coords.y = y;
-    }
-                    
-int Player::NumExpPts() const
-    {
-        //postcondition:  returns the user's current experience point total
-        return expPoints;
     }
     
 int Player::NumToNext() const

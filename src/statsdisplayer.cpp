@@ -11,6 +11,6 @@ void StatsDisplayer::fullDisplayFor(const Player& player)
 		<<"SP: "<<std::left<<setw(12)<<player.Speed()<<" --speed points"<<endl
 		<<endl;
 	cout<<"Level: "<<player.Level()<<endl
-		<<"  Current experience points:    "<<player.NumExpPts()<<endl
+		<<"  Current experience points:    "<<player.ExpPts()<<endl
 		<<"  Number needed for next level: "<<player.NumToNext()<<endl;
 }

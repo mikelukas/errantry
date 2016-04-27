@@ -10,6 +10,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "character.h"
 #include "equipment.h"
 #include "point.h"
 
@@ -33,19 +34,9 @@ const int BEGINGOLD = 1200;
 const Point STARTPOS(29, 8);
 
 //Player Class Definition----------------------------------------------------// 
-class Player
+class Player : public Character
     {
         private:
-            int HP;             //current hit points (life)
-            int maxHP;          //maximum hit points
-            int AP;             //attack power
-            int DP;             //defense percentage
-            int SP;             //speed points
-            int gold;
-                        
-            string playerName;
-            
-            int expPoints;      //current experience points
             int expToNext;      //exp. points needed to advance level
             int lvl;            //current level
             Point Coords;       //Holds the players coordinates on the map
@@ -68,27 +59,17 @@ class Player
 
         public:
             Player();
-            Player(int, int, int, int, int, int);
 
             void LevelUp();
             void AddExp(int);
             void AddMoney(int);
             Point GetCoords() const;
             void SetCoords(int, int);
-            void ChangeHP(int);
 
             void Buy(const EquipmentLine*);
             void Sell(const EquipmentLine*);
                         
-            string ShowName() const;
-            int Damage() const;
-            int Defense() const;
-            int Health() const;
-            int MaxHealth() const;
-            int Speed() const;
-            int Money() const;
             int Level() const;
-            int NumExpPts() const;
             int NumToNext() const;
 
             map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);

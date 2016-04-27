@@ -7,36 +7,15 @@
 //various attributes of the monster from in the program
 
 #include <string>
+#include "character.h"
 
 using std::string;
 
-class Monster
+class Monster : public Character
     {
-        private:
-            int mHP;                //current hit points (life)
-            int mmaxHP;         //maximum hit points
-            int AP;             //attack power
-            int DP;             //defense percentage
-            int SP;             //speed points
-            int gold;
-            int expPoints;          //number of expPoints player gets 
-                                    //from beating monster
-            string monsterName;
-
-
         public:
             Monster();
             void SetAttributes(int, int, int, int, int, int, string&);
-            void ChangeHP(int);
-                    
-            string ShowName() const;
-            int Damage() const;
-            int Defense() const;
-            int mHealth() const;
-            int mMaxHealth() const;
-            int Speed() const;
-            int Money() const;
-            int Experience() const;
     };
 
 #endif

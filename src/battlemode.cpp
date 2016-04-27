@@ -22,7 +22,7 @@ int BattleMode::displayMenu()
 	cout<<endl;
 	cout<<endl;
 	cout<<currMonster.ShowName()<<endl;
-	cout<<"HP:  "<<currMonster.mHealth()<<endl;
+	cout<<"HP:  "<<currMonster.Health()<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"*1)Fight        *"<<endl;
 	cout<<"*2)Run          *"<<endl;
@@ -83,7 +83,7 @@ void BattleMode::fight()
             currMonster.ChangeHP(-1 * pDamage);
         }
 
-    if(currMonster.mHealth() <= 0)
+    if(currMonster.Health() <= 0)
 		{
     		onBattleWon();
 		}
@@ -107,12 +107,12 @@ void BattleMode::onBattleWon()
 
 	char cont;
 	cout<<"You won the battle!  ";
-	cout<<"You gained "<<currMonster.Experience()<<" pts!"<<endl;
+	cout<<"You gained "<<currMonster.ExpPts()<<" pts!"<<endl;
 	cout<<"Monster dropped "<<currMonster.Money()<<" gold!";
 	cout<<endl;
 	cout<<"Press X and enter to continue:  ";
 	cin>>cont;
-	player.AddExp(currMonster.Experience());
+	player.AddExp(currMonster.ExpPts());
 	player.AddMoney(currMonster.Money());
 	if(player.ExpPts() >= player.NumToNext())
 		player.LevelUp();

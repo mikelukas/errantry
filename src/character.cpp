@@ -1,27 +1,17 @@
 #include "character.h"
 
 //Constructors-------------------------------------------------------//
-Character::Character()
-    : HP(1),
-      maxHP(1),
-      AP(0),
-      DP(0),
-      SP(0),
-      gold(0)
-    {
-        //attribute variables initialized in intializer list
-    }
-Character::Character(int hpVar, int apVar, int dpVar, int spVar, int money)
+Character::Character(int hpVar, int apVar, int dpVar, int spVar, int money, int expPoints)
+	: HP(hpVar),
+	  maxHP(hpVar),
+	  AP(apVar),
+      DP(dpVar),
+      SP(spVar),
+      gold(money),
+	  expPoints(expPoints)
     {
         //postcondition:  a character's attributes have been set to
         //the attributes given
-
-        HP= hpVar;
-        maxHP = hpVar;
-        AP = apVar;
-        DP = dpVar;
-        SP = spVar;
-        gold = money;
     }
 //Public Member functions--------------------------------------------//
 void Character::ChangeHP(int hpChange)
@@ -35,23 +25,34 @@ void Character::ChangeHP(int hpChange)
     }
 
 //accessor functions-------------------------------------------------//
+string Character::ShowName() const
+    {
+        //postcondition:  returns the name of the character
+        return name;
+    }
 
 int Character::Damage() const
     {
-        //postcondition:  returns the amount of damage the player can do (AP)
+        //postcondition:  returns the amount of damage the character can do (AP)
         return AP;
     }
 
 int Character::Defense() const
     {
-        //postcondition:  returns user's defense points
+        //postcondition:  returns character's defense points
         return DP;
     }
 
 int Character::Health() const
     {
-        //postcondition:  returns user's health points
+        //postcondition:  returns character's health points
         return HP;
+    }
+
+int Character::MaxHealth() const
+    {
+        //postcondition:  returns character's maximum health points
+        return maxHP;
     }
 
 int Character::Speed() const
@@ -64,4 +65,10 @@ int Character::Money() const
     {
         //postcondition:  returns amount of gold the character has
         return gold;
+    }
+
+int Character::ExpPts() const
+    {
+        //postcondition:  returns the character's current experience point total
+        return expPoints;
     }

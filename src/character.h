@@ -12,25 +12,19 @@ class Character
         protected:
             int HP;             //current hit points (life)
             int maxHP;          //maximum hit points
-            int MP;             //magic points (energy for spells)
-            int maxMP;          //maximum magic points 
             int AP;             //attack power
             int DP;             //defense percentage
-            int MDP;            //magic defense percentage
             int SP;             //speed points
             int gold;
                     
         public:
             Character();
-            Character(int, int, int, int, int, int, int);
+            Character(int, int, int, int, int);
             void ChangeHP(int);
-            void ChangeMP(int);
             
             int Damage() const;
             int Defense() const;
             int Health() const;
-            int MEnergy() const;
-            int MDefense() const;
             int Speed() const;
             int Money() const;  
     };
@@ -38,29 +32,22 @@ class Character
 Character::Character()
     : HP(1),
       maxHP(1),
-      MP(0),
-      maxMP(0),
       AP(0),
       DP(0),
-      MDP(0),
       SP(0),
       gold(0)
     {
         //attribute variables initialized in intializer list
     }
-Character::Character(int hpVar, int mpVar, int apVar, int dpVar,
-                     int mdpVar, int spVar, int money)
+Character::Character(int hpVar, int apVar, int dpVar, int spVar, int money)
     { 
         //postcondition:  a character's attributes have been set to
         //the attributes given
         
         HP= hpVar;
         maxHP = hpVar;
-        MP = mpVar;
-        maxMP = mpVar;
         AP = apVar;
         DP = dpVar;
-        MDP = mdpVar;
         SP = spVar;
         gold = money;
     }
@@ -74,15 +61,7 @@ void Character::ChangeHP(int hpChange)
         
         HP = HP + hpChange;
     }
-void Character::ChangeMP(int mpChange)
-    {
-        //postcondition:  MP value of character altered by the value
-        //sent to the function; if a spell is used, a negative value
-        //is added to MP, if MP is gained, a positive value is
-        //added to MP
-        
-        MP = MP + mpChange;
-    }
+
 //accessor functions-------------------------------------------------//
 
 int Character::Damage() const
@@ -101,18 +80,6 @@ int Character::Health() const
     {
         //postcondition:  returns user's health points
         return HP;
-    }
-
-int Character::MEnergy() const
-    {
-        //postcondition:  returns the character's magic points
-        return MP;
-    }
-
-int Character::MDefense() const
-    {
-        //postcondition:  returns the character's magic defense points
-        return MDP;
     }
 
 int Character::Speed() const

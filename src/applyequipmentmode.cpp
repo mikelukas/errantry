@@ -56,9 +56,9 @@ int ApplyEquipmentMode::displayMenu()
 
 void ApplyEquipmentMode::testChoice(int choice)
 {
-	//postcondition: If player chose equipment, that equipment is applied to them
-	//via a call to apply() on the player, and the inventory list is updated.
-	//Otherwise, if the player chose exit, the mode is exited.
+	//postcondition: If player chose equipment, that equipment is used on them
+	//via a call to useEquipment() on the player with the player as the target,
+	//and the inventory list is updated.  Otherwise, if the player chose exit, the mode is exited.
 
 	switch(choice)
 	{
@@ -66,7 +66,7 @@ void ApplyEquipmentMode::testChoice(int choice)
 		gameState.exitCurrentMode();
 		break;
 	default:
-		gameState.getPlayer().apply((*invEquipment)[choice-1]);
+		gameState.getPlayer().useEquipment((*invEquipment)[choice-1]->pEquipment, gameState.getPlayer());
 		break;
 	}
 }

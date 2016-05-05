@@ -301,64 +301,65 @@ void Player::dequipCurrent(EquipType equipType)
 	}
 void Player::equip(const Equipment* equipment)
 	{
-		//postcondition: "equips" the passed in equipment by setting it as the
+		//precondition: assumes equipment is in Player's inventory (should've
+		//been validated by useEquipment()).
+		//postcondition: "equips" the passed-in equipment by setting it as the
 		//currentEquipped equipment for its type on the player, adding its stats
-		//to the player's current stats, and subtracting 1 from its quantity in
-		//the player's unequipped inventory (since equipped equipment isn't allowed
-		//to be sold)
+		//to the player's current stats.
+		//
 		//DO NOT use this method to perform the menu action of equipping - instead
-		//use apply(), which handles dequipping whatever the player has currently
+		//use useEquipment(), which handles dequipping whatever the player has currently
 		//equipped prior to calling this method before equipping the new equipment.
 		//Not dequipping would cause the player to lose the current equipment,
 		//rather than placing it back in their inventory, and also cause them
 		//to build stats permanently by buying and equipping successful equipment
 		//of the same type.
 
-		map<const Equipment*, EquipmentLine>& inv = getInventoryFor(equipment->getType());
-		EquipmentLine& invEqLine = inv[equipment];
-		if(invEqLine.pEquipment == NULL)
-		{
-			cout<<"Attempted to equip something you don't have in your inventory: "<<equipment->getName()<<"! Don't cheat!";
-			return;
-		}
-
 		currentEquipped[equipment->getType()] = equipment;
 		AddStats(equipment->getStatMod());
+	}
+void Player::useEquipment(const Equipment* eq, Player& onTarget)
+{
+	//postcondition: apply() is called on the target, and the incoming equipment
+	//is decremented from the quantity in the player's inventory.
+	//If this reduces the quantity to 0, the entry for that equipment in the
+	//player's inventory is removed entirely.
 
-		//Equipping something removes it from your inventory
-		invEqLine.quantity--;
-		if(invEqLine.quantity <= 0)
-		{
-			inv.erase(equipment); //remove line from inventory completely
-		}
+	//Sanity check that this method is actually being called with something the player has
+	map<const Equipment*, EquipmentLine>& inv = getInventoryFor(eq->getType());
+	EquipmentLine& invEqLine = inv[eq];
+	if(invEqLine.pEquipment == NULL)
+	{
+		inv.erase(eq);//have to do this since inv[eq] will create a new line.
+		cout<<"Attempted to use equipment you don't have in your inventory: "<<eq->getName()<<endl;
+		return;
 	}
 
-void Player::apply(EquipmentLine* invEqLine)
-	{
-		//postcondition: The incoming EquipmentLine is "applied" to the player.
-		//For weapons and armor this means it is moved out of the player's inventory
-		//and set as their current equipment, with stat gains applied.  Any
-		//previously-equipped equipment is removed first and placed back into the
-		//player's inventory.
-		//For items, this means the effect of the item is applied to the player
-		//and the item's quantity is decreased.
+	onTarget.apply(eq);
 
-		switch(invEqLine->pEquipment->getType())
+	//Regardless of the Equipment type, using it removes it from Player's active inventory
+	(invEqLine.quantity)--;
+	if(invEqLine.quantity <= 0)
+	{
+		inv.erase(eq); //remove line from inventory completely
+	}
+}
+
+void Player::apply(const Equipment* eq)
+	{
+		//postcondition: The incoming Equipment is "applied" to the player, which
+		//adds the stat changes from the Equipment to the player's stats.
+		//For weapons and armor any previously-equipped equipment is also
+		//removed first and placed back into the player's inventory.
+
+		switch(eq->getType())
 		{
 		case WEAPON:
 		case ARMOR:
-			dequipCurrent(invEqLine->pEquipment->getType());
-			equip(invEqLine->pEquipment);
+			dequipCurrent(eq->getType());
+			equip(eq);
 			break;
 		case ITEM:
-			AddStats(invEqLine->pEquipment->getStatMod());
-
-			//assumes eqLine came from your inventory
-			(invEqLine->quantity)--;
-			if(invEqLine->quantity <= 0)
-			{
-				map<const Equipment*, EquipmentLine>& inv = getInventoryFor(invEqLine->pEquipment->getType());
-				inv.erase(invEqLine->pEquipment); //remove line from inventory completely
-			}
+			AddStats(eq->getStatMod());
 		}
 	}

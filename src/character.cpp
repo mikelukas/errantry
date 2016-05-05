@@ -72,3 +72,24 @@ int Character::ExpPts() const
         //postcondition:  returns the character's current experience point total
         return expPoints;
     }
+
+void Character::AddStats(const StatMod& stats)
+	{
+		HP += stats.hpMod;
+		if(HP > maxHP)
+		{
+			HP = maxHP;
+		}
+
+		AP += stats.apMod;
+		DP += stats.dpMod;
+		SP += stats.spMod;
+	}
+
+void Character::SubStats(const StatMod& stats)
+	{
+		HP -= stats.hpMod;
+		AP -= stats.apMod;
+		DP -= stats.dpMod;
+		SP -= stats.spMod;
+	}

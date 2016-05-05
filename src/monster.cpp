@@ -25,4 +25,19 @@ void Monster::SetAttributes(int hpVar, int apVar, int dpVar, int spVar, int gold
         this->name = name;
     }
 
-//accessor functions-------------------------------------------------//
+void Monster::apply(const Equipment* eq)
+	{
+		//postcondition: The incoming Equipment is "applied" to the player, which
+		//adds the stat changes from the Equipment to the player's stats.
+		//For weapons and armor any previously-equipped equipment is also
+		//removed first and placed back into the player's inventory.
+
+		switch(eq->getType())
+		{
+		case ITEM:
+			AddStats(eq->getStatMod());
+			break;
+		default:
+			return;
+		}
+	}

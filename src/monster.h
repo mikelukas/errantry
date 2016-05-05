@@ -16,6 +16,8 @@ class Monster : public Character
         public:
             Monster();
             void SetAttributes(int, int, int, int, int, int, string&);
+
+            void apply(const Equipment*);
     };
 
 #endif

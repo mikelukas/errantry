@@ -251,25 +251,7 @@ const Equipment* Player::getCurrentEquipped(EquipType equipType)
 	{
 		return currentEquipped[equipType];
 	}
-void Player::AddStats(const StatMod& stats)
-	{
-		HP += stats.hpMod;
-		if(HP > maxHP)
-		{
-			HP = maxHP;
-		}
 
-		AP += stats.apMod;
-		DP += stats.dpMod;
-		SP += stats.spMod;
-	}
-void Player::SubStats(const StatMod& stats)
-	{
-		HP -= stats.hpMod;
-		AP -= stats.apMod;
-		DP -= stats.dpMod;
-		SP -= stats.spMod;
-	}
 void Player::dequipCurrent(EquipType equipType)
 	{
 		//postcondition: "dequips" the passed in equipment by subtracting its

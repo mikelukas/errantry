@@ -2,6 +2,7 @@
 #define _CHARACTER_H
 
 #include <string>
+#include "equipment.h"
 
 using std::string;
 
@@ -25,8 +26,13 @@ class Character
             int gold;
             int expPoints;      //number of expPoints character carries
                     
+            void AddStats(const StatMod&);
+			void SubStats(const StatMod&);
+
         public:
             Character(int, int, int, int, int, int);
+            virtual ~Character() {};
+
             void ChangeHP(int);
             
             string ShowName() const;
@@ -38,6 +44,8 @@ class Character
             int Speed() const;
             int Money() const;
             int ExpPts() const;
+
+            virtual void apply(const Equipment*) = 0;
     };
 
 #endif

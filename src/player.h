@@ -51,9 +51,6 @@ class Player : public Character
 
             void initStartingEquipment();
 
-            void AddStats(const StatMod&);
-			void SubStats(const StatMod&);
-
 			void dequipCurrent(EquipType);
 			void equip(const Equipment*);
 

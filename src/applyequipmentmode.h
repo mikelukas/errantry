@@ -13,6 +13,7 @@ class ApplyEquipmentMode : public MenuMode
 	protected:
 
 		vector<EquipmentLine*>* invEquipment; //populate in updateEquipmentChoices()
+		Character* target;
 
 		int displayMenu();
 		void testChoice(int);

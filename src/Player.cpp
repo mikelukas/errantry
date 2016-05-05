@@ -300,7 +300,7 @@ void Player::equip(const Equipment* equipment)
 		currentEquipped[equipment->getType()] = equipment;
 		AddStats(equipment->getStatMod());
 	}
-void Player::useEquipment(const Equipment* eq, Player& onTarget)
+void Player::useEquipment(const Equipment* eq, Character& onTarget)
 {
 	//postcondition: apply() is called on the target, and the incoming equipment
 	//is decremented from the quantity in the player's inventory.

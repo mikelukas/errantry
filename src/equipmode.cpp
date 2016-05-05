@@ -6,7 +6,7 @@
 EquipMode::EquipMode(GameData& gameData, GameState& gameState)
 	: ApplyEquipmentMode(gameData, gameState)
 {
-
+	target = &(gameState.getPlayer());
 }
 
 void EquipMode::displayRelevantPlayerAttrs()

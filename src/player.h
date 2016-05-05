@@ -76,7 +76,7 @@ class Player : public Character
 
             const Equipment* getCurrentEquipped(EquipType);
 
-            void useEquipment(const Equipment*, Player&);
+            void useEquipment(const Equipment*, Character&);
             void apply(const Equipment*);
     };
 

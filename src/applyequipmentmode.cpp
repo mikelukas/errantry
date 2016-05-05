@@ -3,7 +3,8 @@
 
 ApplyEquipmentMode::ApplyEquipmentMode(GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState),
-	  invEquipment(NULL) //should be actually populated in updateEquipmentChoices()
+	  invEquipment(NULL), //should be actually populated in updateEquipmentChoices()
+	  target(NULL)
 {
 
 }
@@ -66,7 +67,9 @@ void ApplyEquipmentMode::testChoice(int choice)
 		gameState.exitCurrentMode();
 		break;
 	default:
-		gameState.getPlayer().useEquipment((*invEquipment)[choice-1]->pEquipment, gameState.getPlayer());
+		if(target != NULL) {
+			gameState.getPlayer().useEquipment((*invEquipment)[choice-1]->pEquipment, *target);
+		}
 		break;
 	}
 }

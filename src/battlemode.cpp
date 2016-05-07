@@ -1,4 +1,5 @@
 #include "battlemode.h"
+#include "battleuseitemmode.h"
 #include "deadmode.h"
 #include "gamestate.h"
 
@@ -25,14 +26,15 @@ int BattleMode::displayMenu()
 	cout<<"HP:  "<<currMonster.Health()<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"*1)Fight        *"<<endl;
-	cout<<"*2)Run          *"<<endl;
+	cout<<"*2)Use Item     *"<<endl;
+	cout<<"*3)Run          *"<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"**********************MESSAGES**********************"<<endl;
 	do
 	{
 		cout<<"Please choose an option:  "<<endl;
 		cin>>choice;
-	}while(!validateChoice(choice,2));
+	}while(!validateChoice(choice,3));
 
 	return choice;
 }
@@ -45,6 +47,9 @@ void BattleMode::testChoice(int choice)
 				fight();
 				break;
 			case 2:
+				useItem();
+				break;
+			case 3:
 				runFromBattle();
 				break;
 		}
@@ -94,6 +99,12 @@ void BattleMode::fight()
 			GameMode* dead = new DeadMode(gameData, gameState);
 			gameState.enterMode(dead);
 		}
+}
+
+void BattleMode::useItem()
+{
+	GameMode* useItemMode = new BattleUseItemMode(gameData, gameState, currMonster);
+	gameState.enterMode(useItemMode);
 }
 
 void BattleMode::runFromBattle()

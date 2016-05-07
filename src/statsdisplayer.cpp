@@ -14,3 +14,22 @@ void StatsDisplayer::fullDisplayFor(const Player& player)
 		<<"  Current experience points:    "<<player.ExpPts()<<endl
 		<<"  Number needed for next level: "<<player.NumToNext()<<endl;
 }
+
+void StatsDisplayer::battleDisplayFor(const Player& player)
+{
+	ostringstream healthMaxhealth;
+	healthMaxhealth<<player.Health()<<"/"<<player.MaxHealth();
+
+	cout<<"HP: "<<std::left<<setw(12)<<healthMaxhealth.str()<<endl
+		<<"AP: "<<std::left<<setw(12)<<player.Damage()<<endl
+		<<"DP: "<<std::left<<setw(12)<<player.Defense()<<endl
+		<<"SP: "<<std::left<<setw(12)<<player.Speed()<<endl;
+}
+
+void StatsDisplayer::battleDisplayFor(const Monster& monster)
+{
+	ostringstream healthMaxhealth;
+	healthMaxhealth<<monster.Health()<<"/"<<monster.MaxHealth();
+
+	cout<<"HP: "<<std::left<<setw(12)<<healthMaxhealth.str()<<endl;
+}

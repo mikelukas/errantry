@@ -9,8 +9,8 @@ class UseItemMode: public ApplyEquipmentMode
 
 		void updateEquipmentChoices();
 
-		void displayRelevantPlayerAttrs();
-		void displayEquipmentList();
+		virtual void displayRelevantPlayerAttrs();
+		virtual void displayEquipmentList();
 
 	public:
 		UseItemMode(GameData&, GameState&);

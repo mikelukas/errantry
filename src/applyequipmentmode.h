@@ -15,8 +15,8 @@ class ApplyEquipmentMode : public MenuMode
 		vector<EquipmentLine*>* invEquipment; //populate in updateEquipmentChoices()
 		Character* target;
 
-		int displayMenu();
-		void testChoice(int);
+		virtual int displayMenu();
+		virtual void testChoice(int);
 
 		virtual void updateEquipmentChoices() = 0;
 		void cleanupEquipmentChoices();

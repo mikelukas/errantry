@@ -16,6 +16,7 @@ class BattleMode : public MenuMode
 		void testChoice(int);
 
 		void fight();
+		void useItem();
 		virtual void runFromBattle();
 
 		virtual void onBattleWon();

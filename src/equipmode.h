@@ -2,15 +2,15 @@
 #define SRC_EQUIPMODE_H_
 
 #include "applyequipmentmode.h"
+#include "equipableschooser.h"
 
+/* Mode allowing player to choose weapons and armor from their inventory to
+ * equip on themselves.
+ */
 class EquipMode : public ApplyEquipmentMode
 {
 	protected:
-
-		void updateEquipmentChoices();
-
-		void displayRelevantPlayerAttrs();
-		void displayEquipmentList();
+		EquipmentChooser* createInventoryChooser();
 
 	public:
 		EquipMode(GameData&, GameState&);

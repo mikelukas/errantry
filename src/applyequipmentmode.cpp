@@ -3,7 +3,7 @@
 
 ApplyEquipmentMode::ApplyEquipmentMode(GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState),
-	  invEquipment(NULL), //should be actually populated in updateEquipmentChoices()
+	  equipmentChoice(NULL),
 	  target(NULL)
 {
 
@@ -11,46 +11,23 @@ ApplyEquipmentMode::ApplyEquipmentMode(GameData& gameData, GameState& gameState)
 
 ApplyEquipmentMode::~ApplyEquipmentMode()
 {
-	cleanupEquipmentChoices();
-}
 
-void ApplyEquipmentMode::run()
-{
-	//postcondition: Updates the equipment choice list before displaying the menu,
-	//since the player's inventory will be changed by whatever they choose.
-
-	//initializes or refreshes equipment choices vector
-	cleanupEquipmentChoices();
-	updateEquipmentChoices();
-
-	MenuMode::run();
 }
 
 int ApplyEquipmentMode::displayMenu()
 {
-	//postcondition: the player's current attributes relative to the type of
-	//equipment they can apply in this mode are displayed, followed by eligible
-	//equipment choices they can apply to themselves in this mode.
+	//postcondition: invokes display on the InventoryChooser subclasses create,
+	//and gets player choice from that.
 
 	int choice;
 
-	cout<<"****************************************************"<<endl;
-	displayRelevantPlayerAttrs();
-	cout<<"----------------------------------------------------"<<endl;
-	displayEquipmentList();
-	cout<<EXIT_CHOICE<<") Back"<<endl;
-	cout<<"**********************MESSAGES**********************"<<endl;
+	EquipmentChooser* invChooser = createInventoryChooser();
+	invChooser->display();
 
-	do
-	{
-		cout<<"Please choose an option:  "<<endl;
-		cin>>choice;
+	choice = invChooser->getChoice();
+	equipmentChoice = invChooser->getChosenEquipment();
 
-		if(choice == EXIT_CHOICE)
-		{
-			return choice;
-		}
-	} while(!validateChoice(choice, invEquipment->size()));
+	delete invChooser;
 
 	return choice;
 }
@@ -67,19 +44,9 @@ void ApplyEquipmentMode::testChoice(int choice)
 		gameState.exitCurrentMode();
 		break;
 	default:
-		if(target != NULL) {
-			gameState.getPlayer().useEquipment((*invEquipment)[choice-1]->pEquipment, *target);
+		if(equipmentChoice != NULL && target != NULL) {
+			gameState.getPlayer().useEquipment(equipmentChoice, *target);
 		}
 		break;
 	}
-}
-
-void ApplyEquipmentMode::cleanupEquipmentChoices()
-{
-	if(invEquipment == NULL)
-	{
-		return;
-	}
-
-	delete invEquipment;
 }

@@ -2,33 +2,28 @@
 #define SRC_APPLYEQUIPMENTMODE_H_
 
 #include <iomanip>
+#include "equipmentchooser.h"
 #include "menumode.h"
 
 using std::setw;
 
-const int EXIT_CHOICE = 0;
-
+/* Base classes for modes which let you choose equipment from your inventory
+ * to apply on a target.
+ */
 class ApplyEquipmentMode : public MenuMode
 {
 	protected:
-
-		vector<EquipmentLine*>* invEquipment; //populate in updateEquipmentChoices()
+		const Equipment* equipmentChoice;
 		Character* target;
 
 		virtual int displayMenu();
 		virtual void testChoice(int);
 
-		virtual void updateEquipmentChoices() = 0;
-		void cleanupEquipmentChoices();
-
-		virtual void displayRelevantPlayerAttrs() = 0;
-		virtual void displayEquipmentList() = 0;
+		virtual EquipmentChooser* createInventoryChooser() = 0;
 
 	public:
 		ApplyEquipmentMode(GameData&, GameState&);
 		~ApplyEquipmentMode();
-
-		void run();
 };
 
 #endif

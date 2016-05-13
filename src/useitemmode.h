@@ -2,15 +2,14 @@
 #define SRC_USEITEMMODE_H_
 
 #include "applyequipmentmode.h"
+#include "usableitemchooser.h"
 
+/* Mode allowing player to choose items from their inventory to use on himself/herself.
+ */
 class UseItemMode: public ApplyEquipmentMode
 {
 	protected:
-
-		void updateEquipmentChoices();
-
-		virtual void displayRelevantPlayerAttrs();
-		virtual void displayEquipmentList();
+		EquipmentChooser* createInventoryChooser();
 
 	public:
 		UseItemMode(GameData&, GameState&);

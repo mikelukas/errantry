@@ -1,4 +1,8 @@
+#include <iostream>
 #include "runaction.h"
+
+using std::cout;
+using std::endl;
 
 RunAction::RunAction(GameState& gameState)
 	: gameState(gameState)
@@ -12,4 +16,5 @@ void RunAction::execute()
 	//will still get a turn in when this action is chosen.
 
 	gameState.requestExitCurrentMode();
+	cout<<gameState.getPlayer().ShowName()<<" ran from the battle!"<<endl;
 }

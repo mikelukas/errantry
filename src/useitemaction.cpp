@@ -70,4 +70,5 @@ void UseItemAction::execute()
 	//pointers aren't null, since mode would've been aborted if either was
 
 	player.useEquipment(pEquipmentChoice, *pTarget);
+	cout<<player.ShowName()<<" used a "<<pEquipmentChoice->getName()<<" on "<<pTarget->ShowName()<<"!"<<endl;
 }

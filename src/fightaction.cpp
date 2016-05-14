@@ -1,4 +1,8 @@
+#include <iostream>
 #include "fightaction.h"
+
+using std::cout;
+using std::endl;
 
 FightAction::FightAction(Character& attacker, Character& defender)
 	: attacker(attacker),
@@ -14,9 +18,10 @@ void FightAction::execute()
 	//A certain defense number is subtracted for the DP value of the defender,
 	//so that the attacker does not do all of their damage(AP) to the defender.
 
-    int pDamage = attacker.Damage() - defender.Defense();
-    if(pDamage < 0)
-        pDamage = 0;
+    int damage = attacker.Damage() - defender.Defense();
+    if(damage < 0)
+        damage = 0;
 
-    defender.ChangeHP(-1 * pDamage);
+    defender.ChangeHP(-1 * damage);
+    cout<<attacker.ShowName()<<" did "<<damage<<" damage to "<<defender.ShowName()<<"!"<<endl;
 }

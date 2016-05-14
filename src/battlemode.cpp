@@ -1,5 +1,4 @@
 #include "battlemode.h"
-#include "battleuseitemmode.h"
 #include "deadmode.h"
 #include "gamestate.h"
 
@@ -50,6 +49,7 @@ int BattleMode::displayMenu()
 	cout<<"HP:  "<<currMonster.Health()<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"*1)Fight        *"<<endl;
+	cout<<"*2)Use Item     *"<<endl;
 	cout<<"*3)Run          *"<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"**********************MESSAGES**********************"<<endl;
@@ -78,6 +78,9 @@ void BattleMode::testChoice(int choice)
 	{
 		case 1:
 			playerAction = new FightAction(player, currMonster);
+			break;
+		case 2:
+			playerAction = new UseItemAction(player, currMonster);
 			break;
 		case 3:
 			playerAction = new RunAction(gameState);

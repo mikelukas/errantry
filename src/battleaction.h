@@ -16,6 +16,8 @@ class BattleAction
 	protected:
 		bool aborted;
 
+		void setAborted(bool);
+
 	public:
 		BattleAction();
 		virtual ~BattleAction() {}

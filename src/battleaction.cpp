@@ -6,3 +6,7 @@ BattleAction::BattleAction()
 
 }
 
+void BattleAction::setAborted(bool aborted)
+{
+	this->aborted = aborted;
+}

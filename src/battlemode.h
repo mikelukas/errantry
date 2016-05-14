@@ -5,6 +5,7 @@
 #include "battleaction.h"
 #include "fightaction.h"
 #include "runaction.h"
+#include "useitemaction.h"
 #include "menumode.h"
 
 using std::queue;

@@ -15,12 +15,20 @@ GameState::GameState()
 	  currBoss(INIT_NEXT_BOSS)
 
 {
+	srand(time(NULL));
 	//monster and town not initialized because you don't start in a town
 }
 
 Player& GameState::getPlayer()
 {
 	return player;
+}
+
+int GameState::getRandInt(int start, int end) const
+{
+	//postcondition: returns a random int between start and end, inclusive
+
+	return rand() % (end-start) + start;
 }
 
 char GameState::getCurrentLandscape()

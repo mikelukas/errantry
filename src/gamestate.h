@@ -37,6 +37,8 @@ class GameState
 
 		Player& getPlayer();
 
+		int getRandInt(int, int) const;
+
 		char getCurrentLandscape();
 		void setCurrentLandscape(const char);
 

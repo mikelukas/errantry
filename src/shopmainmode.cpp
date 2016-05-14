@@ -38,7 +38,7 @@ void ShopMainMode::testChoice(int choice)
 			enterSellMode();
 			break;
 		case 3:
-			gameState.exitCurrentMode();
+			gameState.requestExitCurrentMode();
 			break;
 	}
 }

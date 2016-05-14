@@ -78,7 +78,7 @@ void ShopTransactionMode::testChoice(int choice)
 	switch(choice)
 	{
 	case EXIT_CHOICE:
-		gameState.exitCurrentMode();
+		gameState.requestExitCurrentMode();
 		break;
 	default:
 		processTransaction();

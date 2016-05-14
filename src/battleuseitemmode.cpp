@@ -75,6 +75,6 @@ void BattleUseItemMode::testChoice(int itemChoice)
 	UseItemMode::testChoice(itemChoice);
 	if(itemChoice != EXIT_CHOICE)
 	{
-		gameState.exitCurrentMode();
+		gameState.requestExitCurrentMode();
 	}
 }

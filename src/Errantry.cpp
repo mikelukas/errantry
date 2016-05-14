@@ -56,5 +56,6 @@ void MainGame(GameData& gameData, GameState& gameState)
         while(!gameState.isGameOver())
             {
         		gameState.getCurrentMode()->run();
+        		gameState.handleExitModeRequest();
             }
     }

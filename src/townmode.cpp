@@ -45,7 +45,7 @@ void TownMode::testChoice(int choice)
 				break;
 
 			case 4: //Leave Town
-				gameState.exitCurrentMode();
+				gameState.requestExitCurrentMode();
 				break;
 		}
 }

@@ -11,7 +11,9 @@
 GameState::GameState()
 	: player(),
 	  landscape(INIT_LANDSCAPE),
+	  exitCurrentModeRequested(false),
 	  currBoss(INIT_NEXT_BOSS)
+
 {
 	//monster and town not initialized because you don't start in a town
 }
@@ -39,10 +41,39 @@ void GameState::enterMode(GameMode* mode)
 	//when exitCurrentMode is called
 	activeModes.push(mode);
 }
+void GameState::requestExitCurrentMode()
+{
+	//postcondition: schedules the current mode to be popped and deleted after
+	//the current mode finishes running.
+	//Use this method within modes to exit the current mode; it prevents the effect of
+	//multiple calls to exitCurrentMode() while still running a mode, which would
+	//result in unwanted exiting of extra modes, and also allows the current
+	//mode to finish exiting before its destructor is called, which could cause
+	//unwanted deletion of state.
+
+	exitCurrentModeRequested = true;
+}
+void GameState::handleExitModeRequest()
+{
+	//postcondition: if exitCurrentModeRequested is set, calls exitCurrentMode()
+	//and clears exitCurrentModeRequested
+
+	if(exitCurrentModeRequested)
+	{
+		exitCurrentMode();
+		exitCurrentModeRequested = false;
+	}
+}
 void GameState::exitCurrentMode()
 {
 	//postcondition: deletes the current mode and makes the mode that the player
 	//was previously in before they got to that mode the current mode
+	//Method is private since exiting the current mode while it is running can
+	//destroy state that mode needs to finish running, because its destructor
+	//will immediately be called.
+	//If the current mode should be exited, a request to do so should be made
+	//instead of directly calling this method.
+
 	delete activeModes.top();
 	activeModes.pop();
 }

@@ -41,7 +41,7 @@ void ApplyEquipmentMode::testChoice(int choice)
 	switch(choice)
 	{
 	case EXIT_CHOICE:
-		gameState.exitCurrentMode();
+		gameState.requestExitCurrentMode();
 		break;
 	default:
 		if(equipmentChoice != NULL && target != NULL) {

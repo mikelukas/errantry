@@ -127,54 +127,74 @@ void OverworldMode::getEnemy()
 	//Occasionally, the player will not encounter a monster when
 	//he/she moves.
 
-	int randMons;  //holds value to be used as index of monster
-				   //in 'monsterList' if it is less than a certain
-				   //number.
-	const vector<Monster>& monsterList = gameData.getMonsters();
-	int x = gameState.getPlayer().GetCoords().x;
-	Region area = easy;
+	Region area = getPlayerRegion();
+	if(!randomEncounterHappened(area))
+	{
+		return;
+	}
 
-	if(x < 30)
-		{
-			if(x < 20)
-				{
-					if(x < 10)
-						area = hard;
-					else
-						area = medium;
-				}
-			else
-				area = easy;
-		}
-
-	randMons = rand() % 5 + 1;
-
+	int randMons;  //holds value to be used as index of monster in monsterList
 	switch(area)
-		{
-			case easy:
-				if(randMons < 3)
-					{
-						GameMode* battle = new BattleMode(monsterList[randMons], gameData, gameState);
-						gameState.enterMode(battle);
-					}
-				break;
-			case medium:
-				if(randMons < 4)
-					{
-						GameMode* battle = new BattleMode(monsterList[randMons + 3], gameData, gameState);
-						gameState.enterMode(battle);
-					}
-				break;
-			case hard:
-				if(randMons < 3)
-					{
-						GameMode* battle = new BattleMode(monsterList[randMons + 7], gameData, gameState);
-						gameState.enterMode(battle);
-					}
-				break;
-		}
+	{
+		case easy:
+			randMons = gameState.getRandInt(0, 2);
+			break;
+		case medium:
+			randMons = gameState.getRandInt(3, 6);
+			break;
+		case hard:
+			randMons = gameState.getRandInt(7, 9);
+			break;
+	}
+
+	const vector<Monster>& monsterList = gameData.getMonsters();
+	GameMode* battle = new BattleMode(monsterList[randMons], gameData, gameState);
+	gameState.enterMode(battle);
 
 }
+Region OverworldMode::getPlayerRegion() const
+{
+	//postcondition: based on player's x position, returns the difficulty region
+	//that the player is currently in on the map.
+	//If x is invalid for some reason, assumes easy region
+
+	int x = gameState.getPlayer().GetCoords().x;
+	if(x < 30)
+	{
+		if(x < 20)
+		{
+			if(x < 10)
+				return hard;
+			else
+				return medium;
+		}
+		else
+			return easy;
+	}
+
+	return easy;
+}
+bool OverworldMode::randomEncounterHappened(Region& region) const
+{
+	//postcondition: true if player should encounter a monster, false otherwise.
+	//chance of an encounter increases as the region the player's in gets more
+	//difficult.
+
+	int randResult = gameState.getRandInt(0,6);
+	switch(region)
+	{
+	case easy:
+		return (randResult < 2); // ~33% chance in easy region
+	case medium:
+		return (randResult < 3); //  50% chance in medium region
+	case hard:
+		return (randResult < 4); // ~66% chance in hard region
+
+	default:
+		return (randResult < 2); // assume easy region
+	}
+}
+
 void OverworldMode::printStatus() const
 {
 	//postcondition:  prints out the status of a player;

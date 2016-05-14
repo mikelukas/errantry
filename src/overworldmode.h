@@ -22,6 +22,8 @@ class OverworldMode : public MenuMode
 
 		void move();
 		void getEnemy();
+		Region getPlayerRegion() const;
+		bool randomEncounterHappened(Region&) const;
 		void equip();
 		void useItem();
 

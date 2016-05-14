@@ -1,7 +1,13 @@
 #ifndef SRC_BATTLEMODE_H_
 #define SRC_BATTLEMODE_H_
 
+#include <queue>
+#include "battleaction.h"
+#include "fightaction.h"
+#include "runaction.h"
 #include "menumode.h"
+
+using std::queue;
 
 /* This mode handles battle choices when a player encounters a monster randomly
  * while moving on the overworld.  It is also the base class for boss battles,
@@ -11,19 +17,20 @@ class BattleMode : public MenuMode
 {
 	protected:
 		Monster currMonster; //Monster we're fighting in this mode
+		queue<BattleAction*> actionQueue;
 
 		int displayMenu();
 		void testChoice(int);
+		void executeActions();
 
-		void fight();
-		void useItem();
-		virtual void runFromBattle();
-
+		bool testEndConditions();
 		virtual void onBattleWon();
 
 	public:
 		BattleMode(Monster, GameData&, GameState&);
-		~BattleMode() { };
+		~BattleMode();
+
+		virtual void run();
 };
 
 #endif

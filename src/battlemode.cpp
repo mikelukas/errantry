@@ -5,9 +5,33 @@
 
 BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState),
-	  currMonster(monster)
+	  currMonster(monster),
+	  actionQueue()
 {
 
+}
+
+BattleMode::~BattleMode()
+{
+	//postcondition: if there were unused actions in the queue b/c we returned
+	//from executeActions() early because battle ended, they will be deleted.
+
+	while(!actionQueue.empty())
+	{
+		BattleAction* action = actionQueue.front();
+
+		actionQueue.pop();
+		delete action;
+	}
+}
+
+void BattleMode::run()
+{
+	//postcondition: calls super::run(), and then calls executeActions() to run
+	//enqueued actions (if any).
+
+	MenuMode::run();
+	executeActions();
 }
 
 int BattleMode::displayMenu()
@@ -26,7 +50,6 @@ int BattleMode::displayMenu()
 	cout<<"HP:  "<<currMonster.Health()<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"*1)Fight        *"<<endl;
-	cout<<"*2)Use Item     *"<<endl;
 	cout<<"*3)Run          *"<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"**********************MESSAGES**********************"<<endl;
@@ -41,75 +64,90 @@ int BattleMode::displayMenu()
 
 void BattleMode::testChoice(int choice)
 {
-	switch(choice)
-		{
-			case 1:
-				fight();
-				break;
-			case 2:
-				useItem();
-				break;
-			case 3:
-				runFromBattle();
-				break;
-		}
-}
-
-void BattleMode::fight()
-{
-    //postcondition:  this function deals damage to the monster
-    //from the player and damage from to the player by the monster.
-    //It deducts that damage from the player's and monster's HP.
-    //A certain defense number is subtracted for the DP value of the
-    //player and monster, so that the player and monster do not
-    //do all of their damage(AP) to the other.
+	//postcondition: a BattleAction matching the player's choice is created, and
+	//enqueued in the proper order depending whether the player's speed is greater
+	//than the monster's.  setup() is called on the action before any actions are
+	//are enqueued, and if the action is aborted, this method will return early
+	//to allow the player to choose a new action.
 
 	Player& player = gameState.getPlayer();
 
-    int pDamage, mDamage;
+	//Handle player choice, and set up action they chose.
+	BattleAction* playerAction;
+	switch(choice)
+	{
+		case 1:
+			playerAction = new FightAction(player, currMonster);
+			break;
+		case 3:
+			playerAction = new RunAction(gameState);
+			break;
+	}
 
-    pDamage = player.Damage() - currMonster.Defense();
+	playerAction->setup();
+	if(playerAction->isAborted())
+	{
+		return; //player aborted action during setup, so let them go back and choose again
+	}
 
-    if(pDamage < 0)
-        pDamage = 0;
-    mDamage = currMonster.Damage() - currMonster.Defense();
+	BattleAction* monsterAction = new FightAction(currMonster, player);
+	monsterAction->setup();
 
-    if(mDamage < 0)
-        mDamage = 0;
+	//Enqueue actions for battle turn
+	if(player.Speed() >= currMonster.Speed()) {
+		actionQueue.push(playerAction);
+		actionQueue.push(monsterAction);
+	} else {
+		actionQueue.push(monsterAction);
+		actionQueue.push(playerAction);
+	}
+}
 
-    if(player.Speed() >= currMonster.Speed())
-        {
-    		currMonster.ChangeHP(-1 * pDamage);
-            player.ChangeHP(-1 * mDamage);
-        }
-    else
-        {
-            player.ChangeHP(-1 * mDamage);
-            currMonster.ChangeHP(-1 * pDamage);
-        }
+void BattleMode::executeActions()
+{
+	//postcondition: each queued BattleAction is run in FIFO order until all
+	//actions are executed or the battle is over.
+	//Actions are deleted after execution.
+	//If method returns early, destructor will delete unexecuted actions in queue.
 
-    if(currMonster.Health() <= 0)
+	while(!actionQueue.empty())
+	{
+		BattleAction* action = actionQueue.front();
+		action->execute();
+
+		actionQueue.pop();
+		delete action;
+
+		if(testEndConditions())
 		{
-    		onBattleWon();
+			return;
+		}
+	}
+}
+
+bool BattleMode::testEndConditions()
+{
+	//postcondition: returns true if either the player or monster HP is <=0, and
+	//handles post-battle processing. Returns false, and does no other processing
+	//otherwise.
+
+	bool battleOver = false;
+
+	if(currMonster.Health() <= 0)
+		{
+			onBattleWon();
+			battleOver = true;
 		}
 
-    if(player.Health() <= 0)
+	if(gameState.getPlayer().Health() <= 0)
 		{
 			//if player dies, leave game
 			GameMode* dead = new DeadMode(gameData, gameState);
 			gameState.enterMode(dead);
+			battleOver = true;
 		}
-}
 
-void BattleMode::useItem()
-{
-	GameMode* useItemMode = new BattleUseItemMode(gameData, gameState, currMonster);
-	gameState.enterMode(useItemMode);
-}
-
-void BattleMode::runFromBattle()
-{
-	gameState.exitCurrentMode();
+	return battleOver;
 }
 
 void BattleMode::onBattleWon()
@@ -127,5 +165,5 @@ void BattleMode::onBattleWon()
 	player.AddMoney(currMonster.Money());
 	if(player.ExpPts() >= player.NumToNext())
 		player.LevelUp();
-	gameState.exitCurrentMode();
+	gameState.requestExitCurrentMode();
 }

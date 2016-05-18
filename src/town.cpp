@@ -48,9 +48,9 @@ istream& operator>> (istream& is, Town& town)
 	is>>town.location;
 	is.get(); //gets the newline character after the location point is read in
 
-	town.loadEquipmentIdLine(is, town.weaponIds);
-	town.loadEquipmentIdLine(is, town.armorIds);
-	town.loadEquipmentIdLine(is, town.itemIds);
+	readEquipmentIdLine(is, town.weaponIds);
+	readEquipmentIdLine(is, town.armorIds);
+	readEquipmentIdLine(is, town.itemIds);
 
 	string convoLine;
 	while(getline(is, convoLine) && convoLine != TOWN_CONVO_DELIM) {
@@ -58,15 +58,4 @@ istream& operator>> (istream& is, Town& town)
 	}
 
 	return is;
-}
-
-void Town::loadEquipmentIdLine(istream& is, vector<int>& equipIds)
-{
-	int equipId;
-	while(is.peek() != '\n')
-	{
-		is>>equipId;
-		equipIds.push_back(equipId);
-	}
-	is.get();//throwout newline char
 }

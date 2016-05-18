@@ -122,3 +122,14 @@ void operator-= (EquipmentLine& leftLine, const EquipmentLine& rightLine)
 {
 	leftLine.quantity -= min(leftLine.quantity, rightLine.quantity); //you can't reduce total equipment to a number below 0
 }
+
+void readEquipmentIdLine(istream& is, vector<int>& equipIds)
+{
+	int equipId;
+	while(is.peek() != '\n')
+	{
+		is>>equipId;
+		equipIds.push_back(equipId);
+	}
+	is.get();//throwout newline char
+}

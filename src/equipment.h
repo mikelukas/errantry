@@ -5,12 +5,14 @@
 #include <algorithm> //min
 #include <math.h> //round
 #include <string>
+#include <vector>
 
 using std::istream;
 using std::ostream;
 
 using std::min;
 using std::string;
+using std::vector;
 
 enum EquipType {WEAPON, ARMOR, ITEM};
 
@@ -68,4 +70,8 @@ struct EquipmentLine
 		friend void operator+=(EquipmentLine&, const EquipmentLine&);
 		friend void operator-=(EquipmentLine&, const EquipmentLine&);
 	};
+
+//Helper for reading dat files for various things that start with inventory (towns, monsters)
+void readEquipmentIdLine(istream&, vector<int>&);
+
 #endif

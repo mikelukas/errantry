@@ -97,26 +97,26 @@ bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
 	//Postcondition:  the attributes of each monster are retrieved
 	//from a file for use in the program
 
-	int hp, ap, dp, sp, gold, expPts;
-	bool found = false;
-	string name; //name of monster
+	ifstream monsterFile(filename);
+	if(!monsterFile)
+	{
+		cout<<"ERROR: "<<filename<<" not found!"<<endl;
+		return false;
+	}
 
-	ifstream inFile(filename.c_str());
+	cout<<":  Loading monsters from"<<filename<<endl;
 
-	if(inFile)
-		{
-			while(getline(inFile, name) &&
-				  inFile>>hp>>ap>>dp>>sp>>gold>>expPts)
-				{
-					Monster monster;
-					monster.SetAttributes(hp, ap, dp, sp, gold, expPts,name);
+	while(monsterFile.peek() != EOF)
+	{
+		Monster monster;
+		monsterFile>>monster;
 
-					monsters.push_back(monster);
-				}
-			found = true;
-			cout<<":  "<<monsters.size()<<" Monsters found."<<endl;
-		}
-	return found;
+		monsters.push_back(monster);
+	}
+	monsterFile.close();
+	cout<<":  "<<monsters.size()<<" Monsters found."<<endl;
+
+	return true;
 }
 
 bool GameData::loadEquipment(EquipType type, vector<Equipment*>& equipment, const string& filename)

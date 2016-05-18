@@ -6,18 +6,31 @@
 //and operations a monster will need, such as HP changing and accessing
 //various attributes of the monster from in the program
 
+#include <istream>
 #include <string>
+#include <vector>
 #include "character.h"
+#include "equipment.h"
 
+using std::istream;
 using std::string;
+using std::vector;
 
 class Monster : public Character
     {
+		protected:
+
+			//equipment player may get at end of combat
+			vector<int> weaponIds;
+			vector<int> armorIds;
+			vector<int> itemIds;
+
         public:
             Monster();
-            void SetAttributes(int, int, int, int, int, int, string&);
 
             void apply(const Equipment*);
+
+            friend istream& operator>> (istream&, Monster&);
     };
 
 #endif

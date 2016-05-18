@@ -2,7 +2,11 @@
 //Member function definitions for the monster class.  Function
 //explanations also included
 
+#include <limits>
 #include "monster.h"
+
+using std::numeric_limits;
+using std::streamsize;
 
 //Constructors-------------------------------------------------------//
 
@@ -10,19 +14,6 @@ Monster::Monster()
     : Character(1, 0, 0, 0, 0, 0)
     {
         name = "none";
-    }
-//Public Member functions--------------------------------------------//
-void Monster::SetAttributes(int hpVar, int apVar, int dpVar, int spVar, int goldVar, int expVar,
-                         string& name)
-    {
-        HP = hpVar;
-        maxHP = hpVar;
-        AP = apVar;
-        DP = dpVar;
-        SP = spVar;
-        gold = goldVar;
-        expPoints = expVar;
-        this->name = name;
     }
 
 void Monster::apply(const Equipment* eq)
@@ -41,3 +32,25 @@ void Monster::apply(const Equipment* eq)
 			return;
 		}
 	}
+
+istream& operator>> (istream& is, Monster& monster)
+	{
+		getline(is, monster.name);
+
+		//Init monster stats from stream
+        is>>monster.HP;
+        monster.maxHP = monster.HP;
+        is>>monster.AP;
+        is>>monster.DP;
+        is>>monster.SP;
+        is>>monster.gold;
+        is>>monster.expPoints;
+        is.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        //init inventory from stream (1 line of ids for each equipment type
+        readEquipmentIdLine(is, monster.weaponIds);
+        readEquipmentIdLine(is, monster.armorIds);
+        readEquipmentIdLine(is, monster.itemIds);
+
+        return is;
+    }

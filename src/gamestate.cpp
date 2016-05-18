@@ -24,11 +24,11 @@ Player& GameState::getPlayer()
 	return player;
 }
 
-int GameState::getRandInt(int start, int end) const
+int GameState::getRandIntBetween(int start, int end) const
 {
 	//postcondition: returns a random int between start and end, inclusive
 
-	return rand() % (end-start) + start;
+	return rand() % (end+1-start) + start;
 }
 
 char GameState::getCurrentLandscape()

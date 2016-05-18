@@ -164,7 +164,7 @@ void BattleMode::onBattleWon()
 	//Battle spoils
 	player.AddExp(currMonster.ExpPts());
 	player.AddMoney(currMonster.Money());
-	if(gameState.getRandInt(1, 100) > (100-DROP_CHANCE_PERCENT))
+	if(gameState.getRandIntBetween(1, 100) > (100-DROP_CHANCE_PERCENT))
 	{
 		addMonsterEquipment();
 	}

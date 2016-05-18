@@ -137,13 +137,13 @@ void OverworldMode::getEnemy()
 	switch(area)
 	{
 		case easy:
-			randMons = gameState.getRandInt(0, 2);
+			randMons = gameState.getRandIntBetween(0, 2);
 			break;
 		case medium:
-			randMons = gameState.getRandInt(3, 6);
+			randMons = gameState.getRandIntBetween(3, 6);
 			break;
 		case hard:
-			randMons = gameState.getRandInt(7, 9);
+			randMons = gameState.getRandIntBetween(7, 9);
 			break;
 	}
 
@@ -180,7 +180,7 @@ bool OverworldMode::randomEncounterHappened(Region& region) const
 	//chance of an encounter increases as the region the player's in gets more
 	//difficult.
 
-	int randResult = gameState.getRandInt(0,6);
+	int randResult = gameState.getRandIntBetween(0,6);
 	switch(region)
 	{
 	case easy:

@@ -157,16 +157,76 @@ void BattleMode::onBattleWon()
 {
 	Player& player = gameState.getPlayer();
 
-	char cont;
 	cout<<"You won the battle!  ";
 	cout<<"You gained "<<currMonster.ExpPts()<<" pts!"<<endl;
-	cout<<"Monster dropped "<<currMonster.Money()<<" gold!";
+	cout<<"Monster dropped "<<currMonster.Money()<<" gold!"<<endl;
+
+	//Battle spoils
+	player.AddExp(currMonster.ExpPts());
+	player.AddMoney(currMonster.Money());
+	if(gameState.getRandInt(1, 100) > (100-DROP_CHANCE_PERCENT))
+	{
+		addMonsterEquipment();
+	}
+
+	char cont;
 	cout<<endl;
 	cout<<"Press X and enter to continue:  ";
 	cin>>cont;
-	player.AddExp(currMonster.ExpPts());
-	player.AddMoney(currMonster.Money());
+
+	//Check if player should level up (possibly move to AddExp?)
 	if(player.ExpPts() >= player.NumToNext())
 		player.LevelUp();
+
 	gameState.requestExitCurrentMode();
+}
+
+void BattleMode::addMonsterEquipment()
+{
+	//postcondition: if monster has any Equipment, new EquipmentLines are allocated
+	//for each one and added to the player's inventory.
+	//The equipment added is displayed to the player.  No message is displayed
+	//if the monster has no equipment.
+
+	const vector<int> monsterWeaponIds = currMonster.getEquipmentIds(WEAPON);
+	const vector<int> monsterArmorIds = currMonster.getEquipmentIds(ARMOR);
+	const vector<int> monsterItemIds = currMonster.getEquipmentIds(ITEM);
+
+	//If monster doesn't have anything to drop, don't need to display message
+	//that they're dropping stuff and do a bunch of no-op loops
+	if(monsterWeaponIds.empty() && monsterArmorIds.empty() && monsterItemIds.empty())
+	{
+		return;
+	}
+
+	Player& player = gameState.getPlayer();
+
+	cout<<"Monster dropped: "<<endl;
+
+	const vector<Equipment*> weapons = gameData.getWeapons();
+	for(int i=0; i < monsterWeaponIds.size(); i++)
+	{
+		EquipmentLine weaponLine(weapons[monsterWeaponIds[i]]);
+		player.AddEquipment(weaponLine);
+
+		cout<<"  "<<weaponLine.pEquipment->getName()<<endl;
+	}
+
+	const vector<Equipment*> armor = gameData.getArmor();
+	for(int i=0; i < monsterArmorIds.size(); i++)
+	{
+		EquipmentLine armorLine(armor[monsterArmorIds[i]]);
+		player.AddEquipment(armorLine);
+
+		cout<<"  "<<armorLine.pEquipment->getName()<<endl;
+	}
+
+	const vector<Equipment*> items = gameData.getItems();
+	for(int i=0; i < monsterItemIds.size(); i++)
+	{
+		EquipmentLine itemLine(items[monsterItemIds[i]]);
+		player.AddEquipment(itemLine);
+
+		cout<<"  "<<itemLine.pEquipment->getName()<<endl;
+	}
 }

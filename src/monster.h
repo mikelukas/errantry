@@ -28,6 +28,7 @@ class Monster : public Character
         public:
             Monster();
 
+            vector<int> getEquipmentIds(EquipType) const;
             void apply(const Equipment*);
 
             friend istream& operator>> (istream&, Monster&);

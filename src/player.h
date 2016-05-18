@@ -60,6 +60,7 @@ class Player : public Character
             void LevelUp();
             void AddExp(int);
             void AddMoney(int);
+            void AddEquipment(const EquipmentLine&);
             Point GetCoords() const;
             void SetCoords(int, int);
 

@@ -16,6 +16,28 @@ Monster::Monster()
         name = "none";
     }
 
+vector<int> Monster::getEquipmentIds(EquipType equipType) const
+	{
+		//postcondition: returns a copy of the Monster's equipment id vector
+		//matching the requested EquipType
+
+		switch(equipType)
+		{
+		case WEAPON:
+			return weaponIds;
+			break;
+		case ARMOR:
+			return armorIds;
+			break;
+		case ITEM:
+			return itemIds;
+			break;
+		default:
+			return vector<int>();
+			break;
+		}
+	}
+
 void Monster::apply(const Equipment* eq)
 	{
 		//postcondition: The incoming Equipment is "applied" to the player, which

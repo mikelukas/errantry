@@ -93,19 +93,30 @@ void Player::AddMoney(int money)
         
         gold = gold + money;
     }
-void Player::Buy(const EquipmentLine* purchasedEqLine)
+void Player::AddEquipment(const EquipmentLine& newEqLine)
 	{
-		EquipType purchaseType = purchasedEqLine->pEquipment->getType();
+		//postcondition: adds the Equipment within the incoming EquipmentLine*
+		//to the player's inventory.
+		//Safe for the caller to delete the EquipmentLine pointed to by the
+		//incoming pointer; if the player already has the equipment, we increment
+		//their count for it, and if they don't we, make a copy of the EquipmentLine
+		//and store it into the inventory.
+
+		EquipType purchaseType = newEqLine.pEquipment->getType();
 		map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(purchaseType);
 
-		EquipmentLine& eqLine = inventory[purchasedEqLine->pEquipment];
+		EquipmentLine& eqLine = inventory[newEqLine.pEquipment];
 		if(eqLine.pEquipment != NULL)
 		{
-			eqLine += (*purchasedEqLine);
+			eqLine += newEqLine;
 		}
 		else {
-			inventory[purchasedEqLine->pEquipment] = (*purchasedEqLine);
+			inventory[newEqLine.pEquipment] = newEqLine;
 		}
+	}
+void Player::Buy(const EquipmentLine* purchasedEqLine)
+	{
+		AddEquipment(*purchasedEqLine);
 
 		gold -= (purchasedEqLine->getTotalCost());
 	}

@@ -10,6 +10,8 @@
 
 using std::queue;
 
+const int DROP_CHANCE_PERCENT = 40;
+
 /* This mode handles battle choices when a player encounters a monster randomly
  * while moving on the overworld.  It is also the base class for boss battles,
  * which are slightly special and occur when the user moves onto a cave.
@@ -26,6 +28,7 @@ class BattleMode : public MenuMode
 
 		bool testEndConditions();
 		virtual void onBattleWon();
+		void addMonsterEquipment();
 
 	public:
 		BattleMode(Monster, GameData&, GameState&);

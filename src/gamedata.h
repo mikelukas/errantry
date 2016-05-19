@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <limits>
 #include <map>
 #include <string>
 #include <vector>
@@ -16,6 +17,8 @@
 using std::cout;
 using std::ifstream;
 using std::endl;
+using std::numeric_limits;
+using std::streamsize;
 
 using std::map;
 using std::string;
@@ -24,6 +27,7 @@ using std::vector;
 const string MAPFILE = "../dat/Map.dat";
 const string MONSTERFILE = "../dat/Monster.dat";
 const string BOSSFILE = "../dat/Bosses.dat";
+const string CAVEFILE = "../dat/caves.dat";
 const string TOWNFILE = "../dat/Towns.dat";
 const string WEAPONFILE = "../dat/weapons.dat";
 const string ARMORFILE = "../dat/armor.dat";
@@ -40,7 +44,7 @@ class GameData
 		map<int, Town> towns;
 
 		vector<Monster> monsters;
-		vector<Monster> bosses;
+		map<int, Monster> bosses; //1D coord -> Monster
 
 		vector<Equipment*> weaponPtrs;
 		vector<Equipment*> armorPtrs;
@@ -50,6 +54,7 @@ class GameData
 
 		bool loadMap();
 		bool loadMonsters(vector<Monster>& monsters, const string& filename);
+		bool loadBosses(map<int, Monster>&, const string&, const string&);
 		bool loadEquipment(EquipType type, vector<Equipment*>& equipment, const string& filename);
 
 		bool loadTowns();
@@ -64,7 +69,7 @@ class GameData
 		const Town& getTown(const Point&);
 
 		const vector<Monster>& getMonsters();
-		const vector<Monster>& getBosses();
+		Monster getBossAt(const Point&);
 
 		const vector<Equipment*>& getWeapons();
 		const vector<Equipment*>& getArmor();

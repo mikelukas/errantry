@@ -38,13 +38,11 @@ bool GameData::loadDataFiles()
 
 	if(!loadMonsters(monsters, MONSTERFILE))
 	{
-		cout<<"ERROR: "<<MONSTERFILE<<" not found!"<<endl;
 		return false;
 	}
 
-	if(!loadMonsters(bosses, BOSSFILE))
+	if(!loadBosses(bosses, BOSSFILE, CAVEFILE))
 	{
-		cout<<"ERROR: "<<BOSSFILE<<" not found!"<<endl;
 		return false;
 	}
 
@@ -104,7 +102,7 @@ bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
 		return false;
 	}
 
-	cout<<":  Loading monsters from"<<filename<<endl;
+	cout<<":  Loading monsters from "<<filename<<endl;
 
 	while(monsterFile.peek() != EOF)
 	{
@@ -115,6 +113,47 @@ bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
 	}
 	monsterFile.close();
 	cout<<":  "<<monsters.size()<<" Monsters found."<<endl;
+
+	return true;
+}
+
+bool GameData::loadBosses(map<int, Monster>& bosses, const string& bossesFilename, const string& cavesFilename)
+{
+	//postcondition: monster data for all bosses is loaded from the bosses file,
+	//caves are placed on the world map at the locations where each boss should be
+	//fought at, and the bosses map is populated with 1D cave index -> Monster
+	//instance for the boss at that location.
+
+	vector<Monster> monsters;
+	if(!loadMonsters(monsters, bossesFilename))
+	{
+		cout<<"ERROR: Unable to load Monster data for bosses from "<<bossesFilename<<"!"<<endl;
+		return false;
+	}
+
+	ifstream cavesFile(cavesFilename);
+	if(!cavesFile)
+	{
+		cout<<"ERROR: "<<cavesFilename<<" not found!"<<endl;
+		return false;
+	}
+
+	cout<<":  Loading boss caves from "<<cavesFilename<<endl;
+
+	//Order of caves in caves is the same as order of bosses in bosses file
+	int bossIndex = 0;
+	while(cavesFile.peek() != EOF && bossIndex < monsters.size()) //makes sure we don't make more caves than we have bosses
+	{
+		Point caveLocation;
+		cavesFile>>caveLocation;
+		cavesFile.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		//Map boss monster instance to each cave location for lookup when player moves on the map
+		bosses[caveLocation.as1dIndex(worldMap.size())] = monsters[bossIndex++];
+		worldMap[caveLocation.y][caveLocation.x] = 'C';
+	}
+	cavesFile.close();
+	cout<<":  "<<bosses.size()<<" bosses placed in caves."<<endl;
 
 	return true;
 }
@@ -211,9 +250,9 @@ const vector<Monster>& GameData::getMonsters()
 	return monsters;
 }
 
-const vector<Monster>& GameData::getBosses()
+Monster GameData::getBossAt(const Point& coord)
 {
-	return bosses;
+	return bosses[coord.as1dIndex(worldMap[0].size())];
 }
 
 const vector<Equipment*>& GameData::getWeapons()

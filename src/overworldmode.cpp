@@ -103,8 +103,7 @@ void OverworldMode::move()
 	switch(gameState.getCurrentLandscape())
 		{
 			case 'C': {
-				int currBoss = gameState.getCurrentBoss();
-				GameMode* bossBattle = new BossBattleMode(gameData.getBosses()[currBoss], gameData, gameState);
+				GameMode* bossBattle = new BossBattleMode(gameData.getBossAt(player.GetCoords()), gameData, gameState);
 				gameState.enterMode(bossBattle);
 				break;
 			}

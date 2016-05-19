@@ -25,10 +25,12 @@ class GameState
 
 		char landscape; //current type of landscape the player is standing on
 		stack<GameMode*> activeModes; //top of stack is current game mode, items under it are modes that we got to it from
+		GameMode* nextMode;
 		bool exitCurrentModeRequested;
 
 		int currBoss; //index of the next boss to be fought in 'Bosses'
 
+		void enterMode(GameMode*);
 		void exitCurrentMode();
 
 	public:
@@ -43,7 +45,10 @@ class GameState
 		void setCurrentLandscape(const char);
 
 		GameMode* getCurrentMode() const;
-		void enterMode(GameMode*);
+
+		void requestEnterMode(GameMode*);
+		void handleEnterModeRequest();
+
 		void requestExitCurrentMode();
 		void handleExitModeRequest();
 

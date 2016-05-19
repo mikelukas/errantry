@@ -51,11 +51,14 @@ void MainGame(GameData& gameData, GameState& gameState)
         //perform by calling the functions that perform those actions.
         
 		GameMode* startingMode = new IntroMode(gameData, gameState);
-	    gameState.enterMode(startingMode);
+	    gameState.requestEnterMode(startingMode);
+	    gameState.handleEnterModeRequest();
 
         while(!gameState.isGameOver())
             {
         		gameState.getCurrentMode()->run();
+
         		gameState.handleExitModeRequest();
+        		gameState.handleEnterModeRequest();
             }
     }

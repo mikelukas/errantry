@@ -61,7 +61,7 @@ void IntroMode::run()
 	cout<<"****************************************************"<<endl;
 
 	GameMode* overworld  = new OverworldMode(gameData, gameState);
-	gameState.enterMode(overworld);
+	gameState.requestEnterMode(overworld);
 }
 
 bool IntroMode::validateChoice(char answer)

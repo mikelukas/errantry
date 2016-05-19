@@ -146,7 +146,7 @@ bool BattleMode::testEndConditions()
 		{
 			//if player dies, leave game
 			GameMode* dead = new DeadMode(gameData, gameState);
-			gameState.enterMode(dead);
+			gameState.requestEnterMode(dead);
 			battleOver = true;
 		}
 

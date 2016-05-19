@@ -22,7 +22,7 @@ void BossBattleMode::onBattleWon()
 	if(gameState.getCurrentBoss() >= 7)
 	{
 		GameMode* win = new WinMode(gameData, gameState);
-		gameState.enterMode(win);
+		gameState.requestEnterMode(win);
 	}
 	gameState.advanceToNextBoss();
 }

@@ -79,7 +79,7 @@ void TownMode::enterArmory()
 	}
 
 	GameMode* mode = new ArmoryMainMode(currentTown, gameData, gameState);
-	gameState.enterMode(mode);
+	gameState.requestEnterMode(mode);
 }
 
 void TownMode::enterGenStore()
@@ -95,5 +95,5 @@ void TownMode::enterGenStore()
 	}
 
 	GameMode* genStore = new GeneralStoreMainMode(currentTown, gameData, gameState);
-	gameState.enterMode(genStore);
+	gameState.requestEnterMode(genStore);
 }

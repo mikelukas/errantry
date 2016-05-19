@@ -29,7 +29,7 @@ void GeneralStoreMainMode::enterBuyMode()
 	}
 
 	GameMode* shopBuyMode = new ShopBuyMode(equipmentChoices, gameData, gameState);
-	gameState.enterMode(shopBuyMode);
+	gameState.requestEnterMode(shopBuyMode);
 }
 
 void GeneralStoreMainMode::enterSellMode()
@@ -40,5 +40,5 @@ void GeneralStoreMainMode::enterSellMode()
 	vector<EquipmentLine*>* equipmentChoices = gameState.getPlayer().getItemsAsVector();
 
 	GameMode* shopBuyMode = new ShopSellMode(equipmentChoices, gameData, gameState);
-	gameState.enterMode(shopBuyMode);
+	gameState.requestEnterMode(shopBuyMode);
 }

@@ -11,6 +11,7 @@
 GameState::GameState()
 	: player(),
 	  landscape(INIT_LANDSCAPE),
+	  nextMode(NULL),
 	  exitCurrentModeRequested(false),
 	  currBoss(INIT_NEXT_BOSS)
 
@@ -43,6 +44,29 @@ GameMode* GameState::getCurrentMode() const
 {
 	return activeModes.top();
 }
+void GameState::requestEnterMode(GameMode* mode)
+{
+	//postcondition: schedules the incoming mode to be changed to become the
+	//current mode when the current mode finishes running.
+	//If an exit request and an enter request are made by the same mode, the exit
+	//request will always be handled first.
+	//Use this method within modes to request changing to a new one.  It ensures
+	//an exit request won't immediately drop you out of a mode you tried to enter
+	//and ensures that multiple modes won't be set to be entered by the same mode.
+
+	nextMode = mode;
+}
+void GameState::handleEnterModeRequest()
+{
+	//postcondition: if a nextMode was requested to be entered, it will be made
+	//the active mode, and nextMode will be set back to NULL
+
+	if(nextMode != NULL)
+	{
+		enterMode(nextMode);
+		nextMode = NULL;
+	}
+}
 void GameState::enterMode(GameMode* mode)
 {
 	//postcondition: mode becomes the current active mode.  Mode will be deleted
@@ -53,6 +77,8 @@ void GameState::requestExitCurrentMode()
 {
 	//postcondition: schedules the current mode to be popped and deleted after
 	//the current mode finishes running.
+	//If an exit request and an enter request are made by the same mode, the exit
+	//request will always be handled first.
 	//Use this method within modes to exit the current mode; it prevents the effect of
 	//multiple calls to exitCurrentMode() while still running a mode, which would
 	//result in unwanted exiting of extra modes, and also allows the current

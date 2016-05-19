@@ -59,7 +59,7 @@ void OverworldMode::testChoice(int choice)
 				break;
 			case 5:
 				GameMode* quit = new QuitMode(gameData, gameState);
-				gameState.enterMode(quit);
+				gameState.requestEnterMode(quit);
 				break;
 		}
 }
@@ -104,13 +104,13 @@ void OverworldMode::move()
 		{
 			case 'C': {
 				GameMode* bossBattle = new BossBattleMode(gameData.getBossAt(player.GetCoords()), gameData, gameState);
-				gameState.enterMode(bossBattle);
+				gameState.requestEnterMode(bossBattle);
 				break;
 			}
 			case TOWN_SYMBOL: {
 				const Town& town = gameData.getTown(player.GetCoords());
 				GameMode* townMode = new TownMode(town, gameData, gameState);
-				gameState.enterMode(townMode);
+				gameState.requestEnterMode(townMode);
 				break;
 			}
 			default:
@@ -148,7 +148,7 @@ void OverworldMode::getEnemy()
 
 	const vector<Monster>& monsterList = gameData.getMonsters();
 	GameMode* battle = new BattleMode(monsterList[randMons], gameData, gameState);
-	gameState.enterMode(battle);
+	gameState.requestEnterMode(battle);
 
 }
 Region OverworldMode::getPlayerRegion() const
@@ -222,11 +222,11 @@ void OverworldMode::printStatus() const
 void OverworldMode::equip()
 {
 	GameMode* equipMode = new EquipMode(gameData, gameState);
-	gameState.enterMode(equipMode);
+	gameState.requestEnterMode(equipMode);
 }
 
 void OverworldMode::useItem()
 {
 	GameMode* useItemMode = new UseItemMode(gameData, gameState);
-	gameState.enterMode(useItemMode);
+	gameState.requestEnterMode(useItemMode);
 }

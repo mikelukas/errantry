@@ -37,7 +37,7 @@ void ArmoryMainMode::enterBuyMode()
 	}
 
 	GameMode* shopBuyMode = new ShopBuyMode(equipmentChoices, gameData, gameState);
-	gameState.enterMode(shopBuyMode);
+	gameState.requestEnterMode(shopBuyMode);
 }
 
 void ArmoryMainMode::enterSellMode()
@@ -48,5 +48,5 @@ void ArmoryMainMode::enterSellMode()
 	vector<EquipmentLine*>* equipmentChoices = gameState.getPlayer().getWeaponsAndArmorAsVector();
 
 	GameMode* shopBuyMode = new ShopSellMode(equipmentChoices, gameData, gameState);
-	gameState.enterMode(shopBuyMode);
+	gameState.requestEnterMode(shopBuyMode);
 }

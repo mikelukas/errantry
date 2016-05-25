@@ -12,6 +12,7 @@
 
 #include "equipment.h"
 #include "monster.h"
+#include "spell.h"
 #include "town.h"
 
 using std::cout;
@@ -32,6 +33,7 @@ const string TOWNFILE = "../dat/Towns.dat";
 const string WEAPONFILE = "../dat/weapons.dat";
 const string ARMORFILE = "../dat/armor.dat";
 const string ITEMFILE = "../dat/items.dat";
+const string SPELLFILE = "../dat/spells.dat";
 
 /* This class tracks game resources, which don't change as the player progresses.
  */
@@ -49,6 +51,7 @@ class GameData
 		vector<Equipment*> weaponPtrs;
 		vector<Equipment*> armorPtrs;
 		vector<Equipment*> itemsPtrs;
+		vector<const Spell*> spellPtrs;
 
 		bool loadDataFiles(); //master load method
 
@@ -56,6 +59,7 @@ class GameData
 		bool loadMonsters(vector<Monster>& monsters, const string& filename);
 		bool loadBosses(map<int, Monster>&, const string&, const string&);
 		bool loadEquipment(EquipType type, vector<Equipment*>& equipment, const string& filename);
+		bool loadSpells(vector<const Spell*>&, const string&);
 
 		bool loadTowns();
 

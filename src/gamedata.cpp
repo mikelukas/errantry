@@ -61,6 +61,11 @@ bool GameData::loadDataFiles()
 		return false;
 	}
 
+	if(!loadSpells(spellPtrs, SPELLFILE))
+	{
+		return false;
+	}
+
 	if(!loadTowns())
 	{
 		return false;
@@ -187,6 +192,32 @@ bool GameData::loadEquipment(EquipType type, vector<Equipment*>& equipment, cons
 		}
 	equipFile.close();
 	cout<<":  "<<equipment.size()<<" equipment found."<<endl;
+
+	return true;
+}
+
+bool GameData::loadSpells(vector<const Spell*>& spells, const string& filename)
+{
+	ifstream spellFile(filename);
+	if(!spellFile)
+	{
+		cout<<"ERROR: "<<filename<<" not found!"<<endl;
+		return false;
+	}
+
+	cout<<":  Loading spells from "<<filename<<endl;
+
+	while(spellFile.peek() != EOF)
+	{
+		const Spell* spell = new Spell(spellFile);
+		cout<<spell->getName()<<endl
+			<<"  "<<spell->getElement()<<endl
+			<<"  "<<spell->getMpCost()<<endl
+			<<"  "<<spell->getPurchasePrice()<<endl;
+		spells.push_back(spell);
+	}
+	spellFile.close();
+	cout<<":  "<<spells.size()<<" spells found."<<endl;
 
 	return true;
 }

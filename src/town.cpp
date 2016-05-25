@@ -48,9 +48,9 @@ istream& operator>> (istream& is, Town& town)
 	is>>town.location;
 	is.get(); //gets the newline character after the location point is read in
 
-	readEquipmentIdLine(is, town.weaponIds);
-	readEquipmentIdLine(is, town.armorIds);
-	readEquipmentIdLine(is, town.itemIds);
+	getIdLine(is, town.weaponIds);
+	getIdLine(is, town.armorIds);
+	getIdLine(is, town.itemIds);
 
 	string convoLine;
 	while(getline(is, convoLine) && convoLine != TOWN_CONVO_DELIM) {

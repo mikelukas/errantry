@@ -71,7 +71,4 @@ struct EquipmentLine
 		friend void operator-=(EquipmentLine&, const EquipmentLine&);
 	};
 
-//Helper for reading dat files for various things that start with inventory (towns, monsters)
-void readEquipmentIdLine(istream&, vector<int>&);
-
 #endif

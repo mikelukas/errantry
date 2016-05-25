@@ -70,9 +70,9 @@ istream& operator>> (istream& is, Monster& monster)
         is.ignore(numeric_limits<streamsize>::max(), '\n');
 
         //init inventory from stream (1 line of ids for each equipment type
-        readEquipmentIdLine(is, monster.weaponIds);
-        readEquipmentIdLine(is, monster.armorIds);
-        readEquipmentIdLine(is, monster.itemIds);
+        getIdLine(is, monster.weaponIds);
+        getIdLine(is, monster.armorIds);
+        getIdLine(is, monster.itemIds);
 
         return is;
     }

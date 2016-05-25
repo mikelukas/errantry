@@ -9,6 +9,7 @@
 #include <vector>
 #include "equipment.h"
 #include "point.h"
+#include "streamutils.h"
 
 using std::istream;
 using std::string;

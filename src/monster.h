@@ -11,6 +11,7 @@
 #include <vector>
 #include "character.h"
 #include "equipment.h"
+#include "streamutils.h"
 
 using std::istream;
 using std::string;

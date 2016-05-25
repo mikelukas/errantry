@@ -26,12 +26,14 @@ class Town
 		vector<int> weaponIds;
 		vector<int> armorIds;
 		vector<int> itemIds;
+		vector<int> spellIds;
 		string conversation; //What you hear when you choose to talk in this town
 
 	public:
 		string getName() const;
 		Point getLocation() const;
 		vector<int> getShopEquipmentIds(EquipType) const;
+		vector<int> getShopSpellIds() const;
 		string getConversation() const;
 
 		friend istream& operator>> (istream&, Town&);

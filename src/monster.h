@@ -26,10 +26,15 @@ class Monster : public Character
 			vector<int> armorIds;
 			vector<int> itemIds;
 
+			//spells player may learn by defeating the monster
+			vector<int> spellIds;
+
         public:
             Monster();
 
             vector<int> getEquipmentIds(EquipType) const;
+            vector<int> getSpellIds() const;
+
             void apply(const Equipment*);
 
             friend istream& operator>> (istream&, Monster&);

@@ -29,6 +29,11 @@ vector<int> Town::getShopEquipmentIds(EquipType equipType) const
 	}
 }
 
+vector<int> Town::getShopSpellIds() const
+{
+	return spellIds;
+}
+
 string Town::getConversation() const
 {
 	//postcondition: returns conversation text to be displayed when user
@@ -51,6 +56,7 @@ istream& operator>> (istream& is, Town& town)
 	getIdLine(is, town.weaponIds);
 	getIdLine(is, town.armorIds);
 	getIdLine(is, town.itemIds);
+	getIdLine(is, town.spellIds);
 
 	string convoLine;
 	while(getline(is, convoLine) && convoLine != TOWN_CONVO_DELIM) {

@@ -251,6 +251,7 @@ bool GameData::loadTowns()
 			cout<<"    "<<town.getShopEquipmentIds(WEAPON).size()<<" weapons loaded"<<endl;
 			cout<<"    "<<town.getShopEquipmentIds(ARMOR).size()<<" armor pieces loaded"<<endl;
 			cout<<"    "<<town.getShopEquipmentIds(ITEM).size()<<" items loaded"<<endl;
+			cout<<"    "<<town.getShopSpellIds().size()<<" spells loaded"<<endl;
 			cout<<town.getConversation();
 			cout<<TOWN_CONVO_DELIM<<endl;
 		}

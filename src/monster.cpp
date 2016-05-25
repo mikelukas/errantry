@@ -38,6 +38,11 @@ vector<int> Monster::getEquipmentIds(EquipType equipType) const
 		}
 	}
 
+vector<int> Monster::getSpellIds() const
+{
+	return spellIds;
+}
+
 void Monster::apply(const Equipment* eq)
 	{
 		//postcondition: The incoming Equipment is "applied" to the player, which
@@ -73,6 +78,7 @@ istream& operator>> (istream& is, Monster& monster)
         getIdLine(is, monster.weaponIds);
         getIdLine(is, monster.armorIds);
         getIdLine(is, monster.itemIds);
+        getIdLine(is, monster.spellIds);
 
         return is;
     }

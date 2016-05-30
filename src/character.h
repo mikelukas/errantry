@@ -17,8 +17,11 @@ class Character
         protected:
             int HP;             //current hit points (life)
             int maxHP;          //maximum hit points
+            int MP;				//current magic points (needed to cast spells)
+            int maxMP;			//maximum magic points
             int AP;             //attack power
             int DP;             //defense percentage
+            int MDP;			//magic defense percentage
             int SP;             //speed points
 
             string name;
@@ -30,17 +33,21 @@ class Character
 			void SubStats(const StatMod&);
 
         public:
-            Character(int, int, int, int, int, int);
+            Character(int, int, int, int, int, int, int, int);
             virtual ~Character() {};
 
             void ChangeHP(int);
+            void ChangeMP(int);
             
             string ShowName() const;
 
             int Damage() const;
             int Defense() const;
+            int MagicDefense() const;
             int Health() const;
             int MaxHealth() const;
+            int getMP() const;
+            int MaxMP() const;
             int Speed() const;
             int Money() const;
             int ExpPts() const;

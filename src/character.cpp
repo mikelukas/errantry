@@ -1,11 +1,14 @@
 #include "character.h"
 
 //Constructors-------------------------------------------------------//
-Character::Character(int hpVar, int apVar, int dpVar, int spVar, int money, int expPoints)
+Character::Character(int hpVar, int mpVar, int apVar, int dpVar, int mdpVar, int spVar, int money, int expPoints)
 	: HP(hpVar),
 	  maxHP(hpVar),
+	  MP(mpVar),
+	  maxMP(mpVar),
 	  AP(apVar),
       DP(dpVar),
+	  MDP(mdpVar),
       SP(spVar),
       gold(money),
 	  expPoints(expPoints)
@@ -21,7 +24,16 @@ void Character::ChangeHP(int hpChange)
         //is added to HP, if health is gained, a positive value is
         //added to HP
 
-        HP = HP + hpChange;
+        HP += hpChange;
+    }
+
+void Character::ChangeMP(int mpChange)
+    {
+        //postcondition:  MP value of character altered by the value
+        //sent to the function; if MP is being used, a negative value
+        //should be passed in, otherwise, a positive value should be passed in
+
+        MP += mpChange;
     }
 
 //accessor functions-------------------------------------------------//
@@ -43,6 +55,12 @@ int Character::Defense() const
         return DP;
     }
 
+int Character::MagicDefense() const
+    {
+        //postcondition:  returns character's magic defense points
+        return MDP;
+    }
+
 int Character::Health() const
     {
         //postcondition:  returns character's health points
@@ -53,6 +71,18 @@ int Character::MaxHealth() const
     {
         //postcondition:  returns character's maximum health points
         return maxHP;
+    }
+
+int Character::getMP() const
+    {
+        //postcondition:  returns character's magic points
+        return MP;
+    }
+
+int Character::MaxMP() const
+    {
+        //postcondition:  returns character's maximum magic points
+        return maxMP;
     }
 
 int Character::Speed() const

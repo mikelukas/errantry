@@ -11,7 +11,7 @@ using std::streamsize;
 //Constructors-------------------------------------------------------//
 
 Monster::Monster()
-    : Character(1, 0, 0, 0, 0, 0)
+    : Character(1, 0, 0, 0, 0, 0, 0, 0)
     {
         name = "none";
     }
@@ -67,8 +67,11 @@ istream& operator>> (istream& is, Monster& monster)
 		//Init monster stats from stream
         is>>monster.HP;
         monster.maxHP = monster.HP;
+        is>>monster.MP;
+        monster.maxMP = monster.MP;
         is>>monster.AP;
         is>>monster.DP;
+        is>>monster.MDP;
         is>>monster.SP;
         is>>monster.gold;
         is>>monster.expPoints;

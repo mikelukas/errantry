@@ -11,7 +11,7 @@ using std::endl;
 //Constructors---------------------------------------------------------------//
 
 Player::Player()
-    : Character(BEGINHP, BEGINAP, BEGINDP, BEGINSP, BEGINGOLD, 0),
+    : Character(BEGINHP, BEGINMP, BEGINAP, BEGINDP, BEGINMDP, BEGINSP, BEGINGOLD, 0),
       expToNext(100),
       lvl(1),
       Coords(STARTPOS)
@@ -46,6 +46,7 @@ void Player::LevelUp()
         int choice;
         
         maxHP = maxHP + int(maxHP * HPRATE);
+        maxMP = maxMP + int(maxMP * MPRATE);
                 
         if(lvl % SPRATE == 0)
             SP++;
@@ -57,7 +58,8 @@ void Player::LevelUp()
         
         cout<<"Increase:  1) attack"<<endl
             <<"           2) defense"<<endl
-            <<"           3) even increment"<<endl;
+			<<"           3) magic defense"<<endl
+            <<"           4) even increment"<<endl;
         cout<<"Choice:  ";
         cin>>choice;
         cout<<"--------------------------------------"<<endl;
@@ -66,15 +68,23 @@ void Player::LevelUp()
             {
                 case 1: //Attack
                     AP = AP + int(AP * BIGRATE);
-                    DP = DP + int(AP * FLATRATE);
+                    DP = DP + int(DP * LOWRATE);
+                    MDP = MDP + int(MDP * LOWRATE);
                     break;
                 case 2: //Defense
-                    AP = AP + int(AP * FLATRATE);
-                    DP = DP + int(AP * BIGRATE);
+                    AP = AP + int(AP * LOWRATE);
+                    DP = DP + int(DP * BIGRATE);
+                    MDP = MDP + int(MDP * LOWRATE);
                     break;
+                case 3: //Magic Defense
+                	AP = AP + int(AP * LOWRATE);
+                	DP = DP + int(DP * LOWRATE);
+                	MDP = MDP + int(MDP * BIGRATE);
+                	break;
                 default:  //even
                     AP = AP + int(AP * FLATRATE);
-                    DP = DP + int(AP * FLATRATE); 
+                    DP = DP + int(DP * FLATRATE);
+                    MDP = MDP + int(MDP * FLATRATE);
             }
             
         }

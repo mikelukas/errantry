@@ -22,15 +22,19 @@ using std::string;
 using std::vector;
 
 const double HPRATE = .65;   //
+const double MPRATE = .55;	  //
 const double BIGRATE = .45;     //rates to increase attributes by at level up
 const double FLATRATE = .2;      //
-const int    SPRATE = 10;       //
+const double LOWRATE = .1;      //
+const int    SPRATE = 10;      //
 const double NEXTRATE = .85; //
 
 //attributes a player starts with
 const int BEGINHP = 25;
+const int BEGINMP = 15;
 const int BEGINAP = 10;
 const int BEGINDP = 7;
+const int BEGINMDP = 5;
 const int BEGINSP = 3;
 const int BEGINGOLD = 1200;
 

@@ -2,6 +2,7 @@
 #include "gamestate.h"
 #include "generalstoremainmode.h"
 #include "townmode.h"
+#include "buyspellsmode.h"
 
 TownMode::TownMode(const Town& town, GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState),
@@ -19,13 +20,14 @@ int TownMode::displayMenu()
 	cout<<"*1)Talk                 *"<<endl;
 	cout<<"*2)Go to Armory         *"<<endl;
 	cout<<"*3)Go to General Store  *"<<endl;
-	cout<<"*4)Leave Town           *"<<endl;
+	cout<<"*4)Magic Lessons        *"<<endl;
+	cout<<"*5)Leave Town           *"<<endl;
 	cout<<"*************************"<<endl;
 	do
 	 {
 		cout<<"Please choose an option:  ";
 		cin>>choice;
-	 }while(!validateChoice(choice, 4));
+	 }while(!validateChoice(choice, 5));
 
 	return choice;
 }
@@ -43,8 +45,11 @@ void TownMode::testChoice(int choice)
 			case 3:
 				enterGenStore();
 				break;
+			case 4:
+				enterMagicShop();
+				break;
 
-			case 4: //Leave Town
+			case 5: //Leave Town
 				gameState.requestExitCurrentMode();
 				break;
 		}
@@ -96,4 +101,20 @@ void TownMode::enterGenStore()
 
 	GameMode* genStore = new GeneralStoreMainMode(currentTown, gameData, gameState);
 	gameState.requestEnterMode(genStore);
+}
+
+void TownMode::enterMagicShop()
+{
+	//postcondition: Enters BuySpellsMode if the town has magic to sell,
+	//otherwise just displays a message and remains in town mode.
+
+	bool hasSpells = !currentTown.getShopSpellIds().empty();
+	if(!hasSpells)
+	{
+		cout<<MAGICSHOP_CLOSED_MSG<<currentTown.getName()<<"."<<endl;
+		return;
+	}
+
+	GameMode* magicShop = new BuySpellsMode(currentTown, gameData, gameState);
+	gameState.requestEnterMode(magicShop);
 }

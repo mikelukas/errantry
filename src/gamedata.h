@@ -79,6 +79,7 @@ class GameData
 		const vector<Equipment*>& getArmor();
 		const vector<Equipment*>& getItems();
 		const vector<const Spell*>& getSpells();
+		vector<const Spell*>* getSpellsForIds(const vector<int>&) const;
 };
 
 

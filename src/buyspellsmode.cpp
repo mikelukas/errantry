@@ -4,16 +4,8 @@
 BuySpellsMode::BuySpellsMode(const Town& currentTown, GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState)
 {
-	//Create a new vector of spells that can be learned in the current town - cleaned up in spellChooser's destructor
-	vector<const Spell*>* shopSpells = new vector<const Spell*>();
-
-	const vector<const Spell*>& allSpells = gameData.getSpells();
-	vector<int> shopSpellIds = currentTown.getShopSpellIds();
-	for(int i = 0; i < shopSpellIds.size(); i++)
-	{
-		const Spell* spell = allSpells[shopSpellIds[i]];
-		shopSpells->push_back(spell);
-	}
+	//This vector will be freed in spellChooser's destructor
+	vector<const Spell*>* shopSpells = gameData.getSpellsForIds(currentTown.getShopSpellIds());
 
 	spellChooser = new BuySpellChooser(shopSpells, gameState.getPlayer());
 }

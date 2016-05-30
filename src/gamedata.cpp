@@ -306,3 +306,19 @@ const vector<const Spell*>& GameData::getSpells()
 {
 	return spellPtrs;
 }
+
+vector<const Spell*>* GameData::getSpellsForIds(const vector<int>& spellIds) const
+{
+	//postcondition: Allocates a new vector of Spell ptrs matching each of the
+	//Spell ids passed in, using the allSpells vector to look up the Spell ptrs
+	//by id.
+
+	vector<const Spell*>* spellsForIds = new vector<const Spell*>();
+	for(int i = 0; i < spellIds.size(); i++)
+	{
+		const Spell* spell = spellPtrs[spellIds[i]];
+		spellsForIds->push_back(spell);
+	}
+
+	return spellsForIds;
+}

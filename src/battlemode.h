@@ -29,6 +29,7 @@ class BattleMode : public MenuMode
 		bool testEndConditions();
 		virtual void onBattleWon();
 		void addMonsterEquipment();
+		void learnMonsterSpells();
 
 	public:
 		BattleMode(Monster, GameData&, GameState&);

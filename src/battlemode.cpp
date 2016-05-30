@@ -167,6 +167,7 @@ void BattleMode::onBattleWon()
 	if(gameState.getRandIntBetween(1, 100) > (100-DROP_CHANCE_PERCENT))
 	{
 		addMonsterEquipment();
+		learnMonsterSpells();
 	}
 
 	char cont;
@@ -229,4 +230,24 @@ void BattleMode::addMonsterEquipment()
 
 		cout<<"  "<<itemLine.pEquipment->getName()<<endl;
 	}
+}
+
+void BattleMode::learnMonsterSpells()
+{
+	//postcondition: all spell ids the monster has are converted to spell
+	//pointers and the player learns any he/she didn't alreayd know.
+
+	vector<const Spell*>* monsterSpells = gameData.getSpellsForIds(currMonster.getSpellIds());
+	for(vector<const Spell*>::const_iterator it = monsterSpells->begin(); it != monsterSpells->end(); it++)
+	{
+		if(gameState.getPlayer().hasSpell(*it))
+		{
+			continue;
+		}
+
+		gameState.getPlayer().AddSpell(*it);
+		cout<<"You learned '"<<(*it)->getName()<<"' from a scroll the monster was carrying!"<<endl;
+	}
+
+	delete monsterSpells;
 }

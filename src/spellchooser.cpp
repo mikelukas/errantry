@@ -1,14 +1,7 @@
 #include "spellchooser.h"
 
-SpellChooser::SpellChooser(const Player& player)
-	: InventoryChooser(player.getSpells()),
-	  player(player)
-{
-
-}
-
-SpellChooser::SpellChooser(const Player& player, SpellLocale spellLocale)
-	: InventoryChooser(player.getSpellsForLocale(spellLocale)),
+SpellChooser::SpellChooser(vector<const Spell*>* spellChoices, const Player& player)
+	: InventoryChooser(spellChoices),
 	  player(player)
 {
 
@@ -39,6 +32,25 @@ void SpellChooser::displayInventoryChoices() const
 		cout<<std::left<<setw(4)<<choiceNum.str(); displaySpellLine((*invChoices)[i]);
 	}
 	cout<<endl;
+}
+
+bool SpellChooser::validate() const
+{
+	//First make sure player chose a valid choice number
+	if(!InventoryChooser<const Spell*>::validate())
+	{
+		return false;
+	}
+
+	//Next ensure they're not buying something they already have
+	const Spell* chosenSpell = getChosenSpell();
+	if(chosenSpell != NULL && player.hasSpell(chosenSpell))
+	{
+		cout<<"You already know '"<<chosenSpell->getName()<<"'!"<<endl;
+		return false;
+	}
+
+	return true;
 }
 
 const Spell* SpellChooser::getChosenSpell() const

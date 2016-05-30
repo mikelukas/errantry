@@ -21,9 +21,10 @@ class SpellChooser: public InventoryChooser<const Spell*>
 
 		virtual void displaySpellLine(const Spell*) const = 0;
 
+		virtual bool validate() const;
+
 	public:
-		SpellChooser(const Player&);
-		SpellChooser(const Player&, SpellLocale);
+		SpellChooser(vector<const Spell*>*, const Player&);
 		virtual ~SpellChooser();
 
 		const Spell* getChosenSpell() const;

@@ -1,7 +1,7 @@
 #include "buyspellchooser.h"
 
-BuySpellChooser::BuySpellChooser(const Player& player)
-	: SpellChooser(player)
+BuySpellChooser::BuySpellChooser(vector<const Spell*>* spellChoices, const Player& player)
+	: SpellChooser(spellChoices, player)
 {
 
 }

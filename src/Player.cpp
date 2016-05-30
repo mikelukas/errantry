@@ -124,6 +124,12 @@ void Player::Buy(const EquipmentLine* purchasedEqLine)
 
 		gold -= (purchasedEqLine->getTotalCost());
 	}
+void Player::Buy(const Spell* purchasedSpell)
+	{
+		AddSpell(purchasedSpell);
+
+		gold -= (purchasedSpell->getPurchasePrice());
+	}
 void Player::Sell(const EquipmentLine* soldEqLine)
 	{
 		//postcondition: sold equipment quantity is subtracted from the quantity
@@ -262,6 +268,11 @@ EquipmentLine& Player::getEquipmentLineFromInventoryFor(const Equipment* equipme
 			break;
 		}
 	}
+bool Player::hasSpell(const Spell* spell) const
+{
+	return (spells.find(spell) != spells.end());
+}
+
 vector<const Spell*>* Player::getSpells() const
 {
 	vector<const Spell*>* spellsVector = new vector<const Spell*>();

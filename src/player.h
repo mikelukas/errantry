@@ -71,6 +71,7 @@ class Player : public Character
             void SetCoords(int, int);
 
             void Buy(const EquipmentLine*);
+            void Buy(const Spell*);
             void Sell(const EquipmentLine*);
                         
             int Level() const;
@@ -81,6 +82,7 @@ class Player : public Character
             vector<EquipmentLine*>* getItemsAsVector();
             EquipmentLine& getEquipmentLineFromInventoryFor(const Equipment*);
 
+            bool hasSpell(const Spell*) const;
             vector<const Spell*>* getSpells() const;
             vector<const Spell*>* getSpellsForLocale(SpellLocale locale) const;
 

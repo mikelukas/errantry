@@ -13,7 +13,7 @@ class BuySpellChooser: public SpellChooser
 		virtual void displayPostChoiceListInfo() const;
 
 	public:
-		BuySpellChooser(const Player&);
+		BuySpellChooser(vector<const Spell*>*, const Player&);
 		virtual ~BuySpellChooser() {}
 };
 

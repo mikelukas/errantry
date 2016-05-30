@@ -8,13 +8,16 @@
 //etc. 
 
 #include <map>
+#include <set>
 #include <string>
 #include <vector>
 #include "character.h"
 #include "equipment.h"
 #include "point.h"
+#include "spell.h"
 
 using std::map;
+using std::set;
 using std::string;
 using std::vector;
 
@@ -47,6 +50,8 @@ class Player : public Character
             map<const Equipment*, EquipmentLine> armor;
             map<const Equipment*, EquipmentLine> items;
 
+            set<const Spell*> spells;
+
             map<EquipType, const Equipment*> currentEquipped;
 
             void initStartingEquipment();
@@ -61,6 +66,7 @@ class Player : public Character
             void AddExp(int);
             void AddMoney(int);
             void AddEquipment(const EquipmentLine&);
+            void AddSpell(const Spell*);
             Point GetCoords() const;
             void SetCoords(int, int);
 
@@ -74,6 +80,9 @@ class Player : public Character
             vector<EquipmentLine*>* getWeaponsAndArmorAsVector();
             vector<EquipmentLine*>* getItemsAsVector();
             EquipmentLine& getEquipmentLineFromInventoryFor(const Equipment*);
+
+            vector<const Spell*>* getSpells() const;
+            vector<const Spell*>* getSpellsForLocale(SpellLocale locale) const;
 
             const Equipment* getCurrentEquipped(EquipType);
 

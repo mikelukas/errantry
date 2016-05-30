@@ -114,6 +114,10 @@ void Player::AddEquipment(const EquipmentLine& newEqLine)
 			inventory[newEqLine.pEquipment] = newEqLine;
 		}
 	}
+void Player::AddSpell(const Spell* newSpell)
+	{
+		spells.insert(newSpell);
+	}
 void Player::Buy(const EquipmentLine* purchasedEqLine)
 	{
 		AddEquipment(*purchasedEqLine);
@@ -258,6 +262,34 @@ EquipmentLine& Player::getEquipmentLineFromInventoryFor(const Equipment* equipme
 			break;
 		}
 	}
+vector<const Spell*>* Player::getSpells() const
+{
+	vector<const Spell*>* spellsVector = new vector<const Spell*>();
+	for(set<const Spell*>::const_iterator it = spells.begin(); it != spells.end(); it++)
+	{
+		spellsVector->push_back((*it));
+	}
+	return spellsVector;
+}
+
+vector<const Spell*>* Player::getSpellsForLocale(SpellLocale locale) const
+	{
+		//postcondition: allocates a new vector containing only spell pointers
+		//from the player's inventory that can be cast in the given locale.
+		//Assumes caller will free the vector when done with it.
+
+		vector<const Spell*>* spellsForLocale = new vector<const Spell*>();
+		for(set<const Spell*>::const_iterator it = spells.begin(); it != spells.end(); it++)
+		{
+			set<int> eligibleLocations = (*it)->getEligibleLocations();
+			if(eligibleLocations.find(locale) != eligibleLocations.end()) {
+				spellsForLocale->push_back((*it));
+			}
+		}
+
+		return spellsForLocale;
+	}
+
 const Equipment* Player::getCurrentEquipped(EquipType equipType)
 	{
 		return currentEquipped[equipType];

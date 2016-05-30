@@ -31,6 +31,7 @@ class InventoryChooser
 
 		virtual void displayRelevantStats() const = 0;
 		virtual void displayInventoryChoices() const = 0;
+		virtual void displayPostChoiceListInfo() const {}
 
 		virtual bool validate() const;
 

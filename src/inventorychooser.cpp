@@ -20,6 +20,7 @@ void InventoryChooser<T>::display()
 	cout<<"----------------------------------------------------"<<endl;
 	displayInventoryChoices();
 	cout<<EXIT_CHOICE<<") Back"<<endl;
+	displayPostChoiceListInfo();
 	cout<<"**********************MESSAGES**********************"<<endl;
 
 	do

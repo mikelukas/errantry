@@ -54,5 +54,7 @@ class Spell
 
 		void cast(Character&, Character&) const;
 };
+
+string getDisplayNameFor(Element);
     
 #endif

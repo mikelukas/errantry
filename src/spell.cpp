@@ -66,3 +66,21 @@ void Spell::cast(Character& caster, Character& target) const
 		(*EFFECTS[*it])(caster, target);
 	}
 }
+
+string getDisplayNameFor(Element element)
+{
+	switch(element)
+	{
+	case fire:
+		return "Fire";
+	case earth:
+		return "Earth";
+	case air:
+		return "Air";
+	case water:
+		return "Water";
+
+	default:
+		return "Non-elemental";
+	}
+}

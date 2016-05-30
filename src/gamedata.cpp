@@ -301,3 +301,8 @@ const vector<Equipment*>& GameData::getItems()
 {
 	return itemsPtrs;
 }
+
+const vector<const Spell*>& GameData::getSpells()
+{
+	return spellPtrs;
+}

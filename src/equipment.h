@@ -23,8 +23,10 @@ const int INF_QUANTITY = -1; //For shops that sell equipment, you can buy as muc
 struct StatMod
 	{
 		int hpMod;
+		int mpMod;
 		int apMod;
 		int dpMod;
+		int mdpMod;
 		int spMod;
 
 		StatMod();

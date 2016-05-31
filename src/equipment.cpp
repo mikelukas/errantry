@@ -6,8 +6,10 @@ Equipment::Equipment(EquipType type)
 	  cost(0)
 {
 	statMods.hpMod=0;
+	statMods.mpMod=0;
 	statMods.apMod=0;
 	statMods.dpMod=0;
+	statMods.mdpMod=0;
 	statMods.spMod=0;
 }
 
@@ -38,8 +40,10 @@ const StatMod& Equipment::getStatMod() const
 
 StatMod::StatMod()
 	: hpMod(0),
+	  mpMod(0),
 	  apMod(0),
 	  dpMod(0),
+	  mdpMod(0),
 	  spMod(0)
 {
 
@@ -48,8 +52,10 @@ StatMod::StatMod()
 ostream& operator<< (ostream& os, const StatMod& statMods)
 {
 	os<<" HP: "<<statMods.hpMod
+	  <<" MP: "<<statMods.mpMod
 	  <<" AP: "<<statMods.apMod
 	  <<" DP: "<<statMods.dpMod
+	  <<" MDP: "<<statMods.mdpMod
 	  <<" SP: "<<statMods.spMod;
 
 	return os;
@@ -58,8 +64,10 @@ ostream& operator<< (ostream& os, const StatMod& statMods)
 istream& operator>> (istream& is, StatMod& statMods)
 {
 	is>>statMods.hpMod;
+	is>>statMods.mpMod;
 	is>>statMods.apMod;
 	is>>statMods.dpMod;
+	is>>statMods.mdpMod;
 	is>>statMods.spMod;
 
 	return is;

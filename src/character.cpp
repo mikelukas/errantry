@@ -111,15 +111,24 @@ void Character::AddStats(const StatMod& stats)
 			HP = maxHP;
 		}
 
+		MP += stats.mpMod;
+		if(MP > maxMP)
+		{
+			MP = maxMP;
+		}
+
 		AP += stats.apMod;
 		DP += stats.dpMod;
+		MDP += stats.mdpMod;
 		SP += stats.spMod;
 	}
 
 void Character::SubStats(const StatMod& stats)
 	{
 		HP -= stats.hpMod;
+		MP -= stats.mpMod;
 		AP -= stats.apMod;
 		DP -= stats.dpMod;
+		MDP -= stats.mdpMod;
 		SP -= stats.spMod;
 	}

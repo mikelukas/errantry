@@ -22,7 +22,7 @@ void EquipablesChooser::displayRelevantStats() const
 	cout<<"Current Weapon: "<<(currWeapon != NULL ? currWeapon->getName() : "Fists")<<endl
 		<<"Current Armor:  "<<(currArmor != NULL ? currArmor->getName() : "T-Shirt")<<endl
 		<<endl
-		<<"Current Attributes:       "<<"AP: "<<setw(4)<<player.Damage()<<" DP: "<<setw(4)<<player.Defense()<<" SP: "<<setw(4)<<player.Speed()<<endl;
+		<<"Current Attributes     "<<"AP: "<<setw(4)<<player.Damage()<<" DP: "<<setw(3)<<player.Defense()<<" MDP:"<<setw(3)<<player.MagicDefense()<<" SP: "<<setw(3)<<player.Speed()<<endl;
 }
 
 void EquipablesChooser::displayInventoryChoices() const
@@ -45,16 +45,17 @@ void EquipablesChooser::displayInventoryChoices() const
 	{
 		const Equipment* invEq = (*invChoices)[i]->pEquipment;
 		const StatMod& invStatMod = invEq->getStatMod();
-		int apDiff = invStatMod.apMod - wStats.apMod;
-		int dpDiff = invStatMod.dpMod - wStats.dpMod;
-		int spDiff = invStatMod.spMod - wStats.spMod;
+		int apDiff  = invStatMod.apMod - wStats.apMod;
+		int dpDiff  = invStatMod.dpMod - wStats.dpMod;
+		int mdpDiff = invStatMod.mdpMod - wStats.mdpMod;
+		int spDiff  = invStatMod.spMod - wStats.spMod;
 
 		std::ostringstream eqChoiceLabel;
 		eqChoiceLabel<<i+1<<") "<<invEq->getName();
 		if((*invChoices)[i]->quantity > 1) {
 			eqChoiceLabel<<" (x"<<(*invChoices)[i]->quantity<<")";
 		}
-		cout<<std::left<<setw(26)<<eqChoiceLabel.str()<<std::right<<setw(8)<<apDiff<<setw(9)<<dpDiff<<setw(9)<<spDiff<<endl;
+		cout<<std::left<<setw(23)<<eqChoiceLabel.str()<<std::right<<setw(8)<<apDiff<<setw(8)<<dpDiff<<setw(8)<<mdpDiff<<setw(8)<<spDiff<<endl;
 	}
 
 	cout<<endl;
@@ -66,6 +67,7 @@ void EquipablesChooser::displayInventoryChoices() const
 		const StatMod& invStatMod = invEq->getStatMod();
 		int apDiff = invStatMod.apMod - aStats.apMod;
 		int dpDiff = invStatMod.dpMod - aStats.dpMod;
+		int mdpDiff = invStatMod.mdpMod - aStats.mdpMod;
 		int spDiff = invStatMod.spMod - aStats.spMod;
 
 		std::ostringstream eqChoiceLabel;
@@ -73,7 +75,7 @@ void EquipablesChooser::displayInventoryChoices() const
 		if((*invChoices)[i]->quantity > 1) {
 			eqChoiceLabel<<" (x"<<(*invChoices)[i]->quantity<<")";
 		}
-		cout<<std::left<<setw(26)<<eqChoiceLabel.str()<<std::right<<setw(8)<<apDiff<<setw(9)<<dpDiff<<setw(9)<<spDiff<<endl;
+		cout<<std::left<<setw(23)<<eqChoiceLabel.str()<<std::right<<setw(8)<<apDiff<<setw(8)<<dpDiff<<setw(8)<<mdpDiff<<setw(8)<<spDiff<<endl;
 	}
 	cout<<endl;
 }

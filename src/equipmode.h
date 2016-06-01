@@ -10,7 +10,7 @@
 class EquipMode : public ApplyEquipmentMode
 {
 	protected:
-		EquipmentChooser* createInventoryChooser();
+		Chooser<EquipmentLine>* createInventoryChooser();
 
 	public:
 		EquipMode(GameData&, GameState&);

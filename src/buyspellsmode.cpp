@@ -23,8 +23,8 @@ int BuySpellsMode::displayMenu()
 	//postcondition: SpellChooser is used to display the Spells the player can
 	//purchase, and the player is prompted to either purchase or leave the shop
 
-	spellChooser->display();
-	return spellChooser->getChoice();
+	spellChooser->run();
+	return spellChooser->getChoiceNum();
 }
 
 void BuySpellsMode::testChoice(int choiceNum)
@@ -34,12 +34,12 @@ void BuySpellsMode::testChoice(int choiceNum)
 
 	switch(choiceNum)
 	{
-	case EXIT_CHOICE:
+	case CANCELED_CHOICE:
 		gameState.requestExitCurrentMode();
 		break;
 
 	default:
-		processTransaction(spellChooser->getChosenSpell());
+		processTransaction(spellChooser->getChoice());
 		break;
 	}
 }

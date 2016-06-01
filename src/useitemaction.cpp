@@ -16,15 +16,19 @@ void UseItemAction::setup()
 	//player and these are set to null
 
 	do {
-		EquipmentChooser* itemChooser = new BattleUsableItemChooser(player, monster);
-		itemChooser->display();
+		Chooser<EquipmentLine>* itemChooser = new BattleUsableItemChooser(player, monster);
+		itemChooser->run();
 
 		//Get the choices out of the chooser now so we can delete right here
-		int itemChoice = itemChooser->getChoice();
-		pEquipmentChoice = itemChooser->getChosenEquipment();
+		int itemChoice = itemChooser->getChoiceNum();
+		EquipmentLine* eqLine = itemChooser->getChoice();
+		if(eqLine != NULL)
+		{
+			pEquipmentChoice = eqLine->pEquipment;
+		}
 		delete itemChooser;
 
-		if(itemChoice == EXIT_CHOICE)
+		if(itemChoice == CANCELED_CHOICE)
 		{
 			setAborted(true);
 			return;
@@ -50,7 +54,7 @@ void UseItemAction::setup()
 		case 2:
 			setTarget(monster);
 			break;
-		case EXIT_CHOICE:
+		case CANCELED_CHOICE:
 			continue; //go back to choosing item again
 		default:
 			cout<<"Invalid response"<<endl;

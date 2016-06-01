@@ -16,16 +16,21 @@ ApplyEquipmentMode::~ApplyEquipmentMode()
 
 int ApplyEquipmentMode::displayMenu()
 {
-	//postcondition: invokes display on the InventoryChooser subclasses create,
-	//and gets player choice from that.
+	//postcondition: runs the InventoryChooser that subclasses create, and gets
+	//the player choice from it.
 
 	int choice;
 
-	EquipmentChooser* invChooser = createInventoryChooser();
-	invChooser->display();
+	Chooser<EquipmentLine>* invChooser = createInventoryChooser();
+	invChooser->run();
 
-	choice = invChooser->getChoice();
-	equipmentChoice = invChooser->getChosenEquipment();
+	choice = invChooser->getChoiceNum();
+
+	EquipmentLine* chosenEqLine = invChooser->getChoice();
+	if(chosenEqLine != NULL)
+	{
+		equipmentChoice = chosenEqLine->pEquipment;
+	}
 
 	delete invChooser;
 
@@ -40,7 +45,7 @@ void ApplyEquipmentMode::testChoice(int choice)
 
 	switch(choice)
 	{
-	case EXIT_CHOICE:
+	case CANCELED_CHOICE:
 		gameState.requestExitCurrentMode();
 		break;
 	default:

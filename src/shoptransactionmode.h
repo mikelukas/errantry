@@ -6,7 +6,7 @@
 
 using std::setw;
 
-const int EXIT_CHOICE = 0;
+const int CANCELED_CHOICE = 0;
 
 /* Base class for shop buying and selling shop modes, providing common functionality
  * to both for display choices and directing to appropriate specific logic for

@@ -3,7 +3,7 @@
 
 #include <map>
 #include "equipment.h"
-#include "equipmentchooser.h"
+#include "inventorychooser.h"
 #include "player.h"
 
 using std::map;
@@ -12,7 +12,7 @@ using std::map;
  * Displays stats relevant to these Equipment types, and lists only these types
  * from the player's inventory as choices.
  */
-class EquipablesChooser: public EquipmentChooser
+class EquipablesChooser: public InventoryChooser<EquipmentLine>
 {
 	protected:
 		Player& player;

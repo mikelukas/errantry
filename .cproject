@@ -49,7 +49,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="src/inventorychooser.cpp|src/Player1.cpp|src/monster1.cpp|src/ErrantryCTest.cpp|src/Errantry1.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/chooser.cpp|src/inventorychooser.cpp|src/Player1.cpp|src/monster1.cpp|src/ErrantryCTest.cpp|src/Errantry1.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -97,7 +97,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="src/inventorychooser.cpp|src/Player1.cpp|src/monster1.cpp|src/ErrantryCTest.cpp|src/Errantry1.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/chooser.cpp|src/inventorychooser.cpp|src/Player1.cpp|src/monster1.cpp|src/ErrantryCTest.cpp|src/Errantry1.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

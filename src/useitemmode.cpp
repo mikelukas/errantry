@@ -7,7 +7,7 @@ UseItemMode::UseItemMode(GameData& gameData, GameState& gameState)
 	target = &(gameState.getPlayer());
 }
 
-EquipmentChooser* UseItemMode::createInventoryChooser()
+Chooser<EquipmentLine>* UseItemMode::createInventoryChooser()
 {
 	//postcondtion: allocates a UsableItemChooser
 

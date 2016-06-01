@@ -7,16 +7,6 @@ SpellChooser::SpellChooser(vector<const Spell*>* spellChoices, const Player& pla
 
 }
 
-SpellChooser::~SpellChooser()
-{
-	if(invChoices == NULL)
-	{
-		return;
-	}
-
-	delete invChoices;
-}
-
 void SpellChooser::displayRelevantStats() const
 {
 	StatsDisplayer::fullDisplayFor(player);
@@ -24,12 +14,12 @@ void SpellChooser::displayRelevantStats() const
 
 void SpellChooser::displayInventoryChoices() const
 {
-	for(int i = 0; i < invChoices->size(); i++)
+	for(int i = 0; i < eligibleChoices->size(); i++)
 	{
 		ostringstream choiceNum;
 		choiceNum<<i+1<<")";
 
-		cout<<std::left<<setw(4)<<choiceNum.str(); displaySpellLine((*invChoices)[i]);
+		cout<<std::left<<setw(4)<<choiceNum.str(); displaySpellLine((*eligibleChoices)[i]);
 	}
 	cout<<endl;
 }
@@ -37,13 +27,13 @@ void SpellChooser::displayInventoryChoices() const
 bool SpellChooser::validate() const
 {
 	//First make sure player chose a valid choice number
-	if(!InventoryChooser<const Spell*>::validate())
+	if(!Chooser::validate())
 	{
 		return false;
 	}
 
 	//Next ensure they're not buying something they already have
-	const Spell* chosenSpell = getChosenSpell();
+	const Spell* chosenSpell = getChoice();
 	if(chosenSpell != NULL && player.hasSpell(chosenSpell))
 	{
 		cout<<"You already know '"<<chosenSpell->getName()<<"'!"<<endl;
@@ -51,16 +41,4 @@ bool SpellChooser::validate() const
 	}
 
 	return true;
-}
-
-const Spell* SpellChooser::getChosenSpell() const
-{
-	//postcondition: returns spell pointer at the index the player chose
-	//in invChoices, or NULL if they chose to exit
-
-	if(choice == EXIT_CHOICE) {
-		return NULL;
-	}
-
-	return (*invChoices)[choice-1];
 }

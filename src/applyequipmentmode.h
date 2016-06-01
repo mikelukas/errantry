@@ -2,7 +2,7 @@
 #define SRC_APPLYEQUIPMENTMODE_H_
 
 #include <iomanip>
-#include "equipmentchooser.h"
+#include "inventorychooser.h"
 #include "menumode.h"
 
 using std::setw;
@@ -19,7 +19,7 @@ class ApplyEquipmentMode : public MenuMode
 		virtual int displayMenu();
 		virtual void testChoice(int);
 
-		virtual EquipmentChooser* createInventoryChooser() = 0;
+		virtual Chooser<EquipmentLine>* createInventoryChooser() = 0;
 
 	public:
 		ApplyEquipmentMode(GameData&, GameState&);

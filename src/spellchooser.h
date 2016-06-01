@@ -11,7 +11,7 @@ using std::cout;
 using std::endl;
 
 /* Lists spells in player's inventorye*/
-class SpellChooser: public InventoryChooser<const Spell*>
+class SpellChooser: public InventoryChooser<const Spell>
 {
 	protected:
 		const Player& player;
@@ -25,9 +25,7 @@ class SpellChooser: public InventoryChooser<const Spell*>
 
 	public:
 		SpellChooser(vector<const Spell*>*, const Player&);
-		virtual ~SpellChooser();
-
-		const Spell* getChosenSpell() const;
+		virtual ~SpellChooser() {}
 };
 
 #endif

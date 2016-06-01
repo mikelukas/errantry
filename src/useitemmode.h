@@ -9,7 +9,7 @@
 class UseItemMode: public ApplyEquipmentMode
 {
 	protected:
-		EquipmentChooser* createInventoryChooser();
+		Chooser<EquipmentLine>* createInventoryChooser();
 
 	public:
 		UseItemMode(GameData&, GameState&);

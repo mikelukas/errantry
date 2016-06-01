@@ -1,47 +1,32 @@
 #ifndef SRC_INVENTORYCHOOSER_H_
 #define SRC_INVENTORYCHOOSER_H_
 
-#include <iomanip>
-#include <iostream>
-#include <sstream>
 #include <vector>
+#include "chooser.h"
 
-using std::cin;
-using std::cout;
-using std::endl;
-using std::setw;
 using std::vector;
 
-const int NO_CHOICE = -1;
-const int EXIT_CHOICE = 0;
-
 /* Abstract base class unifying common code for displaying inventory choices to
- * the player, validating their choice, and retrieving the index (starting at 1)
- * of the choice they made.
+ * the player.
  * Subclasses provide specific functionality for stats displayed to the user which
  * might aid in making a decision, and listing the inventory itself.
- * Templated since type of stuff in the player's inventory can be arbitrary.
+ * Templated to be able to handle arbitrary items from player's inventory (e.g.
+ * EquipmentLines and Spells)
  */
-template <class T>
-class InventoryChooser
+template <typename T>
+class InventoryChooser : public Chooser<T>
 {
 	protected:
-		vector<T>* invChoices; //it is up to subclasses to decide how this is freed
-		int choice;
 
 		virtual void displayRelevantStats() const = 0;
 		virtual void displayInventoryChoices() const = 0;
 		virtual void displayPostChoiceListInfo() const {}
 
-		virtual bool validate() const;
+		void displayChoiceMenu() const;
 
 	public:
-		InventoryChooser(vector<T>*);
+		InventoryChooser(const vector<T*>*);
 		virtual ~InventoryChooser() {}
-
-		void display();
-
-		int getChoice() const;
 };
 
 #include "inventorychooser.cpp"

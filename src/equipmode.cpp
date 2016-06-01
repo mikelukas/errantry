@@ -7,7 +7,7 @@ EquipMode::EquipMode(GameData& gameData, GameState& gameState)
 	target = &(gameState.getPlayer());
 }
 
-EquipmentChooser* EquipMode::createInventoryChooser()
+Chooser<EquipmentLine>* EquipMode::createInventoryChooser()
 {
 	//postcondition: allocates an EquipablesChooser.
 

@@ -41,7 +41,7 @@ int ShopTransactionMode::displayMenu()
 				cout<<endl;
 			}
 		cout<<endl
-			<<EXIT_CHOICE<<") Back"<<endl
+			<<CANCELED_CHOICE<<") Back"<<endl
 			<<"***************"<<endl
 			<<"*Gold:        *"<<endl
 			<<"*  $"<<setw(10)<<gameState.getPlayer().Money()<<"*"<<endl
@@ -52,7 +52,7 @@ int ShopTransactionMode::displayMenu()
 			cout<<"Please choose an option:  "<<endl;
 			cin>>choice;
 
-			if(choice == EXIT_CHOICE)
+			if(choice == CANCELED_CHOICE)
 			{
 				return choice;
 			}
@@ -77,7 +77,7 @@ void ShopTransactionMode::testChoice(int choice)
 
 	switch(choice)
 	{
-	case EXIT_CHOICE:
+	case CANCELED_CHOICE:
 		gameState.requestExitCurrentMode();
 		break;
 	default:

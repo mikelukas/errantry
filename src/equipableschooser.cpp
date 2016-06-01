@@ -1,7 +1,7 @@
 #include "equipableschooser.h"
 
 EquipablesChooser::EquipablesChooser(Player& player, int numWeapons, int numArmor)
-	: EquipmentChooser(player.getWeaponsAndArmorAsVector()), //deleted in super-destructor
+	: InventoryChooser<EquipmentLine>(player.getWeaponsAndArmorAsVector()), //deleted in super-destructor
 	  player(player),
 	  numWeapons(numWeapons),
 	  numArmor(numArmor)
@@ -43,7 +43,7 @@ void EquipablesChooser::displayInventoryChoices() const
 	cout<<"Weapons"<<endl;
 	for(; i < numWeapons; i++)
 	{
-		const Equipment* invEq = (*invChoices)[i]->pEquipment;
+		const Equipment* invEq = (*eligibleChoices)[i]->pEquipment;
 		const StatMod& invStatMod = invEq->getStatMod();
 		int apDiff  = invStatMod.apMod - wStats.apMod;
 		int dpDiff  = invStatMod.dpMod - wStats.dpMod;
@@ -52,8 +52,8 @@ void EquipablesChooser::displayInventoryChoices() const
 
 		std::ostringstream eqChoiceLabel;
 		eqChoiceLabel<<i+1<<") "<<invEq->getName();
-		if((*invChoices)[i]->quantity > 1) {
-			eqChoiceLabel<<" (x"<<(*invChoices)[i]->quantity<<")";
+		if((*eligibleChoices)[i]->quantity > 1) {
+			eqChoiceLabel<<" (x"<<(*eligibleChoices)[i]->quantity<<")";
 		}
 		cout<<std::left<<setw(23)<<eqChoiceLabel.str()<<std::right<<setw(8)<<apDiff<<setw(8)<<dpDiff<<setw(8)<<mdpDiff<<setw(8)<<spDiff<<endl;
 	}
@@ -63,7 +63,7 @@ void EquipablesChooser::displayInventoryChoices() const
 	cout<<"Armor"<<endl;
 	for(; (i-numWeapons) < numArmor; i++)
 	{
-		const Equipment* invEq = (*invChoices)[i]->pEquipment;
+		const Equipment* invEq = (*eligibleChoices)[i]->pEquipment;
 		const StatMod& invStatMod = invEq->getStatMod();
 		int apDiff = invStatMod.apMod - aStats.apMod;
 		int dpDiff = invStatMod.dpMod - aStats.dpMod;
@@ -72,8 +72,8 @@ void EquipablesChooser::displayInventoryChoices() const
 
 		std::ostringstream eqChoiceLabel;
 		eqChoiceLabel<<i+1<<") "<<invEq->getName();
-		if((*invChoices)[i]->quantity > 1) {
-			eqChoiceLabel<<" (x"<<(*invChoices)[i]->quantity<<")";
+		if((*eligibleChoices)[i]->quantity > 1) {
+			eqChoiceLabel<<" (x"<<(*eligibleChoices)[i]->quantity<<")";
 		}
 		cout<<std::left<<setw(23)<<eqChoiceLabel.str()<<std::right<<setw(8)<<apDiff<<setw(8)<<dpDiff<<setw(8)<<mdpDiff<<setw(8)<<spDiff<<endl;
 	}

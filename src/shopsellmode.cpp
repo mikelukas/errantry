@@ -48,12 +48,13 @@ void ShopSellMode::processTransaction()
 
 void ShopSellMode::updateChoices(int choiceIndex)
 {
-	//postcondition: the equipment the player purchased is subtracted from the
-	//copy of the inventory in this shop, and removed from the choices list if
-	//they sold anything (worst case O(n)... need to probably not use a vector for storage?)
+	//postcondition: the equipment the player purchased is removed from the
+	//choices vector if they sold anything (worst case O(n)... need to probably not
+	//use a vector for storage?).
+	//NOTE: Don't need to also update quantity of the line in the choice vector
+	//since it's pointing to the same line that is in the player's inventory.
 
 	EquipmentLine* invLine = (*equipmentChoices)[choiceIndex-1]; //-1 b/c shop choices start numbering at 1
-	(*invLine) -= (*equipmentChoice);
 	if(invLine->quantity <= 0)
 	{
 		equipmentChoices->erase(equipmentChoices->begin()+(choiceIndex-1));

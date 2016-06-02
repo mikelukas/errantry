@@ -16,50 +16,36 @@ void UseItemAction::setup()
 	//player and these are set to null
 
 	do {
-		Chooser<EquipmentLine>* itemChooser = new BattleUsableItemChooser(player, monster);
-		itemChooser->run();
-
-		//Get the choices out of the chooser now so we can delete right here
-		int itemChoice = itemChooser->getChoiceNum();
-		EquipmentLine* eqLine = itemChooser->getChoice();
-		if(eqLine != NULL)
-		{
-			pEquipmentChoice = eqLine->pEquipment;
-		}
-		delete itemChooser;
-
-		if(itemChoice == CANCELED_CHOICE)
+		BattleUsableItemChooser itemChooser(player, monster);
+		itemChooser.run();
+		if(itemChooser.canceled())
 		{
 			setAborted(true);
 			return;
 		}
 
-		//Prompt player to choice a target for their item choice
-		int targetChoice = 0;
 
-		cout<<"**********************MESSAGES**********************"<<endl;
-		cout<<"1)Player"<<endl
-			<<"2)Monster"<<endl
-			<<"0)Back"<<endl
-			<<endl;
-		cout<<"Choose a target:"<<endl;
-		cin>>targetChoice;
+		//Get the choices out of the chooser now so we can delete right here
+		EquipmentLine* eqLine = itemChooser.getChoice();
+		if(eqLine != NULL)
+		{
+			pEquipmentChoice = eqLine->pEquipment;
+		}
+
+		//Prompt player to choice a target for their item choice
+		vector<Character*>* eligibleTargets = new vector<Character*>(); //freed in chooser deconstructor
+		eligibleTargets->push_back(&player);
+		eligibleTargets->push_back(&monster);
+
+		TargetChooser targetChooser(eligibleTargets);
+		targetChooser.run();
+		if(targetChooser.canceled())
+		{
+			continue;
+		}
 
 		//Set mode target based on player choice, choice should only be able to be valid at this point
-		switch(targetChoice)
-		{
-		case 1:
-			setTarget(player);
-			break;
-		case 2:
-			setTarget(monster);
-			break;
-		case CANCELED_CHOICE:
-			continue; //go back to choosing item again
-		default:
-			cout<<"Invalid response"<<endl;
-			break;
-		}
+		setTarget(*(targetChooser.getChoice()));
 	} while(pTarget == NULL);
 }
 

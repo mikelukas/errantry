@@ -5,6 +5,7 @@
 #include "battleusableitemchooser.h"
 #include "equipment.h"
 #include "player.h"
+#include "targetchooser.h"
 
 /* BattleAction for selecting an item and target on which to use it in battle */
 class UseItemAction : public BattleAction

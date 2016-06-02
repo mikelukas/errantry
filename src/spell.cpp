@@ -59,7 +59,7 @@ void Spell::cast(Character& caster, Character& target) const
 	//and the effect function of each effect referenced by this spell is called,
 	//in order (dat file specifies order), with the caster and target.
 
-	//TODO: reduce caster MP
+	caster.ChangeMP(-getMpCost());
 
 	for(vector<int>::const_iterator it = effectIds.begin(); it != effectIds.end(); it++)
 	{

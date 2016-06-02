@@ -26,6 +26,7 @@ class OverworldMode : public MenuMode
 		bool randomEncounterHappened(Region&) const;
 		void equip();
 		void useItem();
+		void castSpell();
 
 		void printStatus() const;
 

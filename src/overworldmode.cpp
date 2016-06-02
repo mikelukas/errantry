@@ -1,4 +1,5 @@
 #include "bossbattlemode.h"
+#include "castspellmode.h"
 #include "equipmode.h"
 #include "gamestate.h"
 #include "overworldmode.h"
@@ -29,14 +30,15 @@ int OverworldMode::displayMenu()
 	cout<<"*2)Status       *"<<endl;
 	cout<<"*3)Equip        *"<<endl;
 	cout<<"*4)Use Item     *"<<endl;
-	cout<<"*5)Quit Game    *"<<endl;
+	cout<<"*5)Cast Spell   *"<<endl;
+	cout<<"*6)Quit Game    *"<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"**********************MESSAGES**********************"<<endl;
 	do
 	{
 		cout<<"Please choose an option:  "<<endl;
 		cin>>choice;
-	}while(!validateChoice(choice, 5));
+	}while(!validateChoice(choice, 6));
 
 	return choice;
 }
@@ -58,6 +60,9 @@ void OverworldMode::testChoice(int choice)
 				useItem();
 				break;
 			case 5:
+				castSpell();
+				break;
+			case 6:
 				GameMode* quit = new QuitMode(gameData, gameState);
 				gameState.requestEnterMode(quit);
 				break;
@@ -229,4 +234,10 @@ void OverworldMode::useItem()
 {
 	GameMode* useItemMode = new UseItemMode(gameData, gameState);
 	gameState.requestEnterMode(useItemMode);
+}
+
+void OverworldMode::castSpell()
+{
+	GameMode* castSpellMode = new CastSpellMode(gameData, gameState);
+	gameState.requestEnterMode(castSpellMode);
 }

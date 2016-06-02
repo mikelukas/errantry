@@ -4,6 +4,9 @@
 #include "character.h"
 #include "chooser.h"
 
+/* Displays a list of targets for the player to choose from and can return
+ * the Character object mapping to that target
+ */
 class TargetChooser: public Chooser<Character>
 {
 	protected:

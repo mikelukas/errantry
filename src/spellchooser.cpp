@@ -23,22 +23,3 @@ void SpellChooser::displayInventoryChoices() const
 	}
 	cout<<endl;
 }
-
-bool SpellChooser::validate() const
-{
-	//First make sure player chose a valid choice number
-	if(!Chooser::validate())
-	{
-		return false;
-	}
-
-	//Next ensure they're not buying something they already have
-	const Spell* chosenSpell = getChoice();
-	if(chosenSpell != NULL && player.hasSpell(chosenSpell))
-	{
-		cout<<"You already know '"<<chosenSpell->getName()<<"'!"<<endl;
-		return false;
-	}
-
-	return true;
-}

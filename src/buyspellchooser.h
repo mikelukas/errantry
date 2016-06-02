@@ -12,6 +12,8 @@ class BuySpellChooser: public SpellChooser
 
 		virtual void displayPostChoiceListInfo() const;
 
+		virtual bool validate() const;
+
 	public:
 		BuySpellChooser(vector<const Spell*>*, const Player&);
 		virtual ~BuySpellChooser() {}

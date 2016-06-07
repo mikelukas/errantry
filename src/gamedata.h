@@ -53,6 +53,8 @@ class GameData
 		vector<Equipment*> itemsPtrs;
 		vector<const Spell*> spellPtrs;
 
+		map<SpellCategory, vector<int> > categorizedSpellIds;
+
 		bool loadDataFiles(); //master load method
 
 		bool loadMap();

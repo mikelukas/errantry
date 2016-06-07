@@ -10,6 +10,10 @@ Spell::Spell(istream& is)
 {
 	getline(is, name);
 
+	int categoryId;
+	is>>categoryId;
+	category = static_cast<SpellCategory>(categoryId);
+
 	int elemId;
 	is>>elemId;
 	element = static_cast<Element>(elemId);
@@ -27,6 +31,11 @@ Spell::Spell(istream& is)
 const string& Spell::getName() const
 {
 	return name;
+}
+
+const SpellCategory Spell::getCategory() const
+{
+	return category;
 }
 
 const Element Spell::getElement() const

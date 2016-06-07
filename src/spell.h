@@ -15,6 +15,7 @@ using std::string;
 using std::vector;
 
 enum Element {fire, air, earth, water, none};
+enum SpellCategory {ATTACK, HEALING, ASSIST};
 enum SpellLocale {FIELD, BATTLE};
 enum TargetType {PLAYER, MONSTER};
 
@@ -30,6 +31,7 @@ class Spell
 {
 	protected:
 		string name;                //display name of spell
+		SpellCategory category;		//how the spell's effect can be summarized; used by monsters to decide on spells
 
 		Element element;            //basic elemental type of spell
 
@@ -45,6 +47,7 @@ class Spell
 		Spell(istream&);
 
 		const string& getName() const;
+		const SpellCategory getCategory() const;
 		const Element getElement() const;
 		const int getMpCost() const;
 		const int getPurchasePrice() const;

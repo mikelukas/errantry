@@ -215,6 +215,9 @@ bool GameData::loadSpells(vector<const Spell*>& spells, const string& filename)
 			<<"  "<<spell->getMpCost()<<endl
 			<<"  "<<spell->getPurchasePrice()<<endl;
 		spells.push_back(spell);
+
+		//populate spells by category
+		categorizedSpellIds[spell->getCategory()].push_back(spells.size()-1); //since we just put the spell on thend, spell id is last element index
 	}
 	spellFile.close();
 	cout<<":  "<<spells.size()<<" spells found."<<endl;

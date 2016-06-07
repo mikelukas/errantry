@@ -4,6 +4,7 @@
 #include <queue>
 #include "battleaction.h"
 #include "fightaction.h"
+#include "playercastspellaction.h"
 #include "runaction.h"
 #include "useitemaction.h"
 #include "menumode.h"

@@ -59,7 +59,7 @@ int BattleMode::displayMenu()
 	{
 		cout<<"Please choose an option:  "<<endl;
 		cin>>choice;
-	}while(!validateChoice(choice,3));
+	}while(!validateChoice(choice,4));
 
 	return choice;
 }

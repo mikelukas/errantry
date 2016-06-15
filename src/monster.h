@@ -13,6 +13,8 @@
 #include "equipment.h"
 #include "streamutils.h"
 
+class BattleStrategy; //Forward declaration since BattleStragry and Monster are interdependent
+
 using std::istream;
 using std::string;
 using std::vector;
@@ -29,11 +31,18 @@ class Monster : public Character
 			//spells player may learn by defeating the monster
 			vector<int> spellIds;
 
+			//determines what actions the monster takes in battle
+			BattleStrategy* battleStrategy;
+
         public:
             Monster();
+            Monster(const Monster&);
+            ~Monster();
 
             vector<int> getEquipmentIds(EquipType) const;
             vector<int> getSpellIds() const;
+
+            BattleStrategy* getBattleStrategy() const;
 
             void apply(const Equipment*);
 

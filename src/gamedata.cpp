@@ -8,6 +8,12 @@ GameData::GameData()
 
 GameData::~GameData()
 {
+	while(!monsters.empty())
+	{
+		delete(monsters.back());
+		monsters.pop_back();
+	}
+
 	//delete all equipment definitions
 	while(!weaponPtrs.empty())
 	{
@@ -95,7 +101,7 @@ bool GameData::loadMap()
 	return found;
 }
 
-bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
+bool GameData::loadMonsters(vector<const Monster*>& monsters, const string& filename)
 {
 	//Postcondition:  the attributes of each monster are retrieved
 	//from a file for use in the program
@@ -111,8 +117,8 @@ bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
 
 	while(monsterFile.peek() != EOF)
 	{
-		Monster monster;
-		monsterFile>>monster;
+		Monster* monster = new Monster(); //freed in deconstructor
+		monsterFile>>(*monster);
 
 		monsters.push_back(monster);
 	}
@@ -122,14 +128,14 @@ bool GameData::loadMonsters(vector<Monster>& monsters, const string& filename)
 	return true;
 }
 
-bool GameData::loadBosses(map<int, Monster>& bosses, const string& bossesFilename, const string& cavesFilename)
+bool GameData::loadBosses(map<int, const Monster*>& bosses, const string& bossesFilename, const string& cavesFilename)
 {
 	//postcondition: monster data for all bosses is loaded from the bosses file,
 	//caves are placed on the world map at the locations where each boss should be
 	//fought at, and the bosses map is populated with 1D cave index -> Monster
 	//instance for the boss at that location.
 
-	vector<Monster> monsters;
+	vector<const Monster*> monsters;
 	if(!loadMonsters(monsters, bossesFilename))
 	{
 		cout<<"ERROR: Unable to load Monster data for bosses from "<<bossesFilename<<"!"<<endl;
@@ -280,14 +286,14 @@ const Town& GameData::getTown(const Point& coord)
 	return towns[coord.as1dIndex(worldMap[0].size())];
 }
 
-const vector<Monster>& GameData::getMonsters()
+const vector<const Monster*>& GameData::getMonsters()
 {
 	return monsters;
 }
 
 Monster GameData::getBossAt(const Point& coord)
 {
-	return bosses[coord.as1dIndex(worldMap[0].size())];
+	return *(bosses[coord.as1dIndex(worldMap[0].size())]);
 }
 
 const vector<Equipment*>& GameData::getWeapons()

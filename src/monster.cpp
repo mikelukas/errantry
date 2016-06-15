@@ -4,6 +4,7 @@
 
 #include <limits>
 #include "monster.h"
+#include "randombattlestrategy.h"
 
 using std::numeric_limits;
 using std::streamsize;
@@ -14,7 +15,25 @@ Monster::Monster()
     : Character(1, 0, 0, 0, 0, 0, 0, 0)
     {
         name = "none";
+        battleStrategy = new RandomBattleStrategy();
     }
+
+Monster::Monster(const Monster& monster)
+	: Character(monster),
+	  weaponIds(monster.weaponIds),
+	  armorIds(monster.armorIds),
+	  itemIds(monster.itemIds),
+	  spellIds(monster.spellIds),
+	  battleStrategy(monster.battleStrategy->clone())
+	{
+		//postcondition: performs a deep copy of monster; BattleStrategy* is cloned.
+
+	}
+
+Monster::~Monster()
+	{
+		delete battleStrategy;
+	}
 
 vector<int> Monster::getEquipmentIds(EquipType equipType) const
 	{
@@ -41,6 +60,11 @@ vector<int> Monster::getEquipmentIds(EquipType equipType) const
 vector<int> Monster::getSpellIds() const
 {
 	return spellIds;
+}
+
+BattleStrategy* Monster::getBattleStrategy() const
+{
+	return battleStrategy;
 }
 
 void Monster::apply(const Equipment* eq)

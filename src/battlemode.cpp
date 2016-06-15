@@ -1,4 +1,5 @@
 #include "battlemode.h"
+#include "battlestrategy.h"
 #include "deadmode.h"
 #include "gamestate.h"
 
@@ -97,7 +98,7 @@ void BattleMode::testChoice(int choice)
 		return; //player aborted action during setup, so let them go back and choose again
 	}
 
-	BattleAction* monsterAction = new FightAction(currMonster, player);
+	BattleAction* monsterAction = makeMonsterAction();
 	monsterAction->setup();
 
 	//Enqueue actions for battle turn
@@ -108,6 +109,17 @@ void BattleMode::testChoice(int choice)
 		actionQueue.push(monsterAction);
 		actionQueue.push(playerAction);
 	}
+}
+
+BattleAction* BattleMode::makeMonsterAction()
+{
+	BattleStrategy* strat = currMonster.getBattleStrategy();
+	BattleAction* monsterAction = strat->makeBattleAction(gameState, currMonster, gameState.getPlayer());
+	if(monsterAction == NULL) {
+		//TODO: REMOVE WHEN NULL IS NOT POSSIBLE
+		return new FightAction(currMonster, gameState.getPlayer());
+	}
+	return monsterAction;
 }
 
 void BattleMode::executeActions()

@@ -25,6 +25,7 @@ class BattleMode : public MenuMode
 
 		int displayMenu();
 		void testChoice(int);
+		BattleAction* makeMonsterAction();
 		void executeActions();
 
 		bool testEndConditions();

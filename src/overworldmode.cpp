@@ -151,8 +151,8 @@ void OverworldMode::getEnemy()
 			break;
 	}
 
-	const vector<Monster>& monsterList = gameData.getMonsters();
-	GameMode* battle = new BattleMode(monsterList[randMons], gameData, gameState);
+	const vector<const Monster*>& monsterList = gameData.getMonsters();
+	GameMode* battle = new BattleMode(*(monsterList[randMons]), gameData, gameState);
 	gameState.requestEnterMode(battle);
 
 }

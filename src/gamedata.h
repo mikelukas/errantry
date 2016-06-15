@@ -45,8 +45,8 @@ class GameData
 		vector<string> worldMap;
 		map<int, Town> towns;
 
-		vector<Monster> monsters;
-		map<int, Monster> bosses; //1D coord -> Monster
+		vector<const Monster*> monsters;
+		map<int, const Monster*> bosses; //1D coord -> Monster
 
 		vector<Equipment*> weaponPtrs;
 		vector<Equipment*> armorPtrs;
@@ -58,8 +58,8 @@ class GameData
 		bool loadDataFiles(); //master load method
 
 		bool loadMap();
-		bool loadMonsters(vector<Monster>& monsters, const string& filename);
-		bool loadBosses(map<int, Monster>&, const string&, const string&);
+		bool loadMonsters(vector<const Monster*>& monsters, const string& filename);
+		bool loadBosses(map<int, const Monster*>&, const string&, const string&);
 		bool loadEquipment(EquipType type, vector<Equipment*>& equipment, const string& filename);
 		bool loadSpells(vector<const Spell*>&, const string&);
 
@@ -74,7 +74,7 @@ class GameData
 	    vector<string>& getMap();
 		const Town& getTown(const Point&);
 
-		const vector<Monster>& getMonsters();
+		const vector<const Monster*>& getMonsters();
 		Monster getBossAt(const Point&);
 
 		const vector<Equipment*>& getWeapons();

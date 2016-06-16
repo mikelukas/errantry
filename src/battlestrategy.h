@@ -2,6 +2,7 @@
 #define BATTLESTRATEGY_H_
 
 #include "battleaction.h"
+#include "gamedata.h"
 #include "gamestate.h"
 #include "monster.h"
 
@@ -18,7 +19,7 @@ class BattleStrategy
 
 		virtual BattleStrategy* clone() const = 0;
 
-		virtual BattleAction* makeBattleAction(const GameState&, Monster&, Character&) = 0;
+		virtual BattleAction* makeBattleAction(GameData&, const GameState&, Monster&, Character&) = 0;
 };
 
 #endif

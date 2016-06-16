@@ -1,5 +1,6 @@
 #include <iostream>
 #include "fightaction.h"
+#include "monstercastspellaction.h"
 #include "randombattlestrategy.h"
 
 using std::cout;
@@ -17,7 +18,7 @@ BattleStrategy* RandomBattleStrategy::clone() const
 	return new RandomBattleStrategy(*this);
 }
 
-BattleAction* RandomBattleStrategy::makeBattleAction(const GameState& gameState, Monster& monster, Character& target)
+BattleAction* RandomBattleStrategy::makeBattleAction(GameData& gameData, const GameState& gameState, Monster& monster, Character& target)
 {
 	//postcondition: returns either a MonsterCastSpellAction or a FightAction,
 	//chosen at random.
@@ -35,8 +36,7 @@ BattleAction* RandomBattleStrategy::makeBattleAction(const GameState& gameState,
 	switch(actionType)
 	{
 	case 1:
-		cout<<monster.ShowName()<<" chose to cast a spell."<<endl;
-		return NULL;//todo: return new MonsterCastSpellAction(monster, target);
+		return new MonsterCastSpellAction(gameData, monster, target);
 		break;
 	default:
 		return new FightAction(monster, target);

@@ -99,7 +99,6 @@ void BattleMode::testChoice(int choice)
 	}
 
 	BattleAction* monsterAction = makeMonsterAction();
-	monsterAction->setup();
 
 	//Enqueue actions for battle turn
 	if(player.Speed() >= currMonster.Speed()) {
@@ -113,12 +112,20 @@ void BattleMode::testChoice(int choice)
 
 BattleAction* BattleMode::makeMonsterAction()
 {
+	//postcondition: asks the monster's BattleStrategy to allocate a new action
+	//to be queued, and calls setup() on that action.  If the action is aborted,
+	//because it can't be run for some reason (e.g. not enough MP to cast spells),
+	//a fight action is chosen.
+
 	BattleStrategy* strat = currMonster.getBattleStrategy();
-	BattleAction* monsterAction = strat->makeBattleAction(gameState, currMonster, gameState.getPlayer());
-	if(monsterAction == NULL) {
-		//TODO: REMOVE WHEN NULL IS NOT POSSIBLE
-		return new FightAction(currMonster, gameState.getPlayer());
+	BattleAction* monsterAction = strat->makeBattleAction(gameData, gameState, currMonster, gameState.getPlayer());
+	monsterAction->setup();
+	if(monsterAction->isAborted())
+	{
+		delete monsterAction;
+		monsterAction = new FightAction(currMonster, gameState.getPlayer());
 	}
+
 	return monsterAction;
 }
 

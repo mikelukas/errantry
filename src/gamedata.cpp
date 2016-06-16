@@ -311,9 +311,14 @@ const vector<Equipment*>& GameData::getItems()
 	return itemsPtrs;
 }
 
-const vector<const Spell*>& GameData::getSpells()
+const vector<const Spell*>& GameData::getSpells() const
 {
 	return spellPtrs;
+}
+
+const vector<int>& GameData::getSpellIdsForCategory(SpellCategory category)
+{
+	return categorizedSpellIds[category];
 }
 
 vector<const Spell*>* GameData::getSpellsForIds(const vector<int>& spellIds) const

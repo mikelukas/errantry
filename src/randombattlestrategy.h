@@ -12,7 +12,7 @@ class RandomBattleStrategy : public BattleStrategy
 
 		BattleStrategy* clone() const;
 
-		BattleAction* makeBattleAction(const GameState&, Monster&, Character&);
+		BattleAction* makeBattleAction(GameData&, const GameState&, Monster&, Character&);
 };
 
 #endif

@@ -80,7 +80,8 @@ class GameData
 		const vector<Equipment*>& getWeapons();
 		const vector<Equipment*>& getArmor();
 		const vector<Equipment*>& getItems();
-		const vector<const Spell*>& getSpells();
+		const vector<const Spell*>& getSpells() const;
+		const vector<int>& getSpellIdsForCategory(SpellCategory);
 		vector<const Spell*>* getSpellsForIds(const vector<int>&) const;
 };
 

@@ -1,8 +1,13 @@
 #ifndef SRC_CASTSPELLACTION_H_
 #define SRC_CASTSPELLACTION_H_
 
+#include <iostream>
+
 #include "battleaction.h"
 #include "spell.h"
+
+using std::cout;
+using std::endl;
 
 /* Intended to be used as the base for both player and monster spell casting
  * in battle.*/

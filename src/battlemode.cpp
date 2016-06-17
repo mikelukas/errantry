@@ -118,15 +118,7 @@ BattleAction* BattleMode::makeMonsterAction()
 	//a fight action is chosen.
 
 	BattleStrategy* strat = currMonster.getBattleStrategy();
-	BattleAction* monsterAction = strat->makeBattleAction(gameData, gameState, currMonster, gameState.getPlayer());
-	monsterAction->setup();
-	if(monsterAction->isAborted())
-	{
-		delete monsterAction;
-		monsterAction = new FightAction(currMonster, gameState.getPlayer());
-	}
-
-	return monsterAction;
+	return strat->makeBattleAction(gameData, gameState, currMonster, gameState.getPlayer());
 }
 
 void BattleMode::executeActions()

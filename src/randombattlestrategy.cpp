@@ -33,12 +33,24 @@ BattleAction* RandomBattleStrategy::makeBattleAction(GameData& gameData, const G
 		actionType = gameState.getRandIntBetween(0,1);
 	}
 
+	BattleAction* chosenAction = NULL;
 	switch(actionType)
 	{
 	case 1:
-		return new MonsterCastSpellAction(gameData, monster, target);
+		chosenAction = new MonsterCastSpellAction(gameData, monster, target);
 		break;
 	default:
-		return new FightAction(monster, target);
+		chosenAction = new FightAction(monster, target);
 	}
+
+	chosenAction->setup();
+	if(chosenAction->isAborted())
+	{
+		delete chosenAction;
+
+		chosenAction = new FightAction(monster, target);
+		chosenAction->setup();
+	}
+
+	return chosenAction;
 }

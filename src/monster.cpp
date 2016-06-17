@@ -11,18 +11,15 @@ using std::streamsize;
 
 //Constructors-------------------------------------------------------//
 
-Monster::Monster()
-    : Character(1, 0, 0, 0, 0, 0, 0, 0)
+Monster::Monster(string& name, int hp, int mp, int ap, int dp, int mdp, int sp, int gold, int expPoints)
+    : Character(hp, mp, ap, dp, mdp, sp, gold, expPoints)
     {
-        name = "none";
+		this->name = name;
         battleStrategy = new RandomBattleStrategy();
     }
 
 Monster::Monster(const Monster& monster)
 	: Character(monster),
-	  weaponIds(monster.weaponIds),
-	  armorIds(monster.armorIds),
-	  itemIds(monster.itemIds),
 	  spellIds(monster.spellIds),
 	  battleStrategy(monster.battleStrategy->clone())
 	{
@@ -33,28 +30,6 @@ Monster::Monster(const Monster& monster)
 Monster::~Monster()
 	{
 		delete battleStrategy;
-	}
-
-vector<int> Monster::getEquipmentIds(EquipType equipType) const
-	{
-		//postcondition: returns a copy of the Monster's equipment id vector
-		//matching the requested EquipType
-
-		switch(equipType)
-		{
-		case WEAPON:
-			return weaponIds;
-			break;
-		case ARMOR:
-			return armorIds;
-			break;
-		case ITEM:
-			return itemIds;
-			break;
-		default:
-			return vector<int>();
-			break;
-		}
 	}
 
 vector<int> Monster::getSpellIds() const
@@ -84,27 +59,10 @@ void Monster::apply(const Equipment* eq)
 		}
 	}
 
+//TODO: remove once spells are migrated to Character
 istream& operator>> (istream& is, Monster& monster)
 	{
-		getline(is, monster.name);
-
-		//Init monster stats from stream
-        is>>monster.HP;
-        monster.maxHP = monster.HP;
-        is>>monster.MP;
-        monster.maxMP = monster.MP;
-        is>>monster.AP;
-        is>>monster.DP;
-        is>>monster.MDP;
-        is>>monster.SP;
-        is>>monster.gold;
-        is>>monster.expPoints;
-        is.ignore(numeric_limits<streamsize>::max(), '\n');
-
         //init inventory from stream (1 line of ids for each equipment type
-        getIdLine(is, monster.weaponIds);
-        getIdLine(is, monster.armorIds);
-        getIdLine(is, monster.itemIds);
         getIdLine(is, monster.spellIds);
 
         return is;

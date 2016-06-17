@@ -22,12 +22,6 @@ using std::vector;
 class Monster : public Character
     {
 		protected:
-
-			//equipment player may get at end of combat
-			vector<int> weaponIds;
-			vector<int> armorIds;
-			vector<int> itemIds;
-
 			//spells player may learn by defeating the monster
 			vector<int> spellIds;
 
@@ -35,11 +29,10 @@ class Monster : public Character
 			BattleStrategy* battleStrategy;
 
         public:
-            Monster();
+            Monster(string&, int, int, int, int, int, int, int, int);
             Monster(const Monster&);
             ~Monster();
 
-            vector<int> getEquipmentIds(EquipType) const;
             vector<int> getSpellIds() const;
 
             BattleStrategy* getBattleStrategy() const;

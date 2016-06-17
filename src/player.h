@@ -47,12 +47,6 @@ class Player : public Character
             int expToNext;      //exp. points needed to advance level
             int lvl;            //current level
             Point Coords;       //Holds the players coordinates on the map
-            
-
-            //Inventory; maps for fast lookup of quantity
-            map<const Equipment*, EquipmentLine> weapons;
-            map<const Equipment*, EquipmentLine> armor;
-            map<const Equipment*, EquipmentLine> items;
 
             set<const Spell*> spells;
 
@@ -69,7 +63,6 @@ class Player : public Character
             void LevelUp();
             void AddExp(int);
             void AddMoney(int);
-            void AddEquipment(const EquipmentLine&);
             void AddSpell(const Spell*);
             Point GetCoords() const;
             void SetCoords(int, int);
@@ -81,7 +74,6 @@ class Player : public Character
             int Level() const;
             int NumToNext() const;
 
-            map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
             vector<EquipmentLine*>* getWeaponsAndArmorAsVector();
             vector<EquipmentLine*>* getItemsAsVector();
             EquipmentLine& getEquipmentLineFromInventoryFor(const Equipment*);

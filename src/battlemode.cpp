@@ -204,47 +204,27 @@ void BattleMode::addMonsterEquipment()
 	//The equipment added is displayed to the player.  No message is displayed
 	//if the monster has no equipment.
 
-	const vector<int> monsterWeaponIds = currMonster.getEquipmentIds(WEAPON);
-	const vector<int> monsterArmorIds = currMonster.getEquipmentIds(ARMOR);
-	const vector<int> monsterItemIds = currMonster.getEquipmentIds(ITEM);
-
-	//If monster doesn't have anything to drop, don't need to display message
-	//that they're dropping stuff and do a bunch of no-op loops
-	if(monsterWeaponIds.empty() && monsterArmorIds.empty() && monsterItemIds.empty())
+	vector<const Equipment*>* monsterEquipment = currMonster.getAllEquipment();
+	if(monsterEquipment->empty())
 	{
+		//If monster doesn't have anything to drop, don't need to display message
+		//that they're dropping stuff and do a no-op loop
+		delete monsterEquipment;
 		return;
 	}
 
 	Player& player = gameState.getPlayer();
 
 	cout<<"Monster dropped: "<<endl;
-
-	const vector<Equipment*> weapons = gameData.getWeapons();
-	for(int i=0; i < monsterWeaponIds.size(); i++)
+	for(int i=0; i < monsterEquipment->size(); i++)
 	{
-		EquipmentLine weaponLine(weapons[monsterWeaponIds[i]]);
-		player.AddEquipment(weaponLine);
+		EquipmentLine eqLine((*monsterEquipment)[i]);
+		player.AddEquipment(eqLine);
 
-		cout<<"  "<<weaponLine.pEquipment->getName()<<endl;
+		cout<<"  "<<eqLine.pEquipment->getName()<<endl;
 	}
 
-	const vector<Equipment*> armor = gameData.getArmor();
-	for(int i=0; i < monsterArmorIds.size(); i++)
-	{
-		EquipmentLine armorLine(armor[monsterArmorIds[i]]);
-		player.AddEquipment(armorLine);
-
-		cout<<"  "<<armorLine.pEquipment->getName()<<endl;
-	}
-
-	const vector<Equipment*> items = gameData.getItems();
-	for(int i=0; i < monsterItemIds.size(); i++)
-	{
-		EquipmentLine itemLine(items[monsterItemIds[i]]);
-		player.AddEquipment(itemLine);
-
-		cout<<"  "<<itemLine.pEquipment->getName()<<endl;
-	}
+	delete monsterEquipment;
 }
 
 void BattleMode::learnMonsterSpells()

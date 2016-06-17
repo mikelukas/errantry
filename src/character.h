@@ -1,9 +1,11 @@
 #ifndef _CHARACTER_H
 #define _CHARACTER_H
 
+#include <map>
 #include <string>
 #include "equipment.h"
 
+using std::map;
 using std::string;
 
 //Mike Lukas -p2prog03-         - character.h - 
@@ -28,6 +30,11 @@ class Character
 
             int gold;
             int expPoints;      //number of expPoints character carries
+
+            //Inventory; maps for fast lookup of quantity
+			map<const Equipment*, EquipmentLine> weapons;
+			map<const Equipment*, EquipmentLine> armor;
+			map<const Equipment*, EquipmentLine> items;
                     
             void AddStats(const StatMod&);
 			void SubStats(const StatMod&);
@@ -51,6 +58,11 @@ class Character
             int Speed() const;
             int Money() const;
             int ExpPts() const;
+
+            void AddEquipment(const EquipmentLine&);
+
+            vector<const Equipment*>* getAllEquipment() const;
+            map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
 
             virtual void apply(const Equipment*) = 0;
     };

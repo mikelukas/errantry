@@ -15,6 +15,7 @@ Character::Character(int hpVar, int mpVar, int apVar, int dpVar, int mdpVar, int
     {
         //postcondition:  a character's attributes have been set to
         //the attributes given
+		name = "none";
     }
 //Public Member functions--------------------------------------------//
 void Character::ChangeHP(int hpChange)
@@ -139,4 +140,76 @@ void Character::SubStats(const StatMod& stats)
 		DP -= stats.dpMod;
 		MDP -= stats.mdpMod;
 		SP -= stats.spMod;
+	}
+
+void Character::AddEquipment(const EquipmentLine& newEqLine)
+	{
+		//postcondition: adds the Equipment within the incoming EquipmentLine*
+		//to the player's inventory.
+		//Safe for the caller to delete the EquipmentLine pointed to by the
+		//incoming pointer; if the player already has the equipment, we increment
+		//their count for it, and if they don't we, make a copy of the EquipmentLine
+		//and store it into the inventory.
+
+		EquipType purchaseType = newEqLine.pEquipment->getType();
+		map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(purchaseType);
+
+		EquipmentLine& eqLine = inventory[newEqLine.pEquipment];
+		if(eqLine.pEquipment != NULL)
+		{
+			eqLine += newEqLine;
+		}
+		else {
+			inventory[newEqLine.pEquipment] = newEqLine;
+		}
+	}
+
+vector<const Equipment*>* Character::getAllEquipment() const
+	{
+		//postcondition: allocates a new vector and fills it with pointers to
+		//all equipment this character owns.
+
+		vector<const Equipment*>* allEquipment = new vector<const Equipment*>();
+		allEquipment->reserve(weapons.size() + armor.size() + items.size());
+
+		for(map<const Equipment*, EquipmentLine>::const_iterator it = weapons.begin(); it != weapons.end(); it++)
+		{
+			allEquipment->push_back(it->first);
+		}
+
+		for(map<const Equipment*, EquipmentLine>::const_iterator it = armor.begin(); it != armor.end(); it++)
+		{
+			allEquipment->push_back(it->first);
+		}
+
+		for(map<const Equipment*, EquipmentLine>::const_iterator it = items.begin(); it != items.end(); it++)
+		{
+			allEquipment->push_back(it->first);
+		}
+
+		return allEquipment;
+	}
+
+map<const Equipment*, EquipmentLine>& Character::getInventoryFor(const EquipType equipType)
+	{
+		//postcondition: returns the inventory set matching the given equipment type,
+		//or the items list if the EquipType is not recognized (if this happens then
+		//it should be a bug.
+
+		switch(equipType)
+		{
+		case WEAPON:
+			return weapons;
+			break;
+		case ARMOR:
+			return armor;
+			break;
+		case ITEM:
+			return items;
+			break;
+
+		default:
+			return items;
+			break;
+		}
 	}

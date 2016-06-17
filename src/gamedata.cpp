@@ -42,16 +42,6 @@ bool GameData::loadDataFiles()
 		return false;
 	}
 
-	if(!loadMonsters(monsters, MONSTERFILE))
-	{
-		return false;
-	}
-
-	if(!loadBosses(bosses, BOSSFILE, CAVEFILE))
-	{
-		return false;
-	}
-
 	if(!loadEquipment(WEAPON, weaponPtrs, WEAPONFILE))
 	{
 		return false;
@@ -63,6 +53,16 @@ bool GameData::loadDataFiles()
 	}
 
 	if(!loadEquipment(ITEM, itemsPtrs, ITEMFILE))
+	{
+		return false;
+	}
+
+	if(!loadMonsters(monsters, MONSTERFILE))
+	{
+		return false;
+	}
+
+	if(!loadBosses(bosses, BOSSFILE, CAVEFILE))
 	{
 		return false;
 	}
@@ -117,15 +117,57 @@ bool GameData::loadMonsters(vector<const Monster*>& monsters, const string& file
 
 	while(monsterFile.peek() != EOF)
 	{
-		Monster* monster = new Monster(); //freed in deconstructor
-		monsterFile>>(*monster);
-
+		Monster* monster = loadMonsterFrom(monsterFile);
 		monsters.push_back(monster);
 	}
 	monsterFile.close();
 	cout<<":  "<<monsters.size()<<" Monsters found."<<endl;
 
 	return true;
+}
+
+Monster* GameData::loadMonsterFrom(istream& is)
+{
+	//postcondition: allocates a new Monster and populates it fully using the
+	//istream.
+
+	string name;
+	getline(is, name);
+
+	//Init monster stats from stream
+	int hp, mp, ap, dp, mdp, sp, gold, expPoints;
+	is>>hp>>mp>>ap>>dp>>mdp>>sp>>gold>>expPoints;
+	is.ignore(numeric_limits<streamsize>::max(), '\n');
+
+	Monster* monster = new Monster(name, hp, mp, ap, dp, mdp, sp, gold, expPoints);  //freed in deconstructor
+
+	//init inventory from stream (1 line of ids for each equipment type)
+	loadMonsterEquipment(is, weaponPtrs, monster);
+	loadMonsterEquipment(is, armorPtrs, monster);
+	loadMonsterEquipment(is, itemsPtrs, monster);
+
+	//TODO: remove after migrating spells to Character (temporarily here so monsters can load and we can test equipment)
+	vector<int> spellIds;
+	getIdLine(is, spellIds);
+
+	return monster;
+}
+
+void GameData::loadMonsterEquipment(istream& is, vector<Equipment*>& equipment, Monster* monster)
+{
+	//postcondition: reads a single line of equipment ids from the istream, and
+	//using the given equipment vector, looks up Equipment* for each id and adds
+	//an EquipmentLine for each Equipment* to the monster's inventory.
+
+	int id;
+	while(is.peek() != '\n')
+	{
+		is>>id;
+
+		EquipmentLine eqLine(equipment[id]);
+		monster->AddEquipment(eqLine);
+	}
+	is.get();//throwout newline char
 }
 
 bool GameData::loadBosses(map<int, const Monster*>& bosses, const string& bossesFilename, const string& cavesFilename)

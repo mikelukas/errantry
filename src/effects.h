@@ -19,6 +19,7 @@ const vector<EffectFunction> EFFECTS = initEffects();
  */
 
 void fireDamageFunc(Character&, Character&);
+void healFunc(Character&, Character&);
 
 //----EffectFunctions END-------//
 

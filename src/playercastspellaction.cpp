@@ -21,6 +21,7 @@ void PlayerCastSpellAction::setup()
 		spellChooser.run();
 		if(spellChooser.canceled())
 		{
+			setAborted(true);
 			return;
 		}
 
@@ -47,6 +48,7 @@ void PlayerCastSpellAction::setup()
 		{
 			cout<<"No eligible targets for this spell! This is a bug; spell shouldn't be eligible to cast in this location."<<endl;
 			delete eligibleTargets;
+			setAborted(true);
 			return;
 		}
 

@@ -18,26 +18,20 @@ BattleStrategy* RandomBattleStrategy::clone() const
 	return new RandomBattleStrategy(*this);
 }
 
-BattleAction* RandomBattleStrategy::makeBattleAction(GameData& gameData, const GameState& gameState, Monster& monster, Character& target)
+BattleAction* RandomBattleStrategy::makeBattleAction(const GameState& gameState, Monster& monster, Character& target)
 {
 	//postcondition: returns either a MonsterCastSpellAction or a FightAction,
 	//chosen at random.
 	//Will never return a MonsterCastSpellAction if the monster doesn't have spells
 
-	int actionType = 0; //defaults to build fight action
-
-	//If the monster has spells, randomly decide if they will fight or cast a spell
-	if(!(monster.getSpellIds().empty()))
-	{
-		//Otherwise randomly choose between fighting and casting a spell
-		actionType = gameState.getRandIntBetween(0,1);
-	}
+	//If the monster has spells, randomly choose between fight or cast, otherwise just fight
+	int actionType = monster.hasSpells() ? gameState.getRandIntBetween(0,1) : 0;
 
 	BattleAction* chosenAction = NULL;
 	switch(actionType)
 	{
 	case 1:
-		chosenAction = new MonsterCastSpellAction(gameData, monster, target);
+		chosenAction = new MonsterCastSpellAction(monster, target);
 		break;
 	default:
 		chosenAction = new FightAction(monster, target);

@@ -2,9 +2,10 @@
 #define SRC_EFFECTS_H_
 
 #include <vector>
-#include "character.h"
 
 using std::vector;
+
+class Character; //Forward declaration since Spell and Character are interdependent
 
 /* Functional interface for effects. */
 typedef void (*EffectFunction)(Character& appliedBy, Character& target);

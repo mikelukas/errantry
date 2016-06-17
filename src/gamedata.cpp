@@ -42,6 +42,11 @@ bool GameData::loadDataFiles()
 		return false;
 	}
 
+	if(!loadSpells(spellPtrs, SPELLFILE))
+	{
+		return false;
+	}
+
 	if(!loadEquipment(WEAPON, weaponPtrs, WEAPONFILE))
 	{
 		return false;
@@ -63,11 +68,6 @@ bool GameData::loadDataFiles()
 	}
 
 	if(!loadBosses(bosses, BOSSFILE, CAVEFILE))
-	{
-		return false;
-	}
-
-	if(!loadSpells(spellPtrs, SPELLFILE))
 	{
 		return false;
 	}
@@ -146,9 +146,7 @@ Monster* GameData::loadMonsterFrom(istream& is)
 	loadMonsterEquipment(is, armorPtrs, monster);
 	loadMonsterEquipment(is, itemsPtrs, monster);
 
-	//TODO: remove after migrating spells to Character (temporarily here so monsters can load and we can test equipment)
-	vector<int> spellIds;
-	getIdLine(is, spellIds);
+	loadMonsterSpells(is, monster);
 
 	return monster;
 }
@@ -168,6 +166,22 @@ void GameData::loadMonsterEquipment(istream& is, vector<Equipment*>& equipment, 
 		monster->AddEquipment(eqLine);
 	}
 	is.get();//throwout newline char
+}
+
+void GameData::loadMonsterSpells(istream& is, Monster* monster)
+{
+	//postcondition: reads a single line of spell ids from the istream, and
+	//using gameData's Spell* vector, looks up Spell* for each id and adds it
+	//to the Monster's spell inventory
+
+	int id;
+	while(is.peek() != '\n')
+	{
+		is>>id;
+
+		monster->AddSpell(spellPtrs[id]);
+	}
+	is.get();
 }
 
 bool GameData::loadBosses(map<int, const Monster*>& bosses, const string& bossesFilename, const string& cavesFilename)
@@ -263,9 +277,6 @@ bool GameData::loadSpells(vector<const Spell*>& spells, const string& filename)
 			<<"  "<<spell->getMpCost()<<endl
 			<<"  "<<spell->getPurchasePrice()<<endl;
 		spells.push_back(spell);
-
-		//populate spells by category
-		categorizedSpellIds[spell->getCategory()].push_back(spells.size()-1); //since we just put the spell on thend, spell id is last element index
 	}
 	spellFile.close();
 	cout<<":  "<<spells.size()<<" spells found."<<endl;
@@ -356,11 +367,6 @@ const vector<Equipment*>& GameData::getItems()
 const vector<const Spell*>& GameData::getSpells() const
 {
 	return spellPtrs;
-}
-
-const vector<int>& GameData::getSpellIdsForCategory(SpellCategory category)
-{
-	return categorizedSpellIds[category];
 }
 
 vector<const Spell*>* GameData::getSpellsForIds(const vector<int>& spellIds) const

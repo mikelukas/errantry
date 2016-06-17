@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "battleaction.h"
+#include "character.h"
 #include "spell.h"
 
 using std::cout;

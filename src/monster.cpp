@@ -20,7 +20,6 @@ Monster::Monster(string& name, int hp, int mp, int ap, int dp, int mdp, int sp, 
 
 Monster::Monster(const Monster& monster)
 	: Character(monster),
-	  spellIds(monster.spellIds),
 	  battleStrategy(monster.battleStrategy->clone())
 	{
 		//postcondition: performs a deep copy of monster; BattleStrategy* is cloned.
@@ -31,11 +30,6 @@ Monster::~Monster()
 	{
 		delete battleStrategy;
 	}
-
-vector<int> Monster::getSpellIds() const
-{
-	return spellIds;
-}
 
 BattleStrategy* Monster::getBattleStrategy() const
 {
@@ -58,12 +52,3 @@ void Monster::apply(const Equipment* eq)
 			return;
 		}
 	}
-
-//TODO: remove once spells are migrated to Character
-istream& operator>> (istream& is, Monster& monster)
-	{
-        //init inventory from stream (1 line of ids for each equipment type
-        getIdLine(is, monster.spellIds);
-
-        return is;
-    }

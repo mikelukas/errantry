@@ -164,6 +164,16 @@ void Character::AddEquipment(const EquipmentLine& newEqLine)
 		}
 	}
 
+void Character::AddSpell(const Spell* newSpell)
+	{
+		//postcondition: the given spell is added to the Character, and also
+		//added to Character's categorized spells map (if the Character doesn't
+		//already know the spell.
+
+		spells.insert(newSpell);
+		categorizedSpells[newSpell->getCategory()].insert(newSpell);
+	}
+
 vector<const Equipment*>* Character::getAllEquipment() const
 	{
 		//postcondition: allocates a new vector and fills it with pointers to
@@ -212,4 +222,31 @@ map<const Equipment*, EquipmentLine>& Character::getInventoryFor(const EquipType
 			return items;
 			break;
 		}
+	}
+
+bool Character::hasSpell(const Spell* spell) const
+	{
+		return (spells.find(spell) != spells.end());
+	}
+
+bool Character::hasSpells() const
+	{
+		return spells.size() > 0;
+	}
+
+vector<const Spell*>* Character::getSpells() const
+	{
+		//postcondition: allocates a new vector of all spells the Character knows.
+
+		vector<const Spell*>* spellsVector = new vector<const Spell*>();
+		for(set<const Spell*>::const_iterator it = spells.begin(); it != spells.end(); it++)
+		{
+			spellsVector->push_back((*it));
+		}
+		return spellsVector;
+	}
+
+const set<const Spell*>& Character::getSpellsForCategory(SpellCategory category)
+	{
+		return categorizedSpells[category];
 	}

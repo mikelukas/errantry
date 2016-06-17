@@ -1,4 +1,5 @@
 #include <limits>
+#include "character.h"
 #include "spell.h"
 
 using std::numeric_limits;

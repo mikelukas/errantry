@@ -118,7 +118,7 @@ BattleAction* BattleMode::makeMonsterAction()
 	//a fight action is chosen.
 
 	BattleStrategy* strat = currMonster.getBattleStrategy();
-	return strat->makeBattleAction(gameData, gameState, currMonster, gameState.getPlayer());
+	return strat->makeBattleAction(gameState, currMonster, gameState.getPlayer());
 }
 
 void BattleMode::executeActions()
@@ -232,7 +232,7 @@ void BattleMode::learnMonsterSpells()
 	//postcondition: all spell ids the monster has are converted to spell
 	//pointers and the player learns any he/she didn't alreayd know.
 
-	vector<const Spell*>* monsterSpells = gameData.getSpellsForIds(currMonster.getSpellIds());
+	vector<const Spell*>* monsterSpells = currMonster.getSpells();
 	for(vector<const Spell*>::const_iterator it = monsterSpells->begin(); it != monsterSpells->end(); it++)
 	{
 		if(gameState.getPlayer().hasSpell(*it))

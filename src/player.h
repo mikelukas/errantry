@@ -7,14 +7,10 @@
 //need to do such as move up a level, access attributes, move coordinates,
 //etc. 
 
-#include <map>
-#include <set>
 #include <string>
 #include <vector>
 #include "character.h"
-#include "equipment.h"
 #include "point.h"
-#include "spell.h"
 
 using std::map;
 using std::set;
@@ -48,8 +44,6 @@ class Player : public Character
             int lvl;            //current level
             Point Coords;       //Holds the players coordinates on the map
 
-            set<const Spell*> spells;
-
             map<EquipType, const Equipment*> currentEquipped;
 
             void initStartingEquipment();
@@ -63,7 +57,7 @@ class Player : public Character
             void LevelUp();
             void AddExp(int);
             void AddMoney(int);
-            void AddSpell(const Spell*);
+
             Point GetCoords() const;
             void SetCoords(int, int);
 
@@ -78,8 +72,6 @@ class Player : public Character
             vector<EquipmentLine*>* getItemsAsVector();
             EquipmentLine& getEquipmentLineFromInventoryFor(const Equipment*);
 
-            bool hasSpell(const Spell*) const;
-            vector<const Spell*>* getSpells() const;
             vector<const Spell*>* getSpellsForLocale(SpellLocale locale) const;
 
             const Equipment* getCurrentEquipped(EquipType);

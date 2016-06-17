@@ -1,8 +1,7 @@
 #include "monstercastspellaction.h"
 
-MonsterCastSpellAction::MonsterCastSpellAction(GameData& gameData, Monster& monster, Character& enemy)
-	: CastSpellAction(monster, enemy),
-	  gameData(gameData)
+MonsterCastSpellAction::MonsterCastSpellAction(Character& monster, Character& enemy)
+	: CastSpellAction(monster, enemy)
 {
 
 }
@@ -44,37 +43,22 @@ const Spell* MonsterCastSpellAction::lookupSpellInCategory(SpellCategory categor
 	//to cast has in the given category, or NULL if the monster doesn't have
 	//spells they can cast in that category.
 
-	const vector<int>& spellIdsForCategory = gameData.getSpellIdsForCategory(category);
-	if(spellIdsForCategory.empty())
+	const set<const Spell*>& spellsForCategory = caster.getSpellsForCategory(category);
+	if(spellsForCategory.empty())
 	{
-		//Shouldn't happen except for bug; if there are no spells in a category, that category shouldn't be programmed into the game.
+		//Monster doesn't have any spells in given category
 		return NULL;
 	}
 
-	Monster& monster = static_cast<Monster&>(caster); //XXX hate casting, but need to change the way Monsters are loaded to be able to give Characters ability to have spell* vectors, to avoid the cast
-	vector<int> monsterSpellIds = monster.getSpellIds();
-	if(monsterSpellIds.empty())
+	//Find the first spell monster can cast
+	for(set<const Spell*>::const_iterator it = spellsForCategory.begin(); it != spellsForCategory.end(); it++)
 	{
-		//Shouldn't happen except for bug; if monster doesn't have spells BattleStrategy shouldn't've made this action in the first place
-		return NULL;
-	}
-
-	//Find the first spell the monster has in the given category
-	for(int catSpellsInd = 0; catSpellsInd < spellIdsForCategory.size(); catSpellsInd++)
-	{
-		for(int monsterSpellsInd = 0; monsterSpellsInd < monsterSpellIds.size(); monsterSpellsInd++)
+		if((*it)->getMpCost() <= caster.getMP())
 		{
-			if(spellIdsForCategory[catSpellsInd] == monsterSpellIds[monsterSpellsInd])
-			{
-				const Spell* chosenSpell = gameData.getSpells()[monsterSpellIds[monsterSpellsInd]];
-				if(chosenSpell->getMpCost() <= caster.getMP())
-				{
-					return chosenSpell;
-				}
-			}
+			return (*it);
 		}
 	}
 
-	//If we make it this far, Monster doesn't have any spells in given category
+	//If we make it this far, Monster can't CAST any of the spells it has in the given category
 	return NULL;
 }

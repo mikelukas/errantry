@@ -53,8 +53,6 @@ class GameData
 		vector<Equipment*> itemsPtrs;
 		vector<const Spell*> spellPtrs;
 
-		map<SpellCategory, vector<int> > categorizedSpellIds;
-
 		bool loadDataFiles(); //master load method
 
 		bool loadMap();
@@ -62,6 +60,7 @@ class GameData
 		bool loadMonsters(vector<const Monster*>& monsters, const string& filename);
 		Monster* loadMonsterFrom(istream&);
 		void loadMonsterEquipment(istream&, vector<Equipment*>&, Monster*);
+		void loadMonsterSpells(istream& is, Monster*);
 		bool loadBosses(map<int, const Monster*>&, const string&, const string&);
 
 		bool loadEquipment(EquipType type, vector<Equipment*>& equipment, const string& filename);

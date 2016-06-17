@@ -22,8 +22,6 @@ using std::vector;
 class Monster : public Character
     {
 		protected:
-			//spells player may learn by defeating the monster
-			vector<int> spellIds;
 
 			//determines what actions the monster takes in battle
 			BattleStrategy* battleStrategy;
@@ -33,13 +31,9 @@ class Monster : public Character
             Monster(const Monster&);
             ~Monster();
 
-            vector<int> getSpellIds() const;
-
             BattleStrategy* getBattleStrategy() const;
 
             void apply(const Equipment*);
-
-            friend istream& operator>> (istream&, Monster&);
     };
 
 #endif

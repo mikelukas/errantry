@@ -2,10 +2,13 @@
 #define _CHARACTER_H
 
 #include <map>
+#include <set>
 #include <string>
 #include "equipment.h"
+#include "spell.h"
 
 using std::map;
+using std::set;
 using std::string;
 
 //Mike Lukas -p2prog03-         - character.h - 
@@ -35,6 +38,9 @@ class Character
 			map<const Equipment*, EquipmentLine> weapons;
 			map<const Equipment*, EquipmentLine> armor;
 			map<const Equipment*, EquipmentLine> items;
+
+            set<const Spell*> spells;
+			map<SpellCategory, set<const Spell*> > categorizedSpells;
                     
             void AddStats(const StatMod&);
 			void SubStats(const StatMod&);
@@ -60,9 +66,15 @@ class Character
             int ExpPts() const;
 
             void AddEquipment(const EquipmentLine&);
+            void AddSpell(const Spell*);
 
             vector<const Equipment*>* getAllEquipment() const;
             map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
+
+            bool hasSpell(const Spell*) const;
+            bool hasSpells() const;
+			vector<const Spell*>* getSpells() const;
+			const set<const Spell*>& getSpellsForCategory(SpellCategory);
 
             virtual void apply(const Equipment*) = 0;
     };

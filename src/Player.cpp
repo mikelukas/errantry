@@ -103,10 +103,6 @@ void Player::AddMoney(int money)
         
         gold = gold + money;
     }
-void Player::AddSpell(const Spell* newSpell)
-	{
-		spells.insert(newSpell);
-	}
 void Player::Buy(const EquipmentLine* purchasedEqLine)
 	{
 		AddEquipment(*purchasedEqLine);
@@ -234,20 +230,6 @@ EquipmentLine& Player::getEquipmentLineFromInventoryFor(const Equipment* equipme
 			break;
 		}
 	}
-bool Player::hasSpell(const Spell* spell) const
-{
-	return (spells.find(spell) != spells.end());
-}
-
-vector<const Spell*>* Player::getSpells() const
-{
-	vector<const Spell*>* spellsVector = new vector<const Spell*>();
-	for(set<const Spell*>::const_iterator it = spells.begin(); it != spells.end(); it++)
-	{
-		spellsVector->push_back((*it));
-	}
-	return spellsVector;
-}
 
 vector<const Spell*>* Player::getSpellsForLocale(SpellLocale locale) const
 	{

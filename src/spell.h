@@ -5,7 +5,6 @@
 #include <set>
 #include <string>
 #include <vector>
-#include "character.h"
 #include "effects.h"
 #include "streamutils.h" //getIdLine
 

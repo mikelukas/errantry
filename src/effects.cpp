@@ -1,3 +1,4 @@
+#include "character.h"
 #include "effects.h"
 
 void fireDamageFunc(Character& appliedBy, Character& target)

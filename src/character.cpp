@@ -25,6 +25,10 @@ void Character::ChangeHP(int hpChange)
         //added to HP
 
         HP += hpChange;
+        if(HP > maxHP)
+        {
+        	HP = maxHP;
+        }
     }
 
 void Character::ChangeMP(int mpChange)
@@ -34,6 +38,10 @@ void Character::ChangeMP(int mpChange)
         //should be passed in, otherwise, a positive value should be passed in
 
         MP += mpChange;
+        if(MP > maxMP)
+		{
+			MP = maxMP;
+		}
     }
 
 //accessor functions-------------------------------------------------//

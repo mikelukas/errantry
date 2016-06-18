@@ -5,12 +5,16 @@
 using std::cout;
 using std::endl;
 
+void elementalDamage(Character& appliedBy, Character& target, int rawDamage, Element element)
+{
+	int netDamage = target.applyMagicalDamage(rawDamage, element);
+
+	cout<<appliedBy.ShowName()<<" did "<<netDamage<<" "<<getDisplayNameFor(element)<<" damage to "<<target.ShowName()<<"!"<<endl;
+}
+
 void fireDamageFunc(Character& appliedBy, Character& target)
 {
-	int netDamage = target.applyMagicalDamage(BASE_ELEMENTAL_DAMAGE, fire);
-
-
-	cout<<appliedBy.ShowName()<<" did "<<netDamage<<" "<<getDisplayNameFor(fire)<<" damage to "<<target.ShowName()<<"!"<<endl;
+	elementalDamage(appliedBy, target, BASE_ELEMENTAL_DAMAGE, fire);
 }
 
 void healFunc(Character& appliedby, Character& target)

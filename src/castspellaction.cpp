@@ -19,6 +19,6 @@ void CastSpellAction::execute()
 		return;
 	}
 
-	spellChoice->cast(caster, *spellTarget);
 	cout<<caster.ShowName() + " cast '" + spellChoice->getName() + "' on " + spellTarget->ShowName() + "."<<endl;
+	spellChoice->cast(caster, *spellTarget);
 }

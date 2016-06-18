@@ -13,7 +13,6 @@ using std::set;
 using std::string;
 using std::vector;
 
-enum Element {fire, air, earth, water, none};
 enum SpellCategory {ATTACK, HEALING, ASSIST};
 enum SpellLocale {FIELD, BATTLE};
 enum TargetType {PLAYER, MONSTER};

@@ -250,3 +250,37 @@ const set<const Spell*>& Character::getSpellsForCategory(SpellCategory category)
 	{
 		return categorizedSpells[category];
 	}
+
+int Character::applyPhysicalDamage(int rawDamage)
+	{
+		//postcondition: rawDamage is modified based on this character's DP,
+		//then applied to this character.  The net damage after modification is
+		//returned.
+
+		int netDamage = rawDamage - Defense();
+	    if(netDamage < 0)
+	    {
+	    	netDamage = 0;
+	    }
+
+	    ChangeHP(-1 * netDamage);
+
+	    return netDamage;
+	}
+
+int Character::applyMagicalDamage(int rawDamage, Element element)
+	{
+		//postcondition: rawDamage is modified based on this character's MDP, and
+		//elemental weakness, then applied to this character.  The net damage
+		//after modification is returned.
+
+		int netDamage = rawDamage - MagicDefense();
+	    if(netDamage < 0)
+	    {
+	    	netDamage = 0;
+	    }
+
+	    ChangeHP(-1 * netDamage);
+
+	    return netDamage;
+	}

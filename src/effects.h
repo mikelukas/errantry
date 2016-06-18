@@ -19,6 +19,8 @@ const vector<EffectFunction> EFFECTS = initEffects();
  * If adding new effects, be sure to add them to the vector output by initEffects
  */
 
+const int BASE_ELEMENTAL_DAMAGE = 15;
+
 void fireDamageFunc(Character&, Character&);
 void healFunc(Character&, Character&);
 

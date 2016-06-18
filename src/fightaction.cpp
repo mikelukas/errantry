@@ -13,15 +13,10 @@ FightAction::FightAction(Character& attacker, Character& defender)
 
 void FightAction::execute()
 {
-	//postcondition:  this function deals damage to the defender from the attacker.
-	//It deducts that damage from the defender's HP.
-	//A certain defense number is subtracted for the DP value of the defender,
-	//so that the attacker does not do all of their damage(AP) to the defender.
+	//postcondition:  this function apply's physical damage from the attacker
+	//to the defender.  Raw damage from the attacker is based on their AP
 
-    int damage = attacker.Damage() - defender.Defense();
-    if(damage < 0)
-        damage = 0;
+    int netDamage = defender.applyPhysicalDamage(attacker.Damage());
 
-    defender.ChangeHP(-1 * damage);
-    cout<<attacker.ShowName()<<" did "<<damage<<" damage to "<<defender.ShowName()<<"!"<<endl;
+    cout<<attacker.ShowName()<<" did "<<netDamage<<" damage to "<<defender.ShowName()<<"!"<<endl;
 }

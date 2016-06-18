@@ -77,6 +77,8 @@ class Character
 			const set<const Spell*>& getSpellsForCategory(SpellCategory);
 
             virtual void apply(const Equipment*) = 0;
+            int applyPhysicalDamage(int);
+            int applyMagicalDamage(int, Element);
     };
 
 #endif

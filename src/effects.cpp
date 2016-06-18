@@ -1,10 +1,16 @@
+#include <iostream>
 #include "character.h"
 #include "effects.h"
 
+using std::cout;
+using std::endl;
+
 void fireDamageFunc(Character& appliedBy, Character& target)
 {
-	target.ChangeHP(-15);
-	//Todo: use a magic damage method to apply damage with a weakness
+	int netDamage = target.applyMagicalDamage(BASE_ELEMENTAL_DAMAGE, fire);
+
+
+	cout<<appliedBy.ShowName()<<" did "<<netDamage<<" "<<getDisplayNameFor(fire)<<" damage to "<<target.ShowName()<<"!"<<endl;
 }
 
 void healFunc(Character& appliedby, Character& target)

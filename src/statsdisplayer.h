@@ -14,6 +14,9 @@ using std::setw;
 
 class StatsDisplayer
 {
+	protected:
+		static void displayWeaknessesLineFor(const Character&);
+
 	public:
 		static void fullDisplayFor(const Player& player);
 		static void battleDisplayFor(const Player&);

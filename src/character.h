@@ -29,6 +29,8 @@ class Character
             int MDP;			//magic defense percentage
             int SP;             //speed points
 
+            set<Element> weaknesses;	//more magical damage from these element
+
             string name;
 
             int gold;
@@ -44,6 +46,8 @@ class Character
                     
             void AddStats(const StatMod&);
 			void SubStats(const StatMod&);
+
+			void recalculateWeakness();
 
         public:
             Character(int, int, int, int, int, int, int, int);
@@ -64,6 +68,9 @@ class Character
             int Speed() const;
             int Money() const;
             int ExpPts() const;
+
+            bool isWeakAgainst(Element) const;
+            const set<Element>& getWeaknesses() const;
 
             void AddEquipment(const EquipmentLine&);
             void AddSpell(const Spell*);

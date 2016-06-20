@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <math.h> //ceil()
 #include "character.h"
 
 //Constructors-------------------------------------------------------//
@@ -112,6 +114,16 @@ int Character::ExpPts() const
         return expPoints;
     }
 
+bool Character::isWeakAgainst(Element element) const
+	{
+		return weaknesses.count(element) > 0;
+	}
+
+const set<Element>& Character::getWeaknesses() const
+	{
+		return weaknesses;
+	}
+
 void Character::AddStats(const StatMod& stats)
 	{
 		HP += stats.hpMod;
@@ -168,10 +180,68 @@ void Character::AddSpell(const Spell* newSpell)
 	{
 		//postcondition: the given spell is added to the Character, and also
 		//added to Character's categorized spells map (if the Character doesn't
-		//already know the spell.
+		//already know the spell.  The Character's weaknesses are recalculated
+		//since they are based on the Elements of all spells the character knows.
 
 		spells.insert(newSpell);
 		categorizedSpells[newSpell->getCategory()].insert(newSpell);
+		recalculateWeakness();
+	}
+
+void Character::recalculateWeakness()
+	{
+		//postcondition: Character's weaknesses set is updated based on the
+		//Elements of all Spells they have.
+		//If a Character has more Elements of one type than its opposite, the
+		//character will be weak to its opposite; e.g. if the character has
+		//3 Fire spells, and 2 Water spells, the character will be weak to Water.
+
+		int numPairs = (ELEMENTS.size()-1)/2; //-1 b/c none doesn't have an opposite, and div by 2 b/c every element is paired with its opposite
+		int elementPairAffinities[numPairs]; //The index of a pair is the int val of the 1st element in that pair (see Element enum for pairings)
+		std::fill(elementPairAffinities, elementPairAffinities + sizeof(elementPairAffinities), 0);
+
+		//First go through every spell's Element, and score it based on if it's the first element in its pair or 2nd
+		for(set<const Spell*>::const_iterator it = spells.begin(); it != spells.end(); it++)
+		{
+			Element spellElement = (*it)->getElement();
+			if(spellElement == none)
+			{
+				continue; //can't be weak against 'none', so skip this spell
+			}
+
+			//add 1 to element's pair if it is the first element in the pair, subtract 1 if it's the 2nd
+			if(spellElement % 2 == 0)
+			{
+				elementPairAffinities[spellElement]++;
+			}
+			else
+			{
+				elementPairAffinities[spellElement-1]--;
+			}
+		}
+
+		//For each pair, determine if there are more spells of the first element in the pair or 2nd, and set the weakness to be opposite
+		weaknesses.clear();
+		for(int i = 0; i < numPairs; i++)
+		{
+			int pairAffinity = elementPairAffinities[i];
+			if(pairAffinity == 0)
+			{
+				continue;
+			}
+
+			Element pairElement = static_cast<Element>(2*i);
+			if(pairAffinity > 0)
+			{
+				//More spells' Elements are of the 1st Element in this pair.
+				weaknesses.insert(getOppositeOf(pairElement));
+			}
+			else if(pairAffinity < 0)
+			{
+				//More spells' Elements are of the 2nd Element in this pair
+				weaknesses.insert(pairElement);
+			}
+		}
 	}
 
 vector<const Equipment*>* Character::getAllEquipment() const
@@ -271,10 +341,14 @@ int Character::applyPhysicalDamage(int rawDamage)
 int Character::applyMagicalDamage(int rawDamage, Element element)
 	{
 		//postcondition: rawDamage is modified based on this character's MDP, and
-		//elemental weakness, then applied to this character.  The net damage
-		//after modification is returned.
+		//elemental weakness, then applied to this character.
+		//If character is weak toward the incoming element, then only half of
+		//their MDP is used (rounding up).  Otherwise the base MDP value is used.
+		//The net damage after modification is returned.
 
-		int netDamage = rawDamage - MagicDefense();
+		int adjustedMDP = isWeakAgainst(element)? ceil(.5*((float)MagicDefense())) : MagicDefense();
+
+		int netDamage = rawDamage - adjustedMDP;
 	    if(netDamage < 0)
 	    {
 	    	netDamage = 0;

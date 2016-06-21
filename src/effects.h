@@ -21,6 +21,10 @@ const vector<EffectFunction> EFFECTS = initEffects();
  */
 
 void fireDamageFunc(Character&, Character&);
+void waterDamageFunc(Character&, Character&);
+void airDamageFunc(Character&, Character&);
+void earthDamageFunc(Character&, Character&);
+void nonElementalMagicDamageFunc(Character&, Character&);
 void healFunc(Character&, Character&);
 
 //----Effect Helper functions---//

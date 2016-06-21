@@ -198,7 +198,7 @@ void Character::recalculateWeakness()
 
 		int numPairs = (ELEMENTS.size()-1)/2; //-1 b/c none doesn't have an opposite, and div by 2 b/c every element is paired with its opposite
 		int elementPairAffinities[numPairs]; //The index of a pair is the int val of the 1st element in that pair (see Element enum for pairings)
-		std::fill(elementPairAffinities, elementPairAffinities + sizeof(elementPairAffinities), 0);
+		std::fill(elementPairAffinities, elementPairAffinities + numPairs, 0);
 
 		//First go through every spell's Element, and score it based on if it's the first element in its pair or 2nd
 		for(set<const Spell*>::const_iterator it = spells.begin(); it != spells.end(); it++)
@@ -212,11 +212,11 @@ void Character::recalculateWeakness()
 			//add 1 to element's pair if it is the first element in the pair, subtract 1 if it's the 2nd
 			if(spellElement % 2 == 0)
 			{
-				elementPairAffinities[spellElement]++;
+				elementPairAffinities[spellElement/2]++;
 			}
 			else
 			{
-				elementPairAffinities[spellElement-1]--;
+				elementPairAffinities[spellElement/2]--;
 			}
 		}
 

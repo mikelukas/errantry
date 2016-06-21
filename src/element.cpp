@@ -24,7 +24,7 @@ Element getOppositeOf(Element el)
 		return none;
 	}
 
-	int opIndex = el % 2 == 0 ? el-1 : el+1;
+	int opIndex = el % 2 == 0 ? el+1 : el-1;
 	return ELEMENTS[opIndex];
 }
 

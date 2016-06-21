@@ -26,6 +26,11 @@ void PlayerCastSpellAction::setup()
 		}
 
 		spellChoice = spellChooser.getChoice();
+		if(caster.getMP() < spellChoice->getMpCost())
+		{
+			cout<<"Not enough MP to cast '"<<spellChoice->getName()<<"'."<<endl;
+			continue;
+		}
 
 		//Prepare target list based on spell's eligible targts
 		vector<Character*>* eligibleTargets = new vector<Character*>();

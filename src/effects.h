@@ -27,9 +27,11 @@ void earthDamageFunc(Character&, Character&);
 void nonElementalMagicDamageFunc(Character&, Character&);
 void healFunc(Character&, Character&);
 void fearFunc(Character&, Character&);
+void enervate(Character&, Character&);
 
 //----Effect Helper functions---//
 const int BASE_ELEMENTAL_DAMAGE = 20;
+const int BASE_MP_DROP = 10;
 
 void elementalDamage(Character&, Character&, int, Element);
 

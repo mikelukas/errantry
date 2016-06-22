@@ -65,6 +65,13 @@ void fearFunc(Character& appliedby, Character& target)
 	cout<<target.ShowName()<<" is now weak to "<<getDisplayNameFor(elementChoice)<<"."<<endl;
 }
 
+void enervateFunc(Character& appliedBy, Character& target)
+{
+	target.ChangeMP(-1*BASE_MP_DROP);
+
+	cout<<target.ShowName()<<" lost "<<BASE_MP_DROP<<" MP!"<<endl;
+}
+
 vector<EffectFunction> initEffects()
 {
 	vector<EffectFunction> effects;
@@ -75,6 +82,7 @@ vector<EffectFunction> initEffects()
 	effects.push_back(&nonElementalMagicDamageFunc);
 	effects.push_back(&healFunc);
 	effects.push_back(&fearFunc);
+	effects.push_back(&enervateFunc);
 
 	return effects;
 }

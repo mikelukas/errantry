@@ -26,6 +26,7 @@ void airDamageFunc(Character&, Character&);
 void earthDamageFunc(Character&, Character&);
 void nonElementalMagicDamageFunc(Character&, Character&);
 void healFunc(Character&, Character&);
+void fearFunc(Character&, Character&);
 
 //----Effect Helper functions---//
 const int BASE_ELEMENTAL_DAMAGE = 20;

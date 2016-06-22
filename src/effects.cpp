@@ -3,6 +3,7 @@
 #include "effects.h"
 
 using std::cout;
+using std::cin;
 using std::endl;
 
 void elementalDamage(Character& appliedBy, Character& target, int rawDamage, Element element)
@@ -42,6 +43,28 @@ void healFunc(Character& appliedby, Character& target)
 	target.ChangeHP(25);
 }
 
+void fearFunc(Character& appliedby, Character& target)
+{
+	//postcondition: caster is prompted to choose an Element, and target is made
+	//weak to that element.
+
+	int elementChoiceNum = none;
+	cout<<"Choose a weakness to add to "<<target.ShowName()<<": "<<endl;
+	do
+	{
+		for(int i=0; i < ELEMENTS.size()-1; i++)
+		{
+			cout<<i+1<<") "<<getDisplayNameFor(ELEMENTS[i])<<endl;
+		}
+		cin>>elementChoiceNum;
+	} while(elementChoiceNum < 1 || elementChoiceNum-1 > ELEMENTS.size()-1);
+
+	Element elementChoice = static_cast<Element>(elementChoiceNum-1);
+	target.addWeakness(elementChoice);
+
+	cout<<target.ShowName()<<" is now weak to "<<getDisplayNameFor(elementChoice)<<"."<<endl;
+}
+
 vector<EffectFunction> initEffects()
 {
 	vector<EffectFunction> effects;
@@ -51,6 +74,7 @@ vector<EffectFunction> initEffects()
 	effects.push_back(&earthDamageFunc);
 	effects.push_back(&nonElementalMagicDamageFunc);
 	effects.push_back(&healFunc);
+	effects.push_back(&fearFunc);
 
 	return effects;
 }

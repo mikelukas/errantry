@@ -188,6 +188,11 @@ void Character::AddSpell(const Spell* newSpell)
 		recalculateWeakness();
 	}
 
+void Character::addWeakness(Element element)
+{
+	weaknesses.insert(element);
+}
+
 void Character::recalculateWeakness()
 	{
 		//postcondition: Character's weaknesses set is updated based on the

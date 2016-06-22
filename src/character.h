@@ -86,6 +86,8 @@ class Character
             virtual void apply(const Equipment*) = 0;
             int applyPhysicalDamage(int);
             int applyMagicalDamage(int, Element);
+
+            void addWeakness(Element);
     };
 
 #endif

@@ -72,6 +72,14 @@ void enervateFunc(Character& appliedBy, Character& target)
 	cout<<target.ShowName()<<" lost "<<BASE_MP_DROP<<" MP!"<<endl;
 }
 
+void drainFunc(Character& appliedBy, Character& target)
+{
+	int netDamage = target.applyMagicalDamage(BASE_DRAIN_HP, water);
+	appliedBy.ChangeHP(netDamage); //add to applier's HP amount done in magical damage
+
+	cout<<appliedBy.ShowName()<<" drained "<<netDamage<<" HP from "<<target.ShowName()<<"!"<<endl;
+}
+
 vector<EffectFunction> initEffects()
 {
 	vector<EffectFunction> effects;
@@ -83,6 +91,7 @@ vector<EffectFunction> initEffects()
 	effects.push_back(&healFunc);
 	effects.push_back(&fearFunc);
 	effects.push_back(&enervateFunc);
+	effects.push_back(&drainFunc);
 
 	return effects;
 }

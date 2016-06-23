@@ -28,10 +28,12 @@ void nonElementalMagicDamageFunc(Character&, Character&);
 void healFunc(Character&, Character&);
 void fearFunc(Character&, Character&);
 void enervate(Character&, Character&);
+void drainFunc(Character&, Character&);
 
 //----Effect Helper functions---//
 const int BASE_ELEMENTAL_DAMAGE = 20;
 const int BASE_MP_DROP = 10;
+const int BASE_DRAIN_HP = 15;
 
 void elementalDamage(Character&, Character&, int, Element);
 

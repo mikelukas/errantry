@@ -117,13 +117,24 @@ void meltdownFunc(Character& appliedBy, Character& target)
 	MeltdownEquipmentChooser eqChooser(appliedBy);
 	eqChooser.run();
 
-	EquipmentLine* meltdownChoice = eqChooser.getChoice();
-	appliedBy.RemoveEquipment(meltdownChoice);
+	EquipmentLine meltdownChoice(*(eqChooser.getChoice())); //Copy what they chose so we don't change the quantity of the actual inventory equipment here.
 
-	int rawMeltdownDamage = meltdownChoice->pEquipment->getStatMod().getMeltdownDamage();
+	//Can melt down more than 1 piece of the chosen equipment, so ask player for quantity
+	const int available = meltdownChoice.quantity;
+	do
+	{
+		cout<<"How many (up to "<<available<<")? ";
+		cin>>meltdownChoice.quantity;
+	} while(meltdownChoice.quantity < 1 && meltdownChoice.quantity > available);
+
+	//Remove chosen quantity of chosen equipment
+	appliedBy.RemoveEquipment(&meltdownChoice);
+
+	//Convert equipment stats to damage and deal it to the target
+	int rawMeltdownDamage = meltdownChoice.quantity * (meltdownChoice.pEquipment->getStatMod().getMeltdownDamage());
 	int netDamage = target.applyMagicalDamage(rawMeltdownDamage, fire);
 
-	cout<<appliedBy.ShowName()<<" melted down "<<meltdownChoice->pEquipment->getName()<<" into "<<netDamage<<" "<<getDisplayNameFor(fire)<<" damage to "<<target.ShowName()<<"!"<<endl;
+	cout<<appliedBy.ShowName()<<" melted down "<<meltdownChoice.quantity<<" "<<meltdownChoice.pEquipment->getName()<<" into "<<netDamage<<" "<<getDisplayNameFor(fire)<<" damage to "<<target.ShowName()<<"!"<<endl;
 }
 
 vector<EffectFunction> initEffects()

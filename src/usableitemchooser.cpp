@@ -22,14 +22,19 @@ void UsableItemChooser::displayInventoryChoices() const
 	cout<<"Items"<<endl;
 	for(int i=0; i < eligibleChoices->size(); i++)
 	{
-		const Equipment* invEq = (*eligibleChoices)[i]->pEquipment;
+		displayChoice(i, (*eligibleChoices)[i]);
+	}
+	cout<<endl;
+}
 
-		std::ostringstream eqChoiceLabel;
-		cout<<i+1<<") "<<invEq->getName();
-		if((*eligibleChoices)[i]->quantity > 1) {
-			cout<<" (x"<<(*eligibleChoices)[i]->quantity<<")";
-		}
-		cout<<endl;
+void UsableItemChooser::displayChoice(int choiceNum, EquipmentLine* eqLine) const
+{
+	const Equipment* invEq = eqLine->pEquipment;
+
+	std::ostringstream eqChoiceLabel;
+	cout<<choiceNum+1<<") "<<invEq->getName();
+	if(eqLine->quantity > 1) {
+		cout<<" (x"<<eqLine->quantity<<")";
 	}
 	cout<<endl;
 }

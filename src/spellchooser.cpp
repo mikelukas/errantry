@@ -16,10 +16,15 @@ void SpellChooser::displayInventoryChoices() const
 {
 	for(int i = 0; i < eligibleChoices->size(); i++)
 	{
-		ostringstream choiceNum;
-		choiceNum<<i+1<<")";
-
-		cout<<std::left<<setw(4)<<choiceNum.str(); displaySpellLine((*eligibleChoices)[i]);
+		displayChoice(i, (*eligibleChoices)[i]);
 	}
 	cout<<endl;
+}
+
+void SpellChooser::displayChoice(int choiceNum, const Spell* spellChoice) const
+{
+	ostringstream choiceNumStr;
+	choiceNumStr<<choiceNum+1<<")";
+
+	cout<<std::left<<setw(4)<<choiceNumStr.str(); displaySpellLine(spellChoice);
 }

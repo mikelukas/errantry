@@ -35,6 +35,7 @@ class Chooser
 		int choiceNum;
 
 		virtual void displayChoiceMenu() const = 0;
+		virtual void displayChoice(int, T*) const = 0;
 		virtual void displayChoicePrompt() const;
 
 		virtual bool validate() const;

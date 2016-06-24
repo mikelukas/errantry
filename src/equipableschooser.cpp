@@ -33,29 +33,11 @@ void EquipablesChooser::displayInventoryChoices() const
 	//Numbers are displayed and increment successfully regardless of type, for
 	//use by the player in selecting what he/she wishes to equip.
 
-	const Equipment* currWeap = player.getCurrentEquipped(WEAPON);
-	StatMod wStats = (currWeap != NULL) ? currWeap->getStatMod() : NO_STATMOD;
-
-	const Equipment* currArmor = player.getCurrentEquipped(ARMOR);
-	StatMod aStats = (currArmor != NULL) ? currArmor->getStatMod() : NO_STATMOD;
-
 	int i = 0;
 	cout<<"Weapons"<<endl;
 	for(; i < numWeapons; i++)
 	{
-		const Equipment* invEq = (*eligibleChoices)[i]->pEquipment;
-		const StatMod& invStatMod = invEq->getStatMod();
-		int apDiff  = invStatMod.apMod - wStats.apMod;
-		int dpDiff  = invStatMod.dpMod - wStats.dpMod;
-		int mdpDiff = invStatMod.mdpMod - wStats.mdpMod;
-		int spDiff  = invStatMod.spMod - wStats.spMod;
-
-		std::ostringstream eqChoiceLabel;
-		eqChoiceLabel<<i+1<<") "<<invEq->getName();
-		if((*eligibleChoices)[i]->quantity > 1) {
-			eqChoiceLabel<<" (x"<<(*eligibleChoices)[i]->quantity<<")";
-		}
-		cout<<std::left<<setw(23)<<eqChoiceLabel.str()<<std::right<<setw(8)<<apDiff<<setw(8)<<dpDiff<<setw(8)<<mdpDiff<<setw(8)<<spDiff<<endl;
+		displayChoice(i, (*eligibleChoices)[i]);
 	}
 
 	cout<<endl;
@@ -63,19 +45,29 @@ void EquipablesChooser::displayInventoryChoices() const
 	cout<<"Armor"<<endl;
 	for(; (i-numWeapons) < numArmor; i++)
 	{
-		const Equipment* invEq = (*eligibleChoices)[i]->pEquipment;
-		const StatMod& invStatMod = invEq->getStatMod();
-		int apDiff = invStatMod.apMod - aStats.apMod;
-		int dpDiff = invStatMod.dpMod - aStats.dpMod;
-		int mdpDiff = invStatMod.mdpMod - aStats.mdpMod;
-		int spDiff = invStatMod.spMod - aStats.spMod;
-
-		std::ostringstream eqChoiceLabel;
-		eqChoiceLabel<<i+1<<") "<<invEq->getName();
-		if((*eligibleChoices)[i]->quantity > 1) {
-			eqChoiceLabel<<" (x"<<(*eligibleChoices)[i]->quantity<<")";
-		}
-		cout<<std::left<<setw(23)<<eqChoiceLabel.str()<<std::right<<setw(8)<<apDiff<<setw(8)<<dpDiff<<setw(8)<<mdpDiff<<setw(8)<<spDiff<<endl;
+		displayChoice(i, (*eligibleChoices)[i]);
 	}
 	cout<<endl;
+}
+
+void EquipablesChooser::displayChoice(int choiceNum, EquipmentLine* invEqLine) const
+{
+	const Equipment* invEq = invEqLine->pEquipment;
+
+	//slightly less efficient to look up curr equipment every loop iteration, since for a given loop will be the same, but trade-off is consolidating common code.
+	const Equipment* currEquipped = player.getCurrentEquipped(invEq->getType());
+	StatMod currEqStats = (currEquipped != NULL) ? currEquipped->getStatMod() : NO_STATMOD;
+
+	const StatMod& invStatMod = invEq->getStatMod();
+	int apDiff = invStatMod.apMod - currEqStats.apMod;
+	int dpDiff = invStatMod.dpMod - currEqStats.dpMod;
+	int mdpDiff = invStatMod.mdpMod - currEqStats.mdpMod;
+	int spDiff = invStatMod.spMod - currEqStats.spMod;
+
+	std::ostringstream eqChoiceLabel;
+	eqChoiceLabel<<choiceNum+1<<") "<<invEq->getName();
+	if(invEqLine->quantity > 1) {
+		eqChoiceLabel<<" (x"<<invEqLine->quantity<<")";
+	}
+	cout<<std::left<<setw(23)<<eqChoiceLabel.str()<<std::right<<setw(8)<<apDiff<<setw(8)<<dpDiff<<setw(8)<<mdpDiff<<setw(8)<<spDiff<<endl;
 }

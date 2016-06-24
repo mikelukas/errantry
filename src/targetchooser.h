@@ -12,6 +12,7 @@ class TargetChooser: public Chooser<Character>
 	protected:
 
 		void displayChoiceMenu() const;
+		void displayChoice(int, Character*) const;
 		void displayChoicePrompt() const;
 
 	public:

@@ -19,6 +19,7 @@ class SpellChooser: public InventoryChooser<const Spell>
 		virtual void displayRelevantStats() const;
 		virtual void displayInventoryChoices() const;
 
+		virtual void displayChoice(int, const Spell*) const;
 		virtual void displaySpellLine(const Spell*) const = 0;
 
 	public:

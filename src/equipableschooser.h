@@ -21,6 +21,7 @@ class EquipablesChooser: public InventoryChooser<EquipmentLine>
 
 		void displayRelevantStats() const;
 		void displayInventoryChoices() const;
+		void displayChoice(int, EquipmentLine*) const;
 
 	public:
 		EquipablesChooser(Player&, int, int);

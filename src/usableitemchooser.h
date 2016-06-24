@@ -15,6 +15,8 @@ class UsableItemChooser: public InventoryChooser<EquipmentLine>
 		virtual void displayRelevantStats() const;
 		virtual void displayInventoryChoices() const;
 
+		virtual void displayChoice(int, EquipmentLine*) const;
+
 	public:
 		UsableItemChooser(Player&);
 		~UsableItemChooser() {};

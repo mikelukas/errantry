@@ -12,7 +12,7 @@ void TargetChooser::displayChoiceMenu() const
 	cout<<"**********************MESSAGES**********************"<<endl;
 	for(int i=0; i < eligibleChoices->size(); i++)
 	{
-		cout<<i+1<<")"<<(*eligibleChoices)[i]->ShowName()<<endl;
+		displayChoice(i, (*eligibleChoices)[i]);
 	}
 	cout<<CANCELED_CHOICE<<")Back"<<endl;
 	cout<<endl;
@@ -21,4 +21,9 @@ void TargetChooser::displayChoiceMenu() const
 void TargetChooser::displayChoicePrompt() const
 {
 	cout<<"Choose a target:  ";
+}
+
+void TargetChooser::displayChoice(int choiceNum, Character* targetChoice) const
+{
+	cout<<choiceNum+1<<")"<<targetChoice->ShowName()<<endl;
 }

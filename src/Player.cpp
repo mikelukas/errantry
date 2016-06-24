@@ -122,23 +122,7 @@ void Player::Sell(const EquipmentLine* soldEqLine)
 		//after selling.  An amount of gold equal to the sale price of the
 		//equipment * sold quantity is added to player's gold count.
 
-		EquipType soldType = soldEqLine->pEquipment->getType();
-		map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(soldType);
-
-		EquipmentLine& invEqline = inventory[soldEqLine->pEquipment];
-		if(invEqline.pEquipment == NULL)
-		{
-			//bug if we got this far...
-			cout<<"You can't sell what you don't have!"<<endl;
-			return;
-		}
-
-		invEqline -= (*soldEqLine);
-		if(invEqline.quantity <= 0)
-		{
-			//don't want this equipment listed anywhere anymore if we're out of it
-			inventory.erase(invEqline.pEquipment);
-		}
+		RemoveEquipment(soldEqLine);
 
 		gold += soldEqLine->getTotalSellPrice();
 	}

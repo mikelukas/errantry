@@ -73,6 +73,7 @@ class Character
             const set<Element>& getWeaknesses() const;
 
             void AddEquipment(const EquipmentLine&);
+            void RemoveEquipment(const EquipmentLine*);
             void AddSpell(const Spell*);
 
             vector<const Equipment*>* getAllEquipment() const;

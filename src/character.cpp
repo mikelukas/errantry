@@ -1,6 +1,10 @@
 #include <algorithm>
+#include <iostream>
 #include <math.h> //ceil()
 #include "character.h"
+
+using std::cout;
+using std::endl;
 
 //Constructors-------------------------------------------------------//
 Character::Character(int hpVar, int mpVar, int apVar, int dpVar, int mdpVar, int spVar, int money, int expPoints)
@@ -175,6 +179,31 @@ void Character::AddEquipment(const EquipmentLine& newEqLine)
 			inventory[newEqLine.pEquipment] = newEqLine;
 		}
 	}
+
+void Character::RemoveEquipment(const EquipmentLine* removedEqLine)
+{
+	//postcondition: specified equipmentline's quantity is subtracted from the
+	//character's, and the equipment is removed entirely if they have none left
+	//after it is removed.
+
+	EquipType soldType = removedEqLine->pEquipment->getType();
+	map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(soldType);
+
+	EquipmentLine& invEqline = inventory[removedEqLine->pEquipment];
+	if(invEqline.pEquipment == NULL)
+	{
+		//bug if we got this far...
+		cout<<"Tried to remove equipment this character doesn't have..."<<endl;
+		return;
+	}
+
+	invEqline -= (*removedEqLine);
+	if(invEqline.quantity <= 0)
+	{
+		//don't want this equipment listed anywhere anymore if we're out of it
+		inventory.erase(invEqline.pEquipment);
+	}
+}
 
 void Character::AddSpell(const Spell* newSpell)
 	{

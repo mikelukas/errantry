@@ -1,9 +1,9 @@
 #include "armamentchooser.h"
 
-ArmamentChooser::ArmamentChooser(Character& character, int numWeapons, int numArmor)
+ArmamentChooser::ArmamentChooser(Character& character)
 	: InventoryChooser<EquipmentLine>(character.getWeaponsAndArmorAsVector()), //deleted in super-destructor
-	  numWeapons(numWeapons),
-	  numArmor(numArmor)
+	  numWeapons(character.getInventoryFor(WEAPON).size()),
+	  numArmor(character.getInventoryFor(ARMOR).size())
 {
 	// TODO Auto-generated constructor stub
 

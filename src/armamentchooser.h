@@ -15,7 +15,7 @@ class ArmamentChooser : public InventoryChooser<EquipmentLine>
 		virtual void displayInventoryChoices() const;
 
 	public:
-		ArmamentChooser(Character&, int, int);
+		ArmamentChooser(Character&);
 		virtual ~ArmamentChooser() {}
 };
 

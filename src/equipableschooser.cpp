@@ -1,7 +1,7 @@
 #include "equipableschooser.h"
 
-EquipablesChooser::EquipablesChooser(Player& player, int numWeapons, int numArmor)
-	: ArmamentChooser(player, numWeapons, numArmor),
+EquipablesChooser::EquipablesChooser(Player& player)
+	: ArmamentChooser(player),
 	  player(player)
 {
 

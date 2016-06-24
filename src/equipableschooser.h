@@ -20,7 +20,7 @@ class EquipablesChooser: public ArmamentChooser
 		void displayChoice(int, EquipmentLine*) const;
 
 	public:
-		EquipablesChooser(Player&, int, int);
+		EquipablesChooser(Player&);
 		virtual ~EquipablesChooser() {};
 };
 

@@ -34,10 +34,13 @@ class Chooser
 		const vector<T*>* eligibleChoices;  //vector itself freed in destructor; contents will not individually be freed
 		int choiceNum;
 
+		bool cancelAllowed;
+
 		virtual void displayChoiceMenu() const = 0;
 		virtual void displayChoice(int, T*) const = 0;
 		virtual void displayChoicePrompt() const;
 
+		virtual bool isCancelAllowed() const;
 		virtual bool validate() const;
 
 	public:

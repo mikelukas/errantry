@@ -18,7 +18,10 @@ void InventoryChooser<T>::displayChoiceMenu() const
 	displayRelevantStats();
 	cout<<"----------------------------------------------------"<<endl;
 	displayInventoryChoices();
-	cout<<CANCELED_CHOICE<<") Back"<<endl;
+	if(this->isCancelAllowed())
+	{
+		cout<<CANCELED_CHOICE<<") Back"<<endl;
+	}
 	displayPostChoiceListInfo();
 	cout<<"**********************MESSAGES**********************"<<endl;
 }

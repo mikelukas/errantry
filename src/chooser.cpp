@@ -3,7 +3,8 @@
 template <typename T>
 Chooser<T>::Chooser(const vector<T*>* eligibleChoices)
 	: eligibleChoices(eligibleChoices),
-	  choiceNum(NO_CHOICE)
+	  choiceNum(NO_CHOICE),
+	  cancelAllowed(true)
 {
 
 }
@@ -49,14 +50,26 @@ void Chooser<T>::displayChoicePrompt() const
 }
 
 template <typename T>
+bool Chooser<T>::isCancelAllowed() const
+{
+	//postcondition: returns true if Back/Cancel is an option - by default returns true
+
+	return cancelAllowed;
+}
+
+template <typename T>
 bool Chooser<T>::validate() const
 {
 	//postcondition: returns true if the player chose the exit value, or entered
 	//a number that is a valid index in the eligibleChoices vector
 	//returns false otherwise.
 
-	//Even though EXIT_CHOICE is 0 right now, test explicitly like this to ensure if it changes things don't break
-	if(getChoiceNum() != CANCELED_CHOICE && (getChoiceNum() < 1 || getChoiceNum() > eligibleChoices->size()))
+	if(isCancelAllowed() && getChoiceNum() == CANCELED_CHOICE)
+	{
+		return true;
+	}
+
+	if(getChoiceNum() < 1 || getChoiceNum() > eligibleChoices->size())
 	{
 		cout<<"Invalid response."<<endl;
 		return false;

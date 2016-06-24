@@ -77,6 +77,8 @@ class Character
 
             vector<const Equipment*>* getAllEquipment() const;
             map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
+            vector<EquipmentLine*>* getWeaponsAndArmorAsVector();
+            vector<EquipmentLine*>* getItemsAsVector();
 
             bool hasSpell(const Spell*) const;
             bool hasSpells() const;

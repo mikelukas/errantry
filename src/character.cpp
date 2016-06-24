@@ -299,6 +299,49 @@ map<const Equipment*, EquipmentLine>& Character::getInventoryFor(const EquipType
 		}
 	}
 
+vector<EquipmentLine*>* Character::getWeaponsAndArmorAsVector()
+	{
+		//Postcondition: A vector is dynamically allocated to hold these, and
+		//new EquipmentLines for each piece of equipment are also dynamically
+		//allocated.  All of these allocations should be freed by the caller.
+
+		map<const Equipment*, EquipmentLine>& invWeapons = getInventoryFor(WEAPON);
+		map<const Equipment*, EquipmentLine>& invArmor = getInventoryFor(ARMOR);
+
+		vector<EquipmentLine*>* equipmentChoices = new vector<EquipmentLine*>;
+
+		for(map<const Equipment*,EquipmentLine>::iterator it=invWeapons.begin(); it!=invWeapons.end(); it++)
+		{
+			equipmentChoices->push_back(&(it->second));
+		}
+
+		for(map<const Equipment*,EquipmentLine>::iterator it=invArmor.begin(); it!=invArmor.end(); it++)
+		{
+			equipmentChoices->push_back(&(it->second));
+		}
+
+		return equipmentChoices;
+	}
+
+vector<EquipmentLine*>* Character::getItemsAsVector()
+	{
+		//Postcondition: A vector is dynamically allocated to hold all items in
+		//the player's inventory, and new EquipmentLines for each piece of item
+		//are also dynamically allocated.  All of these allocations should be
+		//freed by the caller.
+
+		map<const Equipment*, EquipmentLine>& invItems = getInventoryFor(ITEM);
+
+		vector<EquipmentLine*>* equipmentChoices = new vector<EquipmentLine*>;
+
+		for(map<const Equipment*,EquipmentLine>::iterator it=invItems.begin(); it!=invItems.end(); it++)
+		{
+			equipmentChoices->push_back(&(it->second));
+		}
+
+		return equipmentChoices;
+	}
+
 bool Character::hasSpell(const Spell* spell) const
 	{
 		return (spells.find(spell) != spells.end());

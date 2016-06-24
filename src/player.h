@@ -68,8 +68,6 @@ class Player : public Character
             int Level() const;
             int NumToNext() const;
 
-            vector<EquipmentLine*>* getWeaponsAndArmorAsVector();
-            vector<EquipmentLine*>* getItemsAsVector();
             EquipmentLine& getEquipmentLineFromInventoryFor(const Equipment*);
 
             vector<const Spell*>* getSpellsForLocale(SpellLocale locale) const;

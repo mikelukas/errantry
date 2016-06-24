@@ -49,6 +49,11 @@ StatMod::StatMod()
 
 }
 
+int StatMod::getMeltdownDamage() const
+{
+	return hpMod + mpMod + apMod + dpMod + mdpMod + spMod;
+}
+
 ostream& operator<< (ostream& os, const StatMod& statMods)
 {
 	os<<" HP: "<<statMods.hpMod

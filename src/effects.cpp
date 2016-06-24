@@ -1,6 +1,7 @@
 #include <iostream>
 #include "character.h"
 #include "effects.h"
+#include "meltdownequipmentchooser.h"
 
 using std::cout;
 using std::cin;
@@ -111,6 +112,20 @@ bool validateChannelDamage(Character& appliedBy, int inputDamage)
 	return true;
 }
 
+void meltdownFunc(Character& appliedBy, Character& target)
+{
+	MeltdownEquipmentChooser eqChooser(appliedBy);
+	eqChooser.run();
+
+	EquipmentLine* meltdownChoice = eqChooser.getChoice();
+	appliedBy.RemoveEquipment(meltdownChoice);
+
+	int rawMeltdownDamage = meltdownChoice->pEquipment->getStatMod().getMeltdownDamage();
+	int netDamage = target.applyMagicalDamage(rawMeltdownDamage, fire);
+
+	cout<<appliedBy.ShowName()<<" melted down "<<meltdownChoice->pEquipment->getName()<<" into "<<netDamage<<" "<<getDisplayNameFor(fire)<<" damage to "<<target.ShowName()<<"!"<<endl;
+}
+
 vector<EffectFunction> initEffects()
 {
 	vector<EffectFunction> effects;
@@ -124,6 +139,7 @@ vector<EffectFunction> initEffects()
 	effects.push_back(&enervateFunc);
 	effects.push_back(&drainFunc);
 	effects.push_back(&channelFunc);
+	effects.push_back(&meltdownFunc);
 
 	return effects;
 }

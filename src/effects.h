@@ -30,6 +30,7 @@ void fearFunc(Character&, Character&);
 void enervate(Character&, Character&);
 void drainFunc(Character&, Character&);
 void channelFunc(Character&, Character&);
+void meltdownFunc(Character&, Character&);
 
 //----Effect Helper functions---//
 const int BASE_ELEMENTAL_DAMAGE = 20;

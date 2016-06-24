@@ -31,6 +31,8 @@ struct StatMod
 
 		StatMod();
 
+		int getMeltdownDamage() const;
+
 		friend istream& operator>> (istream&, StatMod&);
 		friend ostream& operator<< (ostream&, const StatMod&);
 	};

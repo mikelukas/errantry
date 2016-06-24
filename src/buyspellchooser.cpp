@@ -33,8 +33,16 @@ bool BuySpellChooser::validate() const
 		return false;
 	}
 
-	//Next ensure they're not buying something they already have
 	const Spell* chosenSpell = getChoice();
+
+	//Check that they have enough gold to buy the spell
+	if(chosenSpell->getPurchasePrice() > player.Money())
+	{
+		cout<<"Not enough gold! Price is $"<<chosenSpell->getPurchasePrice()<<"."<<endl;
+		return false;
+	}
+
+	//Ensure they're not buying something they already have
 	if(chosenSpell != NULL && player.hasSpell(chosenSpell))
 	{
 		cout<<"You already know '"<<chosenSpell->getName()<<"'!"<<endl;

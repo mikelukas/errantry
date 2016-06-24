@@ -1,10 +1,8 @@
 #include "equipableschooser.h"
 
 EquipablesChooser::EquipablesChooser(Player& player, int numWeapons, int numArmor)
-	: InventoryChooser<EquipmentLine>(player.getWeaponsAndArmorAsVector()), //deleted in super-destructor
-	  player(player),
-	  numWeapons(numWeapons),
-	  numArmor(numArmor)
+	: ArmamentChooser(player, numWeapons, numArmor),
+	  player(player)
 {
 
 }
@@ -25,33 +23,11 @@ void EquipablesChooser::displayRelevantStats() const
 		<<"Current Attributes     "<<"AP: "<<setw(4)<<player.Damage()<<" DP: "<<setw(3)<<player.Defense()<<" MDP:"<<setw(3)<<player.MagicDefense()<<" SP: "<<setw(3)<<player.Speed()<<endl;
 }
 
-void EquipablesChooser::displayInventoryChoices() const
-{
-	//postcondition: Displays weapons and armor in the player's inventory in
-	//2 separate lists, one after the other respectively. Each equipment line
-	//shows the change in stat(s) that would occur by equipping that equipment.
-	//Numbers are displayed and increment successfully regardless of type, for
-	//use by the player in selecting what he/she wishes to equip.
-
-	int i = 0;
-	cout<<"Weapons"<<endl;
-	for(; i < numWeapons; i++)
-	{
-		displayChoice(i, (*eligibleChoices)[i]);
-	}
-
-	cout<<endl;
-
-	cout<<"Armor"<<endl;
-	for(; (i-numWeapons) < numArmor; i++)
-	{
-		displayChoice(i, (*eligibleChoices)[i]);
-	}
-	cout<<endl;
-}
-
 void EquipablesChooser::displayChoice(int choiceNum, EquipmentLine* invEqLine) const
 {
+	//postcondition: Each equipment line shows the change in stat(s) that would
+	//occur by equipping that equipment.
+
 	const Equipment* invEq = invEqLine->pEquipment;
 
 	//slightly less efficient to look up curr equipment every loop iteration, since for a given loop will be the same, but trade-off is consolidating common code.

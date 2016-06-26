@@ -42,7 +42,7 @@ int BattleMode::displayMenu()
 	cout<<"*************ENEMY! You went to battle!*************"<<endl;
 	cout<<player.ShowName()<<endl;
 	cout<<"HP:  "<<player.Health()<<"/"<<player.MaxHealth()<<endl;
-	cout<<"AP:  "<<player.Damage()<<endl;
+	cout<<"MP:  "<<player.getMP()<<"/"<<player.MaxMP()<<endl;
 	cout<<endl;
 	cout<<endl;
 	cout<<endl;

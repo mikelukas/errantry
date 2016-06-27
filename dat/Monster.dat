@@ -4,17 +4,20 @@ Dirt Djinn
 
 0
 0 5
+6
 Sand Wurm
 20 10 10 8 8 3 10 35
 
 0
 
 0 5
+7
 Scorpion
 15 0 13 6 6 3 10 37
 0
 
 
+0
 0
 Orc
 15 0 15 4 4 2 15 55
@@ -22,39 +25,46 @@ Orc
 0
 
 0
+
 Haunted Treefolk
 25 50 15 8 8 1 15 47
 
 0
 0
 0
+
 Werewolf
 30 0 17 6 6 4 15 50
 0
 
 0
 0
+
 Cave Goblin
 40 0 18 6 6 4 25 57
 0
 0
 0
 0
+
 Rock Giant
 42 0 22 8 8 4 25 62
 0 1
 0
 0
 0
+
 Cyclops
 45 100 25 8 8 5 25 68
 0
 0 1
 0
 0
+
 Centaur Guard
 50 200 30 10 10 7 50 88
 0 1
 0 1
 0
 0
+

@@ -146,7 +146,8 @@ Monster* GameData::loadMonsterFrom(istream& is)
 	loadMonsterEquipment(is, armorPtrs, monster);
 	loadMonsterEquipment(is, itemsPtrs, monster);
 
-	loadMonsterSpells(is, monster);
+	loadMonsterCastableSpells(is, monster);
+	loadMonsterDroppableSpells(is, monster);
 
 	return monster;
 }
@@ -168,11 +169,11 @@ void GameData::loadMonsterEquipment(istream& is, vector<Equipment*>& equipment, 
 	is.get();//throwout newline char
 }
 
-void GameData::loadMonsterSpells(istream& is, Monster* monster)
+void GameData::loadMonsterCastableSpells(istream& is, Monster* monster)
 {
 	//postcondition: reads a single line of spell ids from the istream, and
 	//using gameData's Spell* vector, looks up Spell* for each id and adds it
-	//to the Monster's spell inventory
+	//to the Monster's castable spell inventory
 
 	int id;
 	while(is.peek() != '\n')
@@ -180,6 +181,22 @@ void GameData::loadMonsterSpells(istream& is, Monster* monster)
 		is>>id;
 
 		monster->AddSpell(spellPtrs[id]);
+	}
+	is.get();
+}
+
+void GameData::loadMonsterDroppableSpells(istream& is, Monster* monster)
+{
+	//postcondition: reads a single line of spell ids from the istream, and
+	//using gameData's Spell* vector, looks up Spell* for each id and adds it
+	//to the Monster's droppable spell inventory
+
+	int id;
+	while(is.peek() != '\n')
+	{
+		is>>id;
+
+		monster->AddDroppableSpell(spellPtrs[id]);
 	}
 	is.get();
 }

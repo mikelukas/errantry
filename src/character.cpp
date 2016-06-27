@@ -386,18 +386,6 @@ bool Character::hasSpells() const
 		return spells.size() > 0;
 	}
 
-vector<const Spell*>* Character::getSpells() const
-	{
-		//postcondition: allocates a new vector of all spells the Character knows.
-
-		vector<const Spell*>* spellsVector = new vector<const Spell*>();
-		for(set<const Spell*>::const_iterator it = spells.begin(); it != spells.end(); it++)
-		{
-			spellsVector->push_back((*it));
-		}
-		return spellsVector;
-	}
-
 const set<const Spell*>& Character::getSpellsForCategory(SpellCategory category)
 	{
 		return categorizedSpells[category];

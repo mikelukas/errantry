@@ -20,7 +20,8 @@ Monster::Monster(string& name, int hp, int mp, int ap, int dp, int mdp, int sp, 
 
 Monster::Monster(const Monster& monster)
 	: Character(monster),
-	  battleStrategy(monster.battleStrategy->clone())
+	  battleStrategy(monster.battleStrategy->clone()),
+	  droppableSpells(monster.getDroppableSpells())
 	{
 		//postcondition: performs a deep copy of monster; BattleStrategy* is cloned.
 
@@ -34,6 +35,15 @@ Monster::~Monster()
 BattleStrategy* Monster::getBattleStrategy() const
 {
 	return battleStrategy;
+}
+const set<const Spell*>& Monster::getDroppableSpells() const
+{
+	return droppableSpells;
+}
+
+void Monster::AddDroppableSpell(const Spell* droppableSpell)
+{
+	droppableSpells.insert(droppableSpell);
 }
 
 void Monster::apply(const Equipment* eq)

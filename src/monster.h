@@ -26,12 +26,17 @@ class Monster : public Character
 			//determines what actions the monster takes in battle
 			BattleStrategy* battleStrategy;
 
+			set<const Spell*> droppableSpells; //spells monster won't cast but can drop when defeateda
+
         public:
             Monster(string&, int, int, int, int, int, int, int, int);
             Monster(const Monster&);
             ~Monster();
 
             BattleStrategy* getBattleStrategy() const;
+            const set<const Spell*>& getDroppableSpells() const;
+
+            void AddDroppableSpell(const Spell*);
 
             void apply(const Equipment*);
     };

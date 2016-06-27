@@ -60,7 +60,8 @@ class GameData
 		bool loadMonsters(vector<const Monster*>& monsters, const string& filename);
 		Monster* loadMonsterFrom(istream&);
 		void loadMonsterEquipment(istream&, vector<Equipment*>&, Monster*);
-		void loadMonsterSpells(istream& is, Monster*);
+		void loadMonsterCastableSpells(istream& is, Monster*);
+		void loadMonsterDroppableSpells(istream& is, Monster*);
 		bool loadBosses(map<int, const Monster*>&, const string&, const string&);
 
 		bool loadEquipment(EquipType type, vector<Equipment*>& equipment, const string& filename);

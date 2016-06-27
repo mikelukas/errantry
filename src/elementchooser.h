@@ -11,14 +11,13 @@
 class ElementChooser : public Chooser<const Element>
 {
 	protected:
-		const Character& target;
 
 		virtual void displayChoiceMenu() const;
 		virtual void displayChoice(int, const Element*) const;
 		virtual void displayChoicePrompt() const;
 
 	public:
-		ElementChooser(const Character&);
+		ElementChooser();
 		virtual ~ElementChooser() {}
 };
 

@@ -50,7 +50,8 @@ void fearFunc(Character& appliedby, Character& target)
 	//postcondition: caster is prompted to choose an Element, and target is made
 	//weak to that element.
 
-	ElementChooser elementChooser(target);
+	cout<<"Choose a weakness to add to "<<target.ShowName()<<":"<<endl;
+	ElementChooser elementChooser;
 	elementChooser.run();
 
 	const Element* elementChoice = elementChooser.getChoice();
@@ -58,6 +59,22 @@ void fearFunc(Character& appliedby, Character& target)
 	target.addWeakness(*elementChoice);
 
 	cout<<target.ShowName()<<" is now weak to "<<getDisplayNameFor(*elementChoice)<<"."<<endl;
+}
+
+void courageFunc(Character& appliedBy, Character& target)
+{
+	//postcondition: caster is prompted to choose an Element, and target loses
+	//weakness to that element (if any)
+
+	cout<<"Choose a weakness to remove from "<<target.ShowName()<<":"<<endl;
+	ElementChooser elementChooser;
+	elementChooser.run();
+
+	const Element* elementChoice = elementChooser.getChoice();
+
+	target.removeWeakness(*elementChoice);
+
+	cout<<target.ShowName()<<" no longer is weak to "<<getDisplayNameFor(*elementChoice)<<"."<<endl;
 }
 
 void enervateFunc(Character& appliedBy, Character& target)
@@ -141,6 +158,7 @@ vector<EffectFunction> initEffects()
 	effects.push_back(&nonElementalMagicDamageFunc);
 	effects.push_back(&healFunc);
 	effects.push_back(&fearFunc);
+	effects.push_back(&courageFunc);
 	effects.push_back(&enervateFunc);
 	effects.push_back(&drainFunc);
 	effects.push_back(&channelFunc);

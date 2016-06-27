@@ -1,8 +1,7 @@
 #include "elementchooser.h"
 
-ElementChooser::ElementChooser(const Character& target)
-	: Chooser<const Element>(buildElementPointerVector()),
-	  target(target)
+ElementChooser::ElementChooser()
+	: Chooser<const Element>(buildElementPointerVector())
 {
 	cancelAllowed = false;
 }
@@ -10,8 +9,6 @@ ElementChooser::ElementChooser(const Character& target)
 void ElementChooser::displayChoiceMenu() const
 {
 	//postcondition: displays a list of elements and choice numbers.
-
-	cout<<"Choose a weakness to add to "<<target.ShowName()<<":"<<endl;
 	for(int i=0; i < ELEMENTS.size()-1; i++)
 	{
 		displayChoice(i, (*eligibleChoices)[i]);

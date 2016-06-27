@@ -27,6 +27,7 @@ void earthDamageFunc(Character&, Character&);
 void nonElementalMagicDamageFunc(Character&, Character&);
 void healFunc(Character&, Character&);
 void fearFunc(Character&, Character&);
+void courageFunc(Character&, Character&);
 void enervate(Character&, Character&);
 void drainFunc(Character&, Character&);
 void channelFunc(Character&, Character&);

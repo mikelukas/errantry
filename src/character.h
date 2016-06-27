@@ -91,6 +91,7 @@ class Character
             int applyMagicalDamage(int, Element);
 
             void addWeakness(Element);
+            void removeWeakness(Element);
     };
 
 #endif

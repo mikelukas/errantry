@@ -2,6 +2,7 @@
 #include "battlestrategy.h"
 #include "deadmode.h"
 #include "gamestate.h"
+#include "randutils.h"
 
 BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState),
@@ -118,7 +119,7 @@ BattleAction* BattleMode::makeMonsterAction()
 	//a fight action is chosen.
 
 	BattleStrategy* strat = currMonster.getBattleStrategy();
-	return strat->makeBattleAction(gameState, currMonster, gameState.getPlayer());
+	return strat->makeBattleAction(currMonster, gameState.getPlayer());
 }
 
 void BattleMode::executeActions()
@@ -179,7 +180,7 @@ void BattleMode::onBattleWon()
 	//Battle spoils
 	player.AddExp(currMonster.ExpPts());
 	player.AddMoney(currMonster.Money());
-	if(gameState.getRandIntBetween(1, 100) > (100-DROP_CHANCE_PERCENT))
+	if(getRandIntBetween(1, 100) > (100-DROP_CHANCE_PERCENT))
 	{
 		addMonsterEquipment();
 		learnMonsterSpells();

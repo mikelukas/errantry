@@ -3,6 +3,7 @@
 #include "equipmode.h"
 #include "gamestate.h"
 #include "overworldmode.h"
+#include "randutils.h"
 #include "statsdisplayer.h"
 #include "townmode.h"
 #include "quitmode.h"
@@ -141,13 +142,13 @@ void OverworldMode::getEnemy()
 	switch(area)
 	{
 		case easy:
-			randMons = gameState.getRandIntBetween(0, 2);
+			randMons = getRandIntBetween(0, 2);
 			break;
 		case medium:
-			randMons = gameState.getRandIntBetween(3, 6);
+			randMons = getRandIntBetween(3, 6);
 			break;
 		case hard:
-			randMons = gameState.getRandIntBetween(7, 9);
+			randMons = getRandIntBetween(7, 9);
 			break;
 	}
 
@@ -184,7 +185,7 @@ bool OverworldMode::randomEncounterHappened(Region& region) const
 	//chance of an encounter increases as the region the player's in gets more
 	//difficult.
 
-	int randResult = gameState.getRandIntBetween(0,6);
+	int randResult = getRandIntBetween(0,6);
 	switch(region)
 	{
 	case easy:

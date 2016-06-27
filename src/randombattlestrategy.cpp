@@ -2,6 +2,7 @@
 #include "fightaction.h"
 #include "monstercastspellaction.h"
 #include "randombattlestrategy.h"
+#include "randutils.h"
 
 using std::cout;
 using std::endl;
@@ -18,14 +19,14 @@ BattleStrategy* RandomBattleStrategy::clone() const
 	return new RandomBattleStrategy(*this);
 }
 
-BattleAction* RandomBattleStrategy::makeBattleAction(const GameState& gameState, Monster& monster, Character& target)
+BattleAction* RandomBattleStrategy::makeBattleAction(Monster& monster, Character& target)
 {
 	//postcondition: returns either a MonsterCastSpellAction or a FightAction,
 	//chosen at random.
 	//Will never return a MonsterCastSpellAction if the monster doesn't have spells
 
 	//If the monster has spells, randomly choose between fight or cast, otherwise just fight
-	int actionType = monster.hasSpells() ? gameState.getRandIntBetween(0,1) : 0;
+	int actionType = monster.hasSpells() ? getRandIntBetween(0,1) : 0;
 
 	BattleAction* chosenAction = NULL;
 	switch(actionType)

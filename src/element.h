@@ -23,6 +23,7 @@ enum Element
 };
 
 vector<Element> vectorizeElements();
+const vector<const Element*>* buildElementPointerVector();
 Element getOppositeOf(Element);
 string getDisplayNameFor(Element);
 

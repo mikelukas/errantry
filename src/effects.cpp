@@ -1,6 +1,7 @@
 #include <iostream>
 #include "character.h"
 #include "effects.h"
+#include "elementchooser.h"
 #include "meltdownequipmentchooser.h"
 
 using std::cout;
@@ -49,21 +50,14 @@ void fearFunc(Character& appliedby, Character& target)
 	//postcondition: caster is prompted to choose an Element, and target is made
 	//weak to that element.
 
-	int elementChoiceNum = none;
-	cout<<"Choose a weakness to add to "<<target.ShowName()<<": "<<endl;
-	do
-	{
-		for(int i=0; i < ELEMENTS.size()-1; i++)
-		{
-			cout<<i+1<<") "<<getDisplayNameFor(ELEMENTS[i])<<endl;
-		}
-		cin>>elementChoiceNum;
-	} while(elementChoiceNum < 1 || elementChoiceNum-1 > ELEMENTS.size()-1);
+	ElementChooser elementChooser(target);
+	elementChooser.run();
 
-	Element elementChoice = static_cast<Element>(elementChoiceNum-1);
-	target.addWeakness(elementChoice);
+	const Element* elementChoice = elementChooser.getChoice();
 
-	cout<<target.ShowName()<<" is now weak to "<<getDisplayNameFor(elementChoice)<<"."<<endl;
+	target.addWeakness(*elementChoice);
+
+	cout<<target.ShowName()<<" is now weak to "<<getDisplayNameFor(*elementChoice)<<"."<<endl;
 }
 
 void enervateFunc(Character& appliedBy, Character& target)

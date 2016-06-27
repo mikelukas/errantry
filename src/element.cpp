@@ -15,6 +15,20 @@ vector<Element> vectorizeElements()
 	return elements;
 }
 
+const vector<const Element*>* buildElementPointerVector()
+{
+	//postcondition: allocates a new vector of pointers to elements in the
+	//ELEMENTS vector (mainly to comply w/ Chooser interface).
+
+	vector<const Element*>* elementPtrs = new vector<const Element*>();
+	for(int i=0; i < ELEMENTS.size(); i++)
+	{
+		elementPtrs->push_back(&(ELEMENTS[i]));
+	}
+
+	return elementPtrs;
+}
+
 Element getOppositeOf(Element el)
 {
 	//postcondition: Returns the opposite Element for the given element

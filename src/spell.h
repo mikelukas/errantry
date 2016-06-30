@@ -13,7 +13,8 @@ using std::set;
 using std::string;
 using std::vector;
 
-enum SpellCategory {ATTACK, HEALING, ASSIST};
+const int NUM_SPELL_CATEGORIES = 4;
+enum SpellCategory {ATTACK, HEALING, OFFENSIVE_ASSIST, DEFENSIVE_ASSIST};
 enum SpellLocale {FIELD, BATTLE};
 enum TargetType {PLAYER, MONSTER};
 

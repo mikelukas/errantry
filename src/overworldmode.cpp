@@ -31,7 +31,7 @@ int OverworldMode::displayMenu()
 	cout<<"*2)Status       *"<<endl;
 	cout<<"*3)Equip        *"<<endl;
 	cout<<"*4)Use Item     *"<<endl;
-	cout<<"*5)Cast Spell   *"<<endl;
+	cout<<"*5)Spells       *"<<endl;
 	cout<<"*6)Quit Game    *"<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"**********************MESSAGES**********************"<<endl;

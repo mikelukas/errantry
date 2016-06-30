@@ -83,7 +83,7 @@ class Character
 
             bool hasSpell(const Spell*) const;
             bool hasSpells() const;
-			vector<const Spell*>* getSpells() const;
+			const set<const Spell*>& getSpells() const;
 			const set<const Spell*>& getSpellsForCategory(SpellCategory);
 
             virtual void apply(const Equipment*) = 0;

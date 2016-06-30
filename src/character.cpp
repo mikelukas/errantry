@@ -386,6 +386,11 @@ bool Character::hasSpells() const
 		return spells.size() > 0;
 	}
 
+const set<const Spell*>& Character::getSpells() const
+	{
+		return spells;
+	}
+
 const set<const Spell*>& Character::getSpellsForCategory(SpellCategory category)
 	{
 		return categorizedSpells[category];

@@ -3,6 +3,7 @@
 #include "effects.h"
 #include "elementchooser.h"
 #include "meltdownequipmentchooser.h"
+#include "randutils.h"
 
 using std::cout;
 using std::cin;
@@ -108,6 +109,34 @@ void courageFunc(Character& appliedBy, Character& target)
 	cout<<target.ShowName()<<" no longer is weak to "<<getDisplayNameFor(*elementChoice)<<"."<<endl;
 }
 
+void monsterCourageFunc(Character& appliedBy, Character& target)
+{
+	//Get target's current weaknesses, so we can remove only weaknesses that they actually have
+	const set<Element>& targetWeaknesses = target.getWeaknesses();
+	if(targetWeaknesses.empty())
+	{
+		cout<<target.ShowName()<<" is not weak to anything."<<endl;
+		return;
+	}
+
+	//Iterate (can't randomly access sets) to the index of the weakness we want to remove in the set
+	int weaknessToSeek = getRandIntBetween(0, targetWeaknesses.size()-1); //-1 b/c range is inclusive
+	set<Element>::const_iterator it = targetWeaknesses.begin();
+	for(int i=0; i < weaknessToSeek && it != targetWeaknesses.end(); i++)
+	{
+		it++;//advance iterator to position of the weakness we want to remove;
+	}
+
+	removeWeaknessFrom(target, (*it));
+}
+
+void removeWeaknessFrom(Character& target, Element elementChoice)
+{
+	target.removeWeakness(elementChoice);
+
+	cout<<target.ShowName()<<" no longer is weak to "<<getDisplayNameFor(elementChoice)<<"."<<endl;
+}
+
 void enervateFunc(Character& appliedBy, Character& target)
 {
 	target.ChangeMP(-1*BASE_MP_DROP);
@@ -197,6 +226,7 @@ vector<EffectFunction> initEffects()
 
 	//monster-only effect functions
 	effects.push_back(&monsterFearFunc);
+	effects.push_back(&monsterCourageFunc);
 
 	return effects;
 }

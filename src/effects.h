@@ -35,6 +35,7 @@ void meltdownFunc(Character&, Character&);
 
 //----Monster-only EffectFunctions
 void monsterFearFunc(Character&, Character&);
+void monsterCourageFunc(Character&, Character&);
 
 //----Effect Helper functions---//
 const int BASE_ELEMENTAL_DAMAGE = 20;
@@ -44,5 +45,6 @@ const int BASE_DRAIN_HP = 15;
 void elementalDamage(Character&, Character&, int, Element);
 bool validateChannelDamage(Character&, int);
 void applyWeaknessTo(Character&, Element);
+void removeWeaknessFrom(Character&, Element);
 
 #endif

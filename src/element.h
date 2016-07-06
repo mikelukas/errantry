@@ -2,8 +2,10 @@
 #define ELEMENT_H_
 
 #include <string>
+#include <utility> //pair
 #include <vector>
 
+using std::pair;
 using std::string;
 using std::vector;
 
@@ -26,6 +28,7 @@ vector<Element> vectorizeElements();
 const vector<const Element*>* buildElementPointerVector();
 Element getOppositeOf(Element);
 string getDisplayNameFor(Element);
+bool elementCountSort(const pair<Element, int>&, const pair<Element, int>&);
 
 const vector<Element> ELEMENTS = vectorizeElements();
 #endif

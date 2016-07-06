@@ -85,6 +85,8 @@ class Character
             bool hasSpells() const;
 			const set<const Spell*>& getSpells() const;
 			const set<const Spell*>& getSpellsForCategory(SpellCategory);
+			const set<const Spell*>* getSpellsForCategories(const set<SpellCategory>&);
+			const set<pair<Element, int>, bool(*)(const pair<Element, int>&, const pair<Element, int>&)>* getSpellElementCounts(const set<SpellCategory>&);
 
             virtual void apply(const Equipment*) = 0;
             int applyPhysicalDamage(int);

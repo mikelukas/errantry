@@ -61,3 +61,17 @@ string getDisplayNameFor(Element element)
 		return "Non-elemental";
 	}
 }
+
+bool elementCountSort(const pair<Element, int>& elCount1, const pair<Element, int>& elCount2)
+{
+	//postcondition: sorts element-count pairs by count first, then element ordinal
+
+	if(elCount1.second != elCount2.second)
+	{
+		return elCount1.second < elCount2.second;
+	}
+	else
+	{
+		return elCount1.first < elCount2.first;
+	}
+};

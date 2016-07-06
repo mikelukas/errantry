@@ -396,6 +396,56 @@ const set<const Spell*>& Character::getSpellsForCategory(SpellCategory category)
 		return categorizedSpells[category];
 	}
 
+const set<const Spell*>* Character::getSpellsForCategories(const set<SpellCategory>& categories)
+	{
+		//postcondition: allocates a new set of spells that match any of the
+		//specified categories.
+
+		set<const Spell*>* spellsForCategories = new set<const Spell*>(); //freed by caller
+		for(set<SpellCategory>::const_iterator it = categories.begin(); it != categories.end(); it++)
+		{
+			const set<const Spell*>& spellsForCategory = getSpellsForCategory((*it));
+			spellsForCategories->insert(spellsForCategory.begin(), spellsForCategory.end());
+		}
+
+		return spellsForCategories;
+	}
+
+const set<pair<Element, int>, bool(*)(const pair<Element, int>&, const pair<Element, int>&)>* Character::getSpellElementCounts(const set<SpellCategory>& categories)
+	{
+		//postcondition: allocates a set of Elements with their counts, sorted
+		//in ascending order by how many spells of that element the character has.
+
+		vector<int> elementsToCounts(ELEMENTS.size()-1, 0);
+
+		//Count the amount of each element in all of the Character's spells
+		const set<const Spell*>* monsterSpells = getSpellsForCategories(categories);
+		for(set<const Spell*>::const_iterator it = monsterSpells->begin(); it != monsterSpells->end(); it++)
+		{
+			Element element = (*it)->getElement();
+			if(element == none)
+			{
+				continue;
+			}
+
+			elementsToCounts[element]++;
+		}
+
+		delete monsterSpells;
+
+		//Populate a sorted set with pairs of Elements with their counts
+		bool(*sort_func)(const pair<Element, int>&, const pair<Element, int>&) = elementCountSort; //from element.h
+		set<pair<Element, int>, bool(*)(const pair<Element, int>&, const pair<Element, int>&)>* sortedElementCounts = new set<pair<Element, int>, bool(*)(const pair<Element, int>&, const pair<Element, int>&)>(sort_func); //up to caller to free
+		for(int i=0; i < elementsToCounts.size(); i++)
+		{
+			Element el = static_cast<Element>(i);
+
+			sortedElementCounts->insert(std::make_pair(el, elementsToCounts[el]));
+		}
+
+		return sortedElementCounts;
+	}
+
 int Character::applyPhysicalDamage(int rawDamage)
 	{
 		//postcondition: rawDamage is modified based on this character's DP,

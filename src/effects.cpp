@@ -55,10 +55,41 @@ void fearFunc(Character& appliedby, Character& target)
 	elementChooser.run();
 
 	const Element* elementChoice = elementChooser.getChoice();
+	applyWeaknessTo(target, *elementChoice);
+}
 
-	target.addWeakness(*elementChoice);
+void monsterFearFunc(Character& appliedBy, Character& target)
+{
+	//postcondition: target is made weak to an element to which they are not already
+	//weak, prioritizing elements of spells that applied by has the most of.  E.g.
+	//if applied by has 5 fire spells, and 4 water spells, target will be made
+	//weak to fire if they are not already weak to it, otherwise they will be made
+	//weak to water.
+	//If target is already weak toward all elements in spells that appliedBy has,
+	//then target is made weak to first Element they are not already weak to, or
+	//nothing if they are weak to everything.
 
-	cout<<target.ShowName()<<" is now weak to "<<getDisplayNameFor(*elementChoice)<<"."<<endl;
+	set<SpellCategory> offensiveSpellCategories;
+	offensiveSpellCategories.insert(ATTACK);
+
+	const set<pair<Element, int>, bool(*)(const pair<Element, int>&, const pair<Element, int>&)>* elementsByCount = appliedBy.getSpellElementCounts(offensiveSpellCategories);
+	for(set<pair<Element, int>, bool(*)(const pair<Element, int>&, const pair<Element, int>&)>::const_reverse_iterator it = elementsByCount->rbegin(); it != elementsByCount->rend(); it++)
+	{
+		Element el = it->first;
+		if(!target.isWeakAgainst(el))
+		{
+			applyWeaknessTo(target, el);
+			break;
+		}
+	}
+	delete elementsByCount;
+}
+
+void applyWeaknessTo(Character& target, Element elementChoice)
+{
+	target.addWeakness(elementChoice);
+
+	cout<<target.ShowName()<<" is now weak to "<<getDisplayNameFor(elementChoice)<<"."<<endl;
 }
 
 void courageFunc(Character& appliedBy, Character& target)
@@ -163,6 +194,9 @@ vector<EffectFunction> initEffects()
 	effects.push_back(&drainFunc);
 	effects.push_back(&channelFunc);
 	effects.push_back(&meltdownFunc);
+
+	//monster-only effect functions
+	effects.push_back(&monsterFearFunc);
 
 	return effects;
 }

@@ -197,7 +197,34 @@ void meltdownFunc(Character& appliedBy, Character& target)
 		cout<<"How many (up to "<<available<<")? ";
 		cin>>meltdownChoice.quantity;
 	} while(meltdownChoice.quantity < 1 && meltdownChoice.quantity > available);
+}
 
+void monsterMeltdownFunc(Character& appliedBy, Character& target)
+{
+	vector<EquipmentLine*>* monsterArmament = appliedBy.getWeaponsAndArmorAsVector();
+	if(monsterArmament->size() == 0)
+	{
+		cout<<appliedBy.ShowName()<<" tried to melt down equipment, but doesn't have any!"<<endl;
+		delete monsterArmament;
+		return;
+	}
+
+	//Randomly choose a piece of equipment the monster is carrying
+	int eqChoiceIndex = getRandIntBetween(0, monsterArmament->size()-1);
+	EquipmentLine* invEqLine = (*monsterArmament)[eqChoiceIndex];
+
+	//Randomly choose a quantity of that equipment to meltdown
+	int meltdownQuantity = getRandIntBetween(1, invEqLine->quantity);
+	EquipmentLine meltdownEqLine(invEqLine->pEquipment, meltdownQuantity); //new eqline so changing quantity here doesn't affect original eqline in inventory
+
+	//Do the actual meltdown
+	meltdownEquipment(appliedBy, target, meltdownEqLine);
+
+	delete monsterArmament;
+}
+
+void meltdownEquipment(Character& appliedBy, Character& target, EquipmentLine& meltdownChoice)
+{
 	//Remove chosen quantity of chosen equipment
 	appliedBy.RemoveEquipment(&meltdownChoice);
 
@@ -227,6 +254,7 @@ vector<EffectFunction> initEffects()
 	//monster-only effect functions
 	effects.push_back(&monsterFearFunc);
 	effects.push_back(&monsterCourageFunc);
+	effects.push_back(&monsterMeltdownFunc);
 
 	return effects;
 }

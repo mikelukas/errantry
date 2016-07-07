@@ -186,8 +186,8 @@ void Character::RemoveEquipment(const EquipmentLine* removedEqLine)
 	//character's, and the equipment is removed entirely if they have none left
 	//after it is removed.
 
-	EquipType soldType = removedEqLine->pEquipment->getType();
-	map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(soldType);
+	EquipType eqType = removedEqLine->pEquipment->getType();
+	map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(eqType);
 
 	EquipmentLine& invEqline = inventory[removedEqLine->pEquipment];
 	if(invEqline.pEquipment == NULL)
@@ -335,9 +335,9 @@ map<const Equipment*, EquipmentLine>& Character::getInventoryFor(const EquipType
 
 vector<EquipmentLine*>* Character::getWeaponsAndArmorAsVector()
 	{
-		//Postcondition: A vector is dynamically allocated to hold these, and
-		//new EquipmentLines for each piece of equipment are also dynamically
-		//allocated.  All of these allocations should be freed by the caller.
+		//Postcondition: A vector is dynamically allocated to hold pointers to
+		//every weapon and armor equipment line in the character's inventory.
+		//Vector should be freed by the caller.
 
 		map<const Equipment*, EquipmentLine>& invWeapons = getInventoryFor(WEAPON);
 		map<const Equipment*, EquipmentLine>& invArmor = getInventoryFor(ARMOR);

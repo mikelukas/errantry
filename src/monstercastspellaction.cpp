@@ -88,15 +88,19 @@ const Spell* MonsterCastSpellAction::lookupSpellInCategory(SpellCategory categor
 		return NULL;
 	}
 
-	//Find the first spell monster can cast
-	for(set<const Spell*>::const_iterator it = spellsForCategory.begin(); it != spellsForCategory.end(); it++)
+	const Spell* chosenSpell = NULL;
+
+	//Randomly choose from the spells in the given category until a spell the monster has MP to cast is found
+	vector<const Spell*>* shuffledSpells = shuffleSetIntoVector(spellsForCategory);
+	for(vector<const Spell*>::const_iterator it = shuffledSpells->begin(); it != shuffledSpells->end(); it++)
 	{
 		if((*it)->getMpCost() <= caster.getMP())
 		{
-			return (*it);
+			chosenSpell = (*it);
+			break;
 		}
 	}
+	delete shuffledSpells;
 
-	//If we make it this far, Monster can't CAST any of the spells it has in the given category
-	return NULL;
+	return chosenSpell;
 }

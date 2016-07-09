@@ -25,8 +25,8 @@ class EffectFactory
 		static const EffectFactory* getInstance();
 		virtual ~EffectFactory() {}
 
-		Effect* createEffect(int, Element, Character&, Character&);
-		Effect* createEffect(EffectName, Element, Character&, Character&);
+		Effect* createEffect(int, Element, Character&, Character&) const;
+		Effect* createEffect(EffectName, Element, Character&, Character&) const;
 };
 
 #endif

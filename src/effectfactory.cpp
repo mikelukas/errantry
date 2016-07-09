@@ -21,7 +21,7 @@ const EffectFactory* EffectFactory::getInstance()
 	return instance;
 }
 
-Effect* EffectFactory::createEffect(int effectNameOrdinal, Element element, Character& applier, Character& target)
+Effect* EffectFactory::createEffect(int effectNameOrdinal, Element element, Character& applier, Character& target) const
 {
 	//postcondition: convenience method to convert an integer ordinal for an
 	//effect id to an enum value, before calling the main createEffect with that instead.
@@ -29,7 +29,7 @@ Effect* EffectFactory::createEffect(int effectNameOrdinal, Element element, Char
 	return createEffect(static_cast<EffectName>(effectNameOrdinal), element, applier, target);
 }
 
-Effect* EffectFactory::createEffect(EffectName effectId, Element element, Character& applier, Character& target)
+Effect* EffectFactory::createEffect(EffectName effectId, Element element, Character& applier, Character& target) const
 {
 	//postcondition: allocates a new Effect subclass matching the given id, with
 	//the given parameters passed to its constructor.  Effect should be freed by

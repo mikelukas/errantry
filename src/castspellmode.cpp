@@ -1,3 +1,4 @@
+#include "castablespell.h"
 #include "castspellmode.h"
 #include "gamestate.h"
 
@@ -49,6 +50,12 @@ void CastSpellMode::testChoice(int choiceNum)
 		return;
 	}
 
-	const Spell* spell = spellChooser->getChoice();
-	spell->cast(gameState.getPlayer(), gameState.getPlayer());
+	const Spell* spellTemplate = spellChooser->getChoice();
+	CastableSpell spell(spellTemplate, gameState.getPlayer(), gameState.getPlayer());
+	if(!spell.setup())
+	{
+		return;
+	}
+
+	spell.cast();
 }

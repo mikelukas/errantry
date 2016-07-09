@@ -5,7 +5,7 @@
 
 #include "battleaction.h"
 #include "character.h"
-#include "spell.h"
+#include "castablespell.h"
 
 using std::cout;
 using std::endl;
@@ -22,10 +22,17 @@ class CastSpellAction: public BattleAction
 		const Spell* spellChoice;
 		Character* spellTarget;
 
+		CastableSpell* castableSpell;
+
+		virtual bool setupSpellChoice() = 0;
+		virtual bool setupTargetChoice() = 0;
+		virtual bool setupCastableSpell();
+
 	public:
 		CastSpellAction(Character&, Character&);
-		virtual ~CastSpellAction() {}
+		virtual ~CastSpellAction();
 
+		virtual void setup();
 		virtual void execute();
 };
 

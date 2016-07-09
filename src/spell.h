@@ -53,8 +53,6 @@ class Spell
 
 		const set<int>& getEligibleLocations() const;
 		const set<int>& getEligibleTargets() const;
-
-		void cast(Character&, Character&) const;
 };
     
 #endif

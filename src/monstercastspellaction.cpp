@@ -10,7 +10,7 @@ MonsterCastSpellAction::MonsterCastSpellAction(Character& monster, Character& en
 	categoryToTarget[DEFENSIVE_ASSIST] = &monster;
 }
 
-void MonsterCastSpellAction::setup()
+bool MonsterCastSpellAction::setupSpellChoice()
 {
 	//postcondition: if the monster has any spells to cast, and has MP, a spell
 	//is set, with an appropriate target.  The spell chosen depends on the monster's
@@ -20,7 +20,7 @@ void MonsterCastSpellAction::setup()
 	if(caster.getMP() <= 0)
 	{
 		setAborted(true);
-		return;
+		return false;
 	}
 
 	vector<SpellCategory> spellSearchPriority;
@@ -52,10 +52,10 @@ void MonsterCastSpellAction::setup()
 	{
 		//nothing Monster can cast at this point, so abort to let Monster choose another action
 		setAborted(true);
-		return;
+		return false;
 	}
 
-	spellTarget = categoryToTarget[spellChoice->getCategory()];
+	return true;
 }
 
 const Spell* MonsterCastSpellAction::lookupSpellIn(const vector<SpellCategory>& categories) const
@@ -103,4 +103,10 @@ const Spell* MonsterCastSpellAction::lookupSpellInCategory(SpellCategory categor
 	delete shuffledSpells;
 
 	return chosenSpell;
+}
+
+bool MonsterCastSpellAction::setupTargetChoice()
+{
+	spellTarget = categoryToTarget[spellChoice->getCategory()];
+	return true;
 }

@@ -14,11 +14,14 @@ class PlayerCastSpellAction : public CastSpellAction
 
 		CastSpellChooser spellChooser;
 
+		virtual bool setupSpellChoice();
+		virtual bool setupTargetChoice();
+
 	public:
 		PlayerCastSpellAction(Player&, Monster&);
 		virtual ~PlayerCastSpellAction() {}
 
-		virtual void setup();
+
 };
 
 #endif

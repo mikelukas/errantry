@@ -62,17 +62,3 @@ const set<int>& Spell::getEligibleTargets() const
 {
 	return eligibleTargets;
 }
-
-void Spell::cast(Character& caster, Character& target) const
-{
-	//postcondition: //The caster's MP is then reduced by the mpCost of the spell,
-	//and the effect function of each effect referenced by this spell is called,
-	//in order (dat file specifies order), with the caster and target.
-
-	caster.ChangeMP(-getMpCost());
-
-	for(vector<int>::const_iterator it = effectIds.begin(); it != effectIds.end(); it++)
-	{
-		(*EFFECTS[*it])(caster, target);
-	}
-}

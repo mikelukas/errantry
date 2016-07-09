@@ -19,14 +19,15 @@ class MonsterCastSpellAction : public CastSpellAction
 
 		Character* categoryToTarget[NUM_SPELL_CATEGORIES];
 
+		virtual bool setupSpellChoice();
+		virtual bool setupTargetChoice();
+
 		const Spell* lookupSpellIn(const vector<SpellCategory>&) const;
 		const Spell* lookupSpellInCategory(SpellCategory) const;
 
 	public:
 		MonsterCastSpellAction(Character&, Character&);
 		virtual ~MonsterCastSpellAction() {}
-
-		virtual void setup();
 };
 
 #endif

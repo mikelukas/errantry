@@ -5,7 +5,7 @@ BuySpellsMode::BuySpellsMode(const Town& currentTown, GameData& gameData, GameSt
 	: MenuMode(gameData, gameState)
 {
 	//This vector will be freed in spellChooser's destructor
-	vector<const Spell*>* shopSpells = gameData.getSpellsForIds(currentTown.getShopSpellIds());
+	vector<const SpellTemplate*>* shopSpells = gameData.getSpellsForIds(currentTown.getShopSpellIds());
 
 	spellChooser = new BuySpellChooser(shopSpells, gameState.getPlayer());
 }
@@ -44,7 +44,7 @@ void BuySpellsMode::testChoice(int choiceNum)
 	}
 }
 
-void BuySpellsMode::processTransaction(const Spell* purchasedSpell)
+void BuySpellsMode::processTransaction(const SpellTemplate* purchasedSpell)
 {
 	//postcondition: the chosen spell is added to the player's inventory and the
 	//purchase price is deducted from his/her gold.

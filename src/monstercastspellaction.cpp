@@ -58,14 +58,14 @@ bool MonsterCastSpellAction::setupSpellChoice()
 	return true;
 }
 
-const Spell* MonsterCastSpellAction::lookupSpellIn(const vector<SpellCategory>& categories) const
+const SpellTemplate* MonsterCastSpellAction::lookupSpellIn(const vector<SpellCategory>& categories) const
 {
 	//postcondition: returns the first spell found in the first category in
 	//categories with spells.
 
 	for(int i = 0; i < NUM_SPELL_CATEGORIES; i++)
 	{
-		const Spell* spell = lookupSpellInCategory(categories[i]);
+		const SpellTemplate* spell = lookupSpellInCategory(categories[i]);
 		if(spell != NULL)
 		{
 			return spell;
@@ -75,24 +75,24 @@ const Spell* MonsterCastSpellAction::lookupSpellIn(const vector<SpellCategory>& 
 	return NULL;
 }
 
-const Spell* MonsterCastSpellAction::lookupSpellInCategory(SpellCategory category) const
+const SpellTemplate* MonsterCastSpellAction::lookupSpellInCategory(SpellCategory category) const
 {
 	//postcondition: returns pointer to first available spell the monster has MP
 	//to cast has in the given category, or NULL if the monster doesn't have
 	//spells they can cast in that category.
 
-	const set<const Spell*>& spellsForCategory = caster.getSpellsForCategory(category);
+	const set<const SpellTemplate*>& spellsForCategory = caster.getSpellsForCategory(category);
 	if(spellsForCategory.empty())
 	{
 		//Monster doesn't have any spells in given category
 		return NULL;
 	}
 
-	const Spell* chosenSpell = NULL;
+	const SpellTemplate* chosenSpell = NULL;
 
 	//Randomly choose from the spells in the given category until a spell the monster has MP to cast is found
-	vector<const Spell*>* shuffledSpells = shuffleSetIntoVector(spellsForCategory);
-	for(vector<const Spell*>::const_iterator it = shuffledSpells->begin(); it != shuffledSpells->end(); it++)
+	vector<const SpellTemplate*>* shuffledSpells = shuffleSetIntoVector(spellsForCategory);
+	for(vector<const SpellTemplate*>::const_iterator it = shuffledSpells->begin(); it != shuffledSpells->end(); it++)
 	{
 		if((*it)->getMpCost() <= caster.getMP())
 		{

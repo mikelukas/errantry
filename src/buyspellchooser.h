@@ -8,14 +8,14 @@ class BuySpellChooser: public SpellChooser
 {
 	protected:
 		virtual void displayInventoryChoices() const;
-		virtual void displaySpellLine(const Spell*) const;
+		virtual void displaySpellLine(const SpellTemplate*) const;
 
 		virtual void displayPostChoiceListInfo() const;
 
 		virtual bool validate() const;
 
 	public:
-		BuySpellChooser(vector<const Spell*>*, const Player&);
+		BuySpellChooser(vector<const SpellTemplate*>*, const Player&);
 		virtual ~BuySpellChooser() {}
 };
 

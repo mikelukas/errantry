@@ -26,7 +26,7 @@ enum TargetType {PLAYER, MONSTER};
  * compilation, while still being able to do more complicated, reusable logic
  * that is not easily described in a standard way in dat files.
  */
-class Spell
+class SpellTemplate
 {
 	protected:
 		string name;                //display name of spell
@@ -43,7 +43,7 @@ class Spell
 		vector<int> effectIds;	    //Effect IDs applied when this spell is cast, in order of application
 
 	public:
-		Spell(istream&);
+		SpellTemplate(istream&);
 
 		const string& getName() const;
 		const SpellCategory getCategory() const;

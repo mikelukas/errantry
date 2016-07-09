@@ -1,6 +1,6 @@
 #include "spellchooser.h"
 
-SpellChooser::SpellChooser(vector<const Spell*>* spellChoices, const Player& player)
+SpellChooser::SpellChooser(vector<const SpellTemplate*>* spellChoices, const Player& player)
 	: InventoryChooser(spellChoices),
 	  player(player)
 {
@@ -21,7 +21,7 @@ void SpellChooser::displayInventoryChoices() const
 	cout<<endl;
 }
 
-void SpellChooser::displayChoice(int choiceNum, const Spell* spellChoice) const
+void SpellChooser::displayChoice(int choiceNum, const SpellTemplate* spellChoice) const
 {
 	ostringstream choiceNumStr;
 	choiceNumStr<<choiceNum+1<<")";

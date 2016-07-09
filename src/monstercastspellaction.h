@@ -22,8 +22,8 @@ class MonsterCastSpellAction : public CastSpellAction
 		virtual bool setupSpellChoice();
 		virtual bool setupTargetChoice();
 
-		const Spell* lookupSpellIn(const vector<SpellCategory>&) const;
-		const Spell* lookupSpellInCategory(SpellCategory) const;
+		const SpellTemplate* lookupSpellIn(const vector<SpellCategory>&) const;
+		const SpellTemplate* lookupSpellInCategory(SpellCategory) const;
 
 	public:
 		MonsterCastSpellAction(Character&, Character&);

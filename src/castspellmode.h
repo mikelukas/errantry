@@ -11,7 +11,7 @@ class CastSpellMode: public MenuMode
 {
 	protected:
 
-		Chooser<const Spell>* spellChooser; //freed in destructor
+		Chooser<const SpellTemplate>* spellChooser; //freed in destructor
 
 		int displayMenu();
 		void testChoice(int);

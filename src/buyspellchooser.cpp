@@ -1,6 +1,6 @@
 #include "buyspellchooser.h"
 
-BuySpellChooser::BuySpellChooser(vector<const Spell*>* spellChoices, const Player& player)
+BuySpellChooser::BuySpellChooser(vector<const SpellTemplate*>* spellChoices, const Player& player)
 	: SpellChooser(spellChoices, player)
 {
 
@@ -12,7 +12,7 @@ void BuySpellChooser::displayInventoryChoices() const
 	SpellChooser::displayInventoryChoices();
 }
 
-void BuySpellChooser::displaySpellLine(const Spell* spell) const
+void BuySpellChooser::displaySpellLine(const SpellTemplate* spell) const
 {
 	cout<<"$"<<std::left<<setw(5)<<spell->getPurchasePrice()<<" - "<<setw(15)<<spell->getName()<<setw(14)<<getDisplayNameFor(spell->getElement())<<" "<<setw(3)<<spell->getMpCost()<<endl;
 }
@@ -33,7 +33,7 @@ bool BuySpellChooser::validate() const
 		return false;
 	}
 
-	const Spell* chosenSpell = getChoice();
+	const SpellTemplate* chosenSpell = getChoice();
 
 	//Check that they have enough gold to buy the spell
 	if(chosenSpell->getPurchasePrice() > player.Money())

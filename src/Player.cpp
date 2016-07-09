@@ -109,7 +109,7 @@ void Player::Buy(const EquipmentLine* purchasedEqLine)
 
 		gold -= (purchasedEqLine->getTotalCost());
 	}
-void Player::Buy(const Spell* purchasedSpell)
+void Player::Buy(const SpellTemplate* purchasedSpell)
 	{
 		AddSpell(purchasedSpell);
 
@@ -174,14 +174,14 @@ EquipmentLine& Player::getEquipmentLineFromInventoryFor(const Equipment* equipme
 		}
 	}
 
-vector<const Spell*>* Player::getSpellsForLocale(SpellLocale locale) const
+vector<const SpellTemplate*>* Player::getSpellsForLocale(SpellLocale locale) const
 	{
 		//postcondition: allocates a new vector containing only spell pointers
 		//from the player's inventory that can be cast in the given locale.
 		//Assumes caller will free the vector when done with it.
 
-		vector<const Spell*>* spellsForLocale = new vector<const Spell*>();
-		for(set<const Spell*>::const_iterator it = spells.begin(); it != spells.end(); it++)
+		vector<const SpellTemplate*>* spellsForLocale = new vector<const SpellTemplate*>();
+		for(set<const SpellTemplate*>::const_iterator it = spells.begin(); it != spells.end(); it++)
 		{
 			set<int> eligibleLocations = (*it)->getEligibleLocations();
 			if(eligibleLocations.find(locale) != eligibleLocations.end()) {

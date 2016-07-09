@@ -7,14 +7,14 @@
 class CastSpellChooser: public SpellChooser
 {
 	protected:
-		const vector<const Spell*>* uncastableSpells;
+		const vector<const SpellTemplate*>* uncastableSpells;
 
 		virtual void displayInventoryChoices() const;
-		virtual void displaySpellLine(const Spell*) const;
+		virtual void displaySpellLine(const SpellTemplate*) const;
 
 	public:
-		CastSpellChooser(vector<const Spell*>*, const Player&);
-		CastSpellChooser(vector<const Spell*>*, vector<const Spell*>*, const Player&);
+		CastSpellChooser(vector<const SpellTemplate*>*, const Player&);
+		CastSpellChooser(vector<const SpellTemplate*>*, vector<const SpellTemplate*>*, const Player&);
 		virtual ~CastSpellChooser();
 };
 

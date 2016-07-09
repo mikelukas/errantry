@@ -5,7 +5,7 @@
 #include <set>
 #include <string>
 #include "equipment.h"
-#include "spell.h"
+#include "spelltemplate.h"
 
 using std::map;
 using std::set;
@@ -41,8 +41,8 @@ class Character
 			map<const Equipment*, EquipmentLine> armor;
 			map<const Equipment*, EquipmentLine> items;
 
-            set<const Spell*> spells;
-			map<SpellCategory, set<const Spell*> > categorizedSpells;
+            set<const SpellTemplate*> spells;
+			map<SpellCategory, set<const SpellTemplate*> > categorizedSpells;
                     
             void AddStats(const StatMod&);
 			void SubStats(const StatMod&);
@@ -74,18 +74,18 @@ class Character
 
             void AddEquipment(const EquipmentLine&);
             void RemoveEquipment(const EquipmentLine*);
-            void AddSpell(const Spell*);
+            void AddSpell(const SpellTemplate*);
 
             vector<const Equipment*>* getAllEquipment() const;
             map<const Equipment*, EquipmentLine>& getInventoryFor(const EquipType);
             vector<EquipmentLine*>* getWeaponsAndArmorAsVector();
             vector<EquipmentLine*>* getItemsAsVector();
 
-            bool hasSpell(const Spell*) const;
+            bool hasSpell(const SpellTemplate*) const;
             bool hasSpells() const;
-			const set<const Spell*>& getSpells() const;
-			const set<const Spell*>& getSpellsForCategory(SpellCategory);
-			const set<const Spell*>* getSpellsForCategories(const set<SpellCategory>&);
+			const set<const SpellTemplate*>& getSpells() const;
+			const set<const SpellTemplate*>& getSpellsForCategory(SpellCategory);
+			const set<const SpellTemplate*>* getSpellsForCategories(const set<SpellCategory>&);
 			const set<pair<Element, int>, bool(*)(const pair<Element, int>&, const pair<Element, int>&)>* getSpellElementCounts(const set<SpellCategory>&);
 
             virtual void apply(const Equipment*) = 0;

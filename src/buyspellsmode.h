@@ -16,7 +16,7 @@ class BuySpellsMode: public MenuMode
 		virtual int displayMenu();
 		virtual void testChoice(int);
 
-		void processTransaction(const Spell*);
+		void processTransaction(const SpellTemplate*);
 
 	public:
 		BuySpellsMode(const Town&, GameData&, GameState&);

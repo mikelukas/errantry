@@ -233,8 +233,8 @@ void BattleMode::learnMonsterSpells()
 	//postcondition: all spell ids the monster has are converted to spell
 	//pointers and the player learns any he/she didn't alreayd know.
 
-	const set<const Spell*>& monsterSpells = currMonster.getDroppableSpells();
-	for(set<const Spell*>::const_iterator it = monsterSpells.begin(); it != monsterSpells.end(); it++)
+	const set<const SpellTemplate*>& monsterSpells = currMonster.getDroppableSpells();
+	for(set<const SpellTemplate*>::const_iterator it = monsterSpells.begin(); it != monsterSpells.end(); it++)
 	{
 		if(gameState.getPlayer().hasSpell(*it))
 		{

@@ -2,9 +2,9 @@
 #define SRC_CASTABLESPELL_H_
 
 #include "effects/effect.h"
-#include "spell.h"
+#include "spelltemplate.h"
 
-class CastableSpell : public Spell
+class CastableSpell : public SpellTemplate
 {
 	protected:
 		Character& caster;
@@ -14,7 +14,7 @@ class CastableSpell : public Spell
 		void clearInitializedEffects();
 
 	public:
-		CastableSpell(const Spell*, Character&, Character&);
+		CastableSpell(const SpellTemplate*, Character&, Character&);
 		virtual ~CastableSpell();
 
 		bool setup();

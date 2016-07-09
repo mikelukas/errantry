@@ -36,12 +36,12 @@ BattleStrategy* Monster::getBattleStrategy() const
 {
 	return battleStrategy;
 }
-const set<const Spell*>& Monster::getDroppableSpells() const
+const set<const SpellTemplate*>& Monster::getDroppableSpells() const
 {
 	return droppableSpells;
 }
 
-void Monster::AddDroppableSpell(const Spell* droppableSpell)
+void Monster::AddDroppableSpell(const SpellTemplate* droppableSpell)
 {
 	droppableSpells.insert(droppableSpell);
 }

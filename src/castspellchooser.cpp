@@ -1,13 +1,13 @@
 #include "castspellchooser.h"
 
-CastSpellChooser::CastSpellChooser(vector<const Spell*>* spellChoices, const Player& player)
+CastSpellChooser::CastSpellChooser(vector<const SpellTemplate*>* spellChoices, const Player& player)
 	: SpellChooser(spellChoices, player),
 	  uncastableSpells(NULL)
 {
 
 }
 
-CastSpellChooser::CastSpellChooser(vector<const Spell*>* spellChoices, vector<const Spell*>* uncastableSpells, const Player& player)
+CastSpellChooser::CastSpellChooser(vector<const SpellTemplate*>* spellChoices, vector<const SpellTemplate*>* uncastableSpells, const Player& player)
 	: SpellChooser(spellChoices, player),
 	  uncastableSpells(uncastableSpells)
 {
@@ -43,7 +43,7 @@ void CastSpellChooser::displayInventoryChoices() const
 	SpellChooser::displayInventoryChoices();
 }
 
-void CastSpellChooser::displaySpellLine(const Spell* spell) const
+void CastSpellChooser::displaySpellLine(const SpellTemplate* spell) const
 {
 	//postcondition: displays the name, element, and MP cost of the given spell.
 

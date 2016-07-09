@@ -19,7 +19,7 @@ class CastSpellAction: public BattleAction
 		Character& caster;
 		Character& enemy;  //target option for the spell caster.  Character b/c a monster could cast a spell on the player
 
-		const Spell* spellChoice;
+		const SpellTemplate* spellChoice;
 		Character* spellTarget;
 
 		CastableSpell* castableSpell;

@@ -4,14 +4,14 @@
 #include <iostream>
 #include "inventorychooser.h"
 #include "player.h"
-#include "spell.h"
+#include "spelltemplate.h"
 #include "statsdisplayer.h"
 
 using std::cout;
 using std::endl;
 
 /* Lists spells in player's inventorye*/
-class SpellChooser: public InventoryChooser<const Spell>
+class SpellChooser: public InventoryChooser<const SpellTemplate>
 {
 	protected:
 		const Player& player;
@@ -19,11 +19,11 @@ class SpellChooser: public InventoryChooser<const Spell>
 		virtual void displayRelevantStats() const;
 		virtual void displayInventoryChoices() const;
 
-		virtual void displayChoice(int, const Spell*) const;
-		virtual void displaySpellLine(const Spell*) const = 0;
+		virtual void displayChoice(int, const SpellTemplate*) const;
+		virtual void displaySpellLine(const SpellTemplate*) const = 0;
 
 	public:
-		SpellChooser(vector<const Spell*>*, const Player&);
+		SpellChooser(vector<const SpellTemplate*>*, const Player&);
 		virtual ~SpellChooser() {}
 };
 

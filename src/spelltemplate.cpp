@@ -1,11 +1,12 @@
+#include "spelltemplate.h"
+
 #include <limits>
 #include "character.h"
-#include "spell.h"
 
 using std::numeric_limits;
 using std::streamsize;
 
-Spell::Spell(istream& is)
+SpellTemplate::SpellTemplate(istream& is)
 	: mpCost(0), //XXX these are to avoid warning about these fields not being inited
 	  purchasePrice(0)
 {
@@ -29,36 +30,36 @@ Spell::Spell(istream& is)
 	getIdLine(is, effectIds);
 }
 
-const string& Spell::getName() const
+const string& SpellTemplate::getName() const
 {
 	return name;
 }
 
-const SpellCategory Spell::getCategory() const
+const SpellCategory SpellTemplate::getCategory() const
 {
 	return category;
 }
 
-const Element Spell::getElement() const
+const Element SpellTemplate::getElement() const
 {
 	return element;
 }
 
-const int Spell::getMpCost() const
+const int SpellTemplate::getMpCost() const
 {
 	return mpCost;
 }
-const int Spell::getPurchasePrice() const
+const int SpellTemplate::getPurchasePrice() const
 {
 	return purchasePrice;
 }
 
-const set<int>& Spell::getEligibleLocations() const
+const set<int>& SpellTemplate::getEligibleLocations() const
 {
 	return eligibleLocations;
 }
 
-const set<int>& Spell::getEligibleTargets() const
+const set<int>& SpellTemplate::getEligibleTargets() const
 {
 	return eligibleTargets;
 }

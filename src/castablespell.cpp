@@ -2,8 +2,8 @@
 #include "character.h"
 #include "effectfactory.h"
 
-CastableSpell::CastableSpell(const Spell* spellDefinition, Character& caster, Character& target)
-	: Spell(*spellDefinition),
+CastableSpell::CastableSpell(const SpellTemplate* spellDefinition, Character& caster, Character& target)
+	: SpellTemplate(*spellDefinition),
 	  caster(caster),
 	  target(target),
 	  initializedEffects()

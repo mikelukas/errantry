@@ -205,7 +205,7 @@ void Character::RemoveEquipment(const EquipmentLine* removedEqLine)
 	}
 }
 
-void Character::AddSpell(const Spell* newSpell)
+void Character::AddSpell(const SpellTemplate* newSpell)
 	{
 		//postcondition: the given spell is added to the Character, and also
 		//added to Character's categorized spells map (if the Character doesn't
@@ -240,7 +240,7 @@ void Character::recalculateWeakness()
 		std::fill(elementPairAffinities, elementPairAffinities + numPairs, 0);
 
 		//First go through every spell's Element, and score it based on if it's the first element in its pair or 2nd
-		for(set<const Spell*>::const_iterator it = spells.begin(); it != spells.end(); it++)
+		for(set<const SpellTemplate*>::const_iterator it = spells.begin(); it != spells.end(); it++)
 		{
 			Element spellElement = (*it)->getElement();
 			if(spellElement == none)
@@ -376,7 +376,7 @@ vector<EquipmentLine*>* Character::getItemsAsVector()
 		return equipmentChoices;
 	}
 
-bool Character::hasSpell(const Spell* spell) const
+bool Character::hasSpell(const SpellTemplate* spell) const
 	{
 		return (spells.find(spell) != spells.end());
 	}
@@ -386,25 +386,25 @@ bool Character::hasSpells() const
 		return spells.size() > 0;
 	}
 
-const set<const Spell*>& Character::getSpells() const
+const set<const SpellTemplate*>& Character::getSpells() const
 	{
 		return spells;
 	}
 
-const set<const Spell*>& Character::getSpellsForCategory(SpellCategory category)
+const set<const SpellTemplate*>& Character::getSpellsForCategory(SpellCategory category)
 	{
 		return categorizedSpells[category];
 	}
 
-const set<const Spell*>* Character::getSpellsForCategories(const set<SpellCategory>& categories)
+const set<const SpellTemplate*>* Character::getSpellsForCategories(const set<SpellCategory>& categories)
 	{
 		//postcondition: allocates a new set of spells that match any of the
 		//specified categories.
 
-		set<const Spell*>* spellsForCategories = new set<const Spell*>(); //freed by caller
+		set<const SpellTemplate*>* spellsForCategories = new set<const SpellTemplate*>(); //freed by caller
 		for(set<SpellCategory>::const_iterator it = categories.begin(); it != categories.end(); it++)
 		{
-			const set<const Spell*>& spellsForCategory = getSpellsForCategory((*it));
+			const set<const SpellTemplate*>& spellsForCategory = getSpellsForCategory((*it));
 			spellsForCategories->insert(spellsForCategory.begin(), spellsForCategory.end());
 		}
 
@@ -419,8 +419,8 @@ const set<pair<Element, int>, bool(*)(const pair<Element, int>&, const pair<Elem
 		vector<int> elementsToCounts(ELEMENTS.size()-1, 0);
 
 		//Count the amount of each element in all of the Character's spells
-		const set<const Spell*>* monsterSpells = getSpellsForCategories(categories);
-		for(set<const Spell*>::const_iterator it = monsterSpells->begin(); it != monsterSpells->end(); it++)
+		const set<const SpellTemplate*>* monsterSpells = getSpellsForCategories(categories);
+		for(set<const SpellTemplate*>::const_iterator it = monsterSpells->begin(); it != monsterSpells->end(); it++)
 		{
 			Element element = (*it)->getElement();
 			if(element == none)

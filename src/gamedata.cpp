@@ -275,7 +275,7 @@ bool GameData::loadEquipment(EquipType type, vector<Equipment*>& equipment, cons
 	return true;
 }
 
-bool GameData::loadSpells(vector<const Spell*>& spells, const string& filename)
+bool GameData::loadSpells(vector<const SpellTemplate*>& spells, const string& filename)
 {
 	ifstream spellFile(filename);
 	if(!spellFile)
@@ -288,7 +288,7 @@ bool GameData::loadSpells(vector<const Spell*>& spells, const string& filename)
 
 	while(spellFile.peek() != EOF)
 	{
-		const Spell* spell = new Spell(spellFile);
+		const SpellTemplate* spell = new SpellTemplate(spellFile);
 		cout<<spell->getName()<<endl
 			<<"  "<<spell->getElement()<<endl
 			<<"  "<<spell->getMpCost()<<endl
@@ -381,21 +381,21 @@ const vector<Equipment*>& GameData::getItems()
 	return itemsPtrs;
 }
 
-const vector<const Spell*>& GameData::getSpells() const
+const vector<const SpellTemplate*>& GameData::getSpells() const
 {
 	return spellPtrs;
 }
 
-vector<const Spell*>* GameData::getSpellsForIds(const vector<int>& spellIds) const
+vector<const SpellTemplate*>* GameData::getSpellsForIds(const vector<int>& spellIds) const
 {
 	//postcondition: Allocates a new vector of Spell ptrs matching each of the
 	//Spell ids passed in, using the allSpells vector to look up the Spell ptrs
 	//by id.
 
-	vector<const Spell*>* spellsForIds = new vector<const Spell*>();
+	vector<const SpellTemplate*>* spellsForIds = new vector<const SpellTemplate*>();
 	for(int i = 0; i < spellIds.size(); i++)
 	{
-		const Spell* spell = spellPtrs[spellIds[i]];
+		const SpellTemplate* spell = spellPtrs[spellIds[i]];
 		spellsForIds->push_back(spell);
 	}
 

@@ -5,12 +5,12 @@
 CastSpellMode::CastSpellMode(GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState)
 {
-	vector<const Spell*>* playerFieldSpells = gameState.getPlayer().getSpellsForLocale(FIELD);
+	vector<const SpellTemplate*>* playerFieldSpells = gameState.getPlayer().getSpellsForLocale(FIELD);
 
 	//Separate out spells that aren't castable in the field, so that player can view all spells from this mode, but only cast castable ones
-	const set<const Spell*>& allPlayerSpells = gameState.getPlayer().getSpells();
-	vector<const Spell*>* playerBattleOnlySpells = new vector<const Spell*>();
-	for(set<const Spell*>::const_iterator it = allPlayerSpells.begin(); it != allPlayerSpells.end(); it++)
+	const set<const SpellTemplate*>& allPlayerSpells = gameState.getPlayer().getSpells();
+	vector<const SpellTemplate*>* playerBattleOnlySpells = new vector<const SpellTemplate*>();
+	for(set<const SpellTemplate*>::const_iterator it = allPlayerSpells.begin(); it != allPlayerSpells.end(); it++)
 	{
 		const set<int> eligibleLocations = (*it)->getEligibleLocations();
 		if(eligibleLocations.find(FIELD) == eligibleLocations.end())
@@ -50,7 +50,7 @@ void CastSpellMode::testChoice(int choiceNum)
 		return;
 	}
 
-	const Spell* spellTemplate = spellChooser->getChoice();
+	const SpellTemplate* spellTemplate = spellChooser->getChoice();
 	CastableSpell spell(spellTemplate, gameState.getPlayer(), gameState.getPlayer());
 	if(!spell.setup())
 	{

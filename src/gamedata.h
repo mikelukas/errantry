@@ -12,7 +12,7 @@
 
 #include "equipment.h"
 #include "monster.h"
-#include "spell.h"
+#include "spelltemplate.h"
 #include "town.h"
 
 using std::cout;
@@ -51,7 +51,7 @@ class GameData
 		vector<Equipment*> weaponPtrs;
 		vector<Equipment*> armorPtrs;
 		vector<Equipment*> itemsPtrs;
-		vector<const Spell*> spellPtrs;
+		vector<const SpellTemplate*> spellPtrs;
 
 		bool loadDataFiles(); //master load method
 
@@ -65,7 +65,7 @@ class GameData
 		bool loadBosses(map<int, const Monster*>&, const string&, const string&);
 
 		bool loadEquipment(EquipType type, vector<Equipment*>& equipment, const string& filename);
-		bool loadSpells(vector<const Spell*>&, const string&);
+		bool loadSpells(vector<const SpellTemplate*>&, const string&);
 
 		bool loadTowns();
 
@@ -84,9 +84,9 @@ class GameData
 		const vector<Equipment*>& getWeapons();
 		const vector<Equipment*>& getArmor();
 		const vector<Equipment*>& getItems();
-		const vector<const Spell*>& getSpells() const;
+		const vector<const SpellTemplate*>& getSpells() const;
 		const vector<int>& getSpellIdsForCategory(SpellCategory);
-		vector<const Spell*>* getSpellsForIds(const vector<int>&) const;
+		vector<const SpellTemplate*>* getSpellsForIds(const vector<int>&) const;
 };
 
 

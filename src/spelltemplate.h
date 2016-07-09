@@ -18,13 +18,13 @@ enum SpellCategory {ATTACK, HEALING, OFFENSIVE_ASSIST, DEFENSIVE_ASSIST};
 enum SpellLocale {FIELD, BATTLE};
 enum TargetType {PLAYER, MONSTER};
 
-/* This class contains all information needed to acquire and cast a spell,
- * but it DOES NOT directly contain the actual logic for what the spell does.
- * Rather, Spells reference a 1 or more EffectFunctions (see effects.h),
- * which are applied when the spell is cast.
- * Referencing EffectFunctions allows Spells to be defined in dat files without
- * compilation, while still being able to do more complicated, reusable logic
- * that is not easily described in a standard way in dat files.
+/* This class contains all information about a spell, but can't actually be cast.
+ * Instead, a CastableSpell (subclass) should be created given a SpellTemplate
+ * to copy. See CastableSpell for more information about how to cast one.
+ * SpellTemplates reference 1 or more Effect IDs, which contain the actual logic
+ * used when casting the spell. EFfect IDs allows SpellTemplates to be defined
+ * in dat files without compilation, while still being able to do more complicated,
+ * reusable logic that is not easily described in a standard way in dat files.
  */
 class SpellTemplate
 {

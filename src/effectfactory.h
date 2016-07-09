@@ -6,7 +6,7 @@
 /* Maps an integer id to an enum value name, to make adding effects a little easier*/
 enum EffectName
 {
-
+	ELEMENTAL_DAMAGE = 0,
 };
 
 /* Singleton class for building Effects used by spells, given an effect id.

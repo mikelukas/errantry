@@ -21,11 +21,6 @@ const vector<EffectFunction> EFFECTS = initEffects();
  * If adding new effects, be sure to add them to the vector output by initEffects
  */
 
-void fireDamageFunc(Character&, Character&);
-void waterDamageFunc(Character&, Character&);
-void airDamageFunc(Character&, Character&);
-void earthDamageFunc(Character&, Character&);
-void nonElementalMagicDamageFunc(Character&, Character&);
 void healFunc(Character&, Character&);
 void fearFunc(Character&, Character&);
 void courageFunc(Character&, Character&);
@@ -40,11 +35,9 @@ void monsterCourageFunc(Character&, Character&);
 void monsterMeltdownFunc(Character&, Character&);
 
 //----Effect Helper functions---//
-const int BASE_ELEMENTAL_DAMAGE = 20;
 const int BASE_MP_DROP = 10;
 const int BASE_DRAIN_HP = 15;
 
-void elementalDamage(Character&, Character&, int, Element);
 bool validateChannelDamage(Character&, int);
 void applyWeaknessTo(Character&, Element);
 void removeWeaknessFrom(Character&, Element);

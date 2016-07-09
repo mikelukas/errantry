@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include "effectfactory.h"
+#include "effects/elementaldamageeffect.h"
 
 EffectFactory* EffectFactory::instance = NULL; //singleton instance static initialization
 
@@ -38,6 +39,8 @@ Effect* EffectFactory::createEffect(EffectName effectId, Element element, Charac
 
 	switch(effectId)
 	{
+	case ELEMENTAL_DAMAGE:
+		return new ElementalDamageEffect(element, applier, target);
 	default:
 		return NULL;
 	}

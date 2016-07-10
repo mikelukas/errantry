@@ -3,7 +3,9 @@
 #include "effects/elementaldamageeffect.h"
 #include "effects/healeffect.h"
 #include "effects/monsteraddweaknesseffect.h"
+#include "effects/monsterremoveweaknesseffect.h"
 #include "effects/playeraddweaknesseffect.h"
+#include "effects/playerremoveweaknesseffect.h"
 
 EffectFactory* EffectFactory::instance = NULL; //singleton instance static initialization
 
@@ -48,9 +50,13 @@ Effect* EffectFactory::createEffect(EffectName effectId, Element element, Charac
 		return new HealEffect(element, applier, target);
 	case PLAYER_ADD_WEAKNESS:
 		return new PlayerAddWeaknessEffect(element, applier, target);
+	case PLAYER_REMOVE_WEAKNESS:
+		return new PlayerRemoveWeaknessEffect(element, applier, target);
 
 	case MONSTER_ADD_WEAKNESS:
 		return new MonsterAddWeaknessEffect(element, applier, target);
+	case MONSTER_REMOVE_WEAKNESS:
+		return new MonsterRemoveWeaknessEffect(element, applier, target);
 	default:
 		return NULL;
 	}

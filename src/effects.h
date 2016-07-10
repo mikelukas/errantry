@@ -21,14 +21,12 @@ const vector<EffectFunction> EFFECTS = initEffects();
  * If adding new effects, be sure to add them to the vector output by initEffects
  */
 
-void courageFunc(Character&, Character&);
 void enervate(Character&, Character&);
 void drainFunc(Character&, Character&);
 void channelFunc(Character&, Character&);
 void meltdownFunc(Character&, Character&);
 
 //----Monster-only EffectFunctions
-void monsterCourageFunc(Character&, Character&);
 void monsterMeltdownFunc(Character&, Character&);
 
 //----Effect Helper functions---//
@@ -36,7 +34,6 @@ const int BASE_MP_DROP = 10;
 const int BASE_DRAIN_HP = 15;
 
 bool validateChannelDamage(Character&, int);
-void removeWeaknessFrom(Character&, Element);
 void meltdownEquipment(Character&, Character&, EquipmentLine&);
 
 #endif

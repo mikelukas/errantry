@@ -1,57 +1,12 @@
 #include <iostream>
 #include "character.h"
 #include "effects.h"
-#include "elementchooser.h"
 #include "meltdownequipmentchooser.h"
 #include "randutils.h"
 
 using std::cout;
 using std::cin;
 using std::endl;
-
-void courageFunc(Character& appliedBy, Character& target)
-{
-	//postcondition: caster is prompted to choose an Element, and target loses
-	//weakness to that element (if any)
-
-	cout<<"Choose a weakness to remove from "<<target.ShowName()<<":"<<endl;
-	ElementChooser elementChooser;
-	elementChooser.run();
-
-	const Element* elementChoice = elementChooser.getChoice();
-
-	target.removeWeakness(*elementChoice);
-
-	cout<<target.ShowName()<<" no longer is weak to "<<getDisplayNameFor(*elementChoice)<<"."<<endl;
-}
-
-void monsterCourageFunc(Character& appliedBy, Character& target)
-{
-	//Get target's current weaknesses, so we can remove only weaknesses that they actually have
-	const set<Element>& targetWeaknesses = target.getWeaknesses();
-	if(targetWeaknesses.empty())
-	{
-		cout<<target.ShowName()<<" is not weak to anything."<<endl;
-		return;
-	}
-
-	//Iterate (can't randomly access sets) to the index of the weakness we want to remove in the set
-	int weaknessToSeek = getRandIntBetween(0, targetWeaknesses.size()-1); //-1 b/c range is inclusive
-	set<Element>::const_iterator it = targetWeaknesses.begin();
-	for(int i=0; i < weaknessToSeek && it != targetWeaknesses.end(); i++)
-	{
-		it++;//advance iterator to position of the weakness we want to remove;
-	}
-
-	removeWeaknessFrom(target, (*it));
-}
-
-void removeWeaknessFrom(Character& target, Element elementChoice)
-{
-	target.removeWeakness(elementChoice);
-
-	cout<<target.ShowName()<<" no longer is weak to "<<getDisplayNameFor(elementChoice)<<"."<<endl;
-}
 
 void enervateFunc(Character& appliedBy, Character& target)
 {
@@ -154,14 +109,12 @@ void meltdownEquipment(Character& appliedBy, Character& target, EquipmentLine& m
 vector<EffectFunction> initEffects()
 {
 	vector<EffectFunction> effects;
-	effects.push_back(&courageFunc);
 	effects.push_back(&enervateFunc);
 	effects.push_back(&drainFunc);
 	effects.push_back(&channelFunc);
 	effects.push_back(&meltdownFunc);
 
 	//monster-only effect functions
-	effects.push_back(&monsterCourageFunc);
 	effects.push_back(&monsterMeltdownFunc);
 
 	return effects;

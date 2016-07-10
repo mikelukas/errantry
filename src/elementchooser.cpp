@@ -3,7 +3,7 @@
 ElementChooser::ElementChooser()
 	: Chooser<const Element>(buildElementPointerVector())
 {
-	cancelAllowed = false;
+
 }
 
 void ElementChooser::displayChoiceMenu() const
@@ -13,6 +13,8 @@ void ElementChooser::displayChoiceMenu() const
 	{
 		displayChoice(i, (*eligibleChoices)[i]);
 	}
+	cout<<endl;
+	cout<<"0) Back"<<endl;
 }
 
 void ElementChooser::displayChoice(int choiceNum, const Element* choice) const

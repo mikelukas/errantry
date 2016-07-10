@@ -8,6 +8,10 @@ enum EffectName
 {
 	ELEMENTAL_DAMAGE = 0,
 	HEAL = 1,
+	PLAYER_ADD_WEAKNESS = 2,
+
+	//Monster-only effects
+	MONSTER_ADD_WEAKNESS = 8,
 };
 
 /* Singleton class for building Effects used by spells, given an effect id.

@@ -4,6 +4,7 @@
 #include "effects/healeffect.h"
 #include "effects/monsteraddweaknesseffect.h"
 #include "effects/monsterremoveweaknesseffect.h"
+#include "effects/mpdamageeffect.h"
 #include "effects/playeraddweaknesseffect.h"
 #include "effects/playerremoveweaknesseffect.h"
 
@@ -52,6 +53,8 @@ Effect* EffectFactory::createEffect(EffectName effectId, Element element, Charac
 		return new PlayerAddWeaknessEffect(element, applier, target);
 	case PLAYER_REMOVE_WEAKNESS:
 		return new PlayerRemoveWeaknessEffect(element, applier, target);
+	case MP_DAMAGE:
+		return new MpDamageEffect(element, applier, target);
 
 	case MONSTER_ADD_WEAKNESS:
 		return new MonsterAddWeaknessEffect(element, applier, target);

@@ -30,7 +30,7 @@ void meltdownFunc(Character&, Character&);
 void monsterMeltdownFunc(Character&, Character&);
 
 //----Effect Helper functions---//
-const int BASE_MP_DROP = 10;
+
 const int BASE_DRAIN_HP = 15;
 
 bool validateChannelDamage(Character&, int);

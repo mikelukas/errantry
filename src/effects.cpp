@@ -8,13 +8,6 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-void enervateFunc(Character& appliedBy, Character& target)
-{
-	target.ChangeMP(-1*BASE_MP_DROP);
-
-	cout<<target.ShowName()<<" lost "<<BASE_MP_DROP<<" MP!"<<endl;
-}
-
 void drainFunc(Character& appliedBy, Character& target)
 {
 	int netDamage = target.applyMagicalDamage(BASE_DRAIN_HP, water);
@@ -109,7 +102,6 @@ void meltdownEquipment(Character& appliedBy, Character& target, EquipmentLine& m
 vector<EffectFunction> initEffects()
 {
 	vector<EffectFunction> effects;
-	effects.push_back(&enervateFunc);
 	effects.push_back(&drainFunc);
 	effects.push_back(&channelFunc);
 	effects.push_back(&meltdownFunc);

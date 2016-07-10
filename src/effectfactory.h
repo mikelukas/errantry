@@ -7,6 +7,7 @@
 enum EffectName
 {
 	ELEMENTAL_DAMAGE = 0,
+	HEAL = 1,
 };
 
 /* Singleton class for building Effects used by spells, given an effect id.

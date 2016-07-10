@@ -21,7 +21,6 @@ const vector<EffectFunction> EFFECTS = initEffects();
  * If adding new effects, be sure to add them to the vector output by initEffects
  */
 
-void healFunc(Character&, Character&);
 void fearFunc(Character&, Character&);
 void courageFunc(Character&, Character&);
 void enervate(Character&, Character&);

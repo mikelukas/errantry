@@ -21,8 +21,6 @@ const vector<EffectFunction> EFFECTS = initEffects();
  * If adding new effects, be sure to add them to the vector output by initEffects
  */
 
-void enervate(Character&, Character&);
-void drainFunc(Character&, Character&);
 void channelFunc(Character&, Character&);
 void meltdownFunc(Character&, Character&);
 
@@ -30,8 +28,6 @@ void meltdownFunc(Character&, Character&);
 void monsterMeltdownFunc(Character&, Character&);
 
 //----Effect Helper functions---//
-
-const int BASE_DRAIN_HP = 15;
 
 bool validateChannelDamage(Character&, int);
 void meltdownEquipment(Character&, Character&, EquipmentLine&);

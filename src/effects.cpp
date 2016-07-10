@@ -8,14 +8,6 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-void drainFunc(Character& appliedBy, Character& target)
-{
-	int netDamage = target.applyMagicalDamage(BASE_DRAIN_HP, water);
-	appliedBy.ChangeHP(netDamage); //add to applier's HP amount done in magical damage
-
-	cout<<appliedBy.ShowName()<<" drained "<<netDamage<<" HP from "<<target.ShowName()<<"!"<<endl;
-}
-
 void channelFunc(Character& appliedBy, Character& target)
 {
 	int baseChannelDamage;
@@ -102,7 +94,6 @@ void meltdownEquipment(Character& appliedBy, Character& target, EquipmentLine& m
 vector<EffectFunction> initEffects()
 {
 	vector<EffectFunction> effects;
-	effects.push_back(&drainFunc);
 	effects.push_back(&channelFunc);
 	effects.push_back(&meltdownFunc);
 

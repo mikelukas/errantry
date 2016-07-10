@@ -11,6 +11,7 @@ enum EffectName
 	PLAYER_ADD_WEAKNESS = 2,
 	PLAYER_REMOVE_WEAKNESS = 3,
 	MP_DAMAGE = 4,
+	DRAIN = 5,
 
 	//Monster-only effects
 	MONSTER_ADD_WEAKNESS = 8,

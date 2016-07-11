@@ -21,7 +21,6 @@ const vector<EffectFunction> EFFECTS = initEffects();
  * If adding new effects, be sure to add them to the vector output by initEffects
  */
 
-void channelFunc(Character&, Character&);
 void meltdownFunc(Character&, Character&);
 
 //----Monster-only EffectFunctions
@@ -29,7 +28,6 @@ void monsterMeltdownFunc(Character&, Character&);
 
 //----Effect Helper functions---//
 
-bool validateChannelDamage(Character&, int);
 void meltdownEquipment(Character&, Character&, EquipmentLine&);
 
 #endif

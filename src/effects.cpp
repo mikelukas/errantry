@@ -8,37 +8,6 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-void channelFunc(Character& appliedBy, Character& target)
-{
-	int baseChannelDamage;
-	cout<<"Enter amount of your HP to convert into Fire damage (up to "<<appliedBy.Health()-1<<"): ";
-	do
-	{
-		cin>>baseChannelDamage;
-	}while(!validateChannelDamage(appliedBy, baseChannelDamage));
-
-	appliedBy.ChangeHP(-1*baseChannelDamage);
-	int netDamage = target.applyMagicalDamage(baseChannelDamage, fire);
-	cout<<appliedBy.ShowName()<<" channeled "<<baseChannelDamage<<" HP into "<<netDamage<<" "<<getDisplayNameFor(fire)<<" damage to "<<target.ShowName()<<"!"<<endl;
-}
-
-bool validateChannelDamage(Character& appliedBy, int inputDamage)
-{
-	if(inputDamage < 0)
-	{
-		cout<<"Can't channel a negative amount of HP!"<<endl;
-		return false;
-	}
-
-	if(inputDamage >= appliedBy.Health())
-	{
-		cout<<"Channeling all of your HP would kill you!"<<endl;
-		return false;
-	}
-
-	return true;
-}
-
 void meltdownFunc(Character& appliedBy, Character& target)
 {
 	MeltdownEquipmentChooser eqChooser(appliedBy);
@@ -94,7 +63,6 @@ void meltdownEquipment(Character& appliedBy, Character& target, EquipmentLine& m
 vector<EffectFunction> initEffects()
 {
 	vector<EffectFunction> effects;
-	effects.push_back(&channelFunc);
 	effects.push_back(&meltdownFunc);
 
 	//monster-only effect functions

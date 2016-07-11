@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include "effectfactory.h"
+#include "effects/channeleffect.h"
 #include "effects/draineffect.h"
 #include "effects/elementaldamageeffect.h"
 #include "effects/healeffect.h"
@@ -58,6 +59,8 @@ Effect* EffectFactory::createEffect(EffectName effectId, Element element, Charac
 		return new MpDamageEffect(element, applier, target);
 	case DRAIN:
 		return new DrainEffect(element, applier, target);
+	case CHANNEL:
+		return new ChannelEffect(element, applier, target);
 
 	case MONSTER_ADD_WEAKNESS:
 		return new MonsterAddWeaknessEffect(element, applier, target);

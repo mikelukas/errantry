@@ -11,7 +11,7 @@ void ShopSellMode::displayShopChoice(const EquipmentLine* eqLine) const
 {
 	//postcondition: displays 1 line of equipment to be sold.  Does not append newline.
 
-	cout<<"$"<<eqLine->pEquipment->getCost()<<" - "<<std::left<<setw(19)<<eqLine->pEquipment->getName()<<" x"<<eqLine->quantity;
+	cout<<"$"<<eqLine->pEquipment->getSellPrice()<<" - "<<std::left<<setw(19)<<eqLine->pEquipment->getName()<<" x"<<eqLine->quantity;
 }
 
 bool ShopSellMode::validateShopChoice(const Equipment* equipment, int quantity) const

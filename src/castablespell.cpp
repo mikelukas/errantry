@@ -1,6 +1,10 @@
+#include <iostream>
 #include "castablespell.h"
 #include "character.h"
 #include "effectfactory.h"
+
+using std::cout;
+using std::endl;
 
 CastableSpell::CastableSpell(const SpellTemplate* spellDefinition, Character& caster, Character& target)
 	: SpellTemplate(*spellDefinition),
@@ -25,12 +29,19 @@ bool CastableSpell::setup()
 	//concrete Effects to be applied when cast() is called, or false if one or
 	//more effects could not be setup after being constructed.
 
+	if(caster.getMP() < getMpCost())
+	{
+		cout<<caster.ShowName()<<" does not have enough MP to cast '"<<getName()<<"'!"<<endl;
+		return false;
+	}
+
 	for(vector<int>::const_iterator it = effectIds.begin(); it != effectIds.end(); it++)
 	{
 		Effect* effectToRun = EffectFactory::getInstance()->createEffect((*it), getElement(), caster, target);
 		if(effectToRun == NULL)
 		{
-			continue; //if we hit this, the spell references Effects that don't exist
+			cout<<"WARNING: spell references effects that do not exist."<<endl;
+			continue; //if we hit this, the spell references Effects that don't exist, which is probably a bug
 		}
 
 		if(!effectToRun->setup())

@@ -6,16 +6,13 @@
 #include "effects/healeffect.h"
 #include "effects/monsteraddweaknesseffect.h"
 #include "effects/monsterremoveweaknesseffect.h"
+#include "effects/monstermeltdowneffect.h"
 #include "effects/mpdamageeffect.h"
 #include "effects/playeraddweaknesseffect.h"
 #include "effects/playerremoveweaknesseffect.h"
+#include "effects/playermeltdowneffect.h"
 
 EffectFactory* EffectFactory::instance = NULL; //singleton instance static initialization
-
-EffectFactory::EffectFactory()
-{
-
-}
 
 const EffectFactory* EffectFactory::getInstance()
 {
@@ -61,11 +58,17 @@ Effect* EffectFactory::createEffect(EffectName effectId, Element element, Charac
 		return new DrainEffect(element, applier, target);
 	case CHANNEL:
 		return new ChannelEffect(element, applier, target);
+	case PLAYER_MELTDOWN:
+		return new PlayerMeltdownEffect(element, applier, target);
 
+	//Monster-only Effects
 	case MONSTER_ADD_WEAKNESS:
 		return new MonsterAddWeaknessEffect(element, applier, target);
 	case MONSTER_REMOVE_WEAKNESS:
 		return new MonsterRemoveWeaknessEffect(element, applier, target);
+	case MONSTER_MELTDOWN:
+		return new MonsterMeltdownEffect(element, applier, target);
+
 	default:
 		return NULL;
 	}

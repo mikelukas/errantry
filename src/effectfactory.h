@@ -13,10 +13,12 @@ enum EffectName
 	MP_DAMAGE = 4,
 	DRAIN = 5,
 	CHANNEL = 6,
+	PLAYER_MELTDOWN = 7,
 
 	//Monster-only effects
 	MONSTER_ADD_WEAKNESS = 8,
 	MONSTER_REMOVE_WEAKNESS = 9,
+	MONSTER_MELTDOWN = 10,
 };
 
 /* Singleton class for building Effects used by spells, given an effect id.
@@ -29,7 +31,7 @@ class EffectFactory
 	protected:
 		static EffectFactory* instance;
 
-		EffectFactory();
+		EffectFactory() {};
 
 	public:
 		static const EffectFactory* getInstance();

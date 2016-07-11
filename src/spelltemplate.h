@@ -5,7 +5,7 @@
 #include <set>
 #include <string>
 #include <vector>
-#include "effects.h"
+#include "element.h"
 #include "streamutils.h" //getIdLine
 
 using std::istream;

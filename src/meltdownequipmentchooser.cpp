@@ -3,7 +3,6 @@
 MeltdownEquipmentChooser::MeltdownEquipmentChooser(Character& character)
 	: ArmamentChooser(character)
 {
-	cancelAllowed = false;
 
 }
 

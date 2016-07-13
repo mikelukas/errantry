@@ -13,7 +13,7 @@ class MonsterMeltdownEffect: public MeltdownEffect
 		EquipmentLine* chooseEquipment() const;
 
 	public:
-		MonsterMeltdownEffect(Element, Character&, Character&);
+		MonsterMeltdownEffect(const EffectParams&);
 		virtual ~MonsterMeltdownEffect() {}
 };
 

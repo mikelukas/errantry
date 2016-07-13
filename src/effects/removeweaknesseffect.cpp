@@ -1,8 +1,8 @@
 #include "../character.h"
 #include "removeweaknesseffect.h"
 
-RemoveWeaknessEffect::RemoveWeaknessEffect(Element element, Character& applier, Character& target)
-	: Effect(element, applier, target),
+RemoveWeaknessEffect::RemoveWeaknessEffect(const EffectParams& effectParams)
+	: Effect(effectParams),
 	  weaknessToRemove(none)
 {
 

@@ -14,7 +14,7 @@ class MonsterAddWeaknessEffect: public AddWeaknessEffect
 		Element chooseWeakness();
 
 	public:
-		MonsterAddWeaknessEffect(Element, Character&, Character&);
+		MonsterAddWeaknessEffect(const EffectParams&);
 		virtual ~MonsterAddWeaknessEffect() {}
 };
 

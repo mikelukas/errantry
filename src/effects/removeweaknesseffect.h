@@ -19,7 +19,7 @@ class RemoveWeaknessEffect : public Effect
 		virtual Element chooseWeakness() = 0;
 
 	public:
-		RemoveWeaknessEffect(Element, Character&, Character&);
+		RemoveWeaknessEffect(const EffectParams&);
 		virtual ~RemoveWeaknessEffect() {}
 
 		virtual bool setup();

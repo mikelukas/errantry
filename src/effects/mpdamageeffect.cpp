@@ -5,8 +5,8 @@
 using std::cout;
 using std::endl;
 
-MpDamageEffect::MpDamageEffect(Element element, Character& applier, Character& target)
-	: Effect(element, applier, target)
+MpDamageEffect::MpDamageEffect(const EffectParams& effectParams)
+	: Effect(effectParams)
 {
 
 }

@@ -35,9 +35,10 @@ bool CastableSpell::setup()
 		return false;
 	}
 
+	const EffectParams effectParams(getElement(), caster, target);
 	for(vector<int>::const_iterator it = effectIds.begin(); it != effectIds.end(); it++)
 	{
-		Effect* effectToRun = EffectFactory::getInstance()->createEffect((*it), getElement(), caster, target);
+		Effect* effectToRun = EffectFactory::getInstance()->createEffect((*it), effectParams);
 		if(effectToRun == NULL)
 		{
 			cout<<"WARNING: spell references effects that do not exist."<<endl;

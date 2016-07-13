@@ -11,7 +11,7 @@ const int BASE_ELEMENTAL_DAMAGE = 20;
 class ElementalDamageEffect: public Effect
 {
 	public:
-		ElementalDamageEffect(Element, Character&, Character&);
+		ElementalDamageEffect(const EffectParams&);
 		virtual ~ElementalDamageEffect() {}
 
 		virtual void run();

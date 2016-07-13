@@ -5,8 +5,8 @@
 using std::cout;
 using std::endl;
 
-HealEffect::HealEffect(Element element, Character& applier, Character& target)
-	: Effect(element, applier, target)
+HealEffect::HealEffect(const EffectParams& effectParams)
+	: Effect(effectParams)
 {
 
 }

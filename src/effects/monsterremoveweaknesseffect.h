@@ -12,7 +12,7 @@ class MonsterRemoveWeaknessEffect : public RemoveWeaknessEffect
 		Element chooseWeakness();
 
 	public:
-		MonsterRemoveWeaknessEffect(Element, Character&, Character&);
+		MonsterRemoveWeaknessEffect(const EffectParams&);
 		virtual ~MonsterRemoveWeaknessEffect() {}
 };
 

@@ -9,7 +9,7 @@ const int BASE_MP_DROP = 10;
 class MpDamageEffect: public Effect
 {
 	public:
-		MpDamageEffect(Element, Character&, Character&);
+		MpDamageEffect(const EffectParams&);
 		virtual ~MpDamageEffect() {}
 
 		virtual void run();

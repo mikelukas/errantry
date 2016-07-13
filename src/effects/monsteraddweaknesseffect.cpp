@@ -4,10 +4,9 @@
 
 using std::set;
 
-MonsterAddWeaknessEffect::MonsterAddWeaknessEffect(Element element, Character& applier, Character& target)
-	: AddWeaknessEffect(element, applier, target)
+MonsterAddWeaknessEffect::MonsterAddWeaknessEffect(const EffectParams& effectParams)
+	: AddWeaknessEffect(effectParams)
 {
-	// TODO Auto-generated constructor stub
 
 }
 

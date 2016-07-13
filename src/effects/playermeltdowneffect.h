@@ -13,7 +13,7 @@ class PlayerMeltdownEffect : public MeltdownEffect
 
 		bool validateQuantityChoice(int, int) const;
 	public:
-		PlayerMeltdownEffect(Element, Character&, Character&);
+		PlayerMeltdownEffect(const EffectParams&);
 		virtual ~PlayerMeltdownEffect() {}
 };
 

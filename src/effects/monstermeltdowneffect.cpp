@@ -6,8 +6,8 @@
 using std::cout;
 using std::endl;
 
-MonsterMeltdownEffect::MonsterMeltdownEffect(Element element, Character& applier, Character& target)
-	: MeltdownEffect(element, applier, target)
+MonsterMeltdownEffect::MonsterMeltdownEffect(const EffectParams& effectParams)
+	: MeltdownEffect(effectParams)
 {
 
 }

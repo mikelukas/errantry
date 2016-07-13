@@ -2,8 +2,8 @@
 #include "../character.h"
 
 
-AddWeaknessEffect::AddWeaknessEffect(Element element, Character& applier, Character& target)
-	: Effect(element, applier, target),
+AddWeaknessEffect::AddWeaknessEffect(const EffectParams& effectParams)
+	: Effect(effectParams),
 	  weaknessToAdd(none)
 {
 

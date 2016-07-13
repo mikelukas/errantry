@@ -9,7 +9,7 @@ const int BASE_HEAL_HP = 25;
 class HealEffect: public Effect
 {
 	public:
-		HealEffect(Element, Character&, Character&);
+		HealEffect(const EffectParams&);
 		virtual ~HealEffect() {}
 
 		virtual void run();

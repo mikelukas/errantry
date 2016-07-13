@@ -1,8 +1,8 @@
 #include "../elementchooser.h"
 #include "playeraddweaknesseffect.h"
 
-PlayerAddWeaknessEffect::PlayerAddWeaknessEffect(Element element, Character& applier, Character& target)
-	: AddWeaknessEffect(element, applier, target)
+PlayerAddWeaknessEffect::PlayerAddWeaknessEffect(const EffectParams& effectParams)
+	: AddWeaknessEffect(effectParams)
 {
 
 }

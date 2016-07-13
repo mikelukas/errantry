@@ -11,7 +11,7 @@ const int BASE_DRAIN_HP = 15;
 class DrainEffect: public Effect
 {
 	public:
-		DrainEffect(Element, Character&, Character&);
+		DrainEffect(const EffectParams&);
 		virtual ~DrainEffect() {}
 
 		virtual void run();

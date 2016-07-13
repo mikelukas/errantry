@@ -7,8 +7,8 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-PlayerMeltdownEffect::PlayerMeltdownEffect(Element element, Character& applier, Character& target)
-	: MeltdownEffect(element, applier, target)
+PlayerMeltdownEffect::PlayerMeltdownEffect(const EffectParams& effectParams)
+	: MeltdownEffect(effectParams)
 {
 
 }

@@ -2,8 +2,8 @@
 #include "monsterremoveweaknesseffect.h"
 #include "../randutils.h"
 
-MonsterRemoveWeaknessEffect::MonsterRemoveWeaknessEffect(Element element, Character& applier, Character& target)
-	: RemoveWeaknessEffect(element, applier, target)
+MonsterRemoveWeaknessEffect::MonsterRemoveWeaknessEffect(const EffectParams& effectParams)
+	: RemoveWeaknessEffect(effectParams)
 {
 
 }

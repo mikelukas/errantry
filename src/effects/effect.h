@@ -5,6 +5,16 @@
 
 class Character;  //Forward declaration since Spell and Character are interdependent, and Spell Depends on Effects
 
+struct EffectParams
+{
+	Element element;    //Used for things such as applying magic damage
+
+	Character& applier; //Character causing the effect
+	Character& target;  //Character receiving the effect (can be same as applier)
+
+	EffectParams(Element, Character&, Character&);
+};
+
 /* Abstract base class for Effects - scripted actions to run on a target, which
  * can be referenced by things like spells.  Effects have an associated Element
  * to use when applicable, which can be provided by the code creating the Effect.
@@ -25,7 +35,7 @@ class Effect
 		Character& target;  //Character receiving the effect (can be same as applier)
 
 	public:
-		Effect(Element, Character&, Character&);
+		Effect(const EffectParams&);
 		virtual ~Effect() {}
 
 		virtual bool setup() { return true; }

@@ -14,7 +14,7 @@ class ChannelEffect: public Effect
 		bool validateChannelDamage(int);
 
 	public:
-		ChannelEffect(Element, Character&, Character&);
+		ChannelEffect(const EffectParams&);
 		virtual ~ChannelEffect() {}
 
 		virtual bool setup();

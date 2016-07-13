@@ -19,7 +19,7 @@ class AddWeaknessEffect: public Effect
 		virtual Element chooseWeakness() = 0;
 
 	public:
-		AddWeaknessEffect(Element, Character&, Character&);
+		AddWeaknessEffect(const EffectParams&);
 		virtual ~AddWeaknessEffect() {}
 
 		virtual bool setup();

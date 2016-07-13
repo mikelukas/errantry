@@ -5,8 +5,8 @@
 using std::cout;
 using std::endl;
 
-MeltdownEffect::MeltdownEffect(Element element, Character& applier, Character& target)
-	: Effect(element, applier, target),
+MeltdownEffect::MeltdownEffect(const EffectParams& effectParams)
+	: Effect(effectParams),
 	  meltdownChoice(NULL)
 {
 

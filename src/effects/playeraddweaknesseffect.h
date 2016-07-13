@@ -11,7 +11,7 @@ class PlayerAddWeaknessEffect: public AddWeaknessEffect
 		virtual Element chooseWeakness();
 
 	public:
-		PlayerAddWeaknessEffect(Element, Character&, Character&);
+		PlayerAddWeaknessEffect(const EffectParams&);
 		virtual ~PlayerAddWeaknessEffect() {}
 };
 

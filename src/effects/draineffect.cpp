@@ -5,8 +5,8 @@
 using std::cout;
 using std::endl;
 
-DrainEffect::DrainEffect(Element element, Character& applier, Character& target)
-	: Effect(element, applier, target)
+DrainEffect::DrainEffect(const EffectParams& effectParams)
+	: Effect(effectParams)
 {
 
 }

@@ -6,8 +6,8 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-ChannelEffect::ChannelEffect(Element element, Character& applier, Character& target)
-	: Effect(element, applier, target),
+ChannelEffect::ChannelEffect(const EffectParams& effectParams)
+	: Effect(effectParams),
 	  hpToChannel(0)
 {
 

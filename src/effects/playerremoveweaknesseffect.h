@@ -10,7 +10,7 @@ class PlayerRemoveWeaknessEffect : public RemoveWeaknessEffect
 		Element chooseWeakness();
 
 	public:
-		PlayerRemoveWeaknessEffect(Element, Character&, Character&);
+		PlayerRemoveWeaknessEffect(const EffectParams&);
 		virtual ~PlayerRemoveWeaknessEffect() {}
 };
 

@@ -2,8 +2,8 @@
 #include "../elementchooser.h"
 #include "playerremoveweaknesseffect.h"
 
-PlayerRemoveWeaknessEffect::PlayerRemoveWeaknessEffect(Element element, Character& applier, Character& target)
-	: RemoveWeaknessEffect(element, applier, target)
+PlayerRemoveWeaknessEffect::PlayerRemoveWeaknessEffect(const EffectParams& effectParams)
+	: RemoveWeaknessEffect(effectParams)
 {
 
 }

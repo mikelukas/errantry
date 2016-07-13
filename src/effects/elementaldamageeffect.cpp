@@ -5,8 +5,8 @@
 using std::cout;
 using std::endl;
 
-ElementalDamageEffect::ElementalDamageEffect(Element element, Character& applier, Character& target)
-	: Effect(element, applier, target)
+ElementalDamageEffect::ElementalDamageEffect(const EffectParams& effectParams)
+	: Effect(effectParams)
 {
 
 }

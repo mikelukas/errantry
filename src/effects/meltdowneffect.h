@@ -15,7 +15,7 @@ protected:
 	virtual EquipmentLine* chooseEquipment() const = 0;
 
 public:
-	MeltdownEffect(Element, Character&, Character&);
+	MeltdownEffect(const EffectParams&);
 	virtual ~MeltdownEffect();
 
 	virtual bool setup();

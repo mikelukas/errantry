@@ -32,10 +32,10 @@ Effect* EffectFactory::createEffect(int effectNameOrdinal, const EffectParams& e
 	//postcondition: convenience method to convert an integer ordinal for an
 	//effect id to an enum value, before calling the main createEffect with that instead.
 
-	return createEffect(static_cast<EffectName>(effectNameOrdinal), effectParams);
+	return createEffect(static_cast<EffectType>(effectNameOrdinal), effectParams);
 }
 
-Effect* EffectFactory::createEffect(EffectName effectId, const EffectParams& effectParams) const
+Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& effectParams) const
 {
 	//postcondition: allocates a new Effect subclass matching the given id, with
 	//the given parameters passed to its constructor.  Effect should be freed by

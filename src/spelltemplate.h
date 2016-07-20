@@ -15,7 +15,6 @@ using std::vector;
 
 const int NUM_SPELL_CATEGORIES = 4;
 enum SpellCategory {ATTACK, HEALING, OFFENSIVE_ASSIST, DEFENSIVE_ASSIST};
-enum SpellLocale {FIELD, BATTLE};
 enum TargetType {PLAYER, MONSTER};
 
 /* This class contains all information about a spell, but can't actually be cast.

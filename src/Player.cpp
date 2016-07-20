@@ -174,7 +174,7 @@ EquipmentLine& Player::getEquipmentLineFromInventoryFor(const Equipment* equipme
 		}
 	}
 
-vector<const SpellTemplate*>* Player::getSpellsForLocale(SpellLocale locale) const
+vector<const SpellTemplate*>* Player::getSpellsForLocale(Context locale) const
 	{
 		//postcondition: allocates a new vector containing only spell pointers
 		//from the player's inventory that can be cast in the given locale.

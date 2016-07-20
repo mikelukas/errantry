@@ -27,6 +27,23 @@ const EffectFactory* EffectFactory::getInstance()
 	return instance;
 }
 
+EffectFactory::EffectFactory()
+{
+	//TODO replace with actual StatusTemplate initializations once there are actually Statuses
+	Context testContexts[] = {FIELD, BATTLE};
+	statusesByType[ELEMENTAL_DAMAGE] = new StatusTemplate("test", ELEMENTAL_DAMAGE, UNLIMITED_DURATION, new vector<const Context>(&(testContexts[0]), &(testContexts[0])+1));
+}
+
+EffectFactory::~EffectFactory()
+{
+	//Delete all StatusTemplates and remove their entries from hte map
+	for(map<EffectType, const StatusTemplate*>::iterator it = statusesByType.begin(); it != statusesByType.end(); it++)
+	{
+		delete (it->second);
+		statusesByType.erase(it->first);
+	}
+}
+
 Effect* EffectFactory::createEffect(int effectNameOrdinal, const EffectParams& effectParams) const
 {
 	//postcondition: convenience method to convert an integer ordinal for an

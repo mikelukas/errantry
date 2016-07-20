@@ -14,7 +14,7 @@ class ElementalDamageEffect: public Effect
 		ElementalDamageEffect(const EffectParams&);
 		virtual ~ElementalDamageEffect() {}
 
-		virtual void run();
+		virtual void apply();
 };
 
 #endif

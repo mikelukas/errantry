@@ -33,7 +33,7 @@ bool MeltdownEffect::setup()
 	return (meltdownChoice != NULL);
 }
 
-void MeltdownEffect::run()
+void MeltdownEffect::apply()
 {
 	//postcondition: removes meltdownChoice from applier's inventory, converts it
 	//raw magical damage of this effect's element, applies it to the target,

@@ -67,7 +67,7 @@ void CastableSpell::cast()
 
 	for(vector<Effect*>::const_iterator it = initializedEffects.begin(); it != initializedEffects.end(); it++)
 	{
-		(*it)->run();
+		(*it)->apply();
 	}
 
 	clearInitializedEffects();

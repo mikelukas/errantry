@@ -12,7 +12,7 @@ class HealEffect: public Effect
 		HealEffect(const EffectParams&);
 		virtual ~HealEffect() {}
 
-		virtual void run();
+		virtual void apply();
 };
 
 #endif

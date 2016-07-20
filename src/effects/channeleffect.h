@@ -18,7 +18,7 @@ class ChannelEffect: public Effect
 		virtual ~ChannelEffect() {}
 
 		virtual bool setup();
-		virtual void run();
+		virtual void apply();
 };
 
 #endif

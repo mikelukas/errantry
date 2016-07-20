@@ -11,7 +11,7 @@ HealEffect::HealEffect(const EffectParams& effectParams)
 
 }
 
-void HealEffect::run()
+void HealEffect::apply()
 {
 	//postcondition: BASE_HEAL_HP is added to target's HP.
 

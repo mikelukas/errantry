@@ -14,7 +14,7 @@ class DrainEffect: public Effect
 		DrainEffect(const EffectParams&);
 		virtual ~DrainEffect() {}
 
-		virtual void run();
+		virtual void apply();
 };
 
 #endif

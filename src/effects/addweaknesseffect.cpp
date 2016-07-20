@@ -20,7 +20,7 @@ bool AddWeaknessEffect::setup()
 	return (weaknessToAdd != none); //if none is the weakness, then must not have been able to choose one.
 }
 
-void AddWeaknessEffect::run()
+void AddWeaknessEffect::apply()
 {
 	//postcondition: weaknessToAdd is added to the target, with a message
 	//displayed as to what weakness was added.

@@ -39,7 +39,7 @@ class Effect
 		virtual ~Effect() {}
 
 		virtual bool setup() { return true; }
-		virtual void run() = 0;
+		virtual void apply() = 0;
 };
 
 #endif

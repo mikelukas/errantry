@@ -12,7 +12,7 @@ class MpDamageEffect: public Effect
 		MpDamageEffect(const EffectParams&);
 		virtual ~MpDamageEffect() {}
 
-		virtual void run();
+		virtual void apply();
 };
 
 #endif

@@ -23,7 +23,7 @@ class RemoveWeaknessEffect : public Effect
 		virtual ~RemoveWeaknessEffect() {}
 
 		virtual bool setup();
-		virtual void run();
+		virtual void apply();
 };
 
 #endif

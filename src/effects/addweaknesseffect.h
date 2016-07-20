@@ -23,7 +23,7 @@ class AddWeaknessEffect: public Effect
 		virtual ~AddWeaknessEffect() {}
 
 		virtual bool setup();
-		virtual void run();
+		virtual void apply();
 };
 
 #endif

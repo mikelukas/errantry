@@ -11,7 +11,7 @@ ElementalDamageEffect::ElementalDamageEffect(const EffectParams& effectParams)
 
 }
 
-void ElementalDamageEffect::run()
+void ElementalDamageEffect::apply()
 {
 	//postcondition: BASE_ELEMENTAL_DAMAGE magic damage, of an elemental type
 	//matching this EFfect's element is applied to the target, with message

@@ -483,3 +483,118 @@ int Character::applyMagicalDamage(int rawDamage, Element element)
 
 	    return netDamage;
 	}
+
+void Character::addStatus(StatusEffect* status)
+	{
+		//postcondition: if the character does not already have the given status,
+		//it is added to its statuses, and onAdd() is invoked on the status
+		//to run any initial/setup effects, in that order.
+
+		if(statuses.count(status->getType()) > 0)
+		{
+			return; //can't add the same status more than once.
+		}
+
+		//Add status to both lookup maps
+		statuses[status->getType()] = status;
+		const vector<const Context>* statusContexts = status->getEligibleContexts();
+		for(vector<const Context>::iterator it = statusContexts->begin(); it != statusContexts->end(); it++)
+		{
+			statusesByContext[(*it)].insert(status);
+		}
+
+		status->onAdd();
+	}
+
+void Character::removeStatus(const EffectType statusType)
+	{
+		//postcondition: if the character the given status, it is removed from
+		//its statuses map, then the statusByContext map, then onRemove() is invoked
+		//on the status to run any cleanup effects, and the status is deallocated,
+		//in that order.
+
+		map<const EffectType,StatusEffect*>::iterator statusIt = statuses.find(statusType);
+		if(statusIt == statuses.end())
+		{
+			return; //can't remove a status player doesn't have
+		}
+
+		StatusEffect* status = statusIt->second;
+		statuses.erase(statusIt);
+
+		const vector<const Context>* statusContexts = status->getEligibleContexts();
+		for(vector<const Context>::iterator it = statusContexts->begin(); it != statusContexts->end(); it++)
+		{
+			statusesByContext[(*it)].erase(status);
+		}
+
+		status->onRemove();
+		delete status;
+	}
+
+void Character::removeStatusesFor(const Context context)
+	{
+		//postcondition: all statuses the Character has for the given context are
+		//removed from statuses, one at a time, calling onRemove() on each after it is
+		//is removed and then deallocating it, followed by clearing the set of
+		//StatusEffects in the statusesByContext map for that Context, in that order.
+
+		//Remove every status for the given context from the statuses map first
+		set<StatusEffect*> toRemove = statusesByContext[context];
+		for(set<StatusEffect*>::iterator it = toRemove.begin(); it != toRemove.end(); it++)
+		{
+			statuses.erase((*it)->getType());
+			(*it)->onRemove();
+			delete (*it);
+		}
+
+		//Empty the vector of statuses for that context next
+		toRemove.clear();
+	}
+
+void Character::processStatusesFor(const Context context)
+	{
+		//postcondition: calls onTurn() on every status the Character has,
+		//and removes statuses that become expired after doing so.
+
+		vector<StatusEffect*> expiredStatuses;
+
+		//Call onTurn() on every status, track if status is expired after doing so (don't want to remove while iterating
+		set<StatusEffect*> statuses = statusesByContext[context];
+		for(set<StatusEffect*>::iterator it = statuses.begin(); it != statuses.end(); it++)
+		{
+			(*it)->onTurn();
+			if((*it)->isExpired())
+			{
+				expiredStatuses.push_back((*it));
+			}
+		}
+
+		//Remove all expired statuses
+		for(int i=0; i < expiredStatuses.size(); i++)
+		{
+			removeStatus(expiredStatuses[i]->getType());
+		}
+	}
+
+bool Character::hasStatus(const EffectType statusType) const
+	{
+		//postcondition: returns true if the Character currently has a status matching
+		//the given type, false otherwise.
+
+		return statuses.count(statusType) > 0;
+	}
+
+vector<StatusEffect*>* Character::getAllStatuses() const
+	{
+		//postcondition: allocates a new vector containing pointers to all StatusEffects*
+		//the Character currently has.
+
+		vector<StatusEffect*>* statusVector = new vector<StatusEffect*>(); //freed by caller
+		for(map<const EffectType, StatusEffect*>::const_iterator it = statuses.begin(); it != statuses.end(); it++)
+		{
+			statusVector->push_back(it->second);
+		}
+
+		return statusVector;
+	}

@@ -4,8 +4,11 @@
 #include <map>
 #include <set>
 #include <string>
+#include "context.h"
+#include "effecttype.h"
 #include "equipment.h"
 #include "spelltemplate.h"
+#include "statuses/statuseffect.h"
 
 using std::map;
 using std::set;
@@ -43,6 +46,9 @@ class Character
 
             set<const SpellTemplate*> spells;
 			map<SpellCategory, set<const SpellTemplate*> > categorizedSpells;
+
+			map<const EffectType, StatusEffect*> statuses;
+			map<const Context, set<StatusEffect*> > statusesByContext;
                     
             void AddStats(const StatMod&);
 			void SubStats(const StatMod&);
@@ -94,6 +100,15 @@ class Character
 
             void addWeakness(Element);
             void removeWeakness(Element);
+
+            void addStatus(StatusEffect*);
+            void removeStatus(const EffectType);
+            void removeStatusesFor(const Context);
+
+            void processStatusesFor(const Context);
+
+            bool hasStatus(const EffectType) const;
+            vector<StatusEffect*>* getAllStatuses() const;
     };
 
 #endif

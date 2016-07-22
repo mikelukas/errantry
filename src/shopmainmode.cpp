@@ -2,7 +2,7 @@
 #include "shopmainmode.h"
 
 ShopMainMode::ShopMainMode(const Town& town, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState),
+	: MenuMode(gameData, gameState, FIELD),
 	  currentTown(town)
 {
 

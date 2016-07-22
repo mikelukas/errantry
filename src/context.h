@@ -3,6 +3,6 @@
 
 /* Context in which things like Spells and Effects can be applied.
  * In a separate to lighten dependencies. */
-enum Context {FIELD, BATTLE};
+enum Context {FIELD, BATTLE, NO_CONTEXT};
 
 #endif

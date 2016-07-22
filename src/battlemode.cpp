@@ -5,7 +5,7 @@
 #include "randutils.h"
 
 BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState),
+	: MenuMode(gameData, gameState, BATTLE),
 	  currMonster(monster),
 	  actionQueue()
 {
@@ -24,6 +24,16 @@ BattleMode::~BattleMode()
 		actionQueue.pop();
 		delete action;
 	}
+}
+
+void BattleMode::processStatusEffects()
+{
+	//postcondition: the super class processStatusEffects method is run, then
+	//processStatusesFor is called on the current monster too to process their
+	//statuses.
+
+	MenuMode::processStatusEffects();
+	currMonster.processStatusesFor(context);
 }
 
 void BattleMode::run()

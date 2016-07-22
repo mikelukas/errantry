@@ -37,6 +37,7 @@ class BattleMode : public MenuMode
 		BattleMode(Monster, GameData&, GameState&);
 		~BattleMode();
 
+		virtual void processStatusEffects();
 		virtual void run();
 };
 

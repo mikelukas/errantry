@@ -56,6 +56,7 @@ void MainGame(GameData& gameData, GameState& gameState)
 
         while(!gameState.isGameOver())
             {
+        		gameState.getCurrentMode()->processStatusEffects();
         		gameState.getCurrentMode()->run();
 
         		gameState.handleExitModeRequest();

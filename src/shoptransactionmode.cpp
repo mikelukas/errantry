@@ -2,7 +2,7 @@
 #include "shoptransactionmode.h"
 
 ShopTransactionMode::ShopTransactionMode(vector<EquipmentLine*>* equipmentChoices, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState),
+	: MenuMode(gameData, gameState, FIELD),
 	  equipmentChoices(equipmentChoices),
 	  equipmentChoice(NULL)
 {

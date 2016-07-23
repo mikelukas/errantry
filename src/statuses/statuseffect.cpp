@@ -1,3 +1,4 @@
+#include "../character.h"
 #include "statuseffect.h"
 
 StatusEffect::StatusEffect(const StatusTemplate& statusTemplate, const EffectParams& effectParams)
@@ -37,4 +38,11 @@ void StatusEffect::onTurn()
 	{
 		durationTurns--;
 	}
+}
+
+void StatusEffect::apply()
+{
+	//postcondition: addStatus is called on the target with a pointer to this status.
+
+	target.addStatus(this);
 }

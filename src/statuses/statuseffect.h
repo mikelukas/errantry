@@ -32,6 +32,8 @@ class StatusEffect: public StatusTemplate, public Effect
 		void onRemove() {}
 
 		void onTurn();
+
+		virtual void apply();
 };
 
 #endif

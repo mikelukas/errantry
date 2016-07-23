@@ -23,6 +23,16 @@ Character::Character(int hpVar, int mpVar, int apVar, int dpVar, int mdpVar, int
         //the attributes given
 		name = "none";
     }
+
+Character::~Character()
+	{
+		//de-allocate StatusEffects added to this Character that haven't been removed.
+		for(map<const EffectType, StatusEffect*>::const_iterator it = statuses.begin(); it != statuses.end(); it++)
+		{
+			delete it->second;
+		}
+	}
+
 //Public Member functions--------------------------------------------//
 void Character::ChangeHP(int hpChange)
     {

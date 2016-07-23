@@ -14,8 +14,13 @@ BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState
 
 BattleMode::~BattleMode()
 {
-	//postcondition: if there were unused actions in the queue b/c we returned
+	//postcondition: statuses are removed from teh player and monster objects,
+	//and if there were unused actions in the queue b/c we returned
 	//from executeActions() early because battle ended, they will be deleted.
+
+	//Battle-only statuses don't last outside of battle
+	gameState.getPlayer().removeStatusesFor(context);
+	currMonster.removeStatusesFor(context);
 
 	while(!actionQueue.empty())
 	{

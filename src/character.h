@@ -57,7 +57,7 @@ class Character
 
         public:
             Character(int, int, int, int, int, int, int, int);
-            virtual ~Character() {};
+            virtual ~Character();
 
             void ChangeHP(int);
             void ChangeMP(int);

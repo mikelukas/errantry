@@ -10,7 +10,6 @@
 #include <string>
 #include <vector>
 #include "character.h"
-#include "context.h"
 #include "point.h"
 
 using std::map;
@@ -71,7 +70,7 @@ class Player : public Character
 
             EquipmentLine& getEquipmentLineFromInventoryFor(const Equipment*);
 
-            vector<const SpellTemplate*>* getSpellsForLocale(Context locale) const;
+            vector<const SpellTemplate*>* getSpellsForLocale(SpellLocale locale) const;
 
             const Equipment* getCurrentEquipped(EquipType);
 

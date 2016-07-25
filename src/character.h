@@ -105,7 +105,7 @@ class Character
             void removeStatus(const EffectType);
             void removeStatusesFor(const Context);
 
-            void processStatusesFor(const Context);
+            void processStatusEffects();
 
             bool hasStatus(const EffectType) const;
             vector<StatusEffect*>* getAllStatuses() const;

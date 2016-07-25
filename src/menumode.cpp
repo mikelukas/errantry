@@ -6,12 +6,6 @@ MenuMode::MenuMode(GameData& gameData, GameState& gameState)
 
 }
 
-MenuMode::MenuMode(GameData& gameData, GameState& gameState, const Context context)
-	: GameMode(gameData, gameState, context)
-{
-
-}
-
 void MenuMode::run()
 {
 	int choice = displayMenu();

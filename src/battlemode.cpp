@@ -5,7 +5,7 @@
 #include "randutils.h"
 
 BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState, BATTLE),
+	: MenuMode(gameData, gameState),
 	  currMonster(monster),
 	  actionQueue()
 {
@@ -14,14 +14,15 @@ BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState
 
 BattleMode::~BattleMode()
 {
-	//postcondition: statuses are removed from teh player and monster objects,
-	//and if there were unused actions in the queue b/c we returned
+	//postcondition: battle-only statuses are removed from the player and monster
+	//objects, and if there were unused actions in the queue b/c we returned
 	//from executeActions() early because battle ended, they will be deleted.
 
 	//Battle-only statuses don't last outside of battle
-	gameState.getPlayer().removeStatusesFor(context);
-	currMonster.removeStatusesFor(context);
+	gameState.getPlayer().removeStatusesFor(BATTLE_ONLY);
+	currMonster.removeStatusesFor(BATTLE_ONLY);
 
+	//Free up unused BattleActions
 	while(!actionQueue.empty())
 	{
 		BattleAction* action = actionQueue.front();
@@ -34,11 +35,11 @@ BattleMode::~BattleMode()
 void BattleMode::processStatusEffects()
 {
 	//postcondition: the super class processStatusEffects method is run, then
-	//processStatusesFor is called on the current monster too to process their
-	//statuses.
+	//processStatusEffets() is called on the current monster too to process their
+	//statuses too.
 
 	MenuMode::processStatusEffects();
-	currMonster.processStatusesFor(context);
+	currMonster.processStatusEffects();
 }
 
 void BattleMode::run()

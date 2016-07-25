@@ -17,12 +17,9 @@ class GameMode
 		GameData& gameData;
 		GameState& gameState;
 
-		const Context context;
-
 	public:
 		GameMode(GameData& gameData, GameState& gameState);
-		GameMode(GameData& gameData, GameState& gameState, Context context);
-		virtual ~GameMode();
+		virtual ~GameMode() {};
 
 		virtual void processStatusEffects();
 

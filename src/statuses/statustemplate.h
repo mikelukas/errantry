@@ -18,16 +18,16 @@ class StatusTemplate
 		const string& name;
 		const EffectType type;
 		int durationTurns;
-		const vector<const Context>* eligibleContexts; //freed in destructor
+		const Context eligibleContext;
 
 	public:
-		StatusTemplate(const string&, EffectType, int, const vector<const Context>*);
-		virtual ~StatusTemplate();
+		StatusTemplate(const string&, EffectType, int, const Context);
+		virtual ~StatusTemplate() {};
 
 		const string& getName() const;
 		const EffectType getType() const;
 		const int getDuration() const;
-		const vector<const Context>* getEligibleContexts() const;
+		const Context getEligibleContext() const;
 };
 
 #endif

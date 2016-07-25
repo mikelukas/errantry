@@ -497,7 +497,7 @@ int Character::applyMagicalDamage(int rawDamage, Element element)
 void Character::addStatus(StatusEffect* status)
 	{
 		//postcondition: if the character does not already have the given status,
-		//it is added to its statuses, and onAdd() is invoked on the status
+		//it is added to its status maps, and onAdd() is invoked on the status
 		//to run any initial/setup effects, in that order.
 
 		if(statuses.count(status->getType()) > 0)
@@ -507,11 +507,7 @@ void Character::addStatus(StatusEffect* status)
 
 		//Add status to both lookup maps
 		statuses[status->getType()] = status;
-		const vector<const Context>* statusContexts = status->getEligibleContexts();
-		for(vector<const Context>::iterator it = statusContexts->begin(); it != statusContexts->end(); it++)
-		{
-			statusesByContext[(*it)].insert(status);
-		}
+		statusesByContext[status->getEligibleContext()].insert(status);
 
 		status->onAdd();
 	}
@@ -530,13 +526,9 @@ void Character::removeStatus(const EffectType statusType)
 		}
 
 		StatusEffect* status = statusIt->second;
-		statuses.erase(statusIt);
 
-		const vector<const Context>* statusContexts = status->getEligibleContexts();
-		for(vector<const Context>::iterator it = statusContexts->begin(); it != statusContexts->end(); it++)
-		{
-			statusesByContext[(*it)].erase(status);
-		}
+		statuses.erase(statusIt);
+		statusesByContext[status->getEligibleContext()].erase(status);
 
 		status->onRemove();
 		delete status;
@@ -562,7 +554,7 @@ void Character::removeStatusesFor(const Context context)
 		toRemove.clear();
 	}
 
-void Character::processStatusesFor(const Context context)
+void Character::processStatusEffects()
 	{
 		//postcondition: calls onTurn() on every status the Character has,
 		//and removes statuses that become expired after doing so.
@@ -570,13 +562,14 @@ void Character::processStatusesFor(const Context context)
 		vector<StatusEffect*> expiredStatuses;
 
 		//Call onTurn() on every status, track if status is expired after doing so (don't want to remove while iterating
-		set<StatusEffect*> statuses = statusesByContext[context];
-		for(set<StatusEffect*>::iterator it = statuses.begin(); it != statuses.end(); it++)
+		for(map<const EffectType, StatusEffect*>::iterator it = statuses.begin(); it != statuses.end(); it++)
 		{
-			(*it)->onTurn();
-			if((*it)->isExpired())
+			StatusEffect* status = it->second;
+
+			status->onTurn();
+			if(status->isExpired())
 			{
-				expiredStatuses.push_back((*it));
+				expiredStatuses.push_back(status);
 			}
 		}
 

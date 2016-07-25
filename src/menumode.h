@@ -21,7 +21,6 @@ class MenuMode : public GameMode
 
 	public:
 		MenuMode(GameData&, GameState& gameState);
-		MenuMode(GameData&, GameState& gameState, const Context);
 		~MenuMode() { };
 
 		virtual void run(); //Calls displayMenu, followed by testChoice with player's choice from menu

@@ -2,7 +2,7 @@
 #include "gamestate.h"
 
 BuySpellsMode::BuySpellsMode(const Town& currentTown, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState, FIELD)
+	: MenuMode(gameData, gameState)
 {
 	//This vector will be freed in spellChooser's destructor
 	vector<const SpellTemplate*>* shopSpells = gameData.getSpellsForIds(currentTown.getShopSpellIds());

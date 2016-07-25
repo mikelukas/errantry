@@ -30,8 +30,7 @@ const EffectFactory* EffectFactory::getInstance()
 EffectFactory::EffectFactory()
 {
 	//TODO replace with actual StatusTemplate initializations once there are actually Statuses
-	Context testContexts[] = {FIELD, BATTLE};
-	statusesByType[ELEMENTAL_DAMAGE] = new StatusTemplate("test", ELEMENTAL_DAMAGE, UNLIMITED_DURATION, new vector<const Context>(&(testContexts[0]), &(testContexts[0])+1));
+	statusesByType[ELEMENTAL_DAMAGE] = new StatusTemplate("test", ELEMENTAL_DAMAGE, UNLIMITED_DURATION, BATTLE_ONLY);
 }
 
 EffectFactory::~EffectFactory()

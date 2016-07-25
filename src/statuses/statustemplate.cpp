@@ -1,19 +1,12 @@
 #include "statustemplate.h"
 
-StatusTemplate::StatusTemplate(const string& name, EffectType type, int duration, const vector<const Context>* eligibleContexts)
+StatusTemplate::StatusTemplate(const string& name, EffectType type, int duration, const Context eligibleContext)
 	: name(name),
 	  type(type),
 	  durationTurns(duration),
-	  eligibleContexts(eligibleContexts)
+	  eligibleContext(eligibleContext)
 {
 
-}
-
-StatusTemplate::~StatusTemplate()
-{
-	//postcondition: deletes eligibleContexts vector.
-
-	delete eligibleContexts;
 }
 
 const string& StatusTemplate::getName() const
@@ -37,9 +30,9 @@ const int StatusTemplate::getDuration() const
 	return durationTurns;
 }
 
-const vector<const Context>* StatusTemplate::getEligibleContexts() const
+const Context StatusTemplate::getEligibleContext() const
 {
 	//postcondition: returns the contexts in which this Status can be processed.
 
-	return eligibleContexts;
+	return eligibleContext;
 }

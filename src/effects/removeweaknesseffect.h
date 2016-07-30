@@ -18,12 +18,13 @@ class RemoveWeaknessEffect : public Effect
 
 		virtual Element chooseWeakness() = 0;
 
+		virtual void runTurnEffect();
+
 	public:
 		RemoveWeaknessEffect(const EffectParams&);
 		virtual ~RemoveWeaknessEffect() {}
 
 		virtual bool setup();
-		virtual void apply();
 };
 
 #endif

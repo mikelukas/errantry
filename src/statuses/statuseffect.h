@@ -18,20 +18,16 @@
  */
 class StatusEffect: public StatusTemplate, public Effect
 {
-	protected:
-
-		void runTurnEffect() {};
-
 	public:
 		StatusEffect(const StatusTemplate&, const EffectParams&);
 		virtual ~StatusEffect() {}
 
-		bool isExpired() const;
+		virtual bool isExpired() const;
 
-		void onAdd() {}
-		void onRemove() {}
+		virtual void onAdd() {}
+		virtual void onRemove() {}
 
-		void onTurn();
+		virtual void onTurn();
 
 		virtual void apply();
 };

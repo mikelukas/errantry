@@ -14,12 +14,13 @@ protected:
 
 	virtual EquipmentLine* chooseEquipment() const = 0;
 
+	virtual void runTurnEffect();
+
 public:
 	MeltdownEffect(const EffectParams&);
 	virtual ~MeltdownEffect();
 
 	virtual bool setup();
-	virtual void apply();
 };
 
 #endif

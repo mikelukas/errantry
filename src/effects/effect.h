@@ -20,7 +20,8 @@ struct EffectParams
  * to use when applicable, which can be provided by the code creating the Effect.
  * Concrete Effects should be constructed with the EffectFactory, by providing
  * the id of the effect to create.
- * To use an Effect after it is created, call setup() first, then run(). setup()
+ * To use an Effect after it is created, call setup() first, then apply(). The
+ * Effect is considered eligible for cleanup if isExpired() returns true. setup()
  * will return true if the Effect can be run, or false if something during
  * initialization has caused the Effect to not be runnable (e.g. a player choice
  * was required and they canceled).
@@ -34,12 +35,18 @@ class Effect
 		Character& applier; //Character causing the effect
 		Character& target;  //Character receiving the effect (can be same as applier)
 
+		bool used;
+
+		virtual void runTurnEffect() {};
+
 	public:
 		Effect(const EffectParams&);
 		virtual ~Effect() {}
 
+		virtual bool isExpired() const;
+
 		virtual bool setup() { return true; }
-		virtual void apply() = 0;
+		virtual void apply();
 };
 
 #endif

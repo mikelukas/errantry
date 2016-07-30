@@ -8,11 +8,13 @@ const int BASE_MP_DROP = 10;
 /* Reduces target's MP by BASE_MP_DROP */
 class MpDamageEffect: public Effect
 {
+	protected:
+
+		virtual void runTurnEffect();
+
 	public:
 		MpDamageEffect(const EffectParams&);
 		virtual ~MpDamageEffect() {}
-
-		virtual void apply();
 };
 
 #endif

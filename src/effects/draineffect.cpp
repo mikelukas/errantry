@@ -11,7 +11,7 @@ DrainEffect::DrainEffect(const EffectParams& effectParams)
 
 }
 
-void DrainEffect::apply()
+void DrainEffect::runTurnEffect()
 {
 	//postcondition: BASE
 	int netDamage = target.applyMagicalDamage(BASE_DRAIN_HP, element);

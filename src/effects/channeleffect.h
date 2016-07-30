@@ -13,12 +13,13 @@ class ChannelEffect: public Effect
 
 		bool validateChannelDamage(int);
 
+		virtual void runTurnEffect();
+
 	public:
 		ChannelEffect(const EffectParams&);
 		virtual ~ChannelEffect() {}
 
 		virtual bool setup();
-		virtual void apply();
 };
 
 #endif

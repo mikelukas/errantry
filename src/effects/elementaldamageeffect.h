@@ -10,11 +10,13 @@ const int BASE_ELEMENTAL_DAMAGE = 20;
  */
 class ElementalDamageEffect: public Effect
 {
+	protected:
+
+		virtual void runTurnEffect();
+
 	public:
 		ElementalDamageEffect(const EffectParams&);
 		virtual ~ElementalDamageEffect() {}
-
-		virtual void apply();
 };
 
 #endif

@@ -19,7 +19,7 @@ bool RemoveWeaknessEffect::setup()
 	return (weaknessToRemove != none); //if none is the weakness, then must not have been able to choose one.
 }
 
-void RemoveWeaknessEffect::apply()
+void RemoveWeaknessEffect::runTurnEffect()
 {
 	//postcondition: weaknessToRemove is removed from the target, with a message
 	//displayed as to what weakness was removed.

@@ -49,7 +49,7 @@ bool ChannelEffect::validateChannelDamage(int inputDamage)
 	return true;
 }
 
-void ChannelEffect::apply()
+void ChannelEffect::runTurnEffect()
 {
 	//postcondition: reduces applier's HP by amount they chose to convert in setup(),
 	//and applies it as magical damage of this effect's element to the target,

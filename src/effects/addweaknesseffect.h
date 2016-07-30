@@ -18,12 +18,13 @@ class AddWeaknessEffect: public Effect
 
 		virtual Element chooseWeakness() = 0;
 
+		virtual void runTurnEffect();
+
 	public:
 		AddWeaknessEffect(const EffectParams&);
 		virtual ~AddWeaknessEffect() {}
 
 		virtual bool setup();
-		virtual void apply();
 };
 
 #endif

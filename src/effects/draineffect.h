@@ -10,11 +10,13 @@ const int BASE_DRAIN_HP = 15;
  */
 class DrainEffect: public Effect
 {
+	protected:
+
+		virtual void runTurnEffect();
+
 	public:
 		DrainEffect(const EffectParams&);
 		virtual ~DrainEffect() {}
-
-		virtual void apply();
 };
 
 #endif

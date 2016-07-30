@@ -11,7 +11,7 @@ MpDamageEffect::MpDamageEffect(const EffectParams& effectParams)
 
 }
 
-void MpDamageEffect::apply()
+void MpDamageEffect::runTurnEffect()
 {
 	//postcondition: target's MP is reduced by BASE_MP_DROP and a message is
 	//displayed about how much.

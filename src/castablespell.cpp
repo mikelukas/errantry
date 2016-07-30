@@ -2,6 +2,7 @@
 #include "castablespell.h"
 #include "character.h"
 #include "effectfactory.h"
+#include "statuses/poisonstatus.h"
 
 using std::cout;
 using std::endl;
@@ -20,7 +21,7 @@ CastableSpell::~CastableSpell()
 	//postcondition: will attempt to delete initialized effects, just in case
 	//this spell was created and setup(), but not cast
 
-	clearInitializedEffects();
+	deallocInitializedEffects();
 }
 
 bool CastableSpell::setup()
@@ -28,6 +29,13 @@ bool CastableSpell::setup()
 	//postcondition: returns true if initializedEffects is populated with
 	//concrete Effects to be applied when cast() is called, or false if one or
 	//more effects could not be setup after being constructed.
+
+	if(!initializedEffects.empty())
+	{
+		//A bug if this is reached; protects against calling setup() multiple times and adding a bunch of duplicate effects. Whatever is calling setup() 2+ times should be fixed
+		cout<<"WARNING: This spell is already initialized - was setup() called twice before casting?"<<endl;
+		deallocInitializedEffects();
+	}
 
 	if(caster.getMP() < getMpCost())
 	{
@@ -47,7 +55,7 @@ bool CastableSpell::setup()
 
 		if(!effectToRun->setup())
 		{
-			clearInitializedEffects();
+			deallocInitializedEffects();
 			return false;
 		}
 
@@ -68,12 +76,17 @@ void CastableSpell::cast()
 	for(vector<Effect*>::const_iterator it = initializedEffects.begin(); it != initializedEffects.end(); it++)
 	{
 		(*it)->apply();
+		if((*it)->isExpired())
+		{
+			delete (*it);
+		}
 	}
 
-	clearInitializedEffects();
+	//Can dispose of our pointers to Effects, since they have either been deleted or assigned to another owner, which will force setup() to be called again on this spell if casting it again is desired
+	initializedEffects.clear();
 }
 
-void CastableSpell::clearInitializedEffects()
+void CastableSpell::deallocInitializedEffects()
 {
 	//postcondition: deletes all the Effects within initializedEffects, then
 	//clears the vector

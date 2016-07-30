@@ -22,7 +22,7 @@ class CastableSpell : public SpellTemplate
 		Character& target;
 		vector<Effect*> initializedEffects;
 
-		void clearInitializedEffects();
+		void deallocInitializedEffects();
 
 	public:
 		CastableSpell(const SpellTemplate*, Character&, Character&);

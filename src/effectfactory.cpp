@@ -11,10 +11,11 @@
 #include "effects/playeraddweaknesseffect.h"
 #include "effects/playerremoveweaknesseffect.h"
 #include "effects/playermeltdowneffect.h"
+#include "statuses/poisonstatus.h"
 
 EffectFactory* EffectFactory::instance = NULL; //singleton instance static initialization
 
-const EffectFactory* EffectFactory::getInstance()
+EffectFactory* EffectFactory::getInstance()
 {
 	//postcondition: allocates a new EffectFactory instance if one does not exist,
 	//and sets it as the active singleton instance.  If we've already instantiated
@@ -29,8 +30,7 @@ const EffectFactory* EffectFactory::getInstance()
 
 EffectFactory::EffectFactory()
 {
-	//TODO replace with actual StatusTemplate initializations once there are actually Statuses
-	statusesByType[ELEMENTAL_DAMAGE] = new StatusTemplate("test", ELEMENTAL_DAMAGE, UNLIMITED_DURATION, BATTLE_ONLY);
+	statusesByType[POISON] = new StatusTemplate("Poison", POISON, 10, GLOBAL);
 }
 
 EffectFactory::~EffectFactory()
@@ -43,7 +43,7 @@ EffectFactory::~EffectFactory()
 	}
 }
 
-Effect* EffectFactory::createEffect(int effectNameOrdinal, const EffectParams& effectParams) const
+Effect* EffectFactory::createEffect(int effectNameOrdinal, const EffectParams& effectParams)
 {
 	//postcondition: convenience method to convert an integer ordinal for an
 	//effect id to an enum value, before calling the main createEffect with that instead.
@@ -51,7 +51,7 @@ Effect* EffectFactory::createEffect(int effectNameOrdinal, const EffectParams& e
 	return createEffect(static_cast<EffectType>(effectNameOrdinal), effectParams);
 }
 
-Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& effectParams) const
+Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& effectParams)
 {
 	//postcondition: allocates a new Effect subclass matching the given id, with
 	//the given parameters passed to its constructor.  Effect should be freed by
@@ -84,6 +84,10 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 		return new MonsterRemoveWeaknessEffect(effectParams);
 	case MONSTER_MELTDOWN:
 		return new MonsterMeltdownEffect(effectParams);
+
+	//Status Effects
+	case POISON:
+		return new PoisonStatus(*(statusesByType[effectId]), effectParams);
 
 	default:
 		return NULL;

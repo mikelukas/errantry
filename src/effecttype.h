@@ -17,6 +17,9 @@ enum EffectType
 	MONSTER_ADD_WEAKNESS = 8,
 	MONSTER_REMOVE_WEAKNESS = 9,
 	MONSTER_MELTDOWN = 10,
+
+	//StatusEffects
+	POISON = 100,
 };
 
 #endif

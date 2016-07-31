@@ -22,11 +22,11 @@ class EffectFactory
 		EffectFactory();
 
 	public:
-		static const EffectFactory* getInstance();
+		static EffectFactory* getInstance();
 		virtual ~EffectFactory();
 
-		Effect* createEffect(int, const EffectParams&) const;
-		Effect* createEffect(EffectType, const EffectParams&) const;
+		Effect* createEffect(int, const EffectParams&);
+		Effect* createEffect(EffectType, const EffectParams&);
 };
 
 #endif

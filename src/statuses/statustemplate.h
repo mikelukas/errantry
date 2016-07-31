@@ -15,7 +15,7 @@ const int UNLIMITED_DURATION = -1;
 class StatusTemplate
 {
 	protected:
-		const string& name;
+		const string name;
 		const EffectType type;
 		int durationTurns;
 		const Context eligibleContext;

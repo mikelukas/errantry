@@ -494,15 +494,17 @@ int Character::applyMagicalDamage(int rawDamage, Element element)
 	    return netDamage;
 	}
 
-void Character::addStatus(StatusEffect* status)
+bool Character::addStatus(StatusEffect* status)
 	{
 		//postcondition: if the character does not already have the given status,
 		//it is added to its status maps, and onAdd() is invoked on the status
 		//to run any initial/setup effects, in that order.
+		//returns true if the status was added, false otherwise, so it can be
+		//deleted by the caller if applicable.
 
 		if(statuses.count(status->getType()) > 0)
 		{
-			return; //can't add the same status more than once.
+			return false; //can't add the same status more than once.
 		}
 
 		//Add status to both lookup maps
@@ -510,6 +512,7 @@ void Character::addStatus(StatusEffect* status)
 		statusesByContext[status->getEligibleContext()].insert(status);
 
 		status->onAdd();
+		return true;
 	}
 
 void Character::removeStatus(const EffectType statusType)

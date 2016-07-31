@@ -18,6 +18,9 @@
  */
 class StatusEffect: public StatusTemplate, public Effect
 {
+	protected:
+		void setExpired();
+
 	public:
 		StatusEffect(const StatusTemplate&, const EffectParams&);
 		virtual ~StatusEffect() {}

@@ -21,6 +21,11 @@ bool StatusEffect::isExpired() const
 	return true;
 }
 
+void StatusEffect::setExpired()
+{
+	durationTurns = 0;
+}
+
 void StatusEffect::onTurn()
 {
 	//postcondition: runTurnEffect() is called to process a subclass-defined
@@ -43,6 +48,12 @@ void StatusEffect::onTurn()
 void StatusEffect::apply()
 {
 	//postcondition: addStatus is called on the target with a pointer to this status.
+	//If status can't be added, it is set to expired, to inform caller that it
+	//can be deallocated, if applicable.
 
-	target.addStatus(this);
+	bool added = target.addStatus(this);
+	if(!added)
+	{
+		setExpired();
+	}
 }

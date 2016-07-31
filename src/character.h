@@ -101,7 +101,7 @@ class Character
             void addWeakness(Element);
             void removeWeakness(Element);
 
-            void addStatus(StatusEffect*);
+            bool addStatus(StatusEffect*);
             void removeStatus(const EffectType);
             void removeStatusesFor(const Context);
 

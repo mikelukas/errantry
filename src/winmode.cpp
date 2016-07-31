@@ -2,7 +2,7 @@
 #include "winmode.h"
 
 WinMode::WinMode(GameData& gameData, GameState& gameState)
-	: GameMode(gameData, gameState)
+	: GameMode(gameData, gameState, false)
 {
 
 }

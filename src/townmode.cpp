@@ -5,7 +5,7 @@
 #include "buyspellsmode.h"
 
 TownMode::TownMode(const Town& town, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState),
+	: MenuMode(gameData, gameState, true),
 	  currentTown(town)
 {
 

@@ -5,7 +5,7 @@
 #include "randutils.h"
 
 BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState),
+	: MenuMode(gameData, gameState, true),
 	  currMonster(monster),
 	  actionQueue()
 {

@@ -17,8 +17,10 @@ class GameMode
 		GameData& gameData;
 		GameState& gameState;
 
+		bool processesStatuses;
+
 	public:
-		GameMode(GameData& gameData, GameState& gameState);
+		GameMode(GameData&, GameState&, bool);
 		virtual ~GameMode() {};
 
 		virtual void processStatusEffects();

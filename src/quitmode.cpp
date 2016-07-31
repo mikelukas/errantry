@@ -2,7 +2,7 @@
 #include "quitmode.h"
 
 QuitMode::QuitMode(GameData& gameData, GameState& gameState)
-	: GameMode(gameData, gameState)
+	: GameMode(gameData, gameState, false)
 {
 
 }

@@ -2,7 +2,7 @@
 #include "gamestate.h"
 
 ApplyEquipmentMode::ApplyEquipmentMode(GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState),
+	: MenuMode(gameData, gameState, true),
 	  equipmentChoice(NULL),
 	  target(NULL)
 {

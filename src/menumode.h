@@ -20,7 +20,7 @@ class MenuMode : public GameMode
 		bool validateChoice(int, int) const;
 
 	public:
-		MenuMode(GameData&, GameState& gameState);
+		MenuMode(GameData&, GameState&, bool);
 		~MenuMode() { };
 
 		virtual void run(); //Calls displayMenu, followed by testChoice with player's choice from menu

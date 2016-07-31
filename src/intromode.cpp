@@ -1,16 +1,9 @@
-/*
- * intromode.cpp
- *
- *  Created on: Mar 18, 2016
- *      Author: mlukas
- */
-
 #include "gamestate.h"
 #include "intromode.h"
 #include "overworldmode.h"
 
 IntroMode::IntroMode(GameData& gameData, GameState& gameState)
-	: GameMode(gameData, gameState)
+	: GameMode(gameData, gameState, false)
 {
 
 }

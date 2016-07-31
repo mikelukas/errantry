@@ -2,7 +2,7 @@
 #include "gamestate.h"
 
 DeadMode::DeadMode(GameData& gameData, GameState& gameState)
-	: GameMode(gameData, gameState)
+	: GameMode(gameData, gameState, false)
 {
 	// TODO Auto-generated constructor stub
 }

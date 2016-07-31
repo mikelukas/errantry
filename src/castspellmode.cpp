@@ -3,7 +3,7 @@
 #include "gamestate.h"
 
 CastSpellMode::CastSpellMode(GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState)
+	: MenuMode(gameData, gameState, true)
 {
 	vector<const SpellTemplate*>* playerFieldSpells = gameState.getPlayer().getSpellsForLocale(FIELD);
 

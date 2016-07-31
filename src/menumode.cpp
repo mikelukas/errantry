@@ -1,7 +1,7 @@
 #include "menumode.h"
 
-MenuMode::MenuMode(GameData& gameData, GameState& gameState)
-	: GameMode(gameData, gameState)
+MenuMode::MenuMode(GameData& gameData, GameState& gameState, bool processesStatuses)
+	: GameMode(gameData, gameState, processesStatuses)
 {
 
 }

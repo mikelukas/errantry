@@ -10,7 +10,7 @@
 #include "useitemmode.h"
 
 OverworldMode::OverworldMode(GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState)
+	: MenuMode(gameData, gameState, true)
 {
 
 }

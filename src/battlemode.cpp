@@ -3,6 +3,7 @@
 #include "deadmode.h"
 #include "gamestate.h"
 #include "randutils.h"
+#include "statsdisplayer.h"
 
 BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState, true),
@@ -54,17 +55,13 @@ void BattleMode::run()
 int BattleMode::displayMenu()
 {
 	int choice;
-	Player& player = gameState.getPlayer();
 
 	cout<<"*************ENEMY! You went to battle!*************"<<endl;
-	cout<<player.ShowName()<<endl;
-	cout<<"HP:  "<<player.Health()<<"/"<<player.MaxHealth()<<endl;
-	cout<<"MP:  "<<player.getMP()<<"/"<<player.MaxMP()<<endl;
+	StatsDisplayer::battleMainDisplayFor(gameState.getPlayer());
 	cout<<endl;
 	cout<<endl;
 	cout<<endl;
-	cout<<currMonster.ShowName()<<endl;
-	cout<<"HP:  "<<currMonster.Health()<<endl;
+	StatsDisplayer::battleMainDisplayFor(currMonster);
 	cout<<"*****************"<<endl;
 	cout<<"*1)Fight        *"<<endl;
 	cout<<"*2)Cast Spell   *"<<endl;

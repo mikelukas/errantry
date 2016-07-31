@@ -591,6 +591,13 @@ bool Character::hasStatus(const EffectType statusType) const
 		return statuses.count(statusType) > 0;
 	}
 
+bool Character::hasStatuses() const
+	{
+		//postcondition: returns true if Character has any statuses, false otherwise
+
+		return !statuses.empty();
+	}
+
 vector<StatusEffect*>* Character::getAllStatuses() const
 	{
 		//postcondition: allocates a new vector containing pointers to all StatusEffects*

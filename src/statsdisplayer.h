@@ -16,11 +16,15 @@ class StatsDisplayer
 {
 	protected:
 		static void displayWeaknessesLineFor(const Character&);
+		static void displayStatusesLineFor(const Character&);
 
 	public:
 		static void fullDisplayFor(const Player& player);
-		static void battleDisplayFor(const Player&);
-		static void battleDisplayFor(const Monster&);
+
+		static void battleMainDisplayFor(const Player&);
+		static void battleMainDisplayFor(const Monster&);
+		static void battleMenuDisplayFor(const Player&);
+		static void battleMenuDisplayFor(const Monster&);
 };
 
 #endif

@@ -21,6 +21,20 @@ void StatsDisplayer::displayWeaknessesLineFor(const Character& character)
 	cout<<endl;
 }
 
+void StatsDisplayer::displayStatusesLineFor(const Character& character)
+{
+	vector<StatusEffect*>* statuses = character.getAllStatuses();
+
+	cout<<(*statuses)[0]->getName();
+	for(int i=1; i < statuses->size(); i++)
+	{
+		cout<<" "<<(*statuses)[i]->getName();
+	}
+	cout<<endl;
+
+	delete statuses;
+}
+
 void StatsDisplayer::fullDisplayFor(const Player& player)
 {
 	ostringstream healthMaxhealth;
@@ -38,13 +52,42 @@ void StatsDisplayer::fullDisplayFor(const Player& player)
 		<<endl
 		<<std::left<<setw(17)<<"Weaknesses:"<<" --1/2 MDP used against damage from these elements"<<endl
 		<<"  "; displayWeaknessesLineFor(player);
+	if(player.hasStatuses())
+	{
+		cout<<std::left<<setw(17)<<"Statuses:  "<<" --persistent effects applied each turn to you."<<endl
+			<<"  "; displayStatusesLineFor(player);
+	}
 	cout<<endl;
 	cout<<"Level: "<<player.Level()<<endl
 		<<"  Current experience points:    "<<player.ExpPts()<<endl
 		<<"  Number needed for next level: "<<player.NumToNext()<<endl;
 }
 
-void StatsDisplayer::battleDisplayFor(const Player& player)
+void StatsDisplayer::battleMainDisplayFor(const Player& player)
+{
+	cout<<player.ShowName()<<endl;
+	cout<<"HP:  "<<player.Health()<<"/"<<player.MaxHealth()<<endl;
+	cout<<"MP:  "<<player.getMP()<<"/"<<player.MaxMP()<<endl;
+	if(player.hasStatuses())
+	{
+		cout<<"Statuses: "; displayStatusesLineFor(player);
+	}
+
+	cout<<endl;
+}
+
+void StatsDisplayer::battleMainDisplayFor(const Monster& monster)
+{
+	cout<<monster.ShowName()<<endl;
+	cout<<"HP:  "<<monster.Health()<<endl;
+	if(monster.hasStatuses())
+	{
+		cout<<"Statuses: "; displayStatusesLineFor(monster);
+	}
+	cout<<endl;
+}
+
+void StatsDisplayer::battleMenuDisplayFor(const Player& player)
 {
 	ostringstream healthMaxhealth;
 	healthMaxhealth<<player.Health()<<"/"<<player.MaxHealth();
@@ -61,12 +104,25 @@ void StatsDisplayer::battleDisplayFor(const Player& player)
 		<<endl
 		<<"Weaknesses:"<<endl
 		<<"  "; displayWeaknessesLineFor(player);
+
+	if(player.hasStatuses())
+	{
+		cout<<"Statuses:"<<endl
+			<<"  "; displayStatusesLineFor(player);
+	}
 }
 
-void StatsDisplayer::battleDisplayFor(const Monster& monster)
+void StatsDisplayer::battleMenuDisplayFor(const Monster& monster)
 {
 	ostringstream healthMaxhealth;
 	healthMaxhealth<<monster.Health()<<"/"<<monster.MaxHealth();
 
 	cout<<"HP: "<<std::left<<setw(12)<<healthMaxhealth.str()<<endl;
+	if(monster.hasStatuses())
+	{
+		cout<<endl
+			<<"Statuses:"<<endl
+			<<"  "; displayStatusesLineFor(monster);
+	}
+
 }

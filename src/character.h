@@ -108,6 +108,7 @@ class Character
             void processStatusEffects();
 
             bool hasStatus(const EffectType) const;
+            bool hasStatuses() const;
             vector<StatusEffect*>* getAllStatuses() const;
     };
 

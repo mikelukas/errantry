@@ -12,8 +12,8 @@ void BattleUsableItemChooser::displayRelevantStats() const
 	//postcondition:: All player and monster stats are displayed
 
 	cout<<player.ShowName()<<endl;
-	StatsDisplayer::battleDisplayFor(player);
+	StatsDisplayer::battleMenuDisplayFor(player);
 	cout<<endl;
 	cout<<monster.ShowName()<<endl;
-	StatsDisplayer::battleDisplayFor(monster);
+	StatsDisplayer::battleMenuDisplayFor(monster);
 }

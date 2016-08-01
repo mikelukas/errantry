@@ -14,7 +14,7 @@ class CastSpellMode: public MenuMode
 		Chooser<const SpellTemplate>* spellChooser; //freed in destructor
 
 		int displayMenu();
-		void testChoice(int);
+		bool testChoice(int);
 
 	public:
 		CastSpellMode(GameData&, GameState&);

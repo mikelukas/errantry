@@ -17,7 +17,7 @@ class ApplyEquipmentMode : public MenuMode
 		Character* target;
 
 		virtual int displayMenu();
-		virtual void testChoice(int);
+		virtual bool testChoice(int);
 
 		virtual Chooser<EquipmentLine>* createInventoryChooser() = 0;
 

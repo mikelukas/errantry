@@ -11,7 +11,7 @@ class ShopMainMode : public MenuMode
 		const Town& currentTown;
 
 		int displayMenu();
-		void testChoice(int);
+		bool testChoice(int);
 
 		virtual void enterBuyMode() = 0;
 		virtual void enterSellMode() = 0;

@@ -38,24 +38,27 @@ int CastSpellMode::displayMenu()
 	return spellChooser->getChoiceNum();
 }
 
-void CastSpellMode::testChoice(int choiceNum)
+bool CastSpellMode::testChoice(int choiceNum)
 {
 	//postcondition: if the player chose to exit, an exit is requested, otherwise
 	//cast() is called on the chosen spell with the player as both the caster
 	//and the target.
+	//returns false if spell setup() fails and aborts casting to let player loop
+	//back and choose another spell without consuming a turn, true otherwise.
 
 	if(spellChooser->canceled())
 	{
 		gameState.requestExitCurrentMode();
-		return;
+		return true;
 	}
 
 	const SpellTemplate* spellTemplate = spellChooser->getChoice();
 	CastableSpell spell(spellTemplate, gameState.getPlayer(), gameState.getPlayer());
 	if(!spell.setup())
 	{
-		return;
+		return false;
 	}
 
 	spell.cast();
+	return true;
 }

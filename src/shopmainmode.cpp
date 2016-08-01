@@ -27,7 +27,7 @@ int ShopMainMode::displayMenu()
 	return choice;
 }
 
-void ShopMainMode::testChoice(int choice)
+bool ShopMainMode::testChoice(int choice)
 {
 	switch(choice)
 	{
@@ -41,4 +41,6 @@ void ShopMainMode::testChoice(int choice)
 			gameState.requestExitCurrentMode();
 			break;
 	}
+
+	return true;
 }

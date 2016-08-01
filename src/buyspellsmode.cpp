@@ -27,10 +27,11 @@ int BuySpellsMode::displayMenu()
 	return spellChooser->getChoiceNum();
 }
 
-void BuySpellsMode::testChoice(int choiceNum)
+bool BuySpellsMode::testChoice(int choiceNum)
 {
 	//postcondition: if the player chose to leave the shop, an exit mode request
 	//is made to the GameState, otherwise the purchase is completed.
+	//Always returns true to indicate turn should finish.
 
 	switch(choiceNum)
 	{
@@ -42,6 +43,8 @@ void BuySpellsMode::testChoice(int choiceNum)
 		processTransaction(spellChooser->getChoice());
 		break;
 	}
+
+	return true;
 }
 
 void BuySpellsMode::processTransaction(const SpellTemplate* purchasedSpell)

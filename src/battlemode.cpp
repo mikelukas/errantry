@@ -78,13 +78,15 @@ int BattleMode::displayMenu()
 	return choice;
 }
 
-void BattleMode::testChoice(int choice)
+bool BattleMode::testChoice(int choice)
 {
 	//postcondition: a BattleAction matching the player's choice is created, and
 	//enqueued in the proper order depending whether the player's speed is greater
 	//than the monster's.  setup() is called on the action before any actions are
 	//are enqueued, and if the action is aborted, this method will return early
 	//to allow the player to choose a new action.
+	//Returns false if the player's BattleAction is aborted, so that turn is not
+	//not advanced until a BattleAction is enqueued.  True otherwise.
 
 	Player& player = gameState.getPlayer();
 
@@ -109,7 +111,7 @@ void BattleMode::testChoice(int choice)
 	playerAction->setup();
 	if(playerAction->isAborted())
 	{
-		return; //player aborted action during setup, so let them go back and choose again
+		return false; //player aborted action during setup, so let them go back and choose again
 	}
 
 	BattleAction* monsterAction = makeMonsterAction();
@@ -122,6 +124,8 @@ void BattleMode::testChoice(int choice)
 		actionQueue.push(monsterAction);
 		actionQueue.push(playerAction);
 	}
+
+	return true;
 }
 
 BattleAction* BattleMode::makeMonsterAction()

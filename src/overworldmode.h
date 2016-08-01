@@ -18,7 +18,7 @@ class OverworldMode : public MenuMode
 {
 	protected:
 		int displayMenu();
-		void testChoice(int);
+		bool testChoice(int);
 
 		void move();
 		void getEnemy();

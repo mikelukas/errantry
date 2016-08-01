@@ -44,7 +44,7 @@ int OverworldMode::displayMenu()
 	return choice;
 }
 
-void OverworldMode::testChoice(int choice)
+bool OverworldMode::testChoice(int choice)
 {
 	switch(choice)
 		{
@@ -68,6 +68,8 @@ void OverworldMode::testChoice(int choice)
 				gameState.requestEnterMode(quit);
 				break;
 		}
+
+	return true;
 }
 
 void OverworldMode::move()

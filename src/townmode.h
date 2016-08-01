@@ -16,7 +16,7 @@ class TownMode : public MenuMode
 		const Town& currentTown;
 
 		int displayMenu();
-		void testChoice(int);
+		bool testChoice(int);
 
 		void talk() const;
 		void enterArmory();

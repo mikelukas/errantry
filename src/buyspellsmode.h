@@ -14,7 +14,7 @@ class BuySpellsMode: public MenuMode
 		SpellChooser* spellChooser;
 
 		virtual int displayMenu();
-		virtual void testChoice(int);
+		virtual bool testChoice(int);
 
 		void processTransaction(const SpellTemplate*);
 

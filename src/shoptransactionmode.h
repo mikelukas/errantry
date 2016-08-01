@@ -19,7 +19,7 @@ class ShopTransactionMode : public MenuMode
 		EquipmentLine* equipmentChoice;
 
 		int displayMenu();
-		void testChoice(int);
+		bool testChoice(int);
 
 		void clearShopChoice();
 

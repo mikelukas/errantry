@@ -69,11 +69,12 @@ int ShopTransactionMode::displayMenu()
 	return choice;
 }
 
-void ShopTransactionMode::testChoice(int choice)
+bool ShopTransactionMode::testChoice(int choice)
 {
 	//postcondition: calls subclass's implementations of processTransaction and
 	//updateChoices, or exits the mode if the player chose to leave from the
 	//choice list.
+	//Always returns true to indicate turn should finish.
 
 	switch(choice)
 	{
@@ -86,6 +87,8 @@ void ShopTransactionMode::testChoice(int choice)
 		clearShopChoice();
 		break;
 	}
+
+	return true;
 }
 
 void ShopTransactionMode::clearShopChoice()

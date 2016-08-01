@@ -15,7 +15,7 @@ class MenuMode : public GameMode
 {
 	protected:
 		virtual int displayMenu() = 0;
-		virtual void testChoice(int) = 0;
+		virtual bool testChoice(int) = 0; //return indicates if this choice finishes the current turn.
 
 		bool validateChoice(int, int) const;
 

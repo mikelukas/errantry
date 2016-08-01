@@ -32,7 +32,7 @@ int TownMode::displayMenu()
 	return choice;
 }
 
-void TownMode::testChoice(int choice)
+bool TownMode::testChoice(int choice)
 {
 	switch(choice)
 		{
@@ -53,6 +53,8 @@ void TownMode::testChoice(int choice)
 				gameState.requestExitCurrentMode();
 				break;
 		}
+
+	return true;
 }
 
 void TownMode::talk() const

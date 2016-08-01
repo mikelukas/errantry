@@ -8,8 +8,19 @@ MenuMode::MenuMode(GameData& gameData, GameState& gameState, bool processesStatu
 
 void MenuMode::run()
 {
-	int choice = displayMenu();
-	testChoice(choice);
+	//postcondition: calls displayMenu() to prompt user with choices and gather
+	//input, then calls testChoice() to process the input choice.  testChoice()
+	//returns a boolean that indicates if the turn is finished, which will end
+	//the run call and allow the main game loop to iterate through other steps of
+	//a turn. Otherwise the player is taken back to the menu to gather a different
+	//choice.
+
+	bool finishTurn = false;
+	do
+	{
+		int choice = displayMenu();
+		finishTurn = testChoice(choice);
+	} while(!finishTurn);
 }
 
 bool MenuMode::validateChoice(int answer, int numChoices) const

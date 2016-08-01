@@ -117,7 +117,7 @@ bool BattleMode::testChoice(int choice)
 	BattleAction* monsterAction = makeMonsterAction();
 
 	//Enqueue actions for battle turn
-	if(player.Speed() >= currMonster.Speed()) {
+	if(player.getEffectiveSP() >= currMonster.getEffectiveSP()) {
 		actionQueue.push(playerAction);
 		actionQueue.push(monsterAction);
 	} else {
@@ -169,13 +169,13 @@ bool BattleMode::testEndConditions()
 
 	bool battleOver = false;
 
-	if(currMonster.Health() <= 0)
+	if(currMonster.getHP() <= 0)
 		{
 			onBattleWon();
 			battleOver = true;
 		}
 
-	if(gameState.getPlayer().Health() <= 0)
+	if(gameState.getPlayer().getHP() <= 0)
 		{
 			//if player dies, leave game
 			GameMode* dead = new DeadMode(gameData, gameState);

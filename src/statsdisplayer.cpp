@@ -38,17 +38,17 @@ void StatsDisplayer::displayStatusesLineFor(const Character& character)
 void StatsDisplayer::fullDisplayFor(const Player& player)
 {
 	ostringstream healthMaxhealth;
-	healthMaxhealth<<player.Health()<<"/"<<player.MaxHealth();
+	healthMaxhealth<<player.getHP()<<"/"<<player.getEffectiveMaxHP();
 
 	ostringstream mpMaxMP;
-	mpMaxMP<<player.getMP()<<"/"<<player.MaxMP();
+	mpMaxMP<<player.getMP()<<"/"<<player.getEffectiveMaxMP();
 
 	cout<<"HP:  "<<std::left<<setw(12)<<healthMaxhealth.str()<<" --health/max health"<<endl
 		<<"MP:  "<<std::left<<setw(12)<<mpMaxMP.str()<<" --magic points/max magic points"<<endl
-		<<"AP:  "<<std::left<<setw(12)<<player.Damage()<<" --attack power"<<endl
-		<<"DP:  "<<std::left<<setw(12)<<player.Defense()<<" --defense percentage"<<endl
-		<<"MDP: "<<std::left<<setw(12)<<player.MagicDefense()<<" --magic defense percentage"<<endl
-		<<"SP:  "<<std::left<<setw(12)<<player.Speed()<<" --speed points"<<endl
+		<<"AP:  "<<std::left<<setw(12)<<player.getEffectiveAP()<<" --attack power"<<endl
+		<<"DP:  "<<std::left<<setw(12)<<player.getEffectiveDP()<<" --defense percentage"<<endl
+		<<"MDP: "<<std::left<<setw(12)<<player.getEffectiveMDP()<<" --magic defense percentage"<<endl
+		<<"SP:  "<<std::left<<setw(12)<<player.getEffectiveSP()<<" --speed points"<<endl
 		<<endl
 		<<std::left<<setw(17)<<"Weaknesses:"<<" --1/2 MDP used against damage from these elements"<<endl
 		<<"  "; displayWeaknessesLineFor(player);
@@ -66,8 +66,8 @@ void StatsDisplayer::fullDisplayFor(const Player& player)
 void StatsDisplayer::battleMainDisplayFor(const Player& player)
 {
 	cout<<player.ShowName()<<endl;
-	cout<<"HP:  "<<player.Health()<<"/"<<player.MaxHealth()<<endl;
-	cout<<"MP:  "<<player.getMP()<<"/"<<player.MaxMP()<<endl;
+	cout<<"HP:  "<<player.getHP()<<"/"<<player.getEffectiveMaxHP()<<endl;
+	cout<<"MP:  "<<player.getMP()<<"/"<<player.getEffectiveMaxMP()<<endl;
 	if(player.hasStatuses())
 	{
 		cout<<"Statuses: "; displayStatusesLineFor(player);
@@ -79,7 +79,7 @@ void StatsDisplayer::battleMainDisplayFor(const Player& player)
 void StatsDisplayer::battleMainDisplayFor(const Monster& monster)
 {
 	cout<<monster.ShowName()<<endl;
-	cout<<"HP:  "<<monster.Health()<<endl;
+	cout<<"HP:  "<<monster.getHP()<<endl;
 	if(monster.hasStatuses())
 	{
 		cout<<"Statuses: "; displayStatusesLineFor(monster);
@@ -90,17 +90,17 @@ void StatsDisplayer::battleMainDisplayFor(const Monster& monster)
 void StatsDisplayer::battleMenuDisplayFor(const Player& player)
 {
 	ostringstream healthMaxhealth;
-	healthMaxhealth<<player.Health()<<"/"<<player.MaxHealth();
+	healthMaxhealth<<player.getHP()<<"/"<<player.getEffectiveMaxHP();
 
 	ostringstream mpMaxMP;
-	mpMaxMP<<player.getMP()<<"/"<<player.MaxMP();
+	mpMaxMP<<player.getMP()<<"/"<<player.getEffectiveMaxMP();
 
 	cout<<"HP:  "<<std::left<<setw(12)<<healthMaxhealth.str()<<endl
 		<<"MP:  "<<std::left<<setw(12)<<mpMaxMP.str()<<endl
-		<<"AP:  "<<std::left<<setw(12)<<player.Damage()<<endl
-		<<"DP:  "<<std::left<<setw(12)<<player.Defense()<<endl
-		<<"MDP: "<<std::left<<setw(12)<<player.MagicDefense()<<endl
-		<<"SP:  "<<std::left<<setw(12)<<player.Speed()<<endl
+		<<"AP:  "<<std::left<<setw(12)<<player.getEffectiveAP()<<endl
+		<<"DP:  "<<std::left<<setw(12)<<player.getEffectiveDP()<<endl
+		<<"MDP: "<<std::left<<setw(12)<<player.getEffectiveMDP()<<endl
+		<<"SP:  "<<std::left<<setw(12)<<player.getEffectiveSP()<<endl
 		<<endl
 		<<"Weaknesses:"<<endl
 		<<"  "; displayWeaknessesLineFor(player);
@@ -115,7 +115,7 @@ void StatsDisplayer::battleMenuDisplayFor(const Player& player)
 void StatsDisplayer::battleMenuDisplayFor(const Monster& monster)
 {
 	ostringstream healthMaxhealth;
-	healthMaxhealth<<monster.Health()<<"/"<<monster.MaxHealth();
+	healthMaxhealth<<monster.getHP()<<"/"<<monster.getEffectiveMaxHP();
 
 	cout<<"HP: "<<std::left<<setw(12)<<healthMaxhealth.str()<<endl;
 	if(monster.hasStatuses())

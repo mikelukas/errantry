@@ -78,6 +78,26 @@ istream& operator>> (istream& is, StatMod& statMods)
 	return is;
 }
 
+void operator+= (StatMod& leftMod, const StatMod& rightMod)
+{
+	leftMod.hpMod += rightMod.hpMod;
+	leftMod.mpMod += rightMod.mpMod;
+	leftMod.apMod += rightMod.apMod;
+	leftMod.dpMod += rightMod.dpMod;
+	leftMod.mdpMod += rightMod.mdpMod;
+	leftMod.spMod += rightMod.spMod;
+}
+
+void operator-= (StatMod& leftMod, const StatMod& rightMod)
+{
+	leftMod.hpMod -= rightMod.hpMod;
+	leftMod.mpMod -= rightMod.mpMod;
+	leftMod.apMod -= rightMod.apMod;
+	leftMod.dpMod -= rightMod.dpMod;
+	leftMod.mdpMod -= rightMod.mdpMod;
+	leftMod.spMod -= rightMod.spMod;
+}
+
 istream& operator>> (istream& is, Equipment& equipment)
 {
 	string junk;

@@ -14,7 +14,7 @@ using std::map;
 using std::set;
 using std::string;
 
-//Mike Lukas -p2prog03-         - character.h - 
+//Mike Lukas -p2prog03-         - character.h -
 //Class definition for a character.  This class holds all of the basic
 //values a character will need; health points, magic points, attack
 //points, defense points, magic defense points, speed points, and 
@@ -31,6 +31,8 @@ class Character
             int DP;             //defense percentage
             int MDP;			//magic defense percentage
             int SP;             //speed points
+
+            StatMod totalStatMods;	//sum of modifications to player attributes from equipment and status effects
 
             set<Element> weaknesses;	//more magical damage from these element
 
@@ -64,14 +66,15 @@ class Character
             
             string ShowName() const;
 
-            int Damage() const;
-            int Defense() const;
-            int MagicDefense() const;
-            int Health() const;
-            int MaxHealth() const;
+            int getHP() const;
+            int getEffectiveMaxHP() const;
             int getMP() const;
-            int MaxMP() const;
-            int Speed() const;
+            int getEffectiveMaxMP() const;
+            int getEffectiveAP() const;
+            int getEffectiveDP() const;
+            int getEffectiveMDP() const;
+            int getEffectiveSP() const;
+
             int Money() const;
             int ExpPts() const;
 

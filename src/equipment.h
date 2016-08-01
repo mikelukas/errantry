@@ -35,6 +35,9 @@ struct StatMod
 
 		friend istream& operator>> (istream&, StatMod&);
 		friend ostream& operator<< (ostream&, const StatMod&);
+
+		friend void operator+=(StatMod&, const StatMod&);
+		friend void operator-=(StatMod&, const StatMod&);
 	};
 const StatMod NO_STATMOD;
 

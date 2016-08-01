@@ -20,7 +20,7 @@ bool ChannelEffect::setup()
 	//returns true if the applier chose an amount > 0
 	//returns false otherwise, allowing effect to be aborted.
 
-	cout<<"Enter amount of your HP to convert into "<<getDisplayNameFor(element)<<" damage (up to "<<applier.Health()-1<<", 0 aborts): ";
+	cout<<"Enter amount of your HP to convert into "<<getDisplayNameFor(element)<<" damage (up to "<<applier.getHP()-1<<", 0 aborts): ";
 	do
 	{
 		cin>>hpToChannel;
@@ -40,7 +40,7 @@ bool ChannelEffect::validateChannelDamage(int inputDamage)
 		return false;
 	}
 
-	if(inputDamage >= applier.Health())
+	if(inputDamage >= applier.getHP())
 	{
 		cout<<"Are you crazy?! Channeling all of your HP would kill you!"<<endl;
 		return false;

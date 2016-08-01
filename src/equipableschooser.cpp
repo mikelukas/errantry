@@ -20,7 +20,7 @@ void EquipablesChooser::displayRelevantStats() const
 	cout<<"Current Weapon: "<<(currWeapon != NULL ? currWeapon->getName() : "Fists")<<endl
 		<<"Current Armor:  "<<(currArmor != NULL ? currArmor->getName() : "T-Shirt")<<endl
 		<<endl
-		<<"Current Attributes     "<<"AP: "<<setw(4)<<player.Damage()<<" DP: "<<setw(3)<<player.Defense()<<" MDP:"<<setw(3)<<player.MagicDefense()<<" SP: "<<setw(3)<<player.Speed()<<endl;
+		<<"Current Attributes     "<<"AP: "<<setw(4)<<player.getEffectiveAP()<<" DP: "<<setw(3)<<player.getEffectiveDP()<<" MDP:"<<setw(3)<<player.getEffectiveMDP()<<" SP: "<<setw(3)<<player.getEffectiveSP()<<endl;
 }
 
 void EquipablesChooser::displayChoice(int choiceNum, EquipmentLine* invEqLine) const

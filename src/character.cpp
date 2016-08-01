@@ -16,6 +16,7 @@ Character::Character(int hpVar, int mpVar, int apVar, int dpVar, int mdpVar, int
       DP(dpVar),
 	  MDP(mdpVar),
       SP(spVar),
+	  totalStatMods(),
       gold(money),
 	  expPoints(expPoints)
     {
@@ -68,34 +69,34 @@ string Character::ShowName() const
         return name;
     }
 
-int Character::Damage() const
+int Character::getEffectiveAP() const
     {
-        //postcondition:  returns the amount of damage the character can do (AP)
-        return AP;
+        //postcondition:  returns character's total AP after including modifications (e.g. from equipment or statuses)
+        return AP + totalStatMods.apMod;
     }
 
-int Character::Defense() const
+int Character::getEffectiveDP() const
     {
-        //postcondition:  returns character's defense points
-        return DP;
+        //postcondition:  returns character's total DP after including modifications (e.g. from equipment or statuses)
+        return DP + totalStatMods.dpMod;
     }
 
-int Character::MagicDefense() const
+int Character::getEffectiveMDP() const
     {
-        //postcondition:  returns character's magic defense points
-        return MDP;
+        //postcondition:  returns character's total MDP after including modifications (e.g. from equipment or statuses)
+        return MDP + totalStatMods.mdpMod;
     }
 
-int Character::Health() const
+int Character::getHP() const
     {
         //postcondition:  returns character's health points
         return HP;
     }
 
-int Character::MaxHealth() const
+int Character::getEffectiveMaxHP() const
     {
-        //postcondition:  returns character's maximum health points
-        return maxHP;
+        //postcondition:  returns character's maximum HP after including modifications (e.g. from equipment or statuses)
+        return maxHP; //currently nothing modifies max HP
     }
 
 int Character::getMP() const
@@ -104,16 +105,16 @@ int Character::getMP() const
         return MP;
     }
 
-int Character::MaxMP() const
+int Character::getEffectiveMaxMP() const
     {
-        //postcondition:  returns character's maximum magic points
-        return maxMP;
+        //postcondition:  returns character's maximum MP after including modifications (e.g. from equipment or statuses)
+        return maxMP; //currently nothing modifies max MP
     }
 
-int Character::Speed() const
+int Character::getEffectiveSP() const
     {
-        //postcondition:  returns the character's speed points
-        return SP;
+        //postcondition:  returns the character's SP after including modifications (e.g. from equipment or statuses)
+        return SP + totalStatMods.spMod;
     }
 
 int Character::Money() const
@@ -140,32 +141,39 @@ const set<Element>& Character::getWeaknesses() const
 
 void Character::AddStats(const StatMod& stats)
 	{
+		//postcondition: incoming stats are added to the total stat modifications
+		//applied to this Character's stats when they are checked.
+		//Current HP and MP values (not max values) will not be increased beyond
+		//the effective maximum)
+
+		totalStatMods += stats;
+		totalStatMods.hpMod = 0; //doesn't make sense to have current HP have persistent modification (only base max HP)
+		totalStatMods.mpMod = 0; //doesn't make sense to have current MP have persistent modification (only base max MP)
+
 		HP += stats.hpMod;
-		if(HP > maxHP)
+		if(HP > getEffectiveMaxHP())
 		{
-			HP = maxHP;
+			HP = getEffectiveMaxHP();
 		}
 
 		MP += stats.mpMod;
-		if(MP > maxMP)
+		if(MP > getEffectiveMaxMP())
 		{
-			MP = maxMP;
+			MP = getEffectiveMaxMP();
 		}
-
-		AP += stats.apMod;
-		DP += stats.dpMod;
-		MDP += stats.mdpMod;
-		SP += stats.spMod;
 	}
 
 void Character::SubStats(const StatMod& stats)
 	{
+		//postcondition: incoming stats are subtracted from the total stat modifications
+		//applied to this Character's stats when they are checked.
+
+		totalStatMods -= stats;
+		totalStatMods.hpMod = 0; //doesn't make sense to have current HP have persistent modification (only base max HP)
+		totalStatMods.mpMod = 0; //doesn't make sense to have current MP have persistent modification (only base max MP)
+
 		HP -= stats.hpMod;
 		MP -= stats.mpMod;
-		AP -= stats.apMod;
-		DP -= stats.dpMod;
-		MDP -= stats.mdpMod;
-		SP -= stats.spMod;
 	}
 
 void Character::AddEquipment(const EquipmentLine& newEqLine)
@@ -462,7 +470,7 @@ int Character::applyPhysicalDamage(int rawDamage)
 		//then applied to this character.  The net damage after modification is
 		//returned.
 
-		int netDamage = rawDamage - Defense();
+		int netDamage = rawDamage - getEffectiveDP();
 	    if(netDamage < 0)
 	    {
 	    	netDamage = 0;
@@ -481,7 +489,7 @@ int Character::applyMagicalDamage(int rawDamage, Element element)
 		//their MDP is used (rounding up).  Otherwise the base MDP value is used.
 		//The net damage after modification is returned.
 
-		int adjustedMDP = isWeakAgainst(element)? ceil(.5*((float)MagicDefense())) : MagicDefense();
+		int adjustedMDP = isWeakAgainst(element)? ceil(.5*((float)getEffectiveMDP())) : getEffectiveMDP();
 
 		int netDamage = rawDamage - adjustedMDP;
 	    if(netDamage < 0)

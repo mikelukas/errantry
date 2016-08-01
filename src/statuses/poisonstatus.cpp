@@ -27,7 +27,7 @@ void PoisonStatus::runTurnEffect()
 {
 	int basePoisonDamage = getRandIntBetween(1, POISON_DAMAGE);
 
-	int poisonDamage = target.Health()-basePoisonDamage > 0 ? basePoisonDamage : target.Health()-1; //target can't die from poison
+	int poisonDamage = target.getHP()-basePoisonDamage > 0 ? basePoisonDamage : target.getHP()-1; //target can't die from poison
 	if(poisonDamage == 0)
 	{
 		return;

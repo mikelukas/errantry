@@ -26,19 +26,19 @@ bool MonsterCastSpellAction::setupSpellChoice()
 	vector<SpellCategory> spellSearchPriority;
 
 	bool attemptAssist = (getRandIntBetween(0,1) == 1);
-	if(caster.Health() < ((float)(caster.MaxHealth()))*HP_PERCENT_TO_PRIORITIZE_HEAL)
+	if(caster.getHP() < ((float)(caster.getEffectiveMaxHP()))*HP_PERCENT_TO_PRIORITIZE_HEAL)
 	{
 		spellSearchPriority.push_back(HEALING);
 		spellSearchPriority.push_back(DEFENSIVE_ASSIST);
 	}
 	else if(attemptAssist)
 	{
-		if(caster.Health() >= ((float)(caster.MaxHealth()))*HP_PERCENT_TO_PRIORITIZE_OFFENSIVE_ASSIST)
+		if(caster.getHP() >= ((float)(caster.getEffectiveMaxHP()))*HP_PERCENT_TO_PRIORITIZE_OFFENSIVE_ASSIST)
 		{
 			spellSearchPriority.push_back(OFFENSIVE_ASSIST);
 			spellSearchPriority.push_back(DEFENSIVE_ASSIST);
 		}
-		else if(caster.Health() >= ((float)(caster.MaxHealth()))*HP_PERCENT_TO_PRIORITIZE_DEFENSIVE_ASSIST)
+		else if(caster.getHP() >= ((float)(caster.getEffectiveMaxHP()))*HP_PERCENT_TO_PRIORITIZE_DEFENSIVE_ASSIST)
 		{
 			spellSearchPriority.push_back(DEFENSIVE_ASSIST);
 			spellSearchPriority.push_back(OFFENSIVE_ASSIST);

@@ -1,7 +1,5 @@
-//Mike Lukas - p2prog03- player.cpp-
-//Functions and explanations for the player class.
-
 #include <iostream>
+#include "effectfactory.h"
 #include "player.h"
 
 using std::cout;
@@ -258,11 +256,24 @@ void Player::useEquipment(const Equipment* eq, Character& onTarget)
 	if(invEqLine.pEquipment == NULL)
 	{
 		inv.erase(eq);//have to do this since inv[eq] will create a new line.
-		cout<<"Attempted to use equipment you don't have in your inventory: "<<eq->getName()<<endl;
+		cout<<"WARNING: "<<ShowName()<<" tried to use equipment not in its inventory: "<<eq->getName()<<endl;
 		return;
 	}
 
+	//apply equipment and its Effects to the target
 	onTarget.apply(eq);
+	EffectParams effectParams(eq->getElement(), *this, onTarget);
+	const vector<int>& effectIds = eq->getEffectIds();
+	for(int i=0; i < effectIds.size(); i++)
+	{
+		Effect* effect = EffectFactory::getInstance()->createEffect(effectIds[i], effectParams);
+		if(!effect->setup())
+		{
+			continue; //XXX just skip effects we can't set up; shouldn't be defining items with effects that require more choices
+		}
+
+		effect->apply();
+	}
 
 	//Regardless of the Equipment type, using it removes it from Player's active inventory
 	(invEqLine.quantity)--;

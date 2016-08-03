@@ -48,10 +48,9 @@ void Monster::AddDroppableSpell(const SpellTemplate* droppableSpell)
 
 void Monster::apply(const Equipment* eq)
 	{
-		//postcondition: The incoming Equipment is "applied" to the player, which
-		//adds the stat changes from the Equipment to the player's stats.
-		//For weapons and armor any previously-equipped equipment is also
-		//removed first and placed back into the player's inventory.
+		//postcondition: The incoming Equipment is "applied" to the monster, which
+		//adds the stat changes from the Equipment to the monster's stats.
+		//Currently only items can be applied to monsters.
 
 		switch(eq->getType())
 		{

@@ -1,21 +1,29 @@
+#include <limits>
 #include "equipment.h"
+#include "streamutils.h"
+
+using std::numeric_limits;
+using std::streamsize;
 
 Equipment::Equipment(EquipType type)
 	: type(type),
 	  name(""),
+	  element(none),
+	  statMods(NO_STATMOD),
+	  effectIds(),
 	  cost(0)
 {
-	statMods.hpMod=0;
-	statMods.mpMod=0;
-	statMods.apMod=0;
-	statMods.dpMod=0;
-	statMods.mdpMod=0;
-	statMods.spMod=0;
+
 }
 
 string Equipment::getName() const
 {
 	return name;
+}
+
+Element Equipment::getElement() const
+{
+	return element;
 }
 
 EquipType Equipment::getType() const
@@ -36,6 +44,11 @@ int Equipment::getSellPrice() const
 const StatMod& Equipment::getStatMod() const
 {
 	return statMods;
+}
+
+const vector<int>& Equipment::getEffectIds() const
+{
+	return effectIds;
 }
 
 StatMod::StatMod()
@@ -103,14 +116,19 @@ istream& operator>> (istream& is, Equipment& equipment)
 	string junk;
 
 	getline(is, equipment.name);
+
+	int elemId;
+	is>>elemId;
+	equipment.element = static_cast<Element>(elemId);
+	is.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	is>>equipment.statMods;
+	is.ignore(numeric_limits<streamsize>::max(), '\n');
 
-	//throwaway new line
-	getline(is, junk);
+	getIdLine(is, equipment.effectIds);
+
 	is>>equipment.cost;
-
-	//throwaway new line
-	getline(is, junk);
+	is.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	return is;
 }

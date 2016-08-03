@@ -265,7 +265,9 @@ bool GameData::loadEquipment(EquipType type, vector<Equipment*>& equipment, cons
 
 			cout<<item->getName()<<endl;
 			cout<<"   "<<item->getCost()<<endl;
+			cout<<"   "<<getDisplayNameFor(item->getElement())<<endl;
 			cout<<"   "<<item->getType()<<endl;
+			cout<<"   "<<item->getEffectIds().size()<<" effect ids"<<endl;
 
 			cout<<"   Mods - "<<item->getStatMod()<<endl<<endl;
 		}

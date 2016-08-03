@@ -6,6 +6,7 @@
 #include <math.h> //round
 #include <string>
 #include <vector>
+#include "element.h"
 
 using std::istream;
 using std::ostream;
@@ -46,8 +47,11 @@ class Equipment
 		private:
 			EquipType type;
 			string name;
+			Element element;
 
 			StatMod statMods;
+			vector<int> effectIds;
+
 			int cost;   //price the item sells for
 
 		public:
@@ -55,9 +59,11 @@ class Equipment
 
 			string getName() const;
 			EquipType getType() const;
+			Element getElement() const;
 			int getCost() const;
 			int getSellPrice() const;
 			const StatMod& getStatMod() const;
+			const vector<int>& getEffectIds() const;
 
 			friend istream& operator>> (istream&, Equipment&);
     };

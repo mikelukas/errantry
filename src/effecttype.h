@@ -18,6 +18,9 @@ enum EffectType
 	MONSTER_REMOVE_WEAKNESS = 9,
 	MONSTER_MELTDOWN = 10,
 
+	//Status cures
+	CURE_POISON = 50,
+
 	//StatusEffects
 	POISON = 100,
 };

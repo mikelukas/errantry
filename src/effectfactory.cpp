@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include "effectfactory.h"
 #include "effects/channeleffect.h"
+#include "effects/curepoisoneffect.h"
 #include "effects/draineffect.h"
 #include "effects/elementaldamageeffect.h"
 #include "effects/healeffect.h"
@@ -84,6 +85,10 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 		return new MonsterRemoveWeaknessEffect(effectParams);
 	case MONSTER_MELTDOWN:
 		return new MonsterMeltdownEffect(effectParams);
+
+	//Status cures
+	case CURE_POISON:
+		return new CurePoisonEffect(effectParams);
 
 	//Status Effects
 	case POISON:

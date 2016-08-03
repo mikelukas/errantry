@@ -59,6 +59,6 @@ void UseItemAction::execute()
 	//postcondition: chosen item is used on the chosen target. Assumes these
 	//pointers aren't null, since mode would've been aborted if either was
 
-	player.useEquipment(pEquipmentChoice, *pTarget);
 	cout<<player.ShowName()<<" used a "<<pEquipmentChoice->getName()<<" on "<<pTarget->ShowName()<<"!"<<endl;
+	player.useEquipment(pEquipmentChoice, *pTarget);
 }

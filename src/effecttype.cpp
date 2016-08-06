@@ -13,6 +13,10 @@ const string getAdjectiveFor(EffectType type)
 		return "stronger";
 	case WEAKENED:
 		return "weaker";
+	case HARDENED:
+		return "firmer";
+	case FRAIL:
+		return "frailer";
 	default:
 		return "";
 	}

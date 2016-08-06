@@ -37,6 +37,8 @@ EffectFactory::EffectFactory()
 {
 	statusesByType[TEMPERED] = new StatusTemplate("Tempered", TEMPERED, 10, BATTLE_ONLY);
 	statusesByType[WEAKENED] = new StatusTemplate("Weakened", WEAKENED, 10, BATTLE_ONLY);
+	statusesByType[HARDENED] = new StatusTemplate("Hardened", HARDENED, 10, BATTLE_ONLY);
+	statusesByType[FRAIL] = new StatusTemplate("Frail", FRAIL, 10, BATTLE_ONLY);
 	statusesByType[POISON] = new StatusTemplate("Poison", POISON, 10, GLOBAL);
 }
 
@@ -106,6 +108,16 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 		StatMod statMod;
 		statMod.apMod = -1 * max(1, roundDouble(((double) effectParams.target.getBaseAP()) * MOD_SCALING_FACTOR));
 		return new TempStatModStatusEffect(statMod, TEMPERED, *(statusesByType[effectId]), effectParams);
+	}
+	case HARDENED: {
+		StatMod statMod;
+		statMod.dpMod = max(1, roundDouble(((double) effectParams.target.getBaseDP()) * MOD_SCALING_FACTOR));
+		return new TempStatModStatusEffect(statMod, FRAIL, *(statusesByType[effectId]), effectParams);
+	}
+	case FRAIL: {
+		StatMod statMod;
+		statMod.dpMod = -1 * max(1, roundDouble(((double) effectParams.target.getBaseDP()) * MOD_SCALING_FACTOR));
+		return new TempStatModStatusEffect(statMod, HARDENED, *(statusesByType[effectId]), effectParams);
 	}
 	case POISON:
 		return new PoisonStatus(*(statusesByType[effectId]), effectParams);

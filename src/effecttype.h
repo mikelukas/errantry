@@ -28,6 +28,8 @@ enum EffectType
 	//StatusEffects
 	TEMPERED = 100,
 	WEAKENED = 101,
+	HARDENED = 102,
+	FRAIL = 103,
 	POISON = 111,
 };
 

@@ -1,6 +1,10 @@
 #ifndef SRC_EFFECTTYPE_H_
 #define SRC_EFFECTTYPE_H_
 
+#include <string>
+
+using std::string;
+
 /* Maps an integer id to an enum value name, to make adding effects a little easier*/
 enum EffectType
 {
@@ -22,7 +26,11 @@ enum EffectType
 	CURE_POISON = 50,
 
 	//StatusEffects
-	POISON = 100,
+	TEMPERED = 100,
+	WEAKENED = 101,
+	POISON = 111,
 };
+
+const string getAdjectiveFor(EffectType);
 
 #endif

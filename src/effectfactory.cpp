@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include "character.h"
 #include "effectfactory.h"
 #include "effects/channeleffect.h"
 #include "effects/curestatuseffect.h"
@@ -13,6 +14,9 @@
 #include "effects/playerremoveweaknesseffect.h"
 #include "effects/playermeltdowneffect.h"
 #include "statuses/poisonstatus.h"
+#include "statuses/statusconstants.h"
+#include "statuses/tempstatmodstatuseffect.h"
+#include "util/mathutils.h"
 
 EffectFactory* EffectFactory::instance = NULL; //singleton instance static initialization
 
@@ -31,6 +35,8 @@ EffectFactory* EffectFactory::getInstance()
 
 EffectFactory::EffectFactory()
 {
+	statusesByType[TEMPERED] = new StatusTemplate("Tempered", TEMPERED, 10, BATTLE_ONLY);
+	statusesByType[WEAKENED] = new StatusTemplate("Weakened", WEAKENED, 10, BATTLE_ONLY);
 	statusesByType[POISON] = new StatusTemplate("Poison", POISON, 10, GLOBAL);
 }
 
@@ -91,6 +97,16 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 		return new CureStatusEffect(POISON, effectParams);
 
 	//Status Effects
+	case TEMPERED: {
+		StatMod statMod;
+		statMod.apMod = max(1, roundDouble(((double) effectParams.target.getBaseAP()) * MOD_SCALING_FACTOR));
+		return new TempStatModStatusEffect(statMod, WEAKENED, *(statusesByType[effectId]), effectParams);
+	}
+	case WEAKENED: {
+		StatMod statMod;
+		statMod.apMod = -1 * max(1, roundDouble(((double) effectParams.target.getBaseAP()) * MOD_SCALING_FACTOR));
+		return new TempStatModStatusEffect(statMod, TEMPERED, *(statusesByType[effectId]), effectParams);
+	}
 	case POISON:
 		return new PoisonStatus(*(statusesByType[effectId]), effectParams);
 

@@ -69,17 +69,38 @@ string Character::ShowName() const
         return name;
     }
 
+int Character::getBaseAP() const
+    {
+        //postcondition:  returns character's base AP value before modifications
+		//from things like equipment and statuses
+        return AP;
+    }
+
 int Character::getEffectiveAP() const
     {
         //postcondition:  returns character's total AP after including modifications (e.g. from equipment or statuses)
         return AP + totalStatMods.apMod;
     }
 
+int Character::getBaseDP() const
+	{
+		//postcondition:  returns character's base DP value before modifications
+		//from things like equipment and statuses
+		return DP;
+	}
+
 int Character::getEffectiveDP() const
     {
         //postcondition:  returns character's total DP after including modifications (e.g. from equipment or statuses)
         return DP + totalStatMods.dpMod;
     }
+
+int Character::getBaseMDP() const
+	{
+		//postcondition:  returns character's base MDP value before modifications
+		//from things like equipment and statuses
+		return MDP;
+	}
 
 int Character::getEffectiveMDP() const
     {
@@ -93,6 +114,13 @@ int Character::getHP() const
         return HP;
     }
 
+int Character::getBaseMaxHP() const
+	{
+		//postcondition:  returns character's base max HP value before modifications
+		//from things like equipment and statuses
+		return maxHP;
+	}
+
 int Character::getEffectiveMaxHP() const
     {
         //postcondition:  returns character's maximum HP after including modifications (e.g. from equipment or statuses)
@@ -105,11 +133,25 @@ int Character::getMP() const
         return MP;
     }
 
+int Character::getBaseMaxMP() const
+	{
+		//postcondition:  returns character's base max MP value before modifications
+		//from things like equipment and statuses
+		return maxMP;
+	}
+
 int Character::getEffectiveMaxMP() const
     {
         //postcondition:  returns character's maximum MP after including modifications (e.g. from equipment or statuses)
         return maxMP; //currently nothing modifies max MP
     }
+
+int Character::getBaseSP() const
+	{
+		//postcondition:  returns character's base SP value before modifications
+		//from things like equipment and statuses
+		return SP;
+	}
 
 int Character::getEffectiveSP() const
     {

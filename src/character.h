@@ -51,9 +51,6 @@ class Character
 
 			map<const EffectType, StatusEffect*> statuses;
 			map<const Context, set<StatusEffect*> > statusesByContext;
-                    
-            void AddStats(const StatMod&);
-			void SubStats(const StatMod&);
 
 			void recalculateWeakness();
 
@@ -64,15 +61,29 @@ class Character
             void ChangeHP(int);
             void ChangeMP(int);
             
+            void AddStats(const StatMod&);
+			void SubStats(const StatMod&);
+
             string ShowName() const;
 
             int getHP() const;
+            int getBaseMaxHP() const;
             int getEffectiveMaxHP() const;
+
             int getMP() const;
+            int getBaseMaxMP() const;
             int getEffectiveMaxMP() const;
+
+            int getBaseAP() const;
             int getEffectiveAP() const;
+
+            int getBaseDP() const;
             int getEffectiveDP() const;
+
+            int getBaseMDP() const;
             int getEffectiveMDP() const;
+
+            int getBaseSP() const;
             int getEffectiveSP() const;
 
             int Money() const;

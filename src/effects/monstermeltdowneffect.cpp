@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../character.h"
-#include "../randutils.h"
 #include "monstermeltdowneffect.h"
+#include "../util/randutils.h"
 
 using std::cout;
 using std::endl;

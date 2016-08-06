@@ -1,6 +1,7 @@
 #include "../character.h"
 #include "monsterremoveweaknesseffect.h"
-#include "../randutils.h"
+
+#include "../util/randutils.h"
 
 MonsterRemoveWeaknessEffect::MonsterRemoveWeaknessEffect(const EffectParams& effectParams)
 	: RemoveWeaknessEffect(effectParams)

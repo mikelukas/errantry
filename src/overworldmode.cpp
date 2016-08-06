@@ -3,11 +3,11 @@
 #include "equipmode.h"
 #include "gamestate.h"
 #include "overworldmode.h"
-#include "randutils.h"
 #include "statsdisplayer.h"
 #include "townmode.h"
 #include "quitmode.h"
 #include "useitemmode.h"
+#include "util/randutils.h"
 
 OverworldMode::OverworldMode(GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState, true)

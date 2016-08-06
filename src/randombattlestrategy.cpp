@@ -2,7 +2,8 @@
 #include "fightaction.h"
 #include "monstercastspellaction.h"
 #include "randombattlestrategy.h"
-#include "randutils.h"
+
+#include "util/randutils.h"
 
 using std::cout;
 using std::endl;

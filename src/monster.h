@@ -11,7 +11,7 @@
 #include <vector>
 #include "character.h"
 #include "equipment.h"
-#include "streamutils.h"
+#include "util/streamutils.h"
 
 class BattleStrategy; //Forward declaration since BattleStragry and Monster are interdependent
 

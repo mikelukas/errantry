@@ -1,5 +1,5 @@
-#ifndef SRC_STREAMUTILS_H_
-#define SRC_STREAMUTILS_H_
+#ifndef SRC_UTIL_STREAMUTILS_H_
+#define SRC_UTIL_STREAMUTILS_H_
 
 #include <istream>
 #include <set>

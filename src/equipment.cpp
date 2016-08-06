@@ -1,6 +1,7 @@
 #include <limits>
 #include "equipment.h"
-#include "streamutils.h"
+
+#include "util/streamutils.h"
 
 using std::numeric_limits;
 using std::streamsize;

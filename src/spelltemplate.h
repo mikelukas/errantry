@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include "element.h"
-#include "streamutils.h" //getIdLine
+#include "util/streamutils.h" //getIdLine
 
 using std::istream;
 using std::set;

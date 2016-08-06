@@ -1,5 +1,6 @@
 #include "monstercastspellaction.h"
-#include "randutils.h"
+
+#include "util/randutils.h"
 
 MonsterCastSpellAction::MonsterCastSpellAction(Character& monster, Character& enemy)
 	: CastSpellAction(monster, enemy)

@@ -2,8 +2,8 @@
 #include "battlestrategy.h"
 #include "deadmode.h"
 #include "gamestate.h"
-#include "randutils.h"
 #include "statsdisplayer.h"
+#include "util/randutils.h"
 
 BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
 	: MenuMode(gameData, gameState, true),

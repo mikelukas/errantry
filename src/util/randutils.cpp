@@ -1,5 +1,6 @@
-#include <stdlib.h>
 #include "randutils.h"
+
+#include <stdlib.h>
 
 int getRandIntBetween(int start, int end)
 {

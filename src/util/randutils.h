@@ -1,5 +1,5 @@
-#ifndef SRC_RANDUTILS_H_
-#define SRC_RANDUTILS_H_
+#ifndef SRC_UTIL_RANDUTILS_H_
+#define SRC_UTIL_RANDUTILS_H_
 
 #include <algorithm> //random_shuffle
 #include <set>

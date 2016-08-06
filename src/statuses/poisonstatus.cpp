@@ -1,7 +1,8 @@
 #include <iostream>
 #include "../character.h"
 #include "poisonstatus.h"
-#include "../randutils.h"
+
+#include "../util/randutils.h"
 
 using std::cout;
 using std::endl;

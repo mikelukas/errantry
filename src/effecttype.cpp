@@ -17,6 +17,10 @@ const string getAdjectiveFor(EffectType type)
 		return "firmer";
 	case FRAIL:
 		return "frailer";
+	case BLESSED:
+		return "protected";
+	case CURSED:
+		return "unprotected";
 	default:
 		return "";
 	}

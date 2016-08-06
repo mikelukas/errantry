@@ -30,6 +30,8 @@ enum EffectType
 	WEAKENED = 101,
 	HARDENED = 102,
 	FRAIL = 103,
+	BLESSED = 104,
+	CURSED = 105,
 	POISON = 111,
 };
 

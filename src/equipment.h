@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include "element.h"
+#include "statmod.h"
 
 using std::istream;
 using std::ostream;
@@ -19,28 +20,6 @@ enum EquipType {WEAPON, ARMOR, ITEM};
 
 const float USED_EQUIPMENT_MARKDOWN = 0.5f; //% of original cost player gets when selling equipment
 const int INF_QUANTITY = -1; //For shops that sell equipment, you can buy as much as you can afford, and equipment lines need SOME kind of quantity, so this is a sentinel value for infinity
-
-//Encapsulates changes to stats caused by using a piece of equipment
-struct StatMod
-	{
-		int hpMod;
-		int mpMod;
-		int apMod;
-		int dpMod;
-		int mdpMod;
-		int spMod;
-
-		StatMod();
-
-		int getMeltdownDamage() const;
-
-		friend istream& operator>> (istream&, StatMod&);
-		friend ostream& operator<< (ostream&, const StatMod&);
-
-		friend void operator+=(StatMod&, const StatMod&);
-		friend void operator-=(StatMod&, const StatMod&);
-	};
-const StatMod NO_STATMOD;
 
 class Equipment
     {

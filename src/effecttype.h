@@ -32,6 +32,8 @@ enum EffectType
 	FRAIL = 103,
 	BLESSED = 104,
 	CURSED = 105,
+	HYPER = 106,
+	SLOWED = 107,
 	POISON = 111,
 };
 

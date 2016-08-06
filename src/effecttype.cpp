@@ -21,6 +21,10 @@ const string getAdjectiveFor(EffectType type)
 		return "protected";
 	case CURSED:
 		return "unprotected";
+	case HYPER:
+		return "faster";
+	case SLOWED:
+		return "slower";
 	default:
 		return "";
 	}

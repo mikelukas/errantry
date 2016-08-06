@@ -2,5 +2,7 @@
 #define SRC_STATUSES_STATUSCONSTANTS_H_
 
 const double MOD_SCALING_FACTOR = 0.2;
+const double SP_UPSCALING_FACTOR = 1.0;
+const double SP_DOWNSCALING_FACTOR = 0.5;
 
 #endif

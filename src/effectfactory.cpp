@@ -41,6 +41,8 @@ EffectFactory::EffectFactory()
 	statusesByType[FRAIL] = new StatusTemplate("Frail", FRAIL, 10, BATTLE_ONLY);
 	statusesByType[BLESSED] = new StatusTemplate("Blessed", BLESSED, 10, BATTLE_ONLY);
 	statusesByType[CURSED] = new StatusTemplate("Cursed", CURSED, 10, BATTLE_ONLY);
+	statusesByType[HYPER] = new StatusTemplate("Hyper", HYPER, 10, BATTLE_ONLY);
+	statusesByType[SLOWED] = new StatusTemplate("Slowed", SLOWED, 10, BATTLE_ONLY);
 	statusesByType[POISON] = new StatusTemplate("Poison", POISON, 10, GLOBAL);
 }
 
@@ -130,6 +132,16 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 		StatMod statMod;
 		statMod.mdpMod = -1 * max(1, roundDouble(((double) effectParams.target.getBaseMDP()) * MOD_SCALING_FACTOR));
 		return new TempStatModStatusEffect(statMod, BLESSED, *(statusesByType[effectId]), effectParams);
+	}
+	case HYPER: {
+		StatMod statMod;
+		statMod.spMod = max(1, roundDouble(((double) effectParams.target.getBaseSP()) * SP_UPSCALING_FACTOR));
+		return new TempStatModStatusEffect(statMod, SLOWED, *(statusesByType[effectId]), effectParams);
+	}
+	case SLOWED: {
+		StatMod statMod;
+		statMod.spMod = -1 * roundInt(((double) effectParams.target.getBaseSP()) * SP_DOWNSCALING_FACTOR); //no max() because speed shouldn't be allowed to be reduced to 0 from Slowed status
+		return new TempStatModStatusEffect(statMod, HYPER, *(statusesByType[effectId]), effectParams);
 	}
 	case POISON:
 		return new PoisonStatus(*(statusesByType[effectId]), effectParams);

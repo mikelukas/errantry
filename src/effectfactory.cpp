@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include "effectfactory.h"
 #include "effects/channeleffect.h"
-#include "effects/curepoisoneffect.h"
+#include "effects/curestatuseffect.h"
 #include "effects/draineffect.h"
 #include "effects/elementaldamageeffect.h"
 #include "effects/healeffect.h"
@@ -88,7 +88,7 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 
 	//Status cures
 	case CURE_POISON:
-		return new CurePoisonEffect(effectParams);
+		return new CureStatusEffect(POISON, effectParams);
 
 	//Status Effects
 	case POISON:

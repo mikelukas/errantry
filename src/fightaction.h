@@ -12,7 +12,7 @@ class FightAction : public BattleAction
 		Character& attacker;
 		Character& defender;
 
-		void execute();
+		void doAction();
 
 	public:
 		FightAction(Character&, Character&);

@@ -1,8 +1,13 @@
 #include "battlemode.h"
 #include "battlestrategy.h"
 #include "deadmode.h"
+#include "fightaction.h"
 #include "gamestate.h"
+#include "playercastspellaction.h"
+#include "runaction.h"
+#include "skipturnaction.h"
 #include "statsdisplayer.h"
+#include "useitemaction.h"
 #include "util/randutils.h"
 
 BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
@@ -54,6 +59,11 @@ void BattleMode::run()
 
 int BattleMode::displayMenu()
 {
+	if(gameState.getPlayer().hasStatus(STUNNED))
+	{
+		return SKIP_TURN_CHOICE;
+	}
+
 	int choice;
 
 	cout<<"*************ENEMY! You went to battle!*************"<<endl;
@@ -94,6 +104,9 @@ bool BattleMode::testChoice(int choice)
 	BattleAction* playerAction;
 	switch(choice)
 	{
+		case SKIP_TURN_CHOICE:
+			playerAction = new SkipTurnAction(player);
+			break;
 		case 1:
 			playerAction = new FightAction(player, currMonster);
 			break;
@@ -134,6 +147,12 @@ BattleAction* BattleMode::makeMonsterAction()
 	//to be queued, and calls setup() on that action.  If the action is aborted,
 	//because it can't be run for some reason (e.g. not enough MP to cast spells),
 	//a fight action is chosen.
+	//The SkipTurnAction will be returned if the monster has Stunned status
+
+	if(currMonster.hasStatus(STUNNED))
+	{
+		return new SkipTurnAction(currMonster);
+	}
 
 	BattleStrategy* strat = currMonster.getBattleStrategy();
 	return strat->makeBattleAction(currMonster, gameState.getPlayer());

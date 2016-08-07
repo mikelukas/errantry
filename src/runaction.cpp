@@ -5,12 +5,13 @@ using std::cout;
 using std::endl;
 
 RunAction::RunAction(GameState& gameState)
-	: gameState(gameState)
+	: BattleAction(gameState.getPlayer()),
+	  gameState(gameState)
 {
 
 }
 
-void RunAction::execute()
+void RunAction::doAction()
 {
 	//postcondition: current mode is set to be exited.  Note that the monster
 	//will still get a turn in when this action is chosen.

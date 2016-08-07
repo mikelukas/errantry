@@ -3,14 +3,11 @@
 
 #include <queue>
 #include "battleaction.h"
-#include "fightaction.h"
-#include "playercastspellaction.h"
-#include "runaction.h"
-#include "useitemaction.h"
 #include "menumode.h"
 
 using std::queue;
 
+const int SKIP_TURN_CHOICE = -1;
 const int DROP_CHANCE_PERCENT = 40;
 
 /* This mode handles battle choices when a player encounters a monster randomly

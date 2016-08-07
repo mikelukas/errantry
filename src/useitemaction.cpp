@@ -1,7 +1,8 @@
 #include "useitemaction.h"
 
 UseItemAction::UseItemAction(Player& player, Monster& monster)
-	: player(player),
+	: BattleAction(player),
+	  player(player),
 	  monster(monster),
 	  pEquipmentChoice(NULL),
 	  pTarget(NULL)
@@ -54,7 +55,7 @@ void UseItemAction::setTarget(Character& target)
 	this->pTarget = &target;
 }
 
-void UseItemAction::execute()
+void UseItemAction::doAction()
 {
 	//postcondition: chosen item is used on the chosen target. Assumes these
 	//pointers aren't null, since mode would've been aborted if either was

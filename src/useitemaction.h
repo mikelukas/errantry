@@ -18,13 +18,14 @@ class UseItemAction : public BattleAction
 		Character* pTarget;
 
 		void setTarget(Character&);
+		
+		virtual void doAction();
 
 	public:
 		UseItemAction(Player& player, Monster& monster);
 		virtual ~UseItemAction() {}
 
 		virtual void setup();
-		virtual void execute();
 };
 
 #endif

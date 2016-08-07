@@ -27,13 +27,14 @@ class CastSpellAction: public BattleAction
 		virtual bool setupSpellChoice() = 0;
 		virtual bool setupTargetChoice() = 0;
 		virtual bool setupCastableSpell();
+		
+		virtual void doAction();
 
 	public:
 		CastSpellAction(Character&, Character&);
 		virtual ~CastSpellAction();
 
 		virtual void setup();
-		virtual void execute();
 };
 
 #endif

@@ -4,7 +4,8 @@
 using std::stack;
 
 CastSpellAction::CastSpellAction(Character& caster, Character& enemy)
-	: caster(caster),
+	: BattleAction(caster),
+	  caster(caster),
 	  enemy(enemy),
 	  spellChoice(NULL),
 	  spellTarget(NULL),
@@ -60,7 +61,7 @@ bool CastSpellAction::setupCastableSpell()
 	return true;
 }
 
-void CastSpellAction::execute()
+void CastSpellAction::doAction()
 {
 	//postcondition: cast is called on the chosen spell with the passed-in caster
 	//and chosen target as args.

@@ -11,7 +11,7 @@ class RunAction : public BattleAction
 
 		GameState& gameState;
 
-		void execute();
+		void doAction();
 
 	public:
 		RunAction(GameState&);

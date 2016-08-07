@@ -34,6 +34,7 @@ enum EffectType
 	CURSED = 105,
 	HYPER = 106,
 	SLOWED = 107,
+	STUNNED = 108,
 	POISON = 111,
 };
 

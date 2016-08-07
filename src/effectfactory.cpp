@@ -15,6 +15,7 @@
 #include "effects/playermeltdowneffect.h"
 #include "statuses/poisonstatus.h"
 #include "statuses/statusconstants.h"
+#include "statuses/stunstatuseffect.h"
 #include "statuses/tempstatmodstatuseffect.h"
 #include "util/mathutils.h"
 
@@ -43,6 +44,7 @@ EffectFactory::EffectFactory()
 	statusesByType[CURSED] = new StatusTemplate("Cursed", CURSED, 10, BATTLE_ONLY);
 	statusesByType[HYPER] = new StatusTemplate("Hyper", HYPER, 10, BATTLE_ONLY);
 	statusesByType[SLOWED] = new StatusTemplate("Slowed", SLOWED, 10, BATTLE_ONLY);
+	statusesByType[STUNNED] = new StatusTemplate("Stunned", STUNNED, 2, BATTLE_ONLY);
 	statusesByType[POISON] = new StatusTemplate("Poison", POISON, 10, GLOBAL);
 }
 
@@ -143,6 +145,8 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 		statMod.spMod = -1 * roundInt(((double) effectParams.target.getBaseSP()) * SP_DOWNSCALING_FACTOR); //no max() because speed shouldn't be allowed to be reduced to 0 from Slowed status
 		return new TempStatModStatusEffect(statMod, HYPER, *(statusesByType[effectId]), effectParams);
 	}
+	case STUNNED:
+		return new StunStatusEffect(*(statusesByType[effectId]), effectParams);
 	case POISON:
 		return new PoisonStatus(*(statusesByType[effectId]), effectParams);
 

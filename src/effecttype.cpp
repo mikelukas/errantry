@@ -25,6 +25,8 @@ const string getAdjectiveFor(EffectType type)
 		return "faster";
 	case SLOWED:
 		return "slower";
+	case STUNNED:
+		return "stunned";
 	default:
 		return "";
 	}

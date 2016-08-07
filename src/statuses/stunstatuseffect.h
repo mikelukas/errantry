@@ -13,7 +13,7 @@ class StunStatusEffect : public StatusEffect
 		virtual ~StunStatusEffect() {}
 
 		virtual void onAdd();
-		virtual void onTurn();
+		virtual void runTurnEffect();
 		virtual void onRemove();
 };
 

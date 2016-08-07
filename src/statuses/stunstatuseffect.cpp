@@ -18,7 +18,7 @@ void StunStatusEffect::onAdd()
 	cout<<target.ShowName()<<" is "<<getAdjectiveFor(getType())<<"!"<<endl;
 }
 
-void StunStatusEffect::onTurn()
+void StunStatusEffect::runTurnEffect()
 {
 	//postcondition: displays a message that the target can't make a move.
 
@@ -29,5 +29,5 @@ void StunStatusEffect::onRemove()
 {
 	//postcondition: displays a message that the target is no longer stunned.
 
-	cout<<target.ShowName()<<" can move again."<<endl;
+	cout<<target.ShowName()<<" recovers."<<endl;
 }

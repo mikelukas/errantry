@@ -10,7 +10,9 @@ using std::ostream;
 struct StatMod
 	{
 		int hpMod;
+		int maxHpMod;
 		int mpMod;
+		int maxMpMod;
 		int apMod;
 		int dpMod;
 		int mdpMod;

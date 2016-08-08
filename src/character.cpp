@@ -124,7 +124,7 @@ int Character::getBaseMaxHP() const
 int Character::getEffectiveMaxHP() const
     {
         //postcondition:  returns character's maximum HP after including modifications (e.g. from equipment or statuses)
-        return maxHP; //currently nothing modifies max HP
+        return maxHP + totalStatMods.maxHpMod;
     }
 
 int Character::getMP() const
@@ -143,7 +143,7 @@ int Character::getBaseMaxMP() const
 int Character::getEffectiveMaxMP() const
     {
         //postcondition:  returns character's maximum MP after including modifications (e.g. from equipment or statuses)
-        return maxMP; //currently nothing modifies max MP
+        return maxMP + totalStatMods.maxMpMod;
     }
 
 int Character::getBaseSP() const
@@ -215,7 +215,16 @@ void Character::SubStats(const StatMod& stats)
 		totalStatMods.mpMod = 0; //doesn't make sense to have current MP have persistent modification (only base max MP)
 
 		HP -= stats.hpMod;
+		if(HP > getEffectiveMaxHP()) //if something increased max HP, and that inrease is lost, need to ensure HP goes back to new max
+		{
+			HP = getEffectiveMaxHP();
+		}
+
 		MP -= stats.mpMod;
+		if(MP > getEffectiveMaxMP())
+		{
+			MP = getEffectiveMaxMP();
+		}
 	}
 
 void Character::AddEquipment(const EquipmentLine& newEqLine)

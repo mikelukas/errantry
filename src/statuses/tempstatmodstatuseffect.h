@@ -4,18 +4,17 @@
 #include <string>
 #include "../effecttype.h"
 #include "../statmod.h"
-#include "statuseffect.h"
+#include "hasoppositestatuseffect.h"
 
 using std::string;
 
 /* Base class for StatusEffects that apply a temporary modification to one or
  * more of the target's attributes.
  */
-class TempStatModStatusEffect: public StatusEffect
+class TempStatModStatusEffect: public HasOppositeStatusEffect
 {
 	protected:
 		const StatMod modToApply;
-		const EffectType oppositeStatus;
 
 	public:
 		TempStatModStatusEffect(const StatMod&, const EffectType, const StatusTemplate&, const EffectParams&);
@@ -23,8 +22,6 @@ class TempStatModStatusEffect: public StatusEffect
 
 		virtual void onAdd();
 		virtual void onRemove();
-
-		virtual void apply();
 };
 
 #endif

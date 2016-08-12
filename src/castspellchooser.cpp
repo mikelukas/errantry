@@ -46,6 +46,9 @@ void CastSpellChooser::displayInventoryChoices() const
 void CastSpellChooser::displaySpellLine(const SpellTemplate* spell) const
 {
 	//postcondition: displays the name, element, and MP cost of the given spell.
+	//If the player has statuses affecting MP cost, the adjusted cost is displayed.
 
-	cout<<std::left<<setw(15)<<spell->getName()<<setw(14)<<getDisplayNameFor(spell->getElement())<<" "<<setw(3)<<spell->getMpCost()<<endl;
+	int netMpCost = player.getEffectiveMpCostFor(spell);
+
+	cout<<std::left<<setw(15)<<spell->getName()<<setw(14)<<getDisplayNameFor(spell->getElement())<<" "<<setw(3)<<netMpCost<<endl;
 }

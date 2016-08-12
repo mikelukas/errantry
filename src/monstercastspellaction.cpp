@@ -95,7 +95,7 @@ const SpellTemplate* MonsterCastSpellAction::lookupSpellInCategory(SpellCategory
 	vector<const SpellTemplate*>* shuffledSpells = shuffleSetIntoVector(spellsForCategory);
 	for(vector<const SpellTemplate*>::const_iterator it = shuffledSpells->begin(); it != shuffledSpells->end(); it++)
 	{
-		if((*it)->getMpCost() <= caster.getMP())
+		if(caster.hasEnoughMpFor((*it)))
 		{
 			chosenSpell = (*it);
 			break;

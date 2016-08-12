@@ -45,6 +45,8 @@ EffectFactory::EffectFactory()
 	statusesByType[HYPER] = new StatusTemplate("Hyper", HYPER, 10, BATTLE_ONLY);
 	statusesByType[SLOWED] = new StatusTemplate("Slowed", SLOWED, 10, BATTLE_ONLY);
 	statusesByType[STUNNED] = new StatusTemplate("Stunned", STUNNED, 2, BATTLE_ONLY);
+	statusesByType[FOCUSED] = new StatusTemplate("Focused", FOCUSED, 10, BATTLE_ONLY);
+	statusesByType[UNFOCUSED] = new StatusTemplate("Unfocused", UNFOCUSED, 10, BATTLE_ONLY);
 	statusesByType[POISON] = new StatusTemplate("Poison", POISON, 10, GLOBAL);
 }
 
@@ -147,6 +149,10 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 	}
 	case STUNNED:
 		return new StunStatusEffect(*(statusesByType[effectId]), effectParams);
+	case FOCUSED:
+		return new HasOppositeStatusEffect(UNFOCUSED, *(statusesByType[effectId]), effectParams);
+	case UNFOCUSED:
+		return new HasOppositeStatusEffect(FOCUSED, *(statusesByType[effectId]), effectParams);
 	case POISON:
 		return new PoisonStatus(*(statusesByType[effectId]), effectParams);
 

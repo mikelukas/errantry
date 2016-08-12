@@ -2,7 +2,8 @@
 #include "castablespell.h"
 #include "character.h"
 #include "effectfactory.h"
-#include "statuses/poisonstatus.h"
+#include "statuses/statusconstants.h"
+#include "util/mathutils.h"
 
 using std::cout;
 using std::endl;
@@ -37,7 +38,7 @@ bool CastableSpell::setup()
 		deallocInitializedEffects();
 	}
 
-	if(caster.getMP() < getMpCost())
+	if(!caster.hasEnoughMpFor(this))
 	{
 		cout<<caster.ShowName()<<" does not have enough MP to cast '"<<getName()<<"'!"<<endl;
 		return false;
@@ -71,7 +72,14 @@ void CastableSpell::cast()
 	//and the effect function of each effect referenced by this spell is called,
 	//in order (dat file specifies order), with the caster and target.
 
-	caster.ChangeMP(-getMpCost());
+	//caster could've gotten a status that prevents casting after setup() was called
+	if(!caster.hasEnoughMpFor(this))
+	{
+		deallocInitializedEffects();
+		return;
+	}
+
+	caster.ChangeMP(-(caster.getEffectiveMpCostFor(this)));
 
 	for(vector<Effect*>::const_iterator it = initializedEffects.begin(); it != initializedEffects.end(); it++)
 	{

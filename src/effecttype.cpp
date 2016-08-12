@@ -27,6 +27,10 @@ const string getAdjectiveFor(EffectType type)
 		return "slower";
 	case STUNNED:
 		return "stunned";
+	case FOCUSED:
+		return "focused";
+	case UNFOCUSED:
+		return "unfocused";
 	default:
 		return "";
 	}

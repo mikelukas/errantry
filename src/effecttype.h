@@ -35,6 +35,8 @@ enum EffectType
 	HYPER = 106,
 	SLOWED = 107,
 	STUNNED = 108,
+	FOCUSED = 109,
+	UNFOCUSED = 110,
 	POISON = 111,
 };
 

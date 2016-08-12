@@ -25,7 +25,7 @@ bool PlayerCastSpellAction::setupSpellChoice()
 	}
 
 	spellChoice = spellChooser.getChoice();
-	if(caster.getMP() < spellChoice->getMpCost())
+	if(!caster.hasEnoughMpFor(spellChoice))
 	{
 		cout<<"Not enough MP to cast '"<<spellChoice->getName()<<"'."<<endl;
 		return false;

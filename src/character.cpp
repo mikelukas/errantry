@@ -2,6 +2,8 @@
 #include <iostream>
 #include <math.h> //ceil()
 #include "character.h"
+#include "statuses/statusconstants.h"
+#include "util/mathutils.h"
 
 using std::cout;
 using std::endl;
@@ -443,6 +445,32 @@ vector<EquipmentLine*>* Character::getItemsAsVector()
 		}
 
 		return equipmentChoices;
+	}
+
+int Character::getEffectiveMpCostFor(const SpellTemplate* spell) const
+	{
+		//postcondition: returns the actual MP cost for the given spell after
+		//adjusting for statuses this Character has which can affect it.
+
+		int netMpCost = spell->getMpCost();
+		if(hasStatus(FOCUSED))
+		{
+			netMpCost = max(1, roundInt(((double)netMpCost) * MP_COST_DOWNSCALING_FACTOR));
+		}
+		else if(hasStatus(UNFOCUSED))
+		{
+			netMpCost *= MP_COST_UPSCALING_FACTOR;
+		}
+
+		return netMpCost;
+	}
+
+bool Character::hasEnoughMpFor(const SpellTemplate* spell) const
+	{
+		//postcondition: returns true if the Character has enough MP to cast the
+		//given spell, taking adjustments from StatusEffects into account.
+
+		return getEffectiveMpCostFor(spell) <= getMP();
 	}
 
 bool Character::hasSpell(const SpellTemplate* spell) const

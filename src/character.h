@@ -101,6 +101,8 @@ class Character
             vector<EquipmentLine*>* getWeaponsAndArmorAsVector();
             vector<EquipmentLine*>* getItemsAsVector();
 
+            int getEffectiveMpCostFor(const SpellTemplate*) const;
+            bool hasEnoughMpFor(const SpellTemplate*) const;
             bool hasSpell(const SpellTemplate*) const;
             bool hasSpells() const;
 			const set<const SpellTemplate*>& getSpells() const;

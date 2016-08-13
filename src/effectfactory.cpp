@@ -14,6 +14,7 @@
 #include "effects/playerremoveweaknesseffect.h"
 #include "effects/playermeltdowneffect.h"
 #include "statuses/poisonstatus.h"
+#include "statuses/regenstatus.h"
 #include "statuses/statusconstants.h"
 #include "statuses/stunstatuseffect.h"
 #include "statuses/tempstatmodstatuseffect.h"
@@ -48,6 +49,7 @@ EffectFactory::EffectFactory()
 	statusesByType[FOCUSED] = new StatusTemplate("Focused", FOCUSED, 10, BATTLE_ONLY);
 	statusesByType[UNFOCUSED] = new StatusTemplate("Unfocused", UNFOCUSED, 10, BATTLE_ONLY);
 	statusesByType[POISON] = new StatusTemplate("Poison", POISON, 10, GLOBAL);
+	statusesByType[REGEN] = new StatusTemplate("Regen", REGEN, 10, BATTLE_ONLY);
 }
 
 EffectFactory::~EffectFactory()
@@ -155,6 +157,8 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 		return new HasOppositeStatusEffect(FOCUSED, *(statusesByType[effectId]), effectParams);
 	case POISON:
 		return new PoisonStatus(*(statusesByType[effectId]), effectParams);
+	case REGEN:
+		return new RegenStatus(*(statusesByType[effectId]), effectParams);
 
 	default:
 		return NULL;

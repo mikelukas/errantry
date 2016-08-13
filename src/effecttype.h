@@ -38,6 +38,7 @@ enum EffectType
 	FOCUSED = 109,
 	UNFOCUSED = 110,
 	POISON = 111,
+	REGEN = 112
 };
 
 const string getAdjectiveFor(EffectType);

@@ -117,6 +117,13 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 		return new CureStatusesEffect(BLIND, effectParams);
 	case CURE_MUTE:
 		return new CureStatusesEffect(MUTE, effectParams);
+	case PURIFY: {
+		vector<EffectType>* statusesToCure = new vector<EffectType>();
+		statusesToCure->push_back(POISON);
+		statusesToCure->push_back(BLIND);
+		statusesToCure->push_back(MUTE);
+		return new CureStatusesEffect(statusesToCure, effectParams);
+	}
 
 	//Status Effects
 	case TEMPERED: {

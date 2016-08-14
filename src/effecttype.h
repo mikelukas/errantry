@@ -24,6 +24,7 @@ enum EffectType
 
 	//Status cures
 	CURE_POISON = 50,
+	CURE_BLIND = 51,
 
 	//StatusEffects
 	TEMPERED = 100,

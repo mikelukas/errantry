@@ -111,6 +111,8 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 	//Status cures
 	case CURE_POISON:
 		return new CureStatusEffect(POISON, effectParams);
+	case CURE_BLIND:
+		return new CureStatusEffect(BLIND, effectParams);
 
 	//Status Effects
 	case TEMPERED: {

@@ -29,6 +29,12 @@ void CastSpellAction::setup()
 	//Handles returning to spell choosing if a spell is chosen but target choosing
 	//is canceled or spell setup is aborted.
 
+	if(isCasterMute())
+	{
+		setAborted(true);
+		return;
+	}
+
 	while(!isAborted() && castableSpell == NULL)
 	{
 		if(!setupSpellChoice())
@@ -46,6 +52,17 @@ void CastSpellAction::setup()
 			continue;
 		}
 	}
+}
+
+bool CastSpellAction::isCasterMute()
+{
+	if(caster.hasStatus(MUTE))
+	{
+		cout<<caster.ShowName()<<" can't speak to cast spells!"<<endl;
+		return true;
+	}
+
+	return false;
 }
 
 bool CastSpellAction::setupCastableSpell()
@@ -66,7 +83,7 @@ void CastSpellAction::doAction()
 	//postcondition: cast is called on the chosen spell with the passed-in caster
 	//and chosen target as args.
 
-	if(castableSpell == NULL)
+	if(castableSpell == NULL || isCasterMute()) //caster may have acquired MUTE after setup()
 	{
 		return;
 	}

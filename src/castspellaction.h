@@ -24,6 +24,8 @@ class CastSpellAction: public BattleAction
 
 		CastableSpell* castableSpell;
 
+		virtual bool isCasterMute();
+
 		virtual bool setupSpellChoice() = 0;
 		virtual bool setupTargetChoice() = 0;
 		virtual bool setupCastableSpell();

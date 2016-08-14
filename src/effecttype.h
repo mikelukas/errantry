@@ -42,6 +42,7 @@ enum EffectType
 	REGEN = 112,
 	DOOMED = 113,
 	BLIND = 114,
+	MUTE = 115,
 };
 
 const string getAdjectiveFor(EffectType);

@@ -15,7 +15,7 @@ vector<BattleAction*>* BattleStrategy::getEligibleActions(Monster& monster, Char
 		eligibleActions->push_back(new FightAction(monster, target));
 	}
 
-	if(monster.hasSpells())
+	if(!monster.hasStatus(MUTE) && monster.hasSpells())
 	{
 		eligibleActions->push_back(new MonsterCastSpellAction(monster, target));
 	}

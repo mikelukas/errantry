@@ -79,7 +79,7 @@ int BattleMode::displayMenu()
 	StatsDisplayer::battleMainDisplayFor(currMonster);
 	cout<<"*****************"<<endl;
 	displayFightChoice();
-	cout<<"*2)Cast Spell   *"<<endl;
+	displayCastSpellChoice();
 	cout<<"*3)Use Item     *"<<endl;
 	cout<<"*4)Run          *"<<endl;
 	cout<<"*****************"<<endl;
@@ -102,6 +102,18 @@ void BattleMode::displayFightChoice()
 	else
 	{
 		cout<<"*1)Fight        *"<<endl;
+	}
+}
+
+void BattleMode::displayCastSpellChoice()
+{
+	if(gameState.getPlayer().hasStatus(MUTE))
+	{
+		cout<<"*  Mute!        *"<<endl;
+	}
+	else
+	{
+		cout<<"*2)Cast Spell   *"<<endl;
 	}
 }
 

@@ -15,6 +15,7 @@
 #include "effects/playermeltdowneffect.h"
 #include "statuses/blindstatus.h"
 #include "statuses/doomedstatus.h"
+#include "statuses/mutestatus.h"
 #include "statuses/poisonstatus.h"
 #include "statuses/regenstatus.h"
 #include "statuses/statusconstants.h"
@@ -54,6 +55,7 @@ EffectFactory::EffectFactory()
 	statusesByType[REGEN] = new StatusTemplate("Regen", REGEN, 10, BATTLE_ONLY);
 	statusesByType[DOOMED] = new StatusTemplate("Doomed", DOOMED, 10, BATTLE_ONLY);
 	statusesByType[BLIND] = new StatusTemplate("Blind", BLIND, 10, GLOBAL);
+	statusesByType[MUTE] = new StatusTemplate("Mute", MUTE, 10, GLOBAL);
 }
 
 EffectFactory::~EffectFactory()
@@ -169,6 +171,8 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 		return new DoomedStatus(*(statusesByType[effectId]), effectParams);
 	case BLIND:
 		return new BlindStatus(*(statusesByType[effectId]), effectParams);
+	case MUTE:
+		return new MuteStatus(*(statusesByType[effectId]), effectParams);
 
 	default:
 		return NULL;

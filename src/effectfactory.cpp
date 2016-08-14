@@ -2,7 +2,7 @@
 #include "character.h"
 #include "effectfactory.h"
 #include "effects/channeleffect.h"
-#include "effects/curestatuseffect.h"
+#include "effects/curestatuseseffect.h"
 #include "effects/draineffect.h"
 #include "effects/elementaldamageeffect.h"
 #include "effects/healeffect.h"
@@ -112,11 +112,11 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 
 	//Status cures
 	case CURE_POISON:
-		return new CureStatusEffect(POISON, effectParams);
+		return new CureStatusesEffect(POISON, effectParams);
 	case CURE_BLIND:
-		return new CureStatusEffect(BLIND, effectParams);
+		return new CureStatusesEffect(BLIND, effectParams);
 	case CURE_MUTE:
-		return new CureStatusEffect(MUTE, effectParams);
+		return new CureStatusesEffect(MUTE, effectParams);
 
 	//Status Effects
 	case TEMPERED: {

@@ -78,7 +78,7 @@ int BattleMode::displayMenu()
 	cout<<endl;
 	StatsDisplayer::battleMainDisplayFor(currMonster);
 	cout<<"*****************"<<endl;
-	cout<<"*1)Fight        *"<<endl;
+	displayFightChoice();
 	cout<<"*2)Cast Spell   *"<<endl;
 	cout<<"*3)Use Item     *"<<endl;
 	cout<<"*4)Run          *"<<endl;
@@ -91,6 +91,18 @@ int BattleMode::displayMenu()
 	}while(!validateChoice(choice,4));
 
 	return choice;
+}
+
+void BattleMode::displayFightChoice()
+{
+	if(gameState.getPlayer().hasStatus(BLIND))
+	{
+		cout<<"*  Blind!       *"<<endl;
+	}
+	else
+	{
+		cout<<"*1)Fight        *"<<endl;
+	}
 }
 
 bool BattleMode::testChoice(int choice)

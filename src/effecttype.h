@@ -40,6 +40,7 @@ enum EffectType
 	POISON = 111,
 	REGEN = 112,
 	DOOMED = 113,
+	BLIND = 114,
 };
 
 const string getAdjectiveFor(EffectType);

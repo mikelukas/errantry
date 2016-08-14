@@ -13,10 +13,13 @@ class FightAction : public BattleAction
 		Character& defender;
 
 		void doAction();
+		bool isAttackerBlind();
 
 	public:
 		FightAction(Character&, Character&);
 		virtual ~FightAction() {}
+
+		virtual void setup();
 };
 
 #endif

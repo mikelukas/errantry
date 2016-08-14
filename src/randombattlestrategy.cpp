@@ -1,9 +1,9 @@
+#include <algorithm> //random_shuffle
 #include <iostream>
 #include "fightaction.h"
+#include "skipturnaction.h"
 #include "monstercastspellaction.h"
 #include "randombattlestrategy.h"
-
-#include "util/randutils.h"
 
 using std::cout;
 using std::endl;
@@ -22,31 +22,47 @@ BattleStrategy* RandomBattleStrategy::clone() const
 
 BattleAction* RandomBattleStrategy::makeBattleAction(Monster& monster, Character& target)
 {
-	//postcondition: returns either a MonsterCastSpellAction or a FightAction,
-	//chosen at random.
-	//Will never return a MonsterCastSpellAction if the monster doesn't have spells
-
-	//If the monster has spells, randomly choose between fight or cast, otherwise just fight
-	int actionType = monster.hasSpells() ? getRandIntBetween(0,1) : 0;
+	//postcondition: returns a BattleAction for the monster, which has had
+	//setup() called on it and is not aborted.
+	//Randomly chooses this action from among initial eligible actions for the
+	//monster as returned by getEligibleActions().
+	//Returns a SkipTurnAction if the monster doesn't have any eligible actions
+	//or all eligible actions abort during setup().
 
 	BattleAction* chosenAction = NULL;
-	switch(actionType)
+
+	//Randomly choose a valid action.
+	vector<BattleAction*>* eligibleActions = getEligibleActions(monster, target);
+	std::random_shuffle(eligibleActions->begin(), eligibleActions->end());
+	while(!eligibleActions->empty())
 	{
-	case 1:
-		chosenAction = new MonsterCastSpellAction(monster, target);
-		break;
-	default:
-		chosenAction = new FightAction(monster, target);
+		chosenAction = eligibleActions->back();
+		eligibleActions->pop_back();
+
+		chosenAction->setup();
+		if(!chosenAction->isAborted())
+		{
+			break;
+		}
+
+		delete chosenAction;
+		chosenAction = NULL;
 	}
 
-	chosenAction->setup();
-	if(chosenAction->isAborted())
+	//If no valid actions were found, monster must lose its turn
+	if(chosenAction == NULL)
 	{
-		delete chosenAction;
-
-		chosenAction = new FightAction(monster, target);
+		chosenAction = new SkipTurnAction(monster);
 		chosenAction->setup();
 	}
+
+	//de-allocate any remaining actions in queue, and then queue itself
+	while(!eligibleActions->empty())
+	{
+		delete (eligibleActions->back());
+		eligibleActions->pop_back();
+	}
+	delete eligibleActions;
 
 	return chosenAction;
 }

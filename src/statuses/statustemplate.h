@@ -24,7 +24,7 @@ class StatusTemplate
 		StatusTemplate(const string&, EffectType, int, const Context);
 		virtual ~StatusTemplate() {};
 
-		const string& getName() const;
+		virtual const string getName() const;
 		const EffectType getType() const;
 		const int getDuration() const;
 		const Context getEligibleContext() const;

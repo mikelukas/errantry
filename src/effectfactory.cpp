@@ -13,6 +13,7 @@
 #include "effects/playeraddweaknesseffect.h"
 #include "effects/playerremoveweaknesseffect.h"
 #include "effects/playermeltdowneffect.h"
+#include "statuses/doomedstatus.h"
 #include "statuses/poisonstatus.h"
 #include "statuses/regenstatus.h"
 #include "statuses/statusconstants.h"
@@ -50,6 +51,7 @@ EffectFactory::EffectFactory()
 	statusesByType[UNFOCUSED] = new StatusTemplate("Unfocused", UNFOCUSED, 10, BATTLE_ONLY);
 	statusesByType[POISON] = new StatusTemplate("Poison", POISON, 10, GLOBAL);
 	statusesByType[REGEN] = new StatusTemplate("Regen", REGEN, 10, BATTLE_ONLY);
+	statusesByType[DOOMED] = new StatusTemplate("Doomed", DOOMED, 10, BATTLE_ONLY);
 }
 
 EffectFactory::~EffectFactory()
@@ -159,6 +161,8 @@ Effect* EffectFactory::createEffect(EffectType effectId, const EffectParams& eff
 		return new PoisonStatus(*(statusesByType[effectId]), effectParams);
 	case REGEN:
 		return new RegenStatus(*(statusesByType[effectId]), effectParams);
+	case DOOMED:
+		return new DoomedStatus(*(statusesByType[effectId]), effectParams);
 
 	default:
 		return NULL;

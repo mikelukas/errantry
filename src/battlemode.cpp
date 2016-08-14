@@ -53,6 +53,11 @@ void BattleMode::run()
 	//postcondition: calls super::run(), and then calls executeActions() to run
 	//enqueued actions (if any).
 
+	if(testEndConditions())
+	{
+		return; //Status effects processed at the start of this turn could end the battle
+	}
+
 	MenuMode::run();
 	executeActions();
 }

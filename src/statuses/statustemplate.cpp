@@ -9,7 +9,7 @@ StatusTemplate::StatusTemplate(const string& name, EffectType type, int duration
 
 }
 
-const string& StatusTemplate::getName() const
+const string StatusTemplate::getName() const
 {
 	//postcondition: returns a displayable name for this status.
 

@@ -140,6 +140,7 @@ Monster* GameData::loadMonsterFrom(istream& is)
 	is.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	Monster* monster = new Monster(name, hp, mp, ap, dp, mdp, sp, gold, expPoints);  //freed in deconstructor
+	loadMonsterImmunities(is, monster);
 
 	//init inventory from stream (1 line of ids for each equipment type)
 	loadMonsterEquipment(is, weaponPtrs, monster);
@@ -150,6 +151,22 @@ Monster* GameData::loadMonsterFrom(istream& is)
 	loadMonsterDroppableSpells(is, monster);
 
 	return monster;
+}
+
+void GameData::loadMonsterImmunities(istream& is, Monster* monster)
+{
+	//postcondition: reads a single line of EffectType ids from the istream,
+	//casts them to EffectTypes, and each as a permanent immunity to monster.
+
+	int id;
+	while(is.peek() != '\n')
+	{
+		is>>id;
+
+		EffectType immuneTo = static_cast<EffectType>(id);
+		monster->addPermImmunityTo(immuneTo);
+	}
+	is.get();//throwout newline char
 }
 
 void GameData::loadMonsterEquipment(istream& is, vector<Equipment*>& equipment, Monster* monster)

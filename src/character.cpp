@@ -584,10 +584,17 @@ int Character::applyMagicalDamage(int rawDamage, Element element)
 bool Character::addStatus(StatusEffect* status)
 	{
 		//postcondition: if the character does not already have the given status,
-		//it is added to its status maps, and onAdd() is invoked on the status
-		//to run any initial/setup effects, in that order.
+		//and is not immune to it, it is added to its status maps, and onAdd()
+		//is invoked on the status to run any initial/setup effects, in that
+		//order.
 		//returns true if the status was added, false otherwise, so it can be
 		//deleted by the caller if applicable.
+
+		if(isImmuneTo(status->getType()))
+		{
+			cout<<ShowName()<<" is immune to "<<status->getName()<<"!"<<endl;
+			return false;
+		}
 
 		if(statuses.count(status->getType()) > 0)
 		{
@@ -697,4 +704,28 @@ vector<StatusEffect*>* Character::getAllStatuses() const
 		}
 
 		return statusVector;
+	}
+
+bool Character::isImmuneTo(const EffectType status) const
+	{
+		//postcondition: returns true if the Character is immune to the incoming
+		//status, either temporarily or permanently.
+
+		return (permStatusImmunities.count(status) > 0);
+	}
+
+void Character::addPermImmunityTo(const EffectType immunity)
+	{
+		//postcondition: the incoming immunity is added to the set of permanent
+		//status immunities for the Character.
+
+		permStatusImmunities.insert(immunity);
+	}
+
+void Character::removePermImmunityTo(const EffectType immunity)
+	{
+		//postcondition: the incoming immunity is removed from the set of permanent
+		//status immunities for the Character.
+
+		permStatusImmunities.erase(immunity);
 	}

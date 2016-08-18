@@ -52,6 +52,8 @@ class Character
 			map<const EffectType, StatusEffect*> statuses;
 			map<const Context, set<StatusEffect*> > statusesByContext;
 
+			set<const EffectType> permStatusImmunities;
+
 			void recalculateWeakness();
 
         public:
@@ -126,6 +128,10 @@ class Character
             bool hasStatus(const EffectType) const;
             bool hasStatuses() const;
             vector<StatusEffect*>* getAllStatuses() const;
+
+            bool isImmuneTo(const EffectType) const;
+            void addPermImmunityTo(const EffectType);
+            void removePermImmunityTo(const EffectType);
     };
 
 #endif

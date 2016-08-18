@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm> //min
 #include <math.h> //round
+#include <set>
 #include <string>
 #include <vector>
 #include "element.h"
@@ -13,6 +14,7 @@ using std::istream;
 using std::ostream;
 
 using std::min;
+using std::set;
 using std::string;
 using std::vector;
 
@@ -29,6 +31,7 @@ class Equipment
 			Element element;
 
 			StatMod statMods;
+			set<int> effectImmunityIds;
 			vector<int> effectIds;
 
 			int cost;   //price the item sells for
@@ -42,6 +45,7 @@ class Equipment
 			int getCost() const;
 			int getSellPrice() const;
 			const StatMod& getStatMod() const;
+			const set<int>& getEffectImmunityIds() const;
 			const vector<int>& getEffectIds() const;
 
 			friend istream& operator>> (istream&, Equipment&);

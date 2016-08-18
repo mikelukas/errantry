@@ -3,46 +3,61 @@ Potion
 4
 15 0 0 0 0 0 0 0
 
+
 25
 1
 Ether
 4
 0 0 15 0 0 0 0 0
 
+
 100
 2
 Antidote
 2
 0 0 0 0 0 0 0 0
+
 50
 100
 3
 Eye Drops
 3
 0 0 0 0 0 0 0 0
+
 51
 100
 4
 Mint Sprig
 2
 0 0 0 0 0 0 0 0
+
 52
 100
 5
 White Vial
 1
 0 0 0 0 0 0 0 0
+
 53
 100
 6
+Vaccine
+2
+0 0 0 0 0 0 0 0
+111
+
+100
+7
 Molotov Cocktail
 0
 0 0 0 0 0 0 0 0
+
 0
 100
-4
+8
 Flash Bomb
 5
 0 0 0 0 0 0 0 0
+
 108 114
 200

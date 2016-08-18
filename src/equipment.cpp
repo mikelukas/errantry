@@ -47,6 +47,11 @@ const StatMod& Equipment::getStatMod() const
 	return statMods;
 }
 
+const set<int>& Equipment::getEffectImmunityIds() const
+{
+	return effectImmunityIds;
+}
+
 const vector<int>& Equipment::getEffectIds() const
 {
 	return effectIds;
@@ -68,6 +73,7 @@ istream& operator>> (istream& is, Equipment& equipment)
 	is>>equipment.statMods;
 	is.ignore(numeric_limits<streamsize>::max(), '\n');
 
+	getIdLine(is, equipment.effectImmunityIds);
 	getIdLine(is, equipment.effectIds);
 
 	is>>equipment.cost;

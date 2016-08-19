@@ -199,7 +199,8 @@ void Player::dequipCurrent(EquipType equipType)
 	{
 		//postcondition: "dequips" the passed in equipment by subtracting its
 		//stats from the player's current stats (since it's not equipped it doesn't
-		//contribute stat gains anymore), adding the equipment back into the player's
+		//contribute stat gains anymore), removing any temporary immunities
+		//conferred by the equipment, adding the equipment back into the player's
 		//inventory, and setting the currentEquipped equipment for its type back
 		//to null.
 		//Call before calling equip.  Called by apply() to ensure old equipment
@@ -211,6 +212,7 @@ void Player::dequipCurrent(EquipType equipType)
 		}
 
 		SubStats(pCurrEquipment->getStatMod());
+		removeTempImmunitiesFor(pCurrEquipment);
 
 		//Since equipping "removes" equipment from inventory, we need to put it back
 		map<const Equipment*, EquipmentLine>& inv = getInventoryFor(equipType);
@@ -230,7 +232,8 @@ void Player::equip(const Equipment* equipment)
 		//been validated by useEquipment()).
 		//postcondition: "equips" the passed-in equipment by setting it as the
 		//currentEquipped equipment for its type on the player, adding its stats
-		//to the player's current stats.
+		//to the player's current stats, and adding any immunities conferred by
+		//the equipment.
 		//
 		//DO NOT use this method to perform the menu action of equipping - instead
 		//use useEquipment(), which handles dequipping whatever the player has currently
@@ -242,6 +245,7 @@ void Player::equip(const Equipment* equipment)
 
 		currentEquipped[equipment->getType()] = equipment;
 		AddStats(equipment->getStatMod());
+		addTempImmunitiesFrom(equipment);
 	}
 void Player::useEquipment(const Equipment* eq, Character& onTarget)
 {
@@ -286,7 +290,8 @@ void Player::useEquipment(const Equipment* eq, Character& onTarget)
 void Player::apply(const Equipment* eq)
 	{
 		//postcondition: The incoming Equipment is "applied" to the player, which
-		//adds the stat changes from the Equipment to the player's stats.
+		//adds the stat changes from the Equipment to the player's stats, and
+		//any immunities conferred by the equipment.
 		//For weapons and armor any previously-equipped equipment is also
 		//removed first and placed back into the player's inventory.
 
@@ -299,5 +304,7 @@ void Player::apply(const Equipment* eq)
 			break;
 		case ITEM:
 			AddStats(eq->getStatMod());
+			addPermImmunitiesFrom(eq);
+			break;
 		}
 	}

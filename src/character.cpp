@@ -711,7 +711,75 @@ bool Character::isImmuneTo(const EffectType status) const
 		//postcondition: returns true if the Character is immune to the incoming
 		//status, either temporarily or permanently.
 
-		return (permStatusImmunities.count(status) > 0);
+		return (tempStatusImmunities.count(status) > 0) || (permStatusImmunities.count(status) > 0);
+	}
+
+void Character::addTempImmunitiesFrom(const Equipment* equipment)
+	{
+		//postcondition: adds all immunities conferred by equipment as temporary
+		//immunities for this Character
+
+		const set<int> immunityStatusIds = equipment->getEffectImmunityIds();
+		for(set<int>::const_iterator it = immunityStatusIds.begin(); it != immunityStatusIds.end(); it++)
+		{
+			EffectType status = static_cast<EffectType>(*it);
+			addTempImmunityTo(status, equipment);
+		}
+	}
+
+void Character::addTempImmunityTo(const EffectType status, const Equipment* fromEquipment)
+	{
+		//postcondition: adds an immunity to status, referencing fromEquipoment
+		//as the equipment that is providing it, for use when removing.
+
+		tempStatusImmunities[status].insert(fromEquipment);
+		removeStatus(status);
+	}
+
+void Character::removeTempImmunitiesFor(const Equipment* equipment)
+	{
+		//postcondition: removes all immunities conferred by equipment from
+		//this Character.
+
+		const set<int> immunityStatusIds = equipment->getEffectImmunityIds();
+		for(set<int>::const_iterator it = immunityStatusIds.begin(); it != immunityStatusIds.end(); it++)
+		{
+			EffectType status = static_cast<EffectType>(*it);
+			removeTempImmunityTo(status, equipment);
+		}
+	}
+
+void Character::removeTempImmunityTo(const EffectType status, const Equipment* fromEquipment)
+	{
+		//postcondition: removes fromEquipment as a reference to the immunity for
+		//status, and if status is not referenced as an immunity by any other
+		//equipped equipment, the status immunity is removed
+
+		if(tempStatusImmunities.count(status) <= 0)
+		{
+			return;
+		}
+
+		set<const Equipment*>& eqRefs = tempStatusImmunities[status];
+		eqRefs.erase(fromEquipment);
+
+		if(eqRefs.empty())
+		{
+			tempStatusImmunities.erase(status);
+		}
+	}
+
+void Character::addPermImmunitiesFrom(const Equipment* equipment)
+	{
+		//postcondition: adds all immunities conferred by equipment as temporary
+		//immunities for this Character
+
+		const set<int> immunityStatusIds = equipment->getEffectImmunityIds();
+		for(set<int>::const_iterator it = immunityStatusIds.begin(); it != immunityStatusIds.end(); it++)
+		{
+			EffectType status = static_cast<EffectType>(*it);
+			addPermImmunityTo(status);
+		}
 	}
 
 void Character::addPermImmunityTo(const EffectType immunity)
@@ -720,6 +788,20 @@ void Character::addPermImmunityTo(const EffectType immunity)
 		//status immunities for the Character.
 
 		permStatusImmunities.insert(immunity);
+		removeStatus(immunity);
+	}
+
+void Character::removePermImmunitiesFor(const Equipment* equipment)
+	{
+		//postcondition: removes all immunities conferred by equipment from
+		//this Character.
+
+		const set<int> immunityStatusIds = equipment->getEffectImmunityIds();
+		for(set<int>::const_iterator it = immunityStatusIds.begin(); it != immunityStatusIds.end(); it++)
+		{
+			EffectType status = static_cast<EffectType>(*it);
+			removePermImmunityTo(status);
+		}
 	}
 
 void Character::removePermImmunityTo(const EffectType immunity)

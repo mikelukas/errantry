@@ -11,6 +11,8 @@ class UseItemMode: public ApplyEquipmentMode
 	protected:
 		Chooser<EquipmentLine>* createInventoryChooser();
 
+		virtual void useEquipment();
+
 	public:
 		UseItemMode(GameData&, GameState&);
 		~UseItemMode() { };

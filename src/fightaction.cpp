@@ -1,5 +1,6 @@
 #include <iostream>
 #include "fightaction.h"
+#include "player.h"
 
 using std::cout;
 using std::endl;
@@ -47,6 +48,25 @@ void FightAction::doAction()
 	}
 
     int netDamage = defender.applyPhysicalDamage(attacker.getEffectiveAP());
-
     cout<<attacker.ShowName()<<" did "<<netDamage<<" damage to "<<defender.ShowName()<<"!"<<endl;
+
+    applyWeaponEffects();
+}
+
+void FightAction::applyWeaponEffects()
+{
+	//postcondition: if attacker is a Player, get the player's currently-equipped
+	//weapon and apply its affects to the defender.
+
+	Player* attackerAsPlayer = dynamic_cast<Player*>(&attacker); //XXX not a fan of dynamic cast, but eventually equip/dequip functionality may be available at Character levle, and it will be slightly easier to remove this cast and if check, rather than add a whole other subclass just for Player to decorate doAction w/ effect application
+	if(attackerAsPlayer != NULL)
+	{
+		const Equipment* currWeapon = attackerAsPlayer->getCurrentEquipped(WEAPON);
+		if(currWeapon == NULL)
+		{
+			return; //will happen if player hasn't equipped anything
+		}
+
+		attackerAsPlayer->applyEquipmentEffects(currWeapon, defender);
+	}
 }

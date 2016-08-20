@@ -51,7 +51,7 @@ bool ApplyEquipmentMode::testChoice(int choice)
 		break;
 	default:
 		if(equipmentChoice != NULL && target != NULL) {
-			gameState.getPlayer().useEquipment(equipmentChoice, *target);
+			useEquipment();
 		}
 		break;
 	}

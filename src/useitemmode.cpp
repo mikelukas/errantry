@@ -13,3 +13,11 @@ Chooser<EquipmentLine>* UseItemMode::createInventoryChooser()
 
 	return new UsableItemChooser(gameState.getPlayer());
 }
+
+void UseItemMode::useEquipment()
+{
+	//postcondition:: chosen item is used on the target by the player via a
+	//call to useItem().
+
+	gameState.getPlayer().useItem(equipmentChoice, *target);
+}

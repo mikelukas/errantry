@@ -228,83 +228,26 @@ void Player::dequipCurrent(EquipType equipType)
 	}
 void Player::equip(const Equipment* equipment)
 	{
-		//precondition: assumes equipment is in Player's inventory (should've
-		//been validated by useEquipment()).
-		//postcondition: "equips" the passed-in equipment by setting it as the
+		//postcondition: first dequips currently-equipped equipment of the same
+		//type (which adds it back into inventory), so that it is not lost since
+		//equipping always takes the item out of inventory while equipped.
+		//Then equips the passed-in equipment by setting it as the
 		//currentEquipped equipment for its type on the player, adding its stats
 		//to the player's current stats, and adding any immunities conferred by
 		//the equipment.
-		//
-		//DO NOT use this method to perform the menu action of equipping - instead
-		//use useEquipment(), which handles dequipping whatever the player has currently
-		//equipped prior to calling this method before equipping the new equipment.
-		//Not dequipping would cause the player to lose the current equipment,
-		//rather than placing it back in their inventory, and also cause them
-		//to build stats permanently by buying and equipping successful equipment
-		//of the same type.
+		//The equipment's quantity in inventory is reduced by 1 (before
+		//equipping). This method is aborted before any item effects are
+		//applied if the item can't be subtracted from inventory.
 
+		if(!RemoveEquipment(equipment))
+		{
+			return; //if couldn't remove passed-in equipment, abort, since there is some kind of bug
+		}
+
+		dequipCurrent(equipment->getType());
+
+		//equip
 		currentEquipped[equipment->getType()] = equipment;
 		AddStats(equipment->getStatMod());
 		addTempImmunitiesFrom(equipment);
-	}
-void Player::useEquipment(const Equipment* eq, Character& onTarget)
-{
-	//postcondition: apply() is called on the target, and the incoming equipment
-	//is decremented from the quantity in the player's inventory.
-	//If this reduces the quantity to 0, the entry for that equipment in the
-	//player's inventory is removed entirely.
-
-	//Sanity check that this method is actually being called with something the player has
-	map<const Equipment*, EquipmentLine>& inv = getInventoryFor(eq->getType());
-	EquipmentLine& invEqLine = inv[eq];
-	if(invEqLine.pEquipment == NULL)
-	{
-		inv.erase(eq);//have to do this since inv[eq] will create a new line.
-		cout<<"WARNING: "<<ShowName()<<" tried to use equipment not in its inventory: "<<eq->getName()<<endl;
-		return;
-	}
-
-	//apply equipment and its Effects to the target
-	onTarget.apply(eq);
-	EffectParams effectParams(eq->getElement(), *this, onTarget);
-	const vector<int>& effectIds = eq->getEffectIds();
-	for(int i=0; i < effectIds.size(); i++)
-	{
-		Effect* effect = EffectFactory::getInstance()->createEffect(effectIds[i], effectParams);
-		if(!effect->setup())
-		{
-			continue; //XXX just skip effects we can't set up; shouldn't be defining items with effects that require more choices
-		}
-
-		effect->apply();
-	}
-
-	//Regardless of the Equipment type, using it removes it from Player's active inventory
-	(invEqLine.quantity)--;
-	if(invEqLine.quantity <= 0)
-	{
-		inv.erase(eq); //remove line from inventory completely
-	}
-}
-
-void Player::apply(const Equipment* eq)
-	{
-		//postcondition: The incoming Equipment is "applied" to the player, which
-		//adds the stat changes from the Equipment to the player's stats, and
-		//any immunities conferred by the equipment.
-		//For weapons and armor any previously-equipped equipment is also
-		//removed first and placed back into the player's inventory.
-
-		switch(eq->getType())
-		{
-		case WEAPON:
-		case ARMOR:
-			dequipCurrent(eq->getType());
-			equip(eq);
-			break;
-		case ITEM:
-			AddStats(eq->getStatMod());
-			addPermImmunitiesFrom(eq);
-			break;
-		}
 	}

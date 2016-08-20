@@ -12,6 +12,8 @@ class EquipMode : public ApplyEquipmentMode
 	protected:
 		Chooser<EquipmentLine>* createInventoryChooser();
 
+		virtual void useEquipment();
+
 	public:
 		EquipMode(GameData&, GameState&);
 		~EquipMode() { };

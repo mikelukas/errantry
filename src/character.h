@@ -96,7 +96,8 @@ class Character
             const set<Element>& getWeaknesses() const;
 
             void AddEquipment(const EquipmentLine&);
-            void RemoveEquipment(const EquipmentLine*);
+            bool RemoveEquipment(const Equipment*);
+            bool RemoveEquipment(const EquipmentLine*);
             void AddSpell(const SpellTemplate*);
 
             vector<const Equipment*>* getAllEquipment() const;
@@ -113,7 +114,9 @@ class Character
 			const set<const SpellTemplate*>* getSpellsForCategories(const set<SpellCategory>&);
 			const set<pair<Element, int>, bool(*)(const pair<Element, int>&, const pair<Element, int>&)>* getSpellElementCounts(const set<SpellCategory>&);
 
-            virtual void apply(const Equipment*) = 0;
+			void applyEquipmentEffects(const Equipment*, Character&);
+			void useItem(const Equipment*, Character&);
+
             int applyPhysicalDamage(int);
             int applyMagicalDamage(int, Element);
 

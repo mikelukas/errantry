@@ -15,3 +15,10 @@ Chooser<EquipmentLine>* EquipMode::createInventoryChooser()
 
 	return new EquipablesChooser(player);
 }
+
+void EquipMode::useEquipment()
+{
+	//postcondition: chosen equipment is equipped on the player via calling equip().
+
+	gameState.getPlayer().equip(equipmentChoice);
+}

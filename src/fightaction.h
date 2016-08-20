@@ -12,8 +12,9 @@ class FightAction : public BattleAction
 		Character& attacker;
 		Character& defender;
 
-		void doAction();
-		bool isAttackerBlind();
+		virtual void doAction();
+		virtual bool isAttackerBlind();
+		virtual void applyWeaponEffects();
 
 	public:
 		FightAction(Character&, Character&);

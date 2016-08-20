@@ -48,9 +48,6 @@ class Player : public Character
 
             void initStartingEquipment();
 
-			void dequipCurrent(EquipType);
-			void equip(const Equipment*);
-
         public:
             Player();
 
@@ -74,8 +71,8 @@ class Player : public Character
 
             const Equipment* getCurrentEquipped(EquipType);
 
-            void useEquipment(const Equipment*, Character&);
-            void apply(const Equipment*);
+            void dequipCurrent(EquipType);
+            void equip(const Equipment*);
     };
 
 #endif

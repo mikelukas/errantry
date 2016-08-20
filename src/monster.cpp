@@ -45,21 +45,3 @@ void Monster::AddDroppableSpell(const SpellTemplate* droppableSpell)
 {
 	droppableSpells.insert(droppableSpell);
 }
-
-void Monster::apply(const Equipment* eq)
-	{
-		//postcondition: The incoming Equipment is "applied" to the monster, which
-		//adds the stat changes from the Equipment to the monster's stats, and
-		//any immunities conferred by the equipment.
-		//Currently only items can be applied to monsters.
-
-		switch(eq->getType())
-		{
-		case ITEM:
-			AddStats(eq->getStatMod());
-			addPermImmunitiesFrom(eq);
-			break;
-		default:
-			return;
-		}
-	}

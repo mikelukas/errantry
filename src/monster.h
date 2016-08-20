@@ -37,8 +37,6 @@ class Monster : public Character
             const set<const SpellTemplate*>& getDroppableSpells() const;
 
             void AddDroppableSpell(const SpellTemplate*);
-
-            void apply(const Equipment*);
     };
 
 #endif

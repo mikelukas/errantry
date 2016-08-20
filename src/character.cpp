@@ -2,6 +2,7 @@
 #include <iostream>
 #include <math.h> //ceil()
 #include "character.h"
+#include "effectfactory.h"
 #include "statuses/statusconstants.h"
 #include "util/mathutils.h"
 
@@ -251,11 +252,25 @@ void Character::AddEquipment(const EquipmentLine& newEqLine)
 		}
 	}
 
-void Character::RemoveEquipment(const EquipmentLine* removedEqLine)
+bool Character::RemoveEquipment(const Equipment* eq)
+{
+	//postcondition: specified Equipment amount is reduced by 1 in the Character's
+	//inventory, and removed entirely if they have none left after reducing
+	//the quantity.
+	//returns true if equipment was able to be removed, false if somehow the
+	//caller tried to remove equipment this Character does not have.
+
+	const EquipmentLine eqLine(eq);
+	return RemoveEquipment(&eqLine);
+}
+
+bool Character::RemoveEquipment(const EquipmentLine* removedEqLine)
 {
 	//postcondition: specified equipmentline's quantity is subtracted from the
 	//character's, and the equipment is removed entirely if they have none left
 	//after it is removed.
+	//returns true if equipment was able to be removed, false if somehow the
+	//caller tried to remove equipment this Character does not have.
 
 	EquipType eqType = removedEqLine->pEquipment->getType();
 	map<const Equipment*, EquipmentLine>& inventory = getInventoryFor(eqType);
@@ -264,8 +279,8 @@ void Character::RemoveEquipment(const EquipmentLine* removedEqLine)
 	if(invEqline.pEquipment == NULL)
 	{
 		//bug if we got this far...
-		cout<<"Tried to remove equipment this character doesn't have..."<<endl;
-		return;
+		cout<<"Tried to remove equipment "<<ShowName()<<" doesn't have..."<<endl;
+		return false;
 	}
 
 	invEqline -= (*removedEqLine);
@@ -274,6 +289,8 @@ void Character::RemoveEquipment(const EquipmentLine* removedEqLine)
 		//don't want this equipment listed anywhere anymore if we're out of it
 		inventory.erase(invEqline.pEquipment);
 	}
+
+	return true;
 }
 
 void Character::AddSpell(const SpellTemplate* newSpell)
@@ -579,6 +596,46 @@ int Character::applyMagicalDamage(int rawDamage, Element element)
 	    ChangeHP(-1 * netDamage);
 
 	    return netDamage;
+	}
+
+void Character::useItem(const Equipment* item, Character& onTarget)
+	{
+		//postcondition: The incoming item is used on by this character on the
+		//given target, by adding the item's stat changes to the target's stats,
+		//adding any immunities conferred by the item as permanent immunities,
+		//and applying any effects from the item on the target.
+		//The item's quantity in the character's inventory is reduced by 1
+		//(before use).  This method is aborted before any item effects are
+		//applied if the item can't be subtracted from the Character's inventory.
+
+		if(!RemoveEquipment(item))
+		{
+			return; //Abort using item if it can't be removed from inventory; must be a bug where Character is trying to use something they dont' have
+		}
+
+		AddStats(item->getStatMod());
+		addPermImmunitiesFrom(item);
+		applyEquipmentEffects(item, onTarget);
+	}
+
+void Character::applyEquipmentEffects(const Equipment* eq, Character& onTarget)
+	{
+		//postcondition: creates effects for each effect ID held by eq and
+		//applies them to onTarget with this Character as the applier.  Any
+		//effects that fail during setup are skipped.
+
+		EffectParams effectParams(eq->getElement(), *this, onTarget);
+		const vector<int>& effectIds = eq->getEffectIds();
+		for(int i=0; i < effectIds.size(); i++)
+		{
+			Effect* effect = EffectFactory::getInstance()->createEffect(effectIds[i], effectParams);
+			if(!effect->setup())
+			{
+				continue; //XXX just skip effects we can't set up; shouldn't be defining items with effects that require more choices
+			}
+
+			effect->apply();
+		}
 	}
 
 bool Character::addStatus(StatusEffect* status)

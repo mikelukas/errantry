@@ -1,4 +1,5 @@
 #include "equipableschooser.h"
+#include "statsdisplayer.h"
 
 EquipablesChooser::EquipablesChooser(Player& player)
 	: ArmamentChooser(player),
@@ -9,18 +10,11 @@ EquipablesChooser::EquipablesChooser(Player& player)
 
 void EquipablesChooser::displayRelevantStats() const
 {
-	//postcondition: Displays currently-equipped weapon and armor, or "Fists" and/or
-	//"T-Shirt" respectively if there is nothing equipped for each type, then
-	//displays the player's current attributes for determining how they'd change
-	//after equipping something
+	//postcondition: Uses stats displayer to show attributes relevant for
+	//making equipment decisions (current stats, current equipped Equipment, and
+	//current Status immunities).
 
-	const Equipment* currWeapon = player.getCurrentEquipped(WEAPON);
-	const Equipment* currArmor = player.getCurrentEquipped(ARMOR);
-
-	cout<<"Current Weapon: "<<(currWeapon != NULL ? currWeapon->getName() : "Fists")<<endl
-		<<"Current Armor:  "<<(currArmor != NULL ? currArmor->getName() : "T-Shirt")<<endl
-		<<endl
-		<<"Current Attributes     "<<"AP: "<<setw(4)<<player.getEffectiveAP()<<" DP: "<<setw(3)<<player.getEffectiveDP()<<" MDP:"<<setw(3)<<player.getEffectiveMDP()<<" SP: "<<setw(3)<<player.getEffectiveSP()<<endl;
+	StatsDisplayer::equipDisplayFor(player);
 }
 
 void EquipablesChooser::displayChoice(int choiceNum, EquipmentLine* invEqLine) const

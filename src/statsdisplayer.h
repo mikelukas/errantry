@@ -17,6 +17,7 @@ class StatsDisplayer
 	protected:
 		static void displayWeaknessesLineFor(const Character&);
 		static void displayStatusesLineFor(const Character&);
+		static void displayStatusImmunitiesLineFor(const Character&);
 
 	public:
 		static void fullDisplayFor(const Player& player);
@@ -25,6 +26,8 @@ class StatsDisplayer
 		static void battleMainDisplayFor(const Monster&);
 		static void battleMenuDisplayFor(const Player&);
 		static void battleMenuDisplayFor(const Monster&);
+
+		static void equipDisplayFor(Player&);
 };
 
 #endif

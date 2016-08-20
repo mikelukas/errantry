@@ -771,6 +771,30 @@ bool Character::isImmuneTo(const EffectType status) const
 		return (tempStatusImmunities.count(status) > 0) || (permStatusImmunities.count(status) > 0);
 	}
 
+bool Character::hasImmunities() const
+	{
+		//postcondition: returns true if Character is immune, either temporarily
+		//or permanently to at least 1 StatusEffect
+
+		return (tempStatusImmunities.size() > 0) || (permStatusImmunities.size() > 0);
+	}
+
+const set<EffectType>* Character::getAllImmunities() const
+	{
+		//postcondition: returns all temporary and permanent EFfectTypes that
+		//this Character is immune to, in an dynamically allocated set. It is
+		//up to the caller to delete the set.
+
+		set<EffectType>* immunities = new set<EffectType>();
+		for(map<const EffectType, set<const Equipment*> >::const_iterator it = tempStatusImmunities.begin(); it != tempStatusImmunities.end(); it++)
+		{
+			immunities->insert(it->first);
+		}
+		immunities->insert(permStatusImmunities.begin(), permStatusImmunities.end());
+
+		return immunities;
+	}
+
 void Character::addTempImmunitiesFrom(const Equipment* equipment)
 	{
 		//postcondition: adds all immunities conferred by equipment as temporary

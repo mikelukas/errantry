@@ -35,6 +35,21 @@ void StatsDisplayer::displayStatusesLineFor(const Character& character)
 	delete statuses;
 }
 
+void StatsDisplayer::displayStatusImmunitiesLineFor(const Character& character)
+{
+	const set<EffectType>* immunities = character.getAllImmunities();
+
+	set<EffectType>::const_iterator it = immunities->begin();
+	cout<<getDisplayNameFor(*it);
+	for(it++; it != immunities->end(); it++)
+	{
+		cout<<"  "<<getDisplayNameFor(*it);
+	}
+	cout<<endl;
+
+	delete immunities;
+}
+
 void StatsDisplayer::fullDisplayFor(const Player& player)
 {
 	ostringstream healthMaxhealth;
@@ -50,12 +65,17 @@ void StatsDisplayer::fullDisplayFor(const Player& player)
 		<<"MDP: "<<std::left<<setw(12)<<player.getEffectiveMDP()<<" --magic defense percentage"<<endl
 		<<"SP:  "<<std::left<<setw(12)<<player.getEffectiveSP()<<" --speed points"<<endl
 		<<endl
-		<<std::left<<setw(17)<<"Weaknesses:"<<" --1/2 MDP used against damage from these elements"<<endl
+		<<std::left<<setw(20)<<"Weaknesses:"<<" --1/2 MDP used against damage from these elements"<<endl
 		<<"  "; displayWeaknessesLineFor(player);
 	if(player.hasStatuses())
 	{
-		cout<<std::left<<setw(17)<<"Statuses:  "<<" --persistent effects applied each turn to you."<<endl
+		cout<<std::left<<setw(20)<<"Statuses:"<<" --persistent effects applied each turn to you."<<endl
 			<<"  "; displayStatusesLineFor(player);
+	}
+	if(player.hasImmunities())
+	{
+		cout<<std::left<<setw(20)<<"Status Immunities:"<<"--Status Effects the player can't receive."<<endl
+			<<"  "; displayStatusImmunitiesLineFor(player);
 	}
 	cout<<endl;
 	cout<<"Level: "<<player.Level()<<endl
@@ -110,6 +130,11 @@ void StatsDisplayer::battleMenuDisplayFor(const Player& player)
 		cout<<"Statuses:"<<endl
 			<<"  "; displayStatusesLineFor(player);
 	}
+	if(player.hasImmunities())
+	{
+		cout<<"Status Immunities:"<<endl
+			<<"  "; displayStatusImmunitiesLineFor(player);
+	}
 }
 
 void StatsDisplayer::battleMenuDisplayFor(const Monster& monster)
@@ -125,4 +150,25 @@ void StatsDisplayer::battleMenuDisplayFor(const Monster& monster)
 			<<"  "; displayStatusesLineFor(monster);
 	}
 
+}
+
+void StatsDisplayer::equipDisplayFor(Player& player)
+{
+	//postcondition: Displays currently-equipped weapon and armor, or "Fists" and/or
+	//"T-Shirt" respectively if there is nothing equipped for each type, then
+	//displays the player's current attributes for determining how they'd change
+	//after equipping something
+
+	const Equipment* currWeapon = player.getCurrentEquipped(WEAPON);
+	const Equipment* currArmor = player.getCurrentEquipped(ARMOR);
+
+	cout<<"Current Weapon: "<<(currWeapon != NULL ? currWeapon->getName() : "Fists")<<endl
+		<<"Current Armor:  "<<(currArmor != NULL ? currArmor->getName() : "T-Shirt")<<endl;
+	if(player.hasImmunities())
+	{
+		cout<<"Status Immunities:"<<endl
+			<<"  "; displayStatusImmunitiesLineFor(player);
+	}
+	cout<<endl
+		<<std::left<<setw(23)<<"Current Attributes"<<"AP: "<<std::right<<setw(4)<<player.getEffectiveAP()<<" DP: "<<setw(3)<<player.getEffectiveDP()<<" MDP:"<<setw(3)<<player.getEffectiveMDP()<<" SP: "<<setw(3)<<player.getEffectiveSP()<<endl;
 }

@@ -47,6 +47,7 @@ enum EffectType
 	MUTE = 115,
 };
 
+const string getDisplayNameFor(EffectType);
 const string getAdjectiveFor(EffectType);
 
 #endif

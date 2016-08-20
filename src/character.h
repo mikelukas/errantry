@@ -134,6 +134,8 @@ class Character
             vector<StatusEffect*>* getAllStatuses() const;
 
             bool isImmuneTo(const EffectType) const;
+            bool hasImmunities() const;
+            const set<EffectType>* getAllImmunities() const;
             void addTempImmunitiesFrom(const Equipment*);
             void addTempImmunityTo(const EffectType, const Equipment*);
             void removeTempImmunitiesFor(const Equipment*);

@@ -370,7 +370,7 @@ void Character::recalculateWeakness()
 			}
 		}
 
-		delete elementPairAffinities;
+		delete[] elementPairAffinities;
 	}
 
 vector<const Equipment*>* Character::getAllEquipment() const

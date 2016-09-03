@@ -1,10 +1,4 @@
-/*
- * gamestate.cpp
- *
- *  Created on: Mar 9, 2016
- *      Author: mlukas
- */
-
+#include <time.h> //time()
 #include "gamemode.h"
 #include "gamestate.h"
 

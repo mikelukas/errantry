@@ -324,7 +324,7 @@ void Character::recalculateWeakness()
 		//3 Fire spells, and 2 Water spells, the character will be weak to Water.
 
 		int numPairs = (ELEMENTS.size()-1)/2; //-1 b/c none doesn't have an opposite, and div by 2 b/c every element is paired with its opposite
-		int elementPairAffinities[numPairs]; //The index of a pair is the int val of the 1st element in that pair (see Element enum for pairings)
+		int* elementPairAffinities = new int[numPairs]; //The index of a pair is the int val of the 1st element in that pair (see Element enum for pairings)
 		std::fill(elementPairAffinities, elementPairAffinities + numPairs, 0);
 
 		//First go through every spell's Element, and score it based on if it's the first element in its pair or 2nd
@@ -369,6 +369,8 @@ void Character::recalculateWeakness()
 				weaknesses.insert(pairElement);
 			}
 		}
+
+		delete elementPairAffinities;
 	}
 
 vector<const Equipment*>* Character::getAllEquipment() const

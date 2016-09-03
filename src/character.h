@@ -53,7 +53,7 @@ class Character
 			map<const Context, set<StatusEffect*> > statusesByContext;
 
 			map<const EffectType, set<const Equipment*> > tempStatusImmunities;
-			set<const EffectType> permStatusImmunities;
+			set<EffectType> permStatusImmunities;
 
 			void recalculateWeakness();
 

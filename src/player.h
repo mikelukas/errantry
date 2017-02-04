@@ -53,6 +53,8 @@ class Player : public Character
         public:
             Player();
 
+            void setName(const string&);
+
             void LevelUp(LvlUpOpt);
             void AddExp(int);
             void AddMoney(int);

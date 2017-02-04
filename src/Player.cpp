@@ -1,10 +1,5 @@
-#include <iostream>
 #include "effectfactory.h"
 #include "player.h"
-
-using std::cout;
-using std::cin;
-using std::endl;
 
 //Constructors---------------------------------------------------------------//
 
@@ -15,10 +10,6 @@ Player::Player()
       Coords(STARTPOS)
     {
         //attribute variables initialized in initializer list
-        cout<<"Greetings wanderer, tell me your name:  ";
-        cin>>name;
-        cout<<endl;
-
         initStartingEquipment();
     }
 
@@ -32,6 +23,11 @@ void Player::initStartingEquipment()
 	}
 
 //Public Member Functions-----------------------------------------------//
+
+void Player::setName(const string& name)
+	{
+		this->name = name;
+	}
 
 void Player::LevelUp(LvlUpOpt choice)
     {

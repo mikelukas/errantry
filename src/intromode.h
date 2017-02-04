@@ -17,6 +17,8 @@ class IntroMode : public GameMode
 
 		bool validateChoice(char answer);
 
+		void initPlayerName();
+
 	public:
 		IntroMode(GameData&, GameState& gameState);
 		~IntroMode() { };

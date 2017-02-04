@@ -53,6 +53,8 @@ void IntroMode::run()
 	cin>>start;
 	cout<<"****************************************************"<<endl;
 
+	initPlayerName();
+
 	GameMode* overworld  = new OverworldMode(gameData, gameState);
 	gameState.requestEnterMode(overworld);
 }
@@ -67,4 +69,17 @@ bool IntroMode::validateChoice(char answer)
 	else
 		cout<<"Invalid Response"<<endl;
 	return false;
+}
+
+void IntroMode::initPlayerName()
+{
+	//postcondition: player is prompted to enter their name, and what they type
+	//is set as the Player object's name.
+
+	string name;
+    cout<<"Greetings wanderer, tell me your name:  ";
+    cin>>name;
+    cout<<endl;
+
+    gameState.getPlayer().setName(name);
 }

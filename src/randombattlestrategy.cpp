@@ -1,12 +1,8 @@
 #include <algorithm> //random_shuffle
-#include <iostream>
 #include "fightaction.h"
 #include "skipturnaction.h"
 #include "monstercastspellaction.h"
 #include "randombattlestrategy.h"
-
-using std::cout;
-using std::endl;
 
 RandomBattleStrategy::RandomBattleStrategy()
 {

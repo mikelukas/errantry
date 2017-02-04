@@ -36,7 +36,7 @@ void Chooser<T>::run()
 		displayChoicePrompt();
 		cin>>choiceNum;
 
-		if(canceled())
+		if(isCancelAllowed() && canceled())
 		{
 			return;
 		}
@@ -93,7 +93,7 @@ T* Chooser<T>::getChoice() const
 	//postcondition: returns a pointer to the actual data represented by the
 	//numerical choice the player made from the menu, or NULL if they chose to exit
 
-	if(canceled()) {
+	if(isCancelAllowed() && canceled()) {
 		return NULL;
 	}
 

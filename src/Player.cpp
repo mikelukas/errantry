@@ -33,15 +33,12 @@ void Player::initStartingEquipment()
 
 //Public Member Functions-----------------------------------------------//
 
-void Player::LevelUp()
+void Player::LevelUp(LvlUpOpt choice)
     {
         //postcondition:  player's attributes are increased;
-        //user chooses whether he/she wants to increase a certain
-        //attack or defense attribute greater than the others, while
-        //the player's HP, SP, lvl, and expToNext are changed by
-        //the same rates every time.
-        
-        int choice;
+        //based on choice he/she made to increase a certain attribute greater 
+		//than the others, while the player's HP, SP, lvl, and expToNext 
+		//are changed by the same rates every time.
         
         maxHP = maxHP + int(maxHP * HPRATE);
         maxMP = maxMP + int(maxMP * MPRATE);
@@ -50,31 +47,20 @@ void Player::LevelUp()
             SP++;
         lvl++;
         expToNext = expToNext + int(expToNext * NEXTRATE);
-        
-        cout<<"Congratulations, your level is now "<<lvl<<"!"<<endl;
-        cout<<"--------------------------------------"<<endl;
-        
-        cout<<"Increase:  1) attack"<<endl
-            <<"           2) defense"<<endl
-			<<"           3) magic defense"<<endl
-            <<"           4) even increment"<<endl;
-        cout<<"Choice:  ";
-        cin>>choice;
-        cout<<"--------------------------------------"<<endl;
          
          switch(choice)
             {
-                case 1: //Attack
+                case ATK: //Attack
                     AP = AP + int(AP * BIGRATE);
                     DP = DP + int(DP * LOWRATE);
                     MDP = MDP + int(MDP * LOWRATE);
                     break;
-                case 2: //Defense
+                case DEF: //Defense
                     AP = AP + int(AP * LOWRATE);
                     DP = DP + int(DP * BIGRATE);
                     MDP = MDP + int(MDP * LOWRATE);
                     break;
-                case 3: //Magic Defense
+                case MAG_DEF: //Magic Defense
                 	AP = AP + int(AP * LOWRATE);
                 	DP = DP + int(DP * LOWRATE);
                 	MDP = MDP + int(MDP * BIGRATE);

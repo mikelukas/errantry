@@ -150,6 +150,7 @@
     <ClCompile Include="src\inventorychooser.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="src\levelupchooser.cpp" />
     <ClCompile Include="src\meltdownequipmentchooser.cpp" />
     <ClCompile Include="src\menumode.cpp" />
     <ClCompile Include="src\monster.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="src\generalstoremainmode.h" />
     <ClInclude Include="src\intromode.h" />
     <ClInclude Include="src\inventorychooser.h" />
+    <ClInclude Include="src\levelupchooser.h" />
     <ClInclude Include="src\meltdownequipmentchooser.h" />
     <ClInclude Include="src\menumode.h" />
     <ClInclude Include="src\monster.h" />

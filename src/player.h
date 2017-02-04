@@ -36,6 +36,8 @@ const int BEGINGOLD = 1200;
 
 const Point STARTPOS(29, 8);
 
+enum LvlUpOpt { EVEN, ATK, DEF, MAG_DEF };
+
 //Player Class Definition----------------------------------------------------// 
 class Player : public Character
     {
@@ -51,7 +53,7 @@ class Player : public Character
         public:
             Player();
 
-            void LevelUp();
+            void LevelUp(LvlUpOpt);
             void AddExp(int);
             void AddMoney(int);
 

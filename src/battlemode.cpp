@@ -3,6 +3,7 @@
 #include "deadmode.h"
 #include "fightaction.h"
 #include "gamestate.h"
+#include "levelupchooser.h"
 #include "playercastspellaction.h"
 #include "runaction.h"
 #include "skipturnaction.h"
@@ -257,8 +258,10 @@ void BattleMode::onBattleWon()
 	cin>>cont;
 
 	//Check if player should level up (possibly move to AddExp?)
-	if(player.ExpPts() >= player.NumToNext())
-		player.LevelUp();
+	if (player.ExpPts() >= player.NumToNext())
+	{
+		onLevelUp();
+	}
 
 	gameState.requestExitCurrentMode();
 }
@@ -309,4 +312,16 @@ void BattleMode::learnMonsterSpells()
 		gameState.getPlayer().AddSpell(*it);
 		cout<<"You learned '"<<(*it)->getName()<<"' from a scroll the monster was carrying!"<<endl;
 	}
+}
+
+void BattleMode::onLevelUp()
+{
+	Player& player = gameState.getPlayer();
+	LevelUpChooser chooser;
+
+	cout << "Congratulations, your level is now " << (player.Level() +1) << "!" << endl;
+	chooser.run();
+
+	const LvlUpOpt* choice = chooser.getChoice();
+	player.LevelUp(*choice);
 }

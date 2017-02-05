@@ -1,10 +1,8 @@
-#include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "monstermeltdowneffect.h"
 #include "../util/randutils.h"
-
-using std::cout;
-using std::endl;
 
 MonsterMeltdownEffect::MonsterMeltdownEffect(const EffectParams& effectParams)
 	: MeltdownEffect(effectParams)
@@ -21,7 +19,10 @@ EquipmentLine* MonsterMeltdownEffect::chooseEquipment() const
 	vector<EquipmentLine*>* monsterArmament = applier.getWeaponsAndArmorAsVector();
 	if(monsterArmament->size() == 0)
 	{
-		cout<<applier.ShowName()<<" tried to melt down equipment, but doesn't have any!"<<endl;
+		std::stringstream meltedStr;
+		meltedStr<<applier.ShowName()<<" tried to melt down equipment, but doesn't have any!";
+		log(meltedStr.str());
+
 		delete monsterArmament;
 		return NULL;
 	}

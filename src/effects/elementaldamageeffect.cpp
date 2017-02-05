@@ -1,9 +1,7 @@
-#include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "elementaldamageeffect.h"
-
-using std::cout;
-using std::endl;
 
 ElementalDamageEffect::ElementalDamageEffect(const EffectParams& effectParams)
 	: Effect(effectParams)
@@ -19,5 +17,7 @@ void ElementalDamageEffect::runTurnEffect()
 
 	int netDamage = target.applyMagicalDamage(BASE_ELEMENTAL_DAMAGE, element);
 
-	cout<<applier.ShowName()<<" did "<<netDamage<<" "<<getDisplayNameFor(element)<<" damage to "<<target.ShowName()<<"!"<<endl;
+	std::stringstream elemDmgStr;
+	elemDmgStr<<applier.ShowName()<<" did "<<netDamage<<" "<<getDisplayNameFor(element)<<" damage to "<<target.ShowName()<<"!";
+	log(elemDmgStr.str());
 }

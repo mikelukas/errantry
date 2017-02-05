@@ -1,3 +1,5 @@
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "removeweaknesseffect.h"
 
@@ -26,5 +28,7 @@ void RemoveWeaknessEffect::runTurnEffect()
 
 	target.removeWeakness(weaknessToRemove);
 
-	cout<<target.ShowName()<<" no longer is weak to "<<getDisplayNameFor(weaknessToRemove)<<"."<<endl;
+	std::stringstream removedWeaknessMsg;
+	removedWeaknessMsg<<target.ShowName()<<" no longer is weak to "<<getDisplayNameFor(weaknessToRemove)<<".";
+	log(removedWeaknessMsg.str());
 }

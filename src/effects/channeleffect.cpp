@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "channeleffect.h"
 
@@ -20,6 +22,7 @@ bool ChannelEffect::setup()
 	//returns true if the applier chose an amount > 0
 	//returns false otherwise, allowing effect to be aborted.
 
+	//TODO-winterchange: this will go in a special menu window
 	cout<<"Enter amount of your HP to convert into "<<getDisplayNameFor(element)<<" damage (up to "<<applier.getHP()-1<<", 0 aborts): ";
 	do
 	{
@@ -36,13 +39,13 @@ bool ChannelEffect::validateChannelDamage(int inputDamage)
 
 	if(inputDamage < 0)
 	{
-		cout<<"Can't channel a negative amount of HP!"<<endl;
+		log("Can't channel a negative amount of HP!");
 		return false;
 	}
 
 	if(inputDamage >= applier.getHP())
 	{
-		cout<<"Are you crazy?! Channeling all of your HP would kill you!"<<endl;
+		log("Are you crazy?! Channeling all of your HP would kill you!");
 		return false;
 	}
 
@@ -57,5 +60,8 @@ void ChannelEffect::runTurnEffect()
 
 	applier.ChangeHP(-1*hpToChannel);
 	int netDamage = target.applyMagicalDamage(hpToChannel, fire);
-	cout<<applier.ShowName()<<" channeled "<<hpToChannel<<" HP into "<<netDamage<<" "<<getDisplayNameFor(element)<<" damage to "<<target.ShowName()<<"!"<<endl;
+
+	std::stringstream channelMsg;
+	channelMsg<<applier.ShowName()<<" channeled "<<hpToChannel<<" HP into "<<netDamage<<" "<<getDisplayNameFor(element)<<" damage to "<<target.ShowName()<<"!";
+	log(channelMsg.str());
 }

@@ -1,11 +1,7 @@
 #ifndef SRC_EFFECTS_ADDWEAKNESSEFFECT_H_
 #define SRC_EFFECTS_ADDWEAKNESSEFFECT_H_
 
-#include <iostream>
 #include "effect.h"
-
-using std::cout;
-using std::endl;
 
 /* Abstract base class for Effects that add a weakness to their target.
  * Subclasses must implement chooseWeakness() to return a weakness to set,

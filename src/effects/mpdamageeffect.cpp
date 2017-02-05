@@ -1,9 +1,7 @@
-#include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "mpdamageeffect.h"
-
-using std::cout;
-using std::endl;
 
 MpDamageEffect::MpDamageEffect(const EffectParams& effectParams)
 	: Effect(effectParams)
@@ -18,5 +16,7 @@ void MpDamageEffect::runTurnEffect()
 
 	target.ChangeMP(-1*BASE_MP_DROP);
 
-	cout<<target.ShowName()<<" lost "<<BASE_MP_DROP<<" MP!"<<endl;
+	std::stringstream mpDmgMsg;
+	mpDmgMsg<<target.ShowName()<<" lost "<<BASE_MP_DROP<<" MP!";
+	log(mpDmgMsg.str());
 }

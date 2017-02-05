@@ -1,6 +1,7 @@
+#include <sstream>
 #include "addweaknesseffect.h"
 #include "../character.h"
-
+#include "../logging/log.h"
 
 AddWeaknessEffect::AddWeaknessEffect(const EffectParams& effectParams)
 	: Effect(effectParams),
@@ -27,5 +28,7 @@ void AddWeaknessEffect::runTurnEffect()
 
 	target.addWeakness(weaknessToAdd);
 
-	cout<<target.ShowName()<<" is now weak to "<<getDisplayNameFor(weaknessToAdd)<<"."<<endl;
+	std::stringstream weakenedMsg;
+	weakenedMsg<<target.ShowName()<<" is now weak to "<<getDisplayNameFor(weaknessToAdd)<<".";
+	log(weakenedMsg.str());
 }

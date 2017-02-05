@@ -1,9 +1,5 @@
-#include <iostream>
 #include "../character.h"
 #include "curestatuseseffect.h"
-
-using std::cout;
-using std::endl;
 
 CureStatusesEffect::CureStatusesEffect(EffectType typeToCure, const EffectParams& effectParams)
 	: Effect(effectParams)

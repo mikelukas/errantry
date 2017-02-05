@@ -1,9 +1,7 @@
-#include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "healeffect.h"
-
-using std::cout;
-using std::endl;
 
 HealEffect::HealEffect(const EffectParams& effectParams)
 	: Effect(effectParams)
@@ -17,5 +15,7 @@ void HealEffect::runTurnEffect()
 
 	target.ChangeHP(BASE_HEAL_HP);
 
-	cout<<target.ShowName()<<" healed "<<BASE_HEAL_HP<<" HP!"<<endl;
+	std::stringstream healStr;
+	healStr<<target.ShowName()<<" healed "<<BASE_HEAL_HP<<" HP!";
+	log(healStr.str());
 }

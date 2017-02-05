@@ -1,3 +1,5 @@
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "monsterremoveweaknesseffect.h"
 
@@ -18,7 +20,10 @@ Element MonsterRemoveWeaknessEffect::chooseWeakness()
 	const set<Element>& targetWeaknesses = target.getWeaknesses();
 	if(targetWeaknesses.empty())
 	{
-		cout<<target.ShowName()<<" is not weak to anything."<<endl;
+		std::stringstream notWeakMsg;
+		notWeakMsg<<target.ShowName()<<" is not weak to anything.";
+		log(notWeakMsg.str());
+
 		return none;
 	}
 

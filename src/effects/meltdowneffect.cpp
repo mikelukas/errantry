@@ -1,9 +1,7 @@
-#include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "meltdowneffect.h"
-
-using std::cout;
-using std::endl;
 
 MeltdownEffect::MeltdownEffect(const EffectParams& effectParams)
 	: Effect(effectParams),
@@ -51,5 +49,7 @@ void MeltdownEffect::runTurnEffect()
 	int rawMeltdownDamage = meltdownChoice->quantity * (meltdownChoice->pEquipment->getStatMod().getMeltdownDamage());
 	int netDamage = target.applyMagicalDamage(rawMeltdownDamage, element);
 
-	cout<<applier.ShowName()<<" melted down "<<meltdownChoice->quantity<<" "<<meltdownChoice->pEquipment->getName()<<" into "<<netDamage<<" "<<getDisplayNameFor(element)<<" damage to "<<target.ShowName()<<"!"<<endl;
+	std::stringstream meltedStr;
+	meltedStr<<applier.ShowName()<<" melted down "<<meltdownChoice->quantity<<" "<<meltdownChoice->pEquipment->getName()<<" into "<<netDamage<<" "<<getDisplayNameFor(element)<<" damage to "<<target.ShowName()<<"!";
+	log(meltedStr.str());
 }

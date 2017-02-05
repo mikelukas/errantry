@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "../meltdownequipmentchooser.h"
 #include "playermeltdowneffect.h"
@@ -57,13 +59,17 @@ bool PlayerMeltdownEffect::validateQuantityChoice(int chosenQuantity, int availa
 
 	if(chosenQuantity < 0)
 	{
-		cout<<"You can't melt down a negative amount of equipment."<<endl;
+		std::stringstream negMsg;
+		negMsg<<"You can't melt down a negative amount of equipment.";
+		log(negMsg.str());
 		return false;
 	}
 
 	if(chosenQuantity > available)
 	{
-		cout<<"You can't melt down more equipment than you have of that type ("<<available<<")."<<endl;
+		std::stringstream tooMuchMsg;
+		tooMuchMsg<<"You can't melt down more equipment than you have of that type ("<<available<<").";
+		log(tooMuchMsg.str());
 		return false;
 	}
 

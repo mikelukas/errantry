@@ -17,24 +17,24 @@
 //display an ending message when the game is lost or won, as well as
 //instructions in the beginning.  
 
-#include <iostream>
+#include "logging/consoleappender.h"
+#include "logging/log.h"
 #include "gamedata.h"
 #include "gamestate.h"
 #include "intromode.h"
-
-using std::cout;
-using std::endl;
  
 void MainGame(GameData& gameData, GameState& gameState);
 
 int main()
     {
+		Log::init(new ConsoleAppender());
+
         GameData gameData;
         GameState gameState;
 
         if(!gameData.loadSuccessful())
         	{
-        		cout<<"ERROR:  'Could not read one or more data files!"<<endl;
+        		log("ERROR:  Could not read one or more data files!");
         		return 1;
         	}
 

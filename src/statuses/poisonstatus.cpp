@@ -1,11 +1,9 @@
-#include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "poisonstatus.h"
 
 #include "../util/randutils.h"
-
-using std::cout;
-using std::endl;
 
 PoisonStatus::PoisonStatus(const StatusTemplate& statusTemplate, const EffectParams& params)
 	: StatusEffect(statusTemplate, params)
@@ -16,12 +14,16 @@ PoisonStatus::PoisonStatus(const StatusTemplate& statusTemplate, const EffectPar
 
 void PoisonStatus::onAdd()
 {
-	cout<<applier.ShowName()<<" poisoned "<<target.ShowName()<<"!"<<endl;
+	std::stringstream added;
+	added<<applier.ShowName()<<" poisoned "<<target.ShowName()<<"!";
+	log(added.str());
 }
 
 void PoisonStatus::onRemove()
 {
-	cout<<target.ShowName()<<" recovered from "<<getName()<<"."<<endl;
+	std::stringstream removed;
+	removed<<target.ShowName()<<" recovered from "<<getName()<<".";
+	log(removed.str());
 }
 
 void PoisonStatus::runTurnEffect()
@@ -35,5 +37,8 @@ void PoisonStatus::runTurnEffect()
 	}
 
 	target.ChangeHP(-1*poisonDamage);
-	cout<<target.ShowName()<<" took "<<poisonDamage<<" from "<<getName()<<"!"<<endl;
+
+	std::stringstream dmgMsg;
+	dmgMsg<<target.ShowName()<<" took "<<poisonDamage<<" from "<<getName()<<"!";
+	log(dmgMsg.str());
 }

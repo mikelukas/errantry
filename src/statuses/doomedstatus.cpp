@@ -1,10 +1,7 @@
-#include <iostream>
 #include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "doomedstatus.h"
-
-using std::cout;
-using std::endl;
 
 DoomedStatus::DoomedStatus(const StatusTemplate& statusTemplate, const EffectParams& params)
 	: StatusEffect(statusTemplate, params)
@@ -14,7 +11,9 @@ DoomedStatus::DoomedStatus(const StatusTemplate& statusTemplate, const EffectPar
 
 void DoomedStatus::onAdd()
 {
-	cout<<target.ShowName()<<" is doomed!"<<endl;
+	std::stringstream doomed;
+	doomed<<target.ShowName()<<" is doomed!";
+	log(doomed.str());
 }
 
 void DoomedStatus::onRemove()
@@ -23,15 +22,18 @@ void DoomedStatus::onRemove()
 	//to 0, otherwise, if it was removed prior to hitting 0 a message is displayed
 	//stating that the target will not die.
 
+	std::stringstream removeMsg;
 	if(isExpired())
 	{
-		cout<<target.ShowName()<<" succumbs to Doom!"<<endl;
+		removeMsg<<target.ShowName()<<" succumbs to Doom!";
 		target.ChangeHP(-(target.getEffectiveMaxHP()));
 	}
 	else
 	{
-		cout<<target.ShowName()<<" is saved from certain death!"<<endl;
+		removeMsg<<target.ShowName()<<" is saved from certain death!";
 	}
+
+	log(removeMsg.str());
 }
 
 const string DoomedStatus::getName() const

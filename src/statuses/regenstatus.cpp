@@ -1,10 +1,8 @@
-#include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "regenstatus.h"
 #include "../util/randutils.h"
-
-using std::cout;
-using std::endl;
 
 RegenStatus::RegenStatus(const StatusTemplate& statusTemplate, const EffectParams& params)
 	: StatusEffect(statusTemplate, params)
@@ -13,12 +11,16 @@ RegenStatus::RegenStatus(const StatusTemplate& statusTemplate, const EffectParam
 
 void RegenStatus::onAdd()
 {
-	cout<<target.ShowName()<<" is regenerating!"<<endl;
+	std::stringstream added;
+	added<<target.ShowName()<<" is regenerating!";
+	log(added.str());
 }
 
 void RegenStatus::onRemove()
 {
-	cout<<target.ShowName()<<" stopped regenerating."<<endl;
+	std::stringstream removed;
+	removed<<target.ShowName()<<" stopped regenerating.";
+	log(removed.str());
 }
 
 void RegenStatus::runTurnEffect()
@@ -28,5 +30,7 @@ void RegenStatus::runTurnEffect()
 	int regenHP = getRandIntBetween(1, MAX_REGEN_HP);
 	target.ChangeHP(regenHP);
 
-	cout<<target.ShowName()<<" regenerated "<<regenHP<<" HP!"<<endl;
+	std::stringstream regenMsg;
+	regenMsg<<target.ShowName()<<" regenerated "<<regenHP<<" HP!";
+	log(regenMsg.str());
 }

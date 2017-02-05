@@ -1,9 +1,7 @@
-#include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "hasoppositestatuseffect.h"
-
-using std::cout;
-using std::endl;
 
 HasOppositeStatusEffect::HasOppositeStatusEffect(const EffectType oppositeStatus, const StatusTemplate& statusTemplate, const EffectParams& effectParams)
 	: StatusEffect(statusTemplate, effectParams),
@@ -32,7 +30,9 @@ void HasOppositeStatusEffect::onAdd()
 {
 	//postcondition: a message is displayed that the status has been added to the target
 
-	cout<<target.ShowName()<<" feels "<<getAdjectiveFor(getType())<<"!"<<endl;
+	std::stringstream addedMsg;
+	addedMsg<<target.ShowName()<<" feels "<<getAdjectiveFor(getType())<<"!";
+	log(addedMsg.str());
 }
 
 void HasOppositeStatusEffect::onRemove()
@@ -41,6 +41,8 @@ void HasOppositeStatusEffect::onRemove()
 
 	if(target.getHP() > 0)
 	{
-		cout<<target.ShowName()<<" feels "<<getAdjectiveFor(oppositeStatus)<<"."<<endl;
+		std::stringstream removedMsg;
+		removedMsg<<target.ShowName()<<" feels "<<getAdjectiveFor(oppositeStatus)<<".";
+		log(removedMsg.str());
 	}
 }

@@ -1,9 +1,7 @@
-#include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "blindstatus.h"
 #include "../character.h"
-
-using std::cout;
-using std::endl;
 
 BlindStatus::BlindStatus(const StatusTemplate& statusTemplate, const EffectParams& params)
 	: StatusEffect(statusTemplate, params)
@@ -13,10 +11,14 @@ BlindStatus::BlindStatus(const StatusTemplate& statusTemplate, const EffectParam
 
 void BlindStatus::onAdd()
 {
-	cout<<target.ShowName()<<" can't see!"<<endl;
+	std::stringstream blinded;
+	blinded<<target.ShowName()<<" can't see!";
+	log(blinded.str());
 }
 
 void BlindStatus::onRemove()
 {
-	cout<<target.ShowName()<<" can see again."<<endl;
+	std::stringstream unblinded;
+	unblinded<<target.ShowName()<<" can see again.";
+	log(unblinded.str());
 }

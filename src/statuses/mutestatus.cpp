@@ -1,9 +1,7 @@
-#include <iostream>
+#include <sstream>
+#include "../logging/log.h"
 #include "../character.h"
 #include "mutestatus.h"
-
-using std::cout;
-using std::endl;
 
 MuteStatus::MuteStatus(const StatusTemplate& statusTemplate, const EffectParams& params)
 	: StatusEffect(statusTemplate, params)
@@ -13,10 +11,14 @@ MuteStatus::MuteStatus(const StatusTemplate& statusTemplate, const EffectParams&
 
 void MuteStatus::onAdd()
 {
-	cout<<target.ShowName()<<" is unable to speak!"<<endl;
+	std::stringstream addMsg;
+	addMsg<<target.ShowName()<<" is unable to speak!";
+	log(addMsg.str());
 }
 
 void MuteStatus::onRemove()
 {
-	cout<<target.ShowName()<<" can speak again."<<endl;
+	std::stringstream removedMsg;
+	removedMsg<<target.ShowName()<<" can speak again.";
+	log(removedMsg.str());
 }

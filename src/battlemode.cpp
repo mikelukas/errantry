@@ -1,3 +1,5 @@
+#include <sstream>
+#include "logging/log.h"
 #include "battlemode.h"
 #include "battlestrategy.h"
 #include "deadmode.h"
@@ -239,9 +241,11 @@ void BattleMode::onBattleWon()
 {
 	Player& player = gameState.getPlayer();
 
-	cout<<"You won the battle!  ";
-	cout<<"You gained "<<currMonster.ExpPts()<<" pts!"<<endl;
-	cout<<"Monster dropped "<<currMonster.Money()<<" gold!"<<endl;
+	std::stringstream msgs;
+	msgs<<"You won the battle!  "<<endl
+		<<"You gained "<<currMonster.ExpPts()<<" pts!"<<endl
+		<<"Monster dropped "<<currMonster.Money()<<" gold!";
+	log(msgs.str());
 
 	//Battle spoils
 	player.AddExp(currMonster.ExpPts());
@@ -284,13 +288,17 @@ void BattleMode::addMonsterEquipment()
 
 	Player& player = gameState.getPlayer();
 
-	cout<<"Monster dropped: "<<endl;
+	std::stringstream equipmentMsg;
+	log("Monster dropped: ");
 	for(int i=0; i < monsterEquipment->size(); i++)
 	{
 		EquipmentLine eqLine((*monsterEquipment)[i]);
 		player.AddEquipment(eqLine);
 
-		cout<<"  "<<eqLine.pEquipment->getName()<<endl;
+		equipmentMsg<<"  "<<eqLine.pEquipment->getName();
+		log(equipmentMsg.str());
+		equipmentMsg.clear();
+		equipmentMsg.str("");
 	}
 
 	delete monsterEquipment;
@@ -301,6 +309,8 @@ void BattleMode::learnMonsterSpells()
 	//postcondition: all spell ids the monster has are converted to spell
 	//pointers and the player learns any he/she didn't alreayd know.
 
+	std::stringstream learnedSpell;
+
 	const set<const SpellTemplate*>& monsterSpells = currMonster.getDroppableSpells();
 	for(set<const SpellTemplate*>::const_iterator it = monsterSpells.begin(); it != monsterSpells.end(); it++)
 	{
@@ -310,16 +320,22 @@ void BattleMode::learnMonsterSpells()
 		}
 
 		gameState.getPlayer().AddSpell(*it);
-		cout<<"You learned '"<<(*it)->getName()<<"' from a scroll the monster was carrying!"<<endl;
+		learnedSpell<<"You learned '"<<(*it)->getName()<<"' from a scroll the monster was carrying!";
+		log(learnedSpell.str());
+		learnedSpell.clear();
+		learnedSpell.str("");
 	}
 }
 
 void BattleMode::onLevelUp()
 {
 	Player& player = gameState.getPlayer();
-	LevelUpChooser chooser;
 
-	cout << "Congratulations, your level is now " << (player.Level() +1) << "!" << endl;
+	std::stringstream lvlMsg;
+	lvlMsg<<"Congratulations, your level is now "<<(player.Level() +1)<<"!";
+	log(lvlMsg.str());
+
+	LevelUpChooser chooser;
 	chooser.run();
 
 	const LvlUpOpt* choice = chooser.getChoice();

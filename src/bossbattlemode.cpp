@@ -1,3 +1,4 @@
+#include "logging/log.h"
 #include "bossbattlemode.h"
 #include "gamestate.h"
 #include "winmode.h"
@@ -10,7 +11,7 @@ BossBattleMode::BossBattleMode(Monster bossMonster, GameData& gameData, GameStat
 
 void BossBattleMode::runFromBattle()
 {
-	cout<<"Can't run from boss fight!"<<endl;
+	log("Can't run from boss fight!");
 }
 
 void BossBattleMode::onBattleWon()

@@ -1,3 +1,5 @@
+#include <sstream>
+#include "logging/log.h"
 #include "playercastspellaction.h"
 
 PlayerCastSpellAction::PlayerCastSpellAction(Player& player, Monster& monster)
@@ -27,7 +29,9 @@ bool PlayerCastSpellAction::setupSpellChoice()
 	spellChoice = spellChooser.getChoice();
 	if(!caster.hasEnoughMpFor(spellChoice))
 	{
-		cout<<"Not enough MP to cast '"<<spellChoice->getName()<<"'."<<endl;
+		std::stringstream noMpMsg;
+		noMpMsg<<"Not enough MP to cast '"<<spellChoice->getName()<<"'.";
+		log(noMpMsg.str());
 		return false;
 	}
 
@@ -61,7 +65,7 @@ bool PlayerCastSpellAction::setupTargetChoice()
 	//sanity check that there are actually eligible targets
 	if(eligibleTargets->empty())
 	{
-		cout<<"No eligible targets for this spell! This is a bug; spell shouldn't be eligible to cast in this location."<<endl;
+		log("WARNING: No eligible targets for this spell! This is a bug; spell shouldn't be eligible to cast in this location.");
 		delete eligibleTargets;
 		return false;
 	}

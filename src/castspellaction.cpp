@@ -1,4 +1,6 @@
+#include <sstream>
 #include <stack>
+#include "logging/log.h"
 #include "castspellaction.h"
 
 using std::stack;
@@ -58,7 +60,9 @@ bool CastSpellAction::isCasterMute()
 {
 	if(caster.hasStatus(MUTE))
 	{
-		cout<<caster.ShowName()<<" can't speak to cast spells!"<<endl;
+		std::stringstream muteMsg;
+		muteMsg<<caster.ShowName()<<" can't speak to cast spells!";
+		log(muteMsg.str());
 		return true;
 	}
 
@@ -88,6 +92,8 @@ void CastSpellAction::doAction()
 		return;
 	}
 
-	cout<<caster.ShowName() + " cast '" + castableSpell->getName() + "' on " + spellTarget->ShowName() + "."<<endl;
+	std::stringstream castMsg;
+	castMsg<<caster.ShowName() + " cast '" + castableSpell->getName() + "' on " + spellTarget->ShowName() + ".";
+	log(castMsg.str());
 	castableSpell->cast();
 }

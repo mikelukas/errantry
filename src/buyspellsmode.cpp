@@ -1,3 +1,4 @@
+#include "logging/log.h"
 #include "buyspellsmode.h"
 #include "gamestate.h"
 
@@ -54,5 +55,8 @@ void BuySpellsMode::processTransaction(const SpellTemplate* purchasedSpell)
 	//A message stating what spell the player learned is displayed.
 
 	gameState.getPlayer().Buy(purchasedSpell);
-	cout<<"Learned '"<<purchasedSpell->getName() + "'!";
+
+	std::stringstream learnedMsg;
+	learnedMsg<<"Learned '"<<purchasedSpell->getName() + "'!";
+	log(learnedMsg.str());
 }

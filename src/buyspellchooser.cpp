@@ -1,3 +1,4 @@
+#include "logging/log.h"
 #include "buyspellchooser.h"
 
 BuySpellChooser::BuySpellChooser(vector<const SpellTemplate*>* spellChoices, const Player& player)
@@ -36,16 +37,21 @@ bool BuySpellChooser::validate() const
 	const SpellTemplate* chosenSpell = getChoice();
 
 	//Check that they have enough gold to buy the spell
+
 	if(chosenSpell->getPurchasePrice() > player.Money())
 	{
-		cout<<"Not enough gold! Price is $"<<chosenSpell->getPurchasePrice()<<"."<<endl;
+		std::stringstream error;
+		error<<"Not enough gold! Price is $"<<chosenSpell->getPurchasePrice()<<".";
+		log(error.str());
 		return false;
 	}
 
 	//Ensure they're not buying something they already have
 	if(chosenSpell != NULL && player.hasSpell(chosenSpell))
 	{
-		cout<<"You already know '"<<chosenSpell->getName()<<"'!"<<endl;
+		std::stringstream error;
+		error<<"You already know '"<<chosenSpell->getName()<<"'!";
+		log(error.str());
 		return false;
 	}
 

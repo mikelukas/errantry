@@ -1,12 +1,10 @@
-#include <iostream>
+#include <sstream>
+#include "logging/log.h"
 #include "castablespell.h"
 #include "character.h"
 #include "effectfactory.h"
 #include "statuses/statusconstants.h"
 #include "util/mathutils.h"
-
-using std::cout;
-using std::endl;
 
 CastableSpell::CastableSpell(const SpellTemplate* spellDefinition, Character& caster, Character& target)
 	: SpellTemplate(*spellDefinition),
@@ -34,13 +32,15 @@ bool CastableSpell::setup()
 	if(!initializedEffects.empty())
 	{
 		//A bug if this is reached; protects against calling setup() multiple times and adding a bunch of duplicate effects. Whatever is calling setup() 2+ times should be fixed
-		cout<<"WARNING: This spell is already initialized - was setup() called twice before casting?"<<endl;
+		log("WARNING: This spell is already initialized - was setup() called twice before casting?");
 		deallocInitializedEffects();
 	}
 
 	if(!caster.hasEnoughMpFor(this))
 	{
-		cout<<caster.ShowName()<<" does not have enough MP to cast '"<<getName()<<"'!"<<endl;
+		std::stringstream noMpMsg;
+		noMpMsg<<caster.ShowName()<<" does not have enough MP to cast '"<<getName()<<"'!";
+		log(noMpMsg.str());
 		return false;
 	}
 
@@ -50,7 +50,7 @@ bool CastableSpell::setup()
 		Effect* effectToRun = EffectFactory::getInstance()->createEffect((*it), effectParams);
 		if(effectToRun == NULL)
 		{
-			cout<<"WARNING: spell references effects that do not exist."<<endl;
+			log("WARNING: spell references effects that do not exist.");
 			continue; //if we hit this, the spell references Effects that don't exist, which is probably a bug
 		}
 

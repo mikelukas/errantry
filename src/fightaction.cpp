@@ -1,9 +1,7 @@
-#include <iostream>
+#include <sstream>
+#include "logging/log.h"
 #include "fightaction.h"
 #include "player.h"
-
-using std::cout;
-using std::endl;
 
 FightAction::FightAction(Character& attacker, Character& defender)
 	: BattleAction(attacker),
@@ -20,7 +18,9 @@ bool FightAction::isAttackerBlind()
 
 	if(attacker.hasStatus(BLIND))
 	{
-		cout<<attacker.ShowName()<<" can't see to fight!"<<endl;
+		std::stringstream cantSeeMsg;
+		cantSeeMsg<<attacker.ShowName()<<" can't see to fight!";
+		log(cantSeeMsg.str());
 		return true;
 	}
 
@@ -48,7 +48,10 @@ void FightAction::doAction()
 	}
 
     int netDamage = defender.applyPhysicalDamage(attacker.getEffectiveAP());
-    cout<<attacker.ShowName()<<" did "<<netDamage<<" damage to "<<defender.ShowName()<<"!"<<endl;
+
+    std::stringstream fightDmgMsg;
+    fightDmgMsg<<attacker.ShowName()<<" did "<<netDamage<<" damage to "<<defender.ShowName()<<"!";
+    log(fightDmgMsg.str());
 
     applyWeaponEffects();
 }

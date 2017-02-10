@@ -1,3 +1,5 @@
+#include <sstream>
+#include "logging/log.h"
 #include "useitemaction.h"
 
 UseItemAction::UseItemAction(Player& player, Monster& monster)
@@ -60,6 +62,9 @@ void UseItemAction::doAction()
 	//postcondition: chosen item is used on the chosen target. Assumes these
 	//pointers aren't null, since mode would've been aborted if either was
 
-	cout<<player.ShowName()<<" used a "<<pEquipmentChoice->getName()<<" on "<<pTarget->ShowName()<<"!"<<endl;
+	std::stringstream usedItemMsg;
+	usedItemMsg<<player.ShowName()<<" used a "<<pEquipmentChoice->getName()<<" on "<<pTarget->ShowName()<<"!";
+	log(usedItemMsg.str());
+
 	player.useItem(pEquipmentChoice, *pTarget);
 }

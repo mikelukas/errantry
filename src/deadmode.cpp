@@ -1,5 +1,9 @@
+#include <iostream>
 #include "deadmode.h"
 #include "gamestate.h"
+
+using std::cout;
+using std::endl;
 
 DeadMode::DeadMode(GameData& gameData, GameState& gameState)
 	: GameMode(gameData, gameState, false)

@@ -1,5 +1,9 @@
+#include <iostream>
 #include "gamestate.h"
 #include "quitmode.h"
+
+using std::cout;
+using std::endl;
 
 QuitMode::QuitMode(GameData& gameData, GameState& gameState)
 	: GameMode(gameData, gameState, false)

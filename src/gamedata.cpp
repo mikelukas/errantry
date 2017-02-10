@@ -1,3 +1,5 @@
+#include <sstream>
+#include "logging/log.h"
 #include "gamedata.h"
 
 GameData::GameData()
@@ -38,7 +40,9 @@ bool GameData::loadDataFiles()
 {
 	if(!loadMap())
 	{
-		cout<<"ERROR: "<<MAPFILE<<" not found!"<<endl;
+		std::stringstream mapFileNotFound;
+		mapFileNotFound<<"ERROR: "<<MAPFILE<<" not found!";
+		log(mapFileNotFound.str());
 		return false;
 	}
 
@@ -96,7 +100,7 @@ bool GameData::loadMap()
 					worldMap.push_back(mapLine);
 				}
 			found = true;
-			cout<<":  Map found."<<endl;
+			log(":  Map found.");
 		}
 	return found;
 }
@@ -106,14 +110,20 @@ bool GameData::loadMonsters(vector<const Monster*>& monsters, const string& file
 	//Postcondition:  the attributes of each monster are retrieved
 	//from a file for use in the program
 
+	std::stringstream msg;
+
 	ifstream monsterFile(filename);
 	if(!monsterFile)
 	{
-		cout<<"ERROR: "<<filename<<" not found!"<<endl;
+		msg<<"ERROR: "<<filename<<" not found!";
+		log(msg.str());
 		return false;
 	}
 
-	cout<<":  Loading monsters from "<<filename<<endl;
+	msg<<":  Loading monsters from "<<filename;
+	log(msg.str());
+	msg.clear();
+	msg.str("");
 
 	while(monsterFile.peek() != EOF)
 	{
@@ -121,7 +131,8 @@ bool GameData::loadMonsters(vector<const Monster*>& monsters, const string& file
 		monsters.push_back(monster);
 	}
 	monsterFile.close();
-	cout<<":  "<<monsters.size()<<" Monsters found."<<endl;
+	msg<<":  "<<monsters.size()<<" Monsters found.";
+	log(msg.str());
 
 	return true;
 }
@@ -225,21 +236,28 @@ bool GameData::loadBosses(map<int, const Monster*>& bosses, const string& bosses
 	//fought at, and the bosses map is populated with 1D cave index -> Monster
 	//instance for the boss at that location.
 
+	std::stringstream msg;
+
 	vector<const Monster*> monsters;
 	if(!loadMonsters(monsters, bossesFilename))
 	{
-		cout<<"ERROR: Unable to load Monster data for bosses from "<<bossesFilename<<"!"<<endl;
+		msg<<"ERROR: Unable to load Monster data for bosses from "<<bossesFilename<<"!";
+		log(msg.str());
 		return false;
 	}
 
 	ifstream cavesFile(cavesFilename);
 	if(!cavesFile)
 	{
-		cout<<"ERROR: "<<cavesFilename<<" not found!"<<endl;
+		msg<<"ERROR: "<<cavesFilename<<" not found!";
+		log(msg.str());
 		return false;
 	}
 
-	cout<<":  Loading boss caves from "<<cavesFilename<<endl;
+	msg<<":  Loading boss caves from "<<cavesFilename;
+	log(msg.str());
+	msg.clear();
+	msg.str("");
 
 	//Order of caves in caves is the same as order of bosses in bosses file
 	int bossIndex = 0;
@@ -254,21 +272,28 @@ bool GameData::loadBosses(map<int, const Monster*>& bosses, const string& bosses
 		worldMap[caveLocation.y][caveLocation.x] = 'C';
 	}
 	cavesFile.close();
-	cout<<":  "<<bosses.size()<<" bosses placed in caves."<<endl;
+	msg<<":  "<<bosses.size()<<" bosses placed in caves.";
+	log(msg.str());
 
 	return true;
 }
 
 bool GameData::loadEquipment(EquipType type, vector<Equipment*>& equipment, const string& filename)
 {
+	std::stringstream msg;
+
 	ifstream equipFile(filename);
 	if(!equipFile)
 	{
-		cout<<"ERROR: "<<filename<<" not found!"<<endl;
+		msg<<"ERROR: "<<filename<<" not found!";
+		log(msg.str());
 		return false;
 	}
 
-	cout<<":  Loading equipment from "<<filename<<endl;
+	msg<<":  Loading equipment from "<<filename;
+	log(msg.str());
+	msg.clear();
+	msg.str("");
 
 	while(equipFile.peek() != EOF)
 		{
@@ -280,43 +305,59 @@ bool GameData::loadEquipment(EquipType type, vector<Equipment*>& equipment, cons
 
 			equipment.push_back(item);
 
-			cout<<item->getName()<<endl;
-			cout<<"   "<<item->getCost()<<endl;
-			cout<<"   "<<getDisplayNameFor(item->getElement())<<endl;
-			cout<<"   "<<item->getType()<<endl;
-			cout<<"   "<<item->getEffectImmunityIds().size()<<" effect immunity ids"<<endl;
-			cout<<"   "<<item->getEffectIds().size()<<" effect ids"<<endl;
-
-			cout<<"   Mods - "<<item->getStatMod()<<endl<<endl;
+			msg<<item->getName()<<endl
+			   <<"   "<<item->getCost()<<endl
+			   <<"   "<<getDisplayNameFor(item->getElement())<<endl
+			   <<"   "<<item->getType()<<endl
+			   <<"   "<<item->getEffectImmunityIds().size()<<" effect immunity ids"<<endl
+			   <<"   "<<item->getEffectIds().size()<<" effect ids"<<endl
+			   <<"   Mods - "<<item->getStatMod()<<endl;
+			log(msg.str());
+			msg.clear();
+			msg.str("");
 		}
 	equipFile.close();
-	cout<<":  "<<equipment.size()<<" equipment found."<<endl;
+	msg<<":  "<<equipment.size()<<" equipment found.";
+	log(msg.str());
+	msg.clear();
+	msg.str("");
 
 	return true;
 }
 
 bool GameData::loadSpells(vector<const SpellTemplate*>& spells, const string& filename)
 {
+	std::stringstream msg;
+
 	ifstream spellFile(filename);
 	if(!spellFile)
 	{
-		cout<<"ERROR: "<<filename<<" not found!"<<endl;
+		msg<<"ERROR: "<<filename<<" not found!";
+		log(msg.str());
 		return false;
 	}
 
-	cout<<":  Loading spells from "<<filename<<endl;
+	msg<<":  Loading spells from "<<filename;
+	log(msg.str());
+	msg.clear();
+	msg.str("");
 
 	while(spellFile.peek() != EOF)
 	{
 		const SpellTemplate* spell = new SpellTemplate(spellFile);
-		cout<<spell->getName()<<endl
+		msg<<spell->getName()<<endl
 			<<"  "<<spell->getElement()<<endl
 			<<"  "<<spell->getMpCost()<<endl
-			<<"  "<<spell->getPurchasePrice()<<endl;
+			<<"  "<<spell->getPurchasePrice();
+		log(msg.str());
+		msg.clear();
+		msg.str("");
+
 		spells.push_back(spell);
 	}
 	spellFile.close();
-	cout<<":  "<<spells.size()<<" spells found."<<endl;
+	msg<<":  "<<spells.size()<<" spells found.";
+	log(msg.str());
 
 	return true;
 }
@@ -325,14 +366,21 @@ bool GameData::loadTowns()
 {
 	//Postcondition:  towns is populated with all towns from the town data file
 
+	std::stringstream msg;
+
 	ifstream townFile(TOWNFILE);
 	if(!townFile)
 	{
-		cout<<"ERROR: "<<TOWNFILE<<"not found!"<<endl;
+		msg<<"ERROR: "<<TOWNFILE<<"not found!";
+		log(msg.str());
 		return false;
 	}
 
-	cout<<":  Loading towns..."<<endl;
+	msg<<":  Loading towns...";
+	log(msg.str());
+	msg.clear();
+	msg.str("");
+
 	int mapWidth = worldMap[0].size();
 	while(townFile.peek() != EOF)
 		{
@@ -345,18 +393,22 @@ bool GameData::loadTowns()
 			worldMap[townLoc.y][townLoc.x] = TOWN_SYMBOL;
 
 			//For debugging, remove when town-loading is all done.
-			cout<<town.getName()<<endl;
-			cout<<"    "<<town.getLocation().as1dIndex(mapWidth)<<endl;
-			cout<<"    "<<town.getShopEquipmentIds(WEAPON).size()<<" weapons loaded"<<endl;
-			cout<<"    "<<town.getShopEquipmentIds(ARMOR).size()<<" armor pieces loaded"<<endl;
-			cout<<"    "<<town.getShopEquipmentIds(ITEM).size()<<" items loaded"<<endl;
-			cout<<"    "<<town.getShopSpellIds().size()<<" spells loaded"<<endl;
-			cout<<town.getConversation();
-			cout<<TOWN_CONVO_DELIM<<endl;
+			msg<<town.getName()<<endl
+			   <<"    "<<town.getLocation().as1dIndex(mapWidth)<<endl
+			   <<"    "<<town.getShopEquipmentIds(WEAPON).size()<<" weapons loaded"<<endl
+			   <<"    "<<town.getShopEquipmentIds(ARMOR).size()<<" armor pieces loaded"<<endl
+			   <<"    "<<town.getShopEquipmentIds(ITEM).size()<<" items loaded"<<endl
+			   <<"    "<<town.getShopSpellIds().size()<<" spells loaded"<<endl
+			   <<town.getConversation()
+			   <<TOWN_CONVO_DELIM;
+			log(msg.str());
+			msg.clear();
+			msg.str("");
 		}
 
 	townFile.close();
-	cout<<":  "<<towns.size()<<" towns found."<<endl;
+	msg<<":  "<<towns.size()<<" towns found.";
+	log(msg.str());
 
 	return true;
 }

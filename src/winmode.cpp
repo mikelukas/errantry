@@ -1,5 +1,9 @@
+#include <iostream>
 #include "gamestate.h"
 #include "winmode.h"
+
+using std::cout;
+using std::endl;
 
 WinMode::WinMode(GameData& gameData, GameState& gameState)
 	: GameMode(gameData, gameState, false)

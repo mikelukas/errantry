@@ -2,7 +2,6 @@
 #define _GAMEDATA_H_
 
 #include <fstream>
-#include <iostream>
 #include <limits>
 #include <map>
 #include <string>
@@ -15,7 +14,6 @@
 #include "spelltemplate.h"
 #include "town.h"
 
-using std::cout;
 using std::ifstream;
 using std::endl;
 using std::numeric_limits;

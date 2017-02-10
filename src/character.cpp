@@ -1,13 +1,11 @@
 #include <algorithm>
-#include <iostream>
 #include <math.h> //ceil()
+#include <sstream>
+#include "logging/log.h"
 #include "character.h"
 #include "effectfactory.h"
 #include "statuses/statusconstants.h"
 #include "util/mathutils.h"
-
-using std::cout;
-using std::endl;
 
 //Constructors-------------------------------------------------------//
 Character::Character(int hpVar, int mpVar, int apVar, int dpVar, int mdpVar, int spVar, int money, int expPoints)
@@ -279,7 +277,9 @@ bool Character::RemoveEquipment(const EquipmentLine* removedEqLine)
 	if(invEqline.pEquipment == NULL)
 	{
 		//bug if we got this far...
-		cout<<"Tried to remove equipment "<<ShowName()<<" doesn't have..."<<endl;
+		std::stringstream notOwnedMsg;
+		notOwnedMsg<<"WARNING: Tried to remove equipment "<<ShowName()<<" doesn't have...";
+		log(notOwnedMsg.str());
 		return false;
 	}
 
@@ -651,7 +651,9 @@ bool Character::addStatus(StatusEffect* status)
 
 		if(isImmuneTo(status->getType()))
 		{
-			cout<<ShowName()<<" is immune to "<<status->getName()<<"!"<<endl;
+			std::stringstream immuneMsg;
+			immuneMsg<<ShowName()<<" is immune to "<<status->getName()<<"!";
+			log(immuneMsg.str());
 			return false;
 		}
 

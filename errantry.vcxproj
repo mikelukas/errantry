@@ -151,6 +151,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\levelupchooser.cpp" />
+    <ClCompile Include="src\logging\consoleappender.cpp" />
+    <ClCompile Include="src\logging\log.cpp" />
     <ClCompile Include="src\meltdownequipmentchooser.cpp" />
     <ClCompile Include="src\menumode.cpp" />
     <ClCompile Include="src\monster.cpp" />
@@ -241,6 +243,9 @@
     <ClInclude Include="src\intromode.h" />
     <ClInclude Include="src\inventorychooser.h" />
     <ClInclude Include="src\levelupchooser.h" />
+    <ClInclude Include="src\logging\consoleappender.h" />
+    <ClInclude Include="src\logging\log.h" />
+    <ClInclude Include="src\logging\logappender.h" />
     <ClInclude Include="src\meltdownequipmentchooser.h" />
     <ClInclude Include="src\menumode.h" />
     <ClInclude Include="src\monster.h" />

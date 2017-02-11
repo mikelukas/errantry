@@ -279,6 +279,12 @@
     <ClCompile Include="src\levelupchooser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\logging\consoleappender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\logging\log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\applyequipmentmode.h">
@@ -549,6 +555,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\levelupchooser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\consoleappender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\logappender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

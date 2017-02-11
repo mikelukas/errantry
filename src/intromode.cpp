@@ -1,6 +1,12 @@
+#include <iostream>
+#include "logging/log.h"
 #include "gamestate.h"
 #include "intromode.h"
 #include "overworldmode.h"
+
+using std::cin;
+using std::cout;
+using std::endl;
 
 IntroMode::IntroMode(GameData& gameData, GameState& gameState)
 	: GameMode(gameData, gameState, false)
@@ -67,7 +73,7 @@ bool IntroMode::validateChoice(char answer)
 	if(answer == 'Y' || answer == 'y' || answer == 'n' || answer == 'N')
 		return true;
 	else
-		cout<<"Invalid Response"<<endl;
+		log("Invalid Response");
 	return false;
 }
 

@@ -1,3 +1,5 @@
+#include <sstream>
+#include "logging/log.h"
 #include "gamestate.h"
 #include "shopbuymode.h"
 
@@ -42,7 +44,9 @@ bool ShopBuyMode::validateShopChoice(const Equipment* equipment, int quantity) c
 		return true;
 	}
 
-	cout<<"Not enough gold! Total cost is $"<<totalCost<<"."<<endl;
+	std::stringstream noGoldMsg;
+	noGoldMsg<<"Not enough gold! Total cost is $"<<totalCost<<".";
+	log(noGoldMsg.str());
 	return false;
 }
 
@@ -52,5 +56,8 @@ void ShopBuyMode::processTransaction()
 	//and a message is displayed telling the player what they just bought and for how much.
 
 	gameState.getPlayer().Buy(equipmentChoice);
-	cout<<"Bought "<<equipmentChoice->quantity<<" "<<equipmentChoice->pEquipment->getName()<<" for $"<<equipmentChoice->getTotalCost()<<"."<<endl;
+
+	std::stringstream purchaseMsg;
+	purchaseMsg<<"Bought "<<equipmentChoice->quantity<<" "<<equipmentChoice->pEquipment->getName()<<" for $"<<equipmentChoice->getTotalCost()<<".";
+	log(purchaseMsg.str());
 }

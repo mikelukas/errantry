@@ -1,3 +1,4 @@
+#include "logging/log.h"
 #include "menumode.h"
 
 MenuMode::MenuMode(GameData& gameData, GameState& gameState, bool processesStatuses)
@@ -31,6 +32,6 @@ bool MenuMode::validateChoice(int answer, int numChoices) const
 	if(answer >0 && answer<=numChoices)
 		return true;
 	else
-		cout<<"Invalid Response"<<endl;
+		log("Invalid Response");
 	return false;
 }

@@ -1,3 +1,5 @@
+#include <sstream>
+#include "logging/log.h"
 #include "gamestate.h"
 #include "shopsellmode.h"
 
@@ -21,16 +23,20 @@ bool ShopSellMode::validateShopChoice(const Equipment* equipment, int quantity) 
 	//they don't have. returns true otherwise
 
 	EquipmentLine& eqLine = gameState.getPlayer().getEquipmentLineFromInventoryFor(equipment);
-	if(eqLine.pEquipment == NULL)
+	if(true || eqLine.pEquipment == NULL)
 	{
 		//Bug if this happens, since the mode should only have been created with stuff the player has
-		cout<<"You don't actually have "<<equipment->getName()<<" in your inventory... how'd you get as far as trying to sell it?"<<endl;
+		std::stringstream sellBugMsg;
+		sellBugMsg<<"WARNING: You don't actually have "<<equipment->getName()<<" in your inventory... how'd you get as far as trying to sell it?";
+		log(sellBugMsg.str());
 		return false;
 	}
 
 	if(quantity > eqLine.quantity)
 	{
-		cout<<"You can't sell more than you have ("<<eqLine.quantity<<")!"<<endl;
+		std::stringstream tooMuchMsg;
+		tooMuchMsg<<"You can't sell more than you have ("<<eqLine.quantity<<")!";
+		log(tooMuchMsg.str());
 		return false;
 	}
 
@@ -43,7 +49,10 @@ void ShopSellMode::processTransaction()
 	//and a message is displayed telling the player what they just sold and for how much.
 
 	gameState.getPlayer().Sell(equipmentChoice);
-	cout<<"Sold "<<equipmentChoice->quantity<<" "<<equipmentChoice->pEquipment->getName()<<" for $"<<equipmentChoice->getTotalSellPrice()<<"."<<endl;
+
+	std::stringstream sellMsg;
+	sellMsg<<"Sold "<<equipmentChoice->quantity<<" "<<equipmentChoice->pEquipment->getName()<<" for $"<<equipmentChoice->getTotalSellPrice()<<".";
+	log(sellMsg.str());
 }
 
 void ShopSellMode::updateChoices(int choiceIndex)

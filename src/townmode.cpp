@@ -1,3 +1,5 @@
+#include <sstream>
+#include "logging/log.h"
 #include "armorymainmode.h"
 #include "gamestate.h"
 #include "generalstoremainmode.h"
@@ -81,7 +83,9 @@ void TownMode::enterArmory()
 
 	if(!hasInventory)
 	{
-		cout<<ARMORY_CLOSED_MSG<<currentTown.getName()<<"."<<endl;
+		std::stringstream closedMsg;
+		closedMsg<<ARMORY_CLOSED_MSG<<currentTown.getName()<<".";
+		log(closedMsg.str());
 		return;
 	}
 
@@ -97,7 +101,9 @@ void TownMode::enterGenStore()
 	bool hasInventory = !currentTown.getShopEquipmentIds(ITEM).empty();
 	if(!hasInventory)
 	{
-		cout<<GENSTORE_CLOSED_MSG<<currentTown.getName()<<"."<<endl;
+		std::stringstream closedMsg;
+		closedMsg<<GENSTORE_CLOSED_MSG<<currentTown.getName()<<".";
+		log(closedMsg.str());
 		return;
 	}
 
@@ -113,7 +119,9 @@ void TownMode::enterMagicShop()
 	bool hasSpells = !currentTown.getShopSpellIds().empty();
 	if(!hasSpells)
 	{
-		cout<<MAGICSHOP_CLOSED_MSG<<currentTown.getName()<<"."<<endl;
+		std::stringstream closedMsg;
+		closedMsg<<MAGICSHOP_CLOSED_MSG<<currentTown.getName()<<".";
+		log(closedMsg.str());
 		return;
 	}
 

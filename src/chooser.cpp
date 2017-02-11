@@ -1,3 +1,4 @@
+#include "logging/log.h"
 #include "chooser.h"
 
 template <typename T>
@@ -71,7 +72,7 @@ bool Chooser<T>::validate() const
 
 	if(getChoiceNum() < 1 || getChoiceNum() > eligibleChoices->size())
 	{
-		cout<<"Invalid response."<<endl;
+		log("Invalid response.");
 		return false;
 	}
 

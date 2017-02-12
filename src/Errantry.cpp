@@ -34,7 +34,6 @@ int main()
 
         if(!gameData.loadSuccessful())
         	{
-        		log("ERROR:  Could not read one or more data files!");
         		return 1;
         	}
 

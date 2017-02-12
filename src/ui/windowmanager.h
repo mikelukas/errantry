@@ -3,8 +3,7 @@
 
 #include <Window.h>
 
-const char* WIN_TITLE_CHOICES  = "Choices";
-const char* WIN_TITLE_MESSAGES = "Messages";
+using winterchange::Window;
 
 /* Singleton which can provide pointers to each of the Windows that make up
  * the UI.

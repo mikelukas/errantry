@@ -3,6 +3,9 @@
 #include <impl/curses/curseslib.h>
 #include "windowmanager.h"
 
+const char* WIN_TITLE_CHOICES  = "Choices";
+const char* WIN_TITLE_MESSAGES = "Messages";
+
 WindowManager* WindowManager::instance = NULL; //singleton instance static initialization
 
 WindowManager* WindowManager::getInstance()
@@ -48,6 +51,9 @@ bool WindowManager::init()
 	createMainWin();
 	createChoiceWin();
 	createMessageWin();
+
+	//Now that curses is running and our windows have been made, draw them to the screen
+	doupdate();
 
 	//If for some reason the 1 or more of the windows couldn't be inited, return false
 	if(mainWin == NULL || choiceWin == NULL || msgWin == NULL || !cursesActive) {
@@ -128,7 +134,7 @@ void WindowManager::createChoiceWin()
 	//postcondition: choiceWin field is instantiated w/ proper size, position,
 	//and default title.
 
-	choiceWin = new CursesWindow(17,12, 30,0);
+	choiceWin = new CursesWindow(17,12, 32,0);
 	choiceWin->setTitle(WIN_TITLE_CHOICES);
 }
 
@@ -137,7 +143,7 @@ void WindowManager::createMessageWin()
 	//postcondition: msgWin field is instantiated w/ proper size, position and
 	//default title.
 
-	msgWin = new CursesWindow(49,12, 0,30);
+	msgWin = new CursesWindow(49,12, 0,32);
 	msgWin->setTitle(WIN_TITLE_MESSAGES);
 }
 

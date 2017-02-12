@@ -75,12 +75,22 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)deps\winterchange\include;$(ProjectDir)deps\PDcurses-3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(ProjectDir)deps\PDcurses-3.4\lib;$(ProjectDir)deps\winterchange\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pdcurses.lib;winterchange.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /d /y "$(ProjectDir)deps\PDcurses-3.4\bin\pdcurses.dll" "$(OutDir)"
+xcopy /d /y "$(ProjectDir)deps\winterchange\bin\winterchange.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy DLL dependencies to output dir so that executable can access it</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -185,6 +195,7 @@
     <ClCompile Include="src\targetchooser.cpp" />
     <ClCompile Include="src\town.cpp" />
     <ClCompile Include="src\townmode.cpp" />
+    <ClCompile Include="src\ui\windowmanager.cpp" />
     <ClCompile Include="src\usableitemchooser.cpp" />
     <ClCompile Include="src\useitemaction.cpp" />
     <ClCompile Include="src\useitemmode.cpp" />
@@ -280,6 +291,7 @@
     <ClInclude Include="src\targetchooser.h" />
     <ClInclude Include="src\town.h" />
     <ClInclude Include="src\townmode.h" />
+    <ClInclude Include="src\ui\windowmanager.h" />
     <ClInclude Include="src\usableitemchooser.h" />
     <ClInclude Include="src\useitemaction.h" />
     <ClInclude Include="src\useitemmode.h" />

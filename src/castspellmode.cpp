@@ -3,7 +3,7 @@
 #include "gamestate.h"
 
 CastSpellMode::CastSpellMode(GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState, true)
+	: GameMode(gameData, gameState, true)
 {
 	vector<const SpellTemplate*>* playerFieldSpells = gameState.getPlayer().getSpellsForLocale(FIELD);
 
@@ -29,7 +29,7 @@ CastSpellMode::~CastSpellMode()
 	}
 }
 
-int CastSpellMode::displayMenu()
+int CastSpellMode::updateDisplay()
 {
 	//postcondition: invokes chooser to display list of spells player can cast,
 	//returns the numerical choice they selected
@@ -38,7 +38,7 @@ int CastSpellMode::displayMenu()
 	return spellChooser->getChoiceNum();
 }
 
-bool CastSpellMode::testChoice(int choiceNum)
+bool CastSpellMode::processInput(int choiceNum)
 {
 	//postcondition: if the player chose to exit, an exit is requested, otherwise
 	//cast() is called on the chosen spell with the player as both the caster

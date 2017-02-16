@@ -7,13 +7,13 @@
 #include "buyspellsmode.h"
 
 TownMode::TownMode(const Town& town, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState, true),
+	: GameMode(gameData, gameState, true),
 	  currentTown(town)
 {
 
 }
 
-int TownMode::displayMenu()
+int TownMode::updateDisplay()
 {
 	//postcondition: Displays town menu options to user, and returns their choice.
 	int choice;
@@ -34,7 +34,7 @@ int TownMode::displayMenu()
 	return choice;
 }
 
-bool TownMode::testChoice(int choice)
+bool TownMode::processInput(int choice)
 {
 	switch(choice)
 		{

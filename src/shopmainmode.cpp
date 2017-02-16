@@ -1,14 +1,19 @@
+#include <iostream>
 #include "gamestate.h"
 #include "shopmainmode.h"
 
+using std::cout;
+using std::cin;
+using std::endl;
+
 ShopMainMode::ShopMainMode(const Town& town, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState, false),
+	: GameMode(gameData, gameState, false),
 	  currentTown(town)
 {
 
 }
 
-int ShopMainMode::displayMenu()
+int ShopMainMode::updateDisplay()
 {
 	//postcondition: Displays shop menu options to user, and returns their choice.
 	int choice;
@@ -27,7 +32,7 @@ int ShopMainMode::displayMenu()
 	return choice;
 }
 
-bool ShopMainMode::testChoice(int choice)
+bool ShopMainMode::processInput(int choice)
 {
 	switch(choice)
 	{

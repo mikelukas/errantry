@@ -7,11 +7,13 @@
  */
 class WinMode: public GameMode
 {
+	protected:
+		virtual int updateDisplay(); //Displays win message
+		virtual bool processInput(int);
+
 	public:
 		WinMode(GameData&, GameState&);
 		~WinMode() { };
-
-		void run(); //Displays win message
 };
 
 #endif

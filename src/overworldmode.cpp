@@ -10,12 +10,12 @@
 #include "util/randutils.h"
 
 OverworldMode::OverworldMode(GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState, true)
+	: GameMode(gameData, gameState, true)
 {
 
 }
 
-int OverworldMode::displayMenu()
+int OverworldMode::updateDisplay()
 {
 	int choice = 0;
 	vector<string>& map = gameData.getMap();
@@ -44,7 +44,7 @@ int OverworldMode::displayMenu()
 	return choice;
 }
 
-bool OverworldMode::testChoice(int choice)
+bool OverworldMode::processInput(int choice)
 {
 	switch(choice)
 		{

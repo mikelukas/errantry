@@ -2,7 +2,7 @@
 #include "gamestate.h"
 
 ApplyEquipmentMode::ApplyEquipmentMode(GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState, true),
+	: GameMode(gameData, gameState, true),
 	  equipmentChoice(NULL),
 	  target(NULL)
 {
@@ -14,7 +14,7 @@ ApplyEquipmentMode::~ApplyEquipmentMode()
 
 }
 
-int ApplyEquipmentMode::displayMenu()
+int ApplyEquipmentMode::updateDisplay()
 {
 	//postcondition: runs the InventoryChooser that subclasses create, and gets
 	//the player choice from it.
@@ -37,7 +37,7 @@ int ApplyEquipmentMode::displayMenu()
 	return choice;
 }
 
-bool ApplyEquipmentMode::testChoice(int choice)
+bool ApplyEquipmentMode::processInput(int choice)
 {
 	//postcondition: If player chose equipment, that equipment is used on them
 	//via a call to useEquipment() on the player with the player as the target,

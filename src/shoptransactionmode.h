@@ -2,9 +2,12 @@
 #define SRC_SHOPTRANSACTIONMODE_H_
 
 #include <iomanip>
-#include "menumode.h"
+#include <iostream>
+#include "gamemode.h"
 
 using std::setw;
+using std::cout;
+using std::endl;
 
 const int CANCELED_CHOICE = 0;
 
@@ -12,14 +15,14 @@ const int CANCELED_CHOICE = 0;
  * to both for display choices and directing to appropriate specific logic for
  * handling the buy or sell, which will be implemented in subclasses.
  */
-class ShopTransactionMode : public MenuMode
+class ShopTransactionMode : public GameMode
 {
 	protected:
 		vector<EquipmentLine*>* equipmentChoices;
 		EquipmentLine* equipmentChoice;
 
-		int displayMenu();
-		bool testChoice(int);
+		int updateDisplay();
+		bool processInput(int);
 
 		void clearShopChoice();
 

@@ -2,7 +2,6 @@
 #define SRC_OVERWORLDMODE_H_
 
 #include <iomanip>
-#include "menumode.h"
 
 using std::setw;
 
@@ -14,11 +13,11 @@ enum Region {easy, medium, hard};
  * enter towns and caves, and show their current status.  The player can also
  * quit the game from this mode.
  */
-class OverworldMode : public MenuMode
+class OverworldMode : public GameMode
 {
 	protected:
-		int displayMenu();
-		bool testChoice(int);
+		int updateDisplay();
+		bool processInput(int);
 
 		void move();
 		void getEnemy();

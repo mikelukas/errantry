@@ -7,11 +7,13 @@
  */
 class DeadMode: public GameMode
 {
+	protected:
+		virtual int updateDisplay(); //Displays message about player dying
+		virtual bool processInput(int);
+
 	public:
 		DeadMode(GameData&, GameState&);
 		~DeadMode() { };
-
-		void run(); //Displays message about player dying
 };
 
 #endif

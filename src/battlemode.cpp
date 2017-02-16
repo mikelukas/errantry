@@ -14,7 +14,7 @@
 #include "util/randutils.h"
 
 BattleMode::BattleMode(Monster monster, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState, true),
+	: GameMode(gameData, gameState, true),
 	  currMonster(monster),
 	  actionQueue()
 {
@@ -47,7 +47,7 @@ void BattleMode::processStatusEffects()
 	//processStatusEffets() is called on the current monster too to process their
 	//statuses too.
 
-	MenuMode::processStatusEffects();
+	GameMode::processStatusEffects();
 	currMonster.processStatusEffects();
 }
 
@@ -61,11 +61,11 @@ void BattleMode::run()
 		return; //Status effects processed at the start of this turn could end the battle
 	}
 
-	MenuMode::run();
+	GameMode::run();
 	executeActions();
 }
 
-int BattleMode::displayMenu()
+int BattleMode::updateDisplay()
 {
 	if(gameState.getPlayer().hasStatus(STUNNED))
 	{
@@ -120,7 +120,7 @@ void BattleMode::displayCastSpellChoice()
 	}
 }
 
-bool BattleMode::testChoice(int choice)
+bool BattleMode::processInput(int choice)
 {
 	//postcondition: a BattleAction matching the player's choice is created, and
 	//enqueued in the proper order depending whether the player's speed is greater

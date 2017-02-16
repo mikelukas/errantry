@@ -1,17 +1,17 @@
 #ifndef SRC_SHOPMAINMODE_H_
 #define SRC_SHOPMAINMODE_H_
 
-#include "menumode.h"
+#include "gamemode.h"
 
 /* Abstract base class for choices available when entering any kind of shop.
  */
-class ShopMainMode : public MenuMode
+class ShopMainMode : public GameMode
 {
 	protected:
 		const Town& currentTown;
 
-		int displayMenu();
-		bool testChoice(int);
+		int updateDisplay();
+		bool processInput(int);
 
 		virtual void enterBuyMode() = 0;
 		virtual void enterSellMode() = 0;

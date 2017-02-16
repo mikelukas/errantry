@@ -2,19 +2,19 @@
 #define SRC_BUYSPELLSMODE_H_
 
 #include "buyspellchooser.h"
-#include "menumode.h"
+#include "gamemode.h"
 #include "town.h"
 
 /* Entered when player chooses to Learn Magic in a town - allows player to pay
  * to learn new spells.
  */
-class BuySpellsMode: public MenuMode
+class BuySpellsMode: public GameMode
 {
 	protected:
 		SpellChooser* spellChooser;
 
-		virtual int displayMenu();
-		virtual bool testChoice(int);
+		virtual int updateDisplay();
+		virtual bool processInput(int);
 
 		void processTransaction(const SpellTemplate*);
 

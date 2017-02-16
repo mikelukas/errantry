@@ -3,7 +3,7 @@
 #include "gamestate.h"
 
 BuySpellsMode::BuySpellsMode(const Town& currentTown, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState, false)
+	: GameMode(gameData, gameState, false)
 {
 	//This vector will be freed in spellChooser's destructor
 	vector<const SpellTemplate*>* shopSpells = gameData.getSpellsForIds(currentTown.getShopSpellIds());
@@ -19,7 +19,7 @@ BuySpellsMode::~BuySpellsMode()
 	delete spellChooser;
 }
 
-int BuySpellsMode::displayMenu()
+int BuySpellsMode::updateDisplay()
 {
 	//postcondition: SpellChooser is used to display the Spells the player can
 	//purchase, and the player is prompted to either purchase or leave the shop
@@ -28,7 +28,7 @@ int BuySpellsMode::displayMenu()
 	return spellChooser->getChoiceNum();
 }
 
-bool BuySpellsMode::testChoice(int choiceNum)
+bool BuySpellsMode::processInput(int choiceNum)
 {
 	//postcondition: if the player chose to leave the shop, an exit mode request
 	//is made to the GameState, otherwise the purchase is completed.

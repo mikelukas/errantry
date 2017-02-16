@@ -3,7 +3,7 @@
 
 #include <queue>
 #include "battleaction.h"
-#include "menumode.h"
+#include "gamemode.h"
 
 using std::queue;
 
@@ -14,16 +14,16 @@ const int DROP_CHANCE_PERCENT = 40;
  * while moving on the overworld.  It is also the base class for boss battles,
  * which are slightly special and occur when the user moves onto a cave.
  */
-class BattleMode : public MenuMode
+class BattleMode : public GameMode
 {
 	protected:
 		Monster currMonster; //Monster we're fighting in this mode
 		queue<BattleAction*> actionQueue;
 
-		int displayMenu();
+		int updateDisplay();
 		void displayFightChoice();
 		void displayCastSpellChoice();
-		bool testChoice(int);
+		bool processInput(int);
 		BattleAction* makeMonsterAction();
 		void executeActions();
 

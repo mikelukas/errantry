@@ -1,8 +1,10 @@
 #include "gamestate.h"
 #include "shoptransactionmode.h"
 
+using std::cin;
+
 ShopTransactionMode::ShopTransactionMode(vector<EquipmentLine*>* equipmentChoices, GameData& gameData, GameState& gameState)
-	: MenuMode(gameData, gameState, false),
+	: GameMode(gameData, gameState, false),
 	  equipmentChoices(equipmentChoices),
 	  equipmentChoice(NULL)
 {
@@ -19,7 +21,7 @@ ShopTransactionMode::~ShopTransactionMode()
 	delete equipmentChoices;
 }
 
-int ShopTransactionMode::displayMenu()
+int ShopTransactionMode::updateDisplay()
 {
 	//postcondition: displays equipment choice list to be bought/sold at shop,
 	//and returns the index into the equipmentChoices vector the player picked,
@@ -69,7 +71,7 @@ int ShopTransactionMode::displayMenu()
 	return choice;
 }
 
-bool ShopTransactionMode::testChoice(int choice)
+bool ShopTransactionMode::processInput(int choice)
 {
 	//postcondition: calls subclass's implementations of processTransaction and
 	//updateChoices, or exits the mode if the player chose to leave from the

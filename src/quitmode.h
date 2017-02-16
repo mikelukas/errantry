@@ -7,11 +7,13 @@
  */
 class QuitMode : public GameMode
 {
+	protected:
+		virtual int updateDisplay(); //Displays quit message
+		virtual bool processInput(int);
+
 	public:
 		QuitMode(GameData&, GameState&);
 		~QuitMode() { };
-
-		void run(); //Displays quit message
 };
 
 #endif

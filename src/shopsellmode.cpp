@@ -23,7 +23,7 @@ bool ShopSellMode::validateShopChoice(const Equipment* equipment, int quantity) 
 	//they don't have. returns true otherwise
 
 	EquipmentLine& eqLine = gameState.getPlayer().getEquipmentLineFromInventoryFor(equipment);
-	if(true || eqLine.pEquipment == NULL)
+	if(eqLine.pEquipment == NULL)
 	{
 		//Bug if this happens, since the mode should only have been created with stuff the player has
 		std::stringstream sellBugMsg;

@@ -16,7 +16,6 @@ TownMode::TownMode(const Town& town, GameData& gameData, GameState& gameState)
 int TownMode::updateDisplay()
 {
 	//postcondition: Displays town menu options to user, and returns their choice.
-	int choice;
 
 	cout<<"*********Choices*********"<<endl;
 	cout<<"*1)Talk                 *"<<endl;
@@ -25,17 +24,22 @@ int TownMode::updateDisplay()
 	cout<<"*4)Magic Lessons        *"<<endl;
 	cout<<"*5)Leave Town           *"<<endl;
 	cout<<"*************************"<<endl;
-	do
-	 {
-		cout<<"Please choose an option:  ";
-		cin>>choice;
-	 }while(!validateChoice(choice, 5));
 
-	return choice;
+	return 0; //TODO: return value won't matter soon
 }
 
-bool TownMode::processInput(int choice)
+bool TownMode::processInput(int c)
 {
+	//postcondition: prompts for and processes the player's menu choice
+
+	int choice = 0;
+
+	do
+	{
+		cout<<"Please choose an option:  ";
+		cin>>choice;
+	}while(!validateChoice(choice, 5));
+
 	switch(choice)
 		{
 			case 1:

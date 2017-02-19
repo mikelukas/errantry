@@ -16,24 +16,24 @@ ShopMainMode::ShopMainMode(const Town& town, GameData& gameData, GameState& game
 int ShopMainMode::updateDisplay()
 {
 	//postcondition: Displays shop menu options to user, and returns their choice.
-	int choice;
-
 	cout<<"*****Choices*****"<<endl;
 	cout<<"*1)Buy          *"<<endl;
 	cout<<"*2)Sell         *"<<endl;
 	cout<<"*3)Leave        *"<<endl;
 	cout<<"*****************"<<endl;
-	do
-	 {
-		cout<<"Please choose an option:  ";
-		cin>>choice;
-	 }while(!validateChoice(choice, 3));
 
-	return choice;
+	return 0; //TODO return value won't matter soon
 }
 
-bool ShopMainMode::processInput(int choice)
+bool ShopMainMode::processInput(int c)
 {
+	int choice = 0;
+	do
+	{
+		cout<<"Please choose an option:  ";
+		cin>>choice;
+	}while(!validateChoice(choice, 3));
+
 	switch(choice)
 	{
 		case 1:

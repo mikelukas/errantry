@@ -17,7 +17,6 @@ OverworldMode::OverworldMode(GameData& gameData, GameState& gameState)
 
 int OverworldMode::updateDisplay()
 {
-	int choice = 0;
 	vector<string>& map = gameData.getMap();
 
 	cout<<"0    5   10   15   20   25  29"<<endl;
@@ -35,17 +34,19 @@ int OverworldMode::updateDisplay()
 	cout<<"*6)Quit Game    *"<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"**********************MESSAGES**********************"<<endl;
+
+	return 0;
+}
+
+bool OverworldMode::processInput(int c)
+{
+	int choice;
 	do
 	{
 		cout<<"Please choose an option:  "<<endl;
 		cin>>choice;
 	}while(!validateChoice(choice, 6));
 
-	return choice;
-}
-
-bool OverworldMode::processInput(int choice)
-{
 	switch(choice)
 		{
 			case 1:

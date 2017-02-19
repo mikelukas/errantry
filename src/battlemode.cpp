@@ -67,9 +67,9 @@ void BattleMode::run()
 
 int BattleMode::updateDisplay()
 {
-	if(gameState.getPlayer().hasStatus(STUNNED))
+	if(gameState.getPlayer().hasStatus(STUNNED)) //TODO once combat results are displayed in the log window, don't need to check this here since always drawing the battle stats in the info window is fine.
 	{
-		return SKIP_TURN_CHOICE;
+		return 0;//Return value here won't matter soon
 	}
 
 	int choice;
@@ -87,13 +87,8 @@ int BattleMode::updateDisplay()
 	cout<<"*4)Run          *"<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"**********************MESSAGES**********************"<<endl;
-	do
-	{
-		cout<<"Please choose an option:  "<<endl;
-		cin>>choice;
-	}while(!validateChoice(choice,4));
 
-	return choice;
+	return 0; //Return value here won't matter soon
 }
 
 void BattleMode::displayFightChoice()
@@ -120,17 +115,30 @@ void BattleMode::displayCastSpellChoice()
 	}
 }
 
-bool BattleMode::processInput(int choice)
+bool BattleMode::processInput(int c)
 {
-	//postcondition: a BattleAction matching the player's choice is created, and
-	//enqueued in the proper order depending whether the player's speed is greater
-	//than the monster's.  setup() is called on the action before any actions are
-	//are enqueued, and if the action is aborted, this method will return early
-	//to allow the player to choose a new action.
+	//postcondition: prompts the player to choose a battle action if he/she is
+	//not stunned, and if not creates a BattleAction matching the his/her choice
+	//and enqueues it in the proper order depending whether the player's speed
+	//is greater than the monster's.  setup() is called on the action before any
+	//actions are are enqueued, and if the action is aborted, this method will
+	//return early to allow the player to choose a new action.
+	//If the player is stunned when prompting for input, their turn is skipped.
 	//Returns false if the player's BattleAction is aborted, so that turn is not
 	//not advanced until a BattleAction is enqueued.  True otherwise.
 
 	Player& player = gameState.getPlayer();
+	int choice = SKIP_TURN_CHOICE;
+
+	//If the player is stunned don't await input from them, b/c there turn should be skipped
+	if(!player.hasStatus(STUNNED))
+	{
+		do
+		{
+			cout<<"Please choose an option:  "<<endl;
+			cin>>choice;
+		}while(!validateChoice(choice,4));
+	}
 
 	//Handle player choice, and set up action they chose.
 	BattleAction* playerAction;

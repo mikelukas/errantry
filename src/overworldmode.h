@@ -16,8 +16,8 @@ enum Region {easy, medium, hard};
 class OverworldMode : public GameMode
 {
 	protected:
-		int updateDisplay();
-		bool processInput(int);
+		virtual void updateDisplay();
+		bool processInput();
 
 		void move();
 		void getEnemy();

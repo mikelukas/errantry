@@ -15,7 +15,7 @@ IntroMode::IntroMode(GameData& gameData, GameState& gameState)
 
 }
 
-int IntroMode::updateDisplay()
+void IntroMode::updateDisplay()
 {
 	//postcondition: depending on the state we're in, display the title,
 	//instructions, or a prompt for the player to enter their name
@@ -34,8 +34,6 @@ int IntroMode::updateDisplay()
 	default:
 		log("WARNING: Invalid IntroMode state encountered!"); //Bug if we have reached this point, this mode should only be able to set state to one of the valid enum values
 	}
-
-	return 1; //return value of this method is unused
 }
 
 void IntroMode::displayTitle()
@@ -88,7 +86,7 @@ void IntroMode::displayNamePrompt()
 	cout<<"Greetings wanderer, tell me your name:  ";
 }
 
-bool IntroMode::processInput(int choice)
+bool IntroMode::processInput()
 {
 	//postcondition: await input appropriate for the particular state this mode
 	//is in, and act upon what is entered

@@ -8,8 +8,8 @@
 class WinMode: public GameMode
 {
 	protected:
-		virtual int updateDisplay(); //Displays win message
-		virtual bool processInput(int);
+		virtual void updateDisplay(); //Displays win message
+		virtual bool processInput();
 
 	public:
 		WinMode(GameData&, GameState&);

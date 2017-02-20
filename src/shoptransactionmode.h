@@ -20,9 +20,10 @@ class ShopTransactionMode : public GameMode
 	protected:
 		vector<EquipmentLine*>* equipmentChoices;
 		EquipmentLine* equipmentChoice;
+		int choiceNum;
 
-		int updateDisplay();
-		bool processInput(int);
+		virtual void updateDisplay();
+		virtual bool processInput();
 
 		void clearShopChoice();
 

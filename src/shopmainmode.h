@@ -10,8 +10,8 @@ class ShopMainMode : public GameMode
 	protected:
 		const Town& currentTown;
 
-		int updateDisplay();
-		bool processInput(int);
+		virtual void updateDisplay();
+		virtual bool processInput();
 
 		virtual void enterBuyMode() = 0;
 		virtual void enterSellMode() = 0;

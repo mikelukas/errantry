@@ -6,7 +6,8 @@ using std::cin;
 ShopTransactionMode::ShopTransactionMode(vector<EquipmentLine*>* equipmentChoices, GameData& gameData, GameState& gameState)
 	: GameMode(gameData, gameState, false),
 	  equipmentChoices(equipmentChoices),
-	  equipmentChoice(NULL)
+	  equipmentChoice(NULL),
+	  choiceNum(-1)
 {
 
 }
@@ -21,7 +22,7 @@ ShopTransactionMode::~ShopTransactionMode()
 	delete equipmentChoices;
 }
 
-int ShopTransactionMode::updateDisplay()
+void ShopTransactionMode::updateDisplay()
 {
 	//postcondition: displays equipment choice list to be bought/sold at shop,
 	//and returns the index into the equipmentChoices vector the player picked,
@@ -31,7 +32,6 @@ int ShopTransactionMode::updateDisplay()
 	//choice and quantity.  This will be freed once the transaction is processed
 	//after testChoice.
 
-	int choice;
 	int quantity=0;
 
 	do {
@@ -52,40 +52,39 @@ int ShopTransactionMode::updateDisplay()
 		do
 		{
 			cout<<"Please choose an option:  "<<endl;
-			cin>>choice;
+			cin>>choiceNum;
 
-			if(choice == CANCELED_CHOICE)
+			if(choiceNum == CANCELED_CHOICE)
 			{
-				return choice;
+				return;
 			}
-		}while(!validateChoice(choice, equipmentChoices->size()));
+		}while(!validateChoice(choiceNum, equipmentChoices->size()));
 
 		do
 		{
-			cout<<"How many '"<<(*equipmentChoices)[choice-1]->pEquipment->getName()<<"' (0 to cancel)? "<<endl;
+			cout<<"How many '"<<(*equipmentChoices)[choiceNum-1]->pEquipment->getName()<<"' (0 to cancel)? "<<endl;
 			cin>>quantity;
-		}while(!validateShopChoice((*equipmentChoices)[choice-1]->pEquipment, quantity));
+		}while(!validateShopChoice((*equipmentChoices)[choiceNum-1]->pEquipment, quantity));
 	}while(quantity <=0);
 
-	equipmentChoice = new EquipmentLine((*equipmentChoices)[choice-1]->pEquipment, quantity);
-	return choice;
+	equipmentChoice = new EquipmentLine((*equipmentChoices)[choiceNum-1]->pEquipment, quantity);
 }
 
-bool ShopTransactionMode::processInput(int choice)
+bool ShopTransactionMode::processInput()
 {
 	//postcondition: calls subclass's implementations of processTransaction and
 	//updateChoices, or exits the mode if the player chose to leave from the
 	//choice list.
 	//Always returns true to indicate turn should finish.
 
-	switch(choice)
+	switch(choiceNum)
 	{
 	case CANCELED_CHOICE:
 		gameState.requestExitCurrentMode();
 		break;
 	default:
 		processTransaction();
-		updateChoices(choice);
+		updateChoices(choiceNum);
 		clearShopChoice();
 		break;
 	}
@@ -97,4 +96,5 @@ void ShopTransactionMode::clearShopChoice()
 {
 	delete equipmentChoice;
 	equipmentChoice = NULL;
+	choiceNum = -1;
 }

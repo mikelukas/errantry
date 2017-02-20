@@ -13,8 +13,8 @@ class BuySpellsMode: public GameMode
 	protected:
 		SpellChooser* spellChooser;
 
-		virtual int updateDisplay();
-		virtual bool processInput(int);
+		virtual void updateDisplay();
+		virtual bool processInput();
 
 		void processTransaction(const SpellTemplate*);
 

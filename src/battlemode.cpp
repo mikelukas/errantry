@@ -65,11 +65,11 @@ void BattleMode::run()
 	executeActions();
 }
 
-int BattleMode::updateDisplay()
+void BattleMode::updateDisplay()
 {
 	if(gameState.getPlayer().hasStatus(STUNNED)) //TODO once combat results are displayed in the log window, don't need to check this here since always drawing the battle stats in the info window is fine.
 	{
-		return 0;//Return value here won't matter soon
+		return;
 	}
 
 	int choice;
@@ -87,8 +87,6 @@ int BattleMode::updateDisplay()
 	cout<<"*4)Run          *"<<endl;
 	cout<<"*****************"<<endl;
 	cout<<"**********************MESSAGES**********************"<<endl;
-
-	return 0; //Return value here won't matter soon
 }
 
 void BattleMode::displayFightChoice()
@@ -115,7 +113,7 @@ void BattleMode::displayCastSpellChoice()
 	}
 }
 
-bool BattleMode::processInput(int c)
+bool BattleMode::processInput()
 {
 	//postcondition: prompts the player to choose a battle action if he/she is
 	//not stunned, and if not creates a BattleAction matching the his/her choice

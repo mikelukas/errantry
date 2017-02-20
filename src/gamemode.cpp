@@ -36,8 +36,8 @@ void GameMode::run()
 	bool finishTurn = false;
 	do
 	{
-		int choice = updateDisplay();
-		finishTurn = processInput(choice);
+		updateDisplay();
+		finishTurn = processInput();
 	} while(!finishTurn);
 }
 

@@ -16,8 +16,8 @@ class ApplyEquipmentMode : public GameMode
 		const Equipment* equipmentChoice;
 		Character* target;
 
-		virtual int updateDisplay();
-		virtual bool processInput(int);
+		virtual void updateDisplay();
+		virtual bool processInput();
 		virtual void useEquipment() = 0;
 
 		virtual Chooser<EquipmentLine>* createInventoryChooser() = 0;

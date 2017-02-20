@@ -8,8 +8,8 @@
 class QuitMode : public GameMode
 {
 	protected:
-		virtual int updateDisplay(); //Displays quit message
-		virtual bool processInput(int);
+		virtual void updateDisplay(); //Displays quit message
+		virtual bool processInput();
 
 	public:
 		QuitMode(GameData&, GameState&);

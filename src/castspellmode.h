@@ -13,8 +13,8 @@ class CastSpellMode: public GameMode
 
 		Chooser<const SpellTemplate>* spellChooser; //freed in destructor
 
-		int updateDisplay();
-		bool processInput(int);
+		virtual void updateDisplay();
+		virtual bool processInput();
 
 	public:
 		CastSpellMode(GameData&, GameState&);

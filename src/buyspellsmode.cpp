@@ -19,30 +19,27 @@ BuySpellsMode::~BuySpellsMode()
 	delete spellChooser;
 }
 
-int BuySpellsMode::updateDisplay()
+void BuySpellsMode::updateDisplay()
 {
 	//postcondition: SpellChooser is used to display the Spells the player can
 	//purchase, and the player is prompted to either purchase or leave the shop
 
 	spellChooser->run();
-	return spellChooser->getChoiceNum();
 }
 
-bool BuySpellsMode::processInput(int choiceNum)
+bool BuySpellsMode::processInput()
 {
 	//postcondition: if the player chose to leave the shop, an exit mode request
 	//is made to the GameState, otherwise the purchase is completed.
 	//Always returns true to indicate turn should finish.
 
-	switch(choiceNum)
+	if(spellChooser->canceled())
 	{
-	case CANCELED_CHOICE:
 		gameState.requestExitCurrentMode();
-		break;
-
-	default:
+	}
+	else
+	{
 		processTransaction(spellChooser->getChoice());
-		break;
 	}
 
 	return true;

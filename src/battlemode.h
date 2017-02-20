@@ -20,10 +20,10 @@ class BattleMode : public GameMode
 		Monster currMonster; //Monster we're fighting in this mode
 		queue<BattleAction*> actionQueue;
 
-		int updateDisplay();
+		virtual void updateDisplay();
 		void displayFightChoice();
 		void displayCastSpellChoice();
-		bool processInput(int);
+		virtual bool processInput();
 		BattleAction* makeMonsterAction();
 		void executeActions();
 

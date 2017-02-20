@@ -13,7 +13,7 @@ TownMode::TownMode(const Town& town, GameData& gameData, GameState& gameState)
 
 }
 
-int TownMode::updateDisplay()
+void TownMode::updateDisplay()
 {
 	//postcondition: Displays town menu options to user, and returns their choice.
 
@@ -24,11 +24,9 @@ int TownMode::updateDisplay()
 	cout<<"*4)Magic Lessons        *"<<endl;
 	cout<<"*5)Leave Town           *"<<endl;
 	cout<<"*************************"<<endl;
-
-	return 0; //TODO: return value won't matter soon
 }
 
-bool TownMode::processInput(int c)
+bool TownMode::processInput()
 {
 	//postcondition: prompts for and processes the player's menu choice
 

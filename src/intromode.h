@@ -14,12 +14,12 @@ class IntroMode : public GameMode
 
 		IntroState state;
 
-		virtual int updateDisplay();
+		virtual void updateDisplay();
 		void displayTitle();
 		void displayInstructions();
 		void displayNamePrompt();
 
-		virtual bool processInput(int);
+		virtual bool processInput();
 
 		bool validateChoice(char answer);
 

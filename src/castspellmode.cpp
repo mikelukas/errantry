@@ -29,16 +29,15 @@ CastSpellMode::~CastSpellMode()
 	}
 }
 
-int CastSpellMode::updateDisplay()
+void CastSpellMode::updateDisplay()
 {
 	//postcondition: invokes chooser to display list of spells player can cast,
 	//returns the numerical choice they selected
 
 	spellChooser->run();
-	return spellChooser->getChoiceNum();
 }
 
-bool CastSpellMode::processInput(int choiceNum)
+bool CastSpellMode::processInput()
 {
 	//postcondition: if the player chose to exit, an exit is requested, otherwise
 	//cast() is called on the chosen spell with the player as both the caster

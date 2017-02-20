@@ -11,16 +11,14 @@ WinMode::WinMode(GameData& gameData, GameState& gameState)
 
 }
 
-int WinMode::updateDisplay()
+void WinMode::updateDisplay()
 {
 	cout<<"Congratulations, you have defeated the evil monsters of the land,"
 		<<endl<<"saved the people, and allowed peace to flourish!"<<endl
 		<<"You win!"<<endl;
-
-	return 1;
 }
 
-bool WinMode::processInput(int choice)
+bool WinMode::processInput()
 {
 	gameState.setGameOver();
 

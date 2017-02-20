@@ -15,8 +15,8 @@ class TownMode : public GameMode
 	protected:
 		const Town& currentTown;
 
-		int updateDisplay();
-		bool processInput(int);
+		virtual void updateDisplay();
+		virtual bool processInput();
 
 		void talk() const;
 		void enterArmory();

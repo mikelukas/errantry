@@ -19,8 +19,8 @@ class GameMode
 
 		bool processesStatuses;
 
-		virtual int updateDisplay() = 0;
-		virtual bool processInput(int) = 0; //return indicates if this choice finishes the current turn.
+		virtual void updateDisplay() = 0;
+		virtual bool processInput() = 0; //return indicates if this choice finishes the current turn.
 
 		bool validateChoice(int, int) const;
 

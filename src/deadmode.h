@@ -8,8 +8,8 @@
 class DeadMode: public GameMode
 {
 	protected:
-		virtual int updateDisplay(); //Displays message about player dying
-		virtual bool processInput(int);
+		virtual void updateDisplay(); //Displays message about player dying
+		virtual bool processInput();
 
 	public:
 		DeadMode(GameData&, GameState&);

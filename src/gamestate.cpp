@@ -47,17 +47,22 @@ void GameState::handleEnterModeRequest()
 {
 	//postcondition: if a nextMode was requested to be entered, it will be made
 	//the active mode, and nextMode will be set back to NULL
+	//onEnter() is called on the mode after it has been activated.
 
 	if(nextMode != NULL)
 	{
 		enterMode(nextMode);
 		nextMode = NULL;
+
+		//Inform the newly-entered mode that it is now active
+		activeModes.top()->onEnter();
 	}
 }
 void GameState::enterMode(GameMode* mode)
 {
 	//postcondition: mode becomes the current active mode.  Mode will be deleted
-	//when exitCurrentMode is called
+	//when exitCurrentMode is called.
+
 	activeModes.push(mode);
 }
 void GameState::requestExitCurrentMode()
@@ -77,12 +82,20 @@ void GameState::requestExitCurrentMode()
 void GameState::handleExitModeRequest()
 {
 	//postcondition: if exitCurrentModeRequested is set, calls exitCurrentMode()
-	//and clears exitCurrentModeRequested
+	//and clears exitCurrentModeRequested.
+	//onEnter() is then called on the mode that was previous running (unless
+	//there were no previous modes running)
 
 	if(exitCurrentModeRequested)
 	{
 		exitCurrentMode();
 		exitCurrentModeRequested = false;
+
+		//Inform the new current mode that it is now active
+		if(!activeModes.empty())
+		{
+			activeModes.top()->onEnter();
+		}
 	}
 }
 void GameState::exitCurrentMode()
@@ -94,6 +107,9 @@ void GameState::exitCurrentMode()
 	//will immediately be called.
 	//If the current mode should be exited, a request to do so should be made
 	//instead of directly calling this method.
+	//NOTE: onEnter() is not called on the mode here b/c in the event of a
+	//GameOver, un-desired effects could happen at the end of the game as each
+	//mode is popped and the one below it is entered
 
 	delete activeModes.top();
 	activeModes.pop();

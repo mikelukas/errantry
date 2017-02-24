@@ -1,8 +1,12 @@
 #ifndef SRC_GAMEMODE_H_
 #define SRC_GAMEMODE_H_
 
+#include <iostream>
 #include "context.h"
 #include "gamedata.h"
+
+using std::cout;
+using std::endl;
 
 class GameState; //Forward declaration since GameState and GameMode are interdependent
 
@@ -27,6 +31,8 @@ class GameMode
 	public:
 		GameMode(GameData&, GameState&, bool);
 		virtual ~GameMode() {};
+
+		virtual void onEnter() { cout<<"Entered mode"<<endl;};
 
 		virtual void processStatusEffects();
 

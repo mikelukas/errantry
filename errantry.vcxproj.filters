@@ -114,9 +114,6 @@
     <ClCompile Include="src\meltdownequipmentchooser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\menumode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\monster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -387,9 +384,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\meltdownequipmentchooser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\menumode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\monster.h">

@@ -9,7 +9,10 @@
 /**/.DS_Store
 
 ### Visual Studio Files ###
+.vsconfig
+
 # User-specific files
+.vs
 *.suo
 *.user
 

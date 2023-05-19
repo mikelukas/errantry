@@ -34,7 +34,7 @@ If build is successful, `errantry` executable should be placed in Debug sub fold
 ### Windows
 
 Pre-requisites:
-- Visual Studio 2015 (Community Edition is fine, may build in earlier versions but haven't tried).
+- Visual Studio 2022 (Community Edition is fine, may build in earlier versions but haven't tried).
 
 1. Go to File -> Open -> Project/Solution
 2. Browse to the folder to which you cloned errantry, and choose the `errantry.sln` file, and click Open.
